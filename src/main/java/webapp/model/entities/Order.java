@@ -51,12 +51,12 @@ public class Order implements Serializable {
 		this.autolockTime = autolockTime;
 	}
 
-	public int getIsLocked() {
-		return this.isLocked;
+	public boolean getIsLocked() {
+		return this.isLocked != 0;
 	}
 
-	public void setIsLocked(int isLocked) {
-		this.isLocked = isLocked;
+	public void setIsLocked(boolean isLocked) {
+		this.isLocked = isLocked ? 1 : 0;
 	}
 
 	public String getStatus() {

@@ -1,6 +1,7 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -31,6 +32,12 @@ public class OrganizationMembership implements Serializable {
 	private Organization organization;
 
 	public OrganizationMembership() {
+	}
+
+	public OrganizationMembership(Organization organization, User user, String role) {
+		this.organization = organization;
+		this.user = user;
+		this.role = role;
 	}
 
 	public int getOrganizationMembershipId() {

@@ -1,6 +1,7 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -27,6 +28,12 @@ public class UserPhoneNumber implements Serializable {
 	public UserPhoneNumber() {
 	}
 
+	public UserPhoneNumber(User user, String phoneNumber, boolean primary) {
+		this.user = user;
+		this.phoneNumber = phoneNumber;
+		this.primary = primary ? 1 : 0;
+	}
+
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}
@@ -35,12 +42,12 @@ public class UserPhoneNumber implements Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getPrimary() {
-		return this.primary;
+	public boolean getPrimary() {
+		return this.primary != 0;
 	}
 
-	public void setPrimary(int primary) {
-		this.primary = primary;
+	public void setPrimary(boolean primary) {
+		this.primary = primary ? 1 : 0;
 	}
 
 	public User getUser() {

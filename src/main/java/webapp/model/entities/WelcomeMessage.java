@@ -1,6 +1,7 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -31,6 +32,12 @@ public class WelcomeMessage implements Serializable {
 	private Voice voice;
 
 	public WelcomeMessage() {
+	}
+
+	public WelcomeMessage(Organization organization, String locale, Voice voice) {
+		this.organization = organization;
+		this.locale = locale;
+		this.voice = voice;
 	}
 
 	public int getWelcomeMessageId() {

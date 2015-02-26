@@ -31,6 +31,11 @@ public class GroupMembership implements Serializable {
 	public GroupMembership() {
 	}
 
+	public GroupMembership(Group group, User user) {
+		this.group = group;
+		this.user = user;
+	}
+
 	public int getGroupMembershipId() {
 		return this.groupMembershipId;
 	}

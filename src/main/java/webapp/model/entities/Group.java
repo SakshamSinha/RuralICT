@@ -54,6 +54,12 @@ public class Group implements Serializable {
 	public Group() {
 	}
 
+	public Group(Organization organization, String name, Group parentGroup) {
+		this.organization = organization;
+		this.name = name;
+		this.parentGroup = parentGroup;
+	}
+
 	public int getGroupId() {
 		return this.groupId;
 	}

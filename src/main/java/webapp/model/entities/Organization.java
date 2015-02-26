@@ -124,6 +124,35 @@ public class Organization implements Serializable {
 	public Organization() {
 	}
 
+	public Organization(String name, String abbreviation, String ivrNumber, String incomingSmsCode, String address,
+			String contact, Organization parentOrganization, String defaultWebLocale, String defaultCallLocale,
+			boolean inboundCallAskFeedback, boolean inboundCallAskOrder, boolean inboundCallAskResponse,
+			boolean inboundCallGroupwiseLatestBroadcast, boolean inboundCallPlayLatestBroadcast,
+			boolean enableOrderCancellation, boolean enableBroadcasts, boolean enableFeedbacks, boolean enableResponses,
+			boolean enableSms, boolean enableBilling) {
+
+		this.name = name;
+		this.abbreviation = abbreviation;
+		this.ivrNumber = ivrNumber;
+		this.incomingSmsCode = incomingSmsCode;
+		this.address = address;
+		this.contact = contact;
+		this.parentOrganization = parentOrganization;
+		this.defaultWebLocale = defaultWebLocale;
+		this.defaultCallLocale = defaultCallLocale;
+		this.inboundCallAskFeedback = inboundCallAskFeedback ? 1 : 0;
+		this.inboundCallAskOrder = inboundCallAskOrder ? 1 : 0;
+		this.inboundCallAskResponse = inboundCallAskResponse ? 1 : 0;
+		this.inboundCallGroupwiseLatestBroadcast = inboundCallGroupwiseLatestBroadcast ? 1 : 0;
+		this.inboundCallPlayLatestBroadcast = inboundCallPlayLatestBroadcast ? 1 : 0;
+		this.enableOrderCancellation = enableOrderCancellation ? 1 : 0;
+		this.enableBroadcasts = enableBroadcasts ? 1 : 0;
+		this.enableFeedbacks = enableFeedbacks ? 1 : 0;
+		this.enableResponses = enableResponses ? 1 : 0;
+		this.enableSms = enableSms ? 1 : 0;
+		this.enableBilling = enableBilling ? 1 : 0;
+	}
+
 	public int getOrganizationId() {
 		return this.organizationId;
 	}
@@ -172,92 +201,92 @@ public class Organization implements Serializable {
 		this.defaultWebLocale = defaultWebLocale;
 	}
 
-	public int getEnableBilling() {
-		return this.enableBilling;
+	public boolean getEnableBilling() {
+		return this.enableBilling != 0;
 	}
 
-	public void setEnableBilling(int enableBilling) {
-		this.enableBilling = enableBilling;
+	public void setEnableBilling(boolean enableBilling) {
+		this.enableBilling = enableBilling ? 1 : 0;
 	}
 
-	public int getEnableBroadcasts() {
-		return this.enableBroadcasts;
+	public boolean getEnableBroadcasts() {
+		return this.enableBroadcasts != 0;
 	}
 
-	public void setEnableBroadcasts(int enableBroadcasts) {
-		this.enableBroadcasts = enableBroadcasts;
+	public void setEnableBroadcasts(boolean enableBroadcasts) {
+		this.enableBroadcasts = enableBroadcasts ? 1 : 0;
 	}
 
-	public int getEnableFeedbacks() {
-		return this.enableFeedbacks;
+	public boolean getEnableFeedbacks() {
+		return this.enableFeedbacks != 0;
 	}
 
-	public void setEnableFeedbacks(int enableFeedbacks) {
-		this.enableFeedbacks = enableFeedbacks;
+	public void setEnableFeedbacks(boolean enableFeedbacks) {
+		this.enableFeedbacks = enableFeedbacks ? 1 : 0;
 	}
 
-	public int getEnableOrderCancellation() {
-		return this.enableOrderCancellation;
+	public boolean getEnableOrderCancellation() {
+		return this.enableOrderCancellation != 0;
 	}
 
-	public void setEnableOrderCancellation(int enableOrderCancellation) {
-		this.enableOrderCancellation = enableOrderCancellation;
+	public void setEnableOrderCancellation(boolean enableOrderCancellation) {
+		this.enableOrderCancellation = enableOrderCancellation ? 1 : 0;
 	}
 
-	public int getEnableResponses() {
-		return this.enableResponses;
+	public boolean getEnableResponses() {
+		return this.enableResponses != 0;
 	}
 
-	public void setEnableResponses(int enableResponses) {
-		this.enableResponses = enableResponses;
+	public void setEnableResponses(boolean enableResponses) {
+		this.enableResponses = enableResponses ? 1 : 0;
 	}
 
-	public int getEnableSms() {
-		return this.enableSms;
+	public boolean getEnableSms() {
+		return this.enableSms != 0;
 	}
 
-	public void setEnableSms(int enableSms) {
-		this.enableSms = enableSms;
+	public void setEnableSms(boolean enableSms) {
+		this.enableSms = enableSms ? 1 : 0;
 	}
 
-	public int getInboundCallAskFeedback() {
-		return this.inboundCallAskFeedback;
+	public boolean getInboundCallAskFeedback() {
+		return this.inboundCallAskFeedback != 0;
 	}
 
-	public void setInboundCallAskFeedback(int inboundCallAskFeedback) {
-		this.inboundCallAskFeedback = inboundCallAskFeedback;
+	public void setInboundCallAskFeedback(boolean inboundCallAskFeedback) {
+		this.inboundCallAskFeedback = inboundCallAskFeedback ? 1 : 0;
 	}
 
-	public int getInboundCallAskOrder() {
-		return this.inboundCallAskOrder;
+	public boolean getInboundCallAskOrder() {
+		return this.inboundCallAskOrder != 0;
 	}
 
-	public void setInboundCallAskOrder(int inboundCallAskOrder) {
-		this.inboundCallAskOrder = inboundCallAskOrder;
+	public void setInboundCallAskOrder(boolean inboundCallAskOrder) {
+		this.inboundCallAskOrder = inboundCallAskOrder ? 1 : 0;
 	}
 
-	public int getInboundCallAskResponse() {
-		return this.inboundCallAskResponse;
+	public boolean getInboundCallAskResponse() {
+		return this.inboundCallAskResponse != 0;
 	}
 
-	public void setInboundCallAskResponse(int inboundCallAskResponse) {
-		this.inboundCallAskResponse = inboundCallAskResponse;
+	public void setInboundCallAskResponse(boolean inboundCallAskResponse) {
+		this.inboundCallAskResponse = inboundCallAskResponse ? 1 : 0;
 	}
 
-	public int getInboundCallGroupwiseLatestBroadcast() {
-		return this.inboundCallGroupwiseLatestBroadcast;
+	public boolean getInboundCallGroupwiseLatestBroadcast() {
+		return this.inboundCallGroupwiseLatestBroadcast != 0;
 	}
 
-	public void setInboundCallGroupwiseLatestBroadcast(int inboundCallGroupwiseLatestBroadcast) {
-		this.inboundCallGroupwiseLatestBroadcast = inboundCallGroupwiseLatestBroadcast;
+	public void setInboundCallGroupwiseLatestBroadcast(boolean inboundCallGroupwiseLatestBroadcast) {
+		this.inboundCallGroupwiseLatestBroadcast = inboundCallGroupwiseLatestBroadcast ? 1 : 0;
 	}
 
-	public int getInboundCallPlayLatestBroadcast() {
-		return this.inboundCallPlayLatestBroadcast;
+	public boolean getInboundCallPlayLatestBroadcast() {
+		return this.inboundCallPlayLatestBroadcast != 0;
 	}
 
-	public void setInboundCallPlayLatestBroadcast(int inboundCallPlayLatestBroadcast) {
-		this.inboundCallPlayLatestBroadcast = inboundCallPlayLatestBroadcast;
+	public void setInboundCallPlayLatestBroadcast(boolean inboundCallPlayLatestBroadcast) {
+		this.inboundCallPlayLatestBroadcast = inboundCallPlayLatestBroadcast ? 1 : 0;
 	}
 
 	public String getIncomingSmsCode() {

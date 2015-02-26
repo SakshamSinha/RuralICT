@@ -27,7 +27,7 @@ import webapp.model.entities.broadcast.Broadcast;
 @Entity
 @Table(name="message")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
-@DiscriminatorColumn(name="format",discriminatorType=DiscriminatorType.STRING)  
+@DiscriminatorColumn(name="format", discriminatorType=DiscriminatorType.STRING)  
 public abstract class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -64,6 +64,18 @@ public abstract class Message implements Serializable {
 	public Message() {
 	}
 
+	public Message(User user, Broadcast broadcast, String mode, String format, String type, boolean response,
+			Order order) {
+
+		this.user = user;
+		this.broadcast = broadcast;
+		this.mode = mode;
+		this.format = format;
+		this.type = type;
+		this.response = response ? 1 : 0;
+		this.order = order;
+	}
+
 	public int getMessageId() {
 		return this.messageId;
 	}
@@ -96,12 +108,12 @@ public abstract class Message implements Serializable {
 		this.mode = mode;
 	}
 
-	public int getResponse() {
-		return this.response;
+	public boolean getResponse() {
+		return this.response != 0;
 	}
 
-	public void setResponse(int response) {
-		this.response = response;
+	public void setResponse(boolean response) {
+		this.response = response ? 1 : 0;
 	}
 
 	public String getType() {

@@ -33,6 +33,12 @@ public class PresetQuantity implements Serializable {
 	public PresetQuantity() {
 	}
 
+	public PresetQuantity(Organization organization, ProductType productType, float quantity) {
+		this.organization = organization;
+		this.productType = productType;
+		this.quantity = quantity;
+	}
+
 	public int getPresetQuantityId() {
 		return this.presetQuantityId;
 	}

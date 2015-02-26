@@ -6,7 +6,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import webapp.model.entities.InboundCall;
+import webapp.model.entities.Order;
+import webapp.model.entities.User;
 import webapp.model.entities.Voice;
+import webapp.model.entities.broadcast.Broadcast;
 
 @Entity
 @DiscriminatorValue("voice")
@@ -24,6 +27,14 @@ public class VoiceMessage extends Message {
 	private InboundCall inboundCall;
 
 	public VoiceMessage() {
+	}
+
+	public VoiceMessage(User user, Broadcast broadcast, String mode, String type, boolean response, Order order,
+			Voice voice, InboundCall inboundCall) {
+
+		super(user, broadcast, mode, "voice", type, response, order);
+		this.voice = voice;
+		this.inboundCall = inboundCall;
 	}
 
 	public Voice getVoice() {

@@ -1,7 +1,9 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -46,6 +48,18 @@ public class Product implements Serializable {
 	private ProductType productType;
 
 	public Product() {
+	}
+
+	public Product(String name, Organization organization, ProductType productType, float unitRate, int quantity,
+			String description, String imageUrl) {
+
+		this.name = name;
+		this.organization = organization;
+		this.productType = productType;
+		this.unitRate = unitRate;
+		this.quantity = quantity;
+		this.description = description;
+		this.imageUrl = imageUrl;
 	}
 
 	public int getProductId() {

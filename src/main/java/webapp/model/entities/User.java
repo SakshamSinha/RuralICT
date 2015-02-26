@@ -66,6 +66,14 @@ public class User implements Serializable {
 	public User() {
 	}
 
+	public User(String name, String address, String webLocale, String callLocale, String email) {
+		this.name = name;
+		this.address = address;
+		this.webLocale = webLocale;
+		this.callLocale = callLocale;
+		this.email = email;
+	}
+
 	public int getUserId() {
 		return this.userId;
 	}

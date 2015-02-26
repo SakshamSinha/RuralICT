@@ -1,6 +1,7 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -36,6 +37,16 @@ public class OutboundCall implements Serializable {
 	private BroadcastRecipient broadcastRecipient;
 
 	public OutboundCall() {
+	}
+
+	public OutboundCall(BroadcastRecipient broadcastRecipient, BroadcastSchedule broadcastSchedule, String status,
+			String statusDetail, int duration) {
+
+		this.broadcastRecipient = broadcastRecipient;
+		this.broadcastSchedule = broadcastSchedule;
+		this.status = status;
+		this.statusDetail = statusDetail;
+		this.duration = duration;
 	}
 
 	public int getOutboundCallId() {

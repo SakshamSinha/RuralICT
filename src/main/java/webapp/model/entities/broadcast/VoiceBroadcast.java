@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import webapp.model.entities.Group;
+import webapp.model.entities.Organization;
+import webapp.model.entities.User;
 import webapp.model.entities.Voice;
 
 @Entity
@@ -24,12 +27,20 @@ public class VoiceBroadcast extends Broadcast {
 	public VoiceBroadcast() {
 	}
 
-	public int getVoiceBroadcastDraft() {
-		return this.voiceBroadcastDraft;
+	public VoiceBroadcast(Organization organization, Group group, User user, String mode, boolean askFeedback,
+			boolean askOrder, boolean askResponse, boolean appOnly, Voice voice, boolean voiceBroadcastDraft) {
+
+		super(organization, group, user, "text", mode, askFeedback, askOrder, askResponse, appOnly);
+		this.voice = voice;
+		this.voiceBroadcastDraft = voiceBroadcastDraft ? 1 : 0;
 	}
 
-	public void setVoiceBroadcastDraft(int voiceBroadcastDraft) {
-		this.voiceBroadcastDraft = voiceBroadcastDraft;
+	public boolean getVoiceBroadcastDraft() {
+		return this.voiceBroadcastDraft != 0;
+	}
+
+	public void setVoiceBroadcastDraft(boolean voiceBroadcastDraft) {
+		this.voiceBroadcastDraft = voiceBroadcastDraft ? 1 : 0;
 	}
 
 	public Voice getVoice() {

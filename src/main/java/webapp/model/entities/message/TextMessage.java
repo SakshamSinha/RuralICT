@@ -6,6 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import webapp.model.entities.Order;
+import webapp.model.entities.User;
+import webapp.model.entities.broadcast.Broadcast;
+
 @Entity
 @DiscriminatorValue("text")
 public class TextMessage extends Message {
@@ -18,6 +22,14 @@ public class TextMessage extends Message {
 	private Timestamp textTime;
 
 	public TextMessage() {
+	}
+
+	public TextMessage(User user, Broadcast broadcast, String mode, String type, boolean response, Order order,
+			String textContent, Timestamp textTime) {
+
+		super(user, broadcast, mode, "text", type, response, order);
+		this.textContent = textContent;
+		this.textTime = textTime;
 	}
 
 	public String getTextContent() {

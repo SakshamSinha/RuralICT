@@ -40,6 +40,14 @@ public class BroadcastDefaultSetting implements Serializable {
 	public BroadcastDefaultSetting() {
 	}
 
+	public BroadcastDefaultSetting(Organization organization, Group group, boolean askFeedback, boolean askOrder, boolean askResponse) {
+		this.organization = organization;
+		this.group = group;
+		this.askFeedback = askFeedback ? 1 : 0;
+		this.askOrder = askOrder ? 1 : 0;
+		this.askResponse = askResponse ? 1 : 0;
+	}
+
 	public int getBroadcastDefaultSettingsId() {
 		return this.broadcastDefaultSettingsId;
 	}
@@ -48,28 +56,28 @@ public class BroadcastDefaultSetting implements Serializable {
 		this.broadcastDefaultSettingsId = broadcastDefaultSettingsId;
 	}
 
-	public int getAskFeedback() {
-		return this.askFeedback;
+	public boolean getAskFeedback() {
+		return this.askFeedback != 0;
 	}
 
-	public void setAskFeedback(int askFeedback) {
-		this.askFeedback = askFeedback;
+	public void setAskFeedback(boolean askFeedback) {
+		this.askFeedback = askFeedback ? 1 : 0;
 	}
 
-	public int getAskOrder() {
-		return this.askOrder;
+	public boolean getAskOrder() {
+		return this.askOrder != 0;
 	}
 
-	public void setAskOrder(int askOrder) {
-		this.askOrder = askOrder;
+	public void setAskOrder(boolean askOrder) {
+		this.askOrder = askOrder ? 1 : 0;
 	}
 
-	public int getAskResponse() {
-		return this.askResponse;
+	public boolean getAskResponse() {
+		return this.askResponse != 0;
 	}
 
-	public void setAskResponse(int askResponse) {
-		this.askResponse = askResponse;
+	public void setAskResponse(boolean askResponse) {
+		this.askResponse = askResponse ? 1 : 0;
 	}
 
 	public Organization getOrganization() {

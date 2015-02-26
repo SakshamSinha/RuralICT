@@ -40,6 +40,11 @@ public class BroadcastRecipient implements Serializable {
 	public BroadcastRecipient() {
 	}
 
+	public BroadcastRecipient(Broadcast broadcast, User user) {
+		this.broadcast = broadcast;
+		this.user = user;
+	}
+
 	public int getBroadcastRecipientId() {
 		return this.broadcastRecipientId;
 	}

@@ -33,7 +33,7 @@ import webapp.model.entities.message.Message;
 @Entity
 @Table(name="broadcast")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
-@DiscriminatorColumn(name="format",discriminatorType=DiscriminatorType.STRING)  
+@DiscriminatorColumn(name="format", discriminatorType=DiscriminatorType.STRING)  
 public abstract class Broadcast implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -91,6 +91,19 @@ public abstract class Broadcast implements Serializable {
 	public Broadcast() {
 	}
 
+	public Broadcast(Organization organization, Group group, User user, String format, String mode, boolean askFeedback,
+			boolean askOrder, boolean askResponse, boolean appOnly) {
+		this.organization = organization;
+		this.group = group;
+		this.user = user;
+		this.format = format;
+		this.mode = mode;
+		this.askFeedback = askFeedback ? 1 : 0;
+		this.askOrder = askOrder ? 1 : 0;
+		this.askResponse = askResponse ? 1 : 0;
+		this.appOnly = appOnly ? 1 : 0;
+	}
+
 	public int getBroadcastId() {
 		return this.broadcastId;
 	}
@@ -99,36 +112,36 @@ public abstract class Broadcast implements Serializable {
 		this.broadcastId = broadcastId;
 	}
 
-	public int getAppOnly() {
-		return this.appOnly;
+	public boolean getAppOnly() {
+		return this.appOnly != 0;
 	}
 
-	public void setAppOnly(int appOnly) {
-		this.appOnly = appOnly;
+	public void setAppOnly(boolean appOnly) {
+		this.appOnly = appOnly ? 1 : 0;
 	}
 
-	public int getAskFeedback() {
-		return this.askFeedback;
+	public boolean getAskFeedback() {
+		return this.askFeedback != 0;
 	}
 
-	public void setAskFeedback(int askFeedback) {
-		this.askFeedback = askFeedback;
+	public void setAskFeedback(boolean askFeedback) {
+		this.askFeedback = askFeedback ? 1 : 0;
 	}
 
-	public int getAskOrder() {
-		return this.askOrder;
+	public boolean getAskOrder() {
+		return this.askOrder != 0;
 	}
 
-	public void setAskOrder(int askOrder) {
-		this.askOrder = askOrder;
+	public void setAskOrder(boolean askOrder) {
+		this.askOrder = askOrder ? 1 : 0;
 	}
 
-	public int getAskResponse() {
-		return this.askResponse;
+	public boolean getAskResponse() {
+		return this.askResponse != 0;
 	}
 
-	public void setAskResponse(int askResponse) {
-		this.askResponse = askResponse;
+	public void setAskResponse(boolean askResponse) {
+		this.askResponse = askResponse ? 1 : 0;
 	}
 
 	public Timestamp getBroadcastedTime() {

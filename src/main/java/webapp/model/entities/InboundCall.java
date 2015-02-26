@@ -44,6 +44,13 @@ public class InboundCall implements Serializable {
 	public InboundCall() {
 	}
 
+	public InboundCall(Organization organization, String fromNumber, Timestamp time, int duration) {
+		this.organization = organization;
+		this.fromNumber = fromNumber;
+		this.time = time;
+		this.duration = duration;
+	}
+
 	public int getInboundCallId() {
 		return this.inboundCallId;
 	}

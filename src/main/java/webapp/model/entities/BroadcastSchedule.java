@@ -43,6 +43,12 @@ public class BroadcastSchedule implements Serializable {
 	public BroadcastSchedule() {
 	}
 
+	public BroadcastSchedule(Broadcast broadcast, Timestamp time, boolean sendToAll) {
+		this.broadcast = broadcast;
+		this.time = time;
+		this.sendToAll = sendToAll ? 1 : 0;
+	}
+
 	public int getBroadcastScheduleId() {
 		return this.broadcastScheduleId;
 	}
@@ -51,20 +57,20 @@ public class BroadcastSchedule implements Serializable {
 		this.broadcastScheduleId = broadcastScheduleId;
 	}
 
-	public int getCancelled() {
-		return this.cancelled;
+	public boolean getCancelled() {
+		return this.cancelled != 0;
 	}
 
-	public void setCancelled(int cancelled) {
-		this.cancelled = cancelled;
+	public void setCancelled(boolean cancelled) {
+		this.cancelled = cancelled ? 1 : 0;
 	}
 
-	public int getSendToAll() {
-		return this.sendToAll;
+	public boolean getSendToAll() {
+		return this.sendToAll != 0;
 	}
 
-	public void setSendToAll(int sendToAll) {
-		this.sendToAll = sendToAll;
+	public void setSendToAll(boolean sendToAll) {
+		this.sendToAll = sendToAll ? 1 : 0;
 	}
 
 	public Timestamp getTime() {

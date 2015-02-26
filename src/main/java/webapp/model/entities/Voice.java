@@ -40,6 +40,11 @@ public class Voice implements Serializable {
 	public Voice() {
 	}
 
+	public Voice(String url, int isDownloaded) {
+		this.url = url;
+		this.isDownloaded = isDownloaded;
+	}
+
 	public int getVoiceId() {
 		return this.voiceId;
 	}
