@@ -1,13 +1,17 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import webapp.model.entities.broadcast.Broadcast;
-import webapp.model.entities.broadcast.VoiceBroadcast;
-
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import webapp.model.entities.broadcast.VoiceBroadcast;
 
 
 /**
@@ -31,7 +35,7 @@ public class Voice implements Serializable {
 
 	//bi-directional many-to-one association to Broadcast
 	@OneToMany(mappedBy="voice")
-	private List<Broadcast> broadcasts;
+	private List<VoiceBroadcast> broadcasts;
 
 	//bi-directional many-to-one association to WelcomeMessage
 	@OneToMany(mappedBy="voice")
@@ -69,11 +73,11 @@ public class Voice implements Serializable {
 		this.url = url;
 	}
 
-	public List<Broadcast> getBroadcasts() {
+	public List<VoiceBroadcast> getBroadcasts() {
 		return this.broadcasts;
 	}
 
-	public void setBroadcasts(List<Broadcast> broadcasts) {
+	public void setBroadcasts(List<VoiceBroadcast> broadcasts) {
 		this.broadcasts = broadcasts;
 	}
 

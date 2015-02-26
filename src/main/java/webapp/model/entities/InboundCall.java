@@ -1,14 +1,20 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import webapp.model.entities.message.Message;
-import webapp.model.entities.message.VoiceMessage;
-
 import java.sql.Timestamp;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import webapp.model.entities.message.VoiceMessage;
 
 
 /**
@@ -39,7 +45,7 @@ public class InboundCall implements Serializable {
 
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="inboundCall")
-	private List<Message> messages;
+	private List<VoiceMessage> messages;
 
 	public InboundCall() {
 	}
@@ -91,11 +97,11 @@ public class InboundCall implements Serializable {
 		this.organization = organization;
 	}
 
-	public List<Message> getMessages() {
+	public List<VoiceMessage> getMessages() {
 		return this.messages;
 	}
 
-	public void setMessages(List<Message> messages) {
+	public void setMessages(List<VoiceMessage> messages) {
 		this.messages = messages;
 	}
 

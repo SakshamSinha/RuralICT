@@ -38,6 +38,7 @@ public abstract class Message implements Serializable {
 
 	private String comments;
 
+	@Column(insertable=false, updatable=false)
 	private String format;
 
 	private String mode;

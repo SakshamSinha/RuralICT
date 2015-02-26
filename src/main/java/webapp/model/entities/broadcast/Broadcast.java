@@ -57,6 +57,7 @@ public abstract class Broadcast implements Serializable {
 	@Column(name="broadcasted_time")
 	private Timestamp broadcastedTime;
 
+	@Column(insertable=false, updatable=false)
 	private String format;
 
 	private String mode;

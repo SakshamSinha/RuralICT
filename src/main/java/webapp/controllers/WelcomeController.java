@@ -9,7 +9,8 @@ public class WelcomeController {
 
 	@RequestMapping("/")
 	public String welcome(Model model) {
-		model.addAttribute("displayString", "Hey world, sup?");
+		model.addAttribute("displayString", "Hello world!");
 		return "welcome";
 	}
+
 }
