@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="RuralIVRS">
+		<class>webapp.model.entities.Broadcast</class>
+		<class>webapp.model.entities.BroadcastDefaultSetting</class>
+		<class>webapp.model.entities.BroadcastRecipient</class>
+		<class>webapp.model.entities.BroadcastSchedule</class>
+		<class>webapp.model.entities.Group</class>
+		<class>webapp.model.entities.GroupMembership</class>
+		<class>webapp.model.entities.InboundCall</class>
+		<class>webapp.model.entities.Message</class>
+		<class>webapp.model.entities.Order</class>
+		<class>webapp.model.entities.OrderItem</class>
+		<class>webapp.model.entities.Organization</class>
+		<class>webapp.model.entities.OrganizationMembership</class>
+		<class>webapp.model.entities.OutboundCall</class>
+		<class>webapp.model.entities.PresetQuantity</class>
+		<class>webapp.model.entities.Product</class>
+		<class>webapp.model.entities.ProductType</class>
+		<class>webapp.model.entities.User</class>
+		<class>webapp.model.entities.UserPhoneNumber</class>
+		<class>webapp.model.entities.Voice</class>
+		<class>webapp.model.entities.WelcomeMessage</class>
 	</persistence-unit>
 </persistence>
