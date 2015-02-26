@@ -125,11 +125,7 @@ public class Organization implements Serializable {
 	}
 
 	public Organization(String name, String abbreviation, String ivrNumber, String incomingSmsCode, String address,
-			String contact, Organization parentOrganization, String defaultWebLocale, String defaultCallLocale,
-			boolean inboundCallAskFeedback, boolean inboundCallAskOrder, boolean inboundCallAskResponse,
-			boolean inboundCallGroupwiseLatestBroadcast, boolean inboundCallPlayLatestBroadcast,
-			boolean enableOrderCancellation, boolean enableBroadcasts, boolean enableFeedbacks, boolean enableResponses,
-			boolean enableSms, boolean enableBilling) {
+			String contact, Organization parentOrganization, String defaultWebLocale, String defaultCallLocale) {
 
 		this.name = name;
 		this.abbreviation = abbreviation;
@@ -140,17 +136,6 @@ public class Organization implements Serializable {
 		this.parentOrganization = parentOrganization;
 		this.defaultWebLocale = defaultWebLocale;
 		this.defaultCallLocale = defaultCallLocale;
-		this.inboundCallAskFeedback = inboundCallAskFeedback ? 1 : 0;
-		this.inboundCallAskOrder = inboundCallAskOrder ? 1 : 0;
-		this.inboundCallAskResponse = inboundCallAskResponse ? 1 : 0;
-		this.inboundCallGroupwiseLatestBroadcast = inboundCallGroupwiseLatestBroadcast ? 1 : 0;
-		this.inboundCallPlayLatestBroadcast = inboundCallPlayLatestBroadcast ? 1 : 0;
-		this.enableOrderCancellation = enableOrderCancellation ? 1 : 0;
-		this.enableBroadcasts = enableBroadcasts ? 1 : 0;
-		this.enableFeedbacks = enableFeedbacks ? 1 : 0;
-		this.enableResponses = enableResponses ? 1 : 0;
-		this.enableSms = enableSms ? 1 : 0;
-		this.enableBilling = enableBilling ? 1 : 0;
 	}
 
 	public int getOrganizationId() {
