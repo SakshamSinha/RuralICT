@@ -1,9 +1,29 @@
-package webapp.model.entities;
+package webapp.model.entities.broadcast;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import webapp.model.entities.BroadcastRecipient;
+import webapp.model.entities.BroadcastSchedule;
+import webapp.model.entities.Group;
+import webapp.model.entities.Organization;
+import webapp.model.entities.User;
+import webapp.model.entities.message.Message;
 
 
 /**
@@ -12,7 +32,9 @@ import java.util.List;
  */
 @Entity
 @Table(name="broadcast")
-public class Broadcast implements Serializable {
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
+@DiscriminatorColumn(name="format",discriminatorType=DiscriminatorType.STRING)  
+public abstract class Broadcast implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -39,12 +61,6 @@ public class Broadcast implements Serializable {
 
 	private String mode;
 
-	@Column(name="text_content")
-	private String textContent;
-
-	@Column(name="voice_broadcast_draft")
-	private int voiceBroadcastDraft;
-
 	//bi-directional many-to-one association to Organization
 	@ManyToOne
 	@JoinColumn(name="organization_id")
@@ -59,11 +75,6 @@ public class Broadcast implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="publisher_id")
 	private User user;
-
-	//bi-directional many-to-one association to Voice
-	@ManyToOne
-	@JoinColumn(name="voice_id")
-	private Voice voice;
 
 	//bi-directional many-to-one association to BroadcastRecipient
 	@OneToMany(mappedBy="broadcast")
@@ -144,22 +155,6 @@ public class Broadcast implements Serializable {
 		this.mode = mode;
 	}
 
-	public String getTextContent() {
-		return this.textContent;
-	}
-
-	public void setTextContent(String textContent) {
-		this.textContent = textContent;
-	}
-
-	public int getVoiceBroadcastDraft() {
-		return this.voiceBroadcastDraft;
-	}
-
-	public void setVoiceBroadcastDraft(int voiceBroadcastDraft) {
-		this.voiceBroadcastDraft = voiceBroadcastDraft;
-	}
-
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -182,14 +177,6 @@ public class Broadcast implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public Voice getVoice() {
-		return this.voice;
-	}
-
-	public void setVoice(Voice voice) {
-		this.voice = voice;
 	}
 
 	public List<BroadcastRecipient> getBroadcastRecipients() {

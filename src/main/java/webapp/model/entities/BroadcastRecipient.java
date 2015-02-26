@@ -1,7 +1,11 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import webapp.model.entities.broadcast.Broadcast;
+
 import java.util.List;
 
 

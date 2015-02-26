@@ -1,8 +1,23 @@
-package webapp.model.entities;
+package webapp.model.entities.message;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import webapp.model.entities.Order;
+import webapp.model.entities.User;
+import webapp.model.entities.broadcast.Broadcast;
 
 
 /**
@@ -11,7 +26,9 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="message")
-public class Message implements Serializable {
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
+@DiscriminatorColumn(name="format",discriminatorType=DiscriminatorType.STRING)  
+public abstract class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,12 +44,6 @@ public class Message implements Serializable {
 
 	private int response;
 
-	@Column(name="text_content")
-	private String textContent;
-
-	@Column(name="text_time")
-	private Timestamp textTime;
-
 	private String type;
 
 	//bi-directional many-to-one association to User
@@ -44,16 +55,6 @@ public class Message implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="source_broadcast_id")
 	private Broadcast broadcast;
-
-	//uni-directional many-to-one association to Voice
-	@ManyToOne
-	@JoinColumn(name="voice_id")
-	private Voice voice;
-
-	//bi-directional many-to-one association to InboundCall
-	@ManyToOne
-	@JoinColumn(name="voice_inbound_call_id")
-	private InboundCall inboundCall;
 
 	//uni-directional many-to-one association to Order
 	@ManyToOne
@@ -103,22 +104,6 @@ public class Message implements Serializable {
 		this.response = response;
 	}
 
-	public String getTextContent() {
-		return this.textContent;
-	}
-
-	public void setTextContent(String textContent) {
-		this.textContent = textContent;
-	}
-
-	public Timestamp getTextTime() {
-		return this.textTime;
-	}
-
-	public void setTextTime(Timestamp textTime) {
-		this.textTime = textTime;
-	}
-
 	public String getType() {
 		return this.type;
 	}
@@ -141,22 +126,6 @@ public class Message implements Serializable {
 
 	public void setBroadcast(Broadcast broadcast) {
 		this.broadcast = broadcast;
-	}
-
-	public Voice getVoice() {
-		return this.voice;
-	}
-
-	public void setVoice(Voice voice) {
-		this.voice = voice;
-	}
-
-	public InboundCall getInboundCall() {
-		return this.inboundCall;
-	}
-
-	public void setInboundCall(InboundCall inboundCall) {
-		this.inboundCall = inboundCall;
 	}
 
 	public Order getOrder() {

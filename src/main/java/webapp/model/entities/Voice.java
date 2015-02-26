@@ -1,7 +1,12 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import webapp.model.entities.broadcast.Broadcast;
+import webapp.model.entities.broadcast.VoiceBroadcast;
+
 import java.util.List;
 
 
@@ -67,14 +72,14 @@ public class Voice implements Serializable {
 		this.broadcasts = broadcasts;
 	}
 
-	public Broadcast addBroadcast(Broadcast broadcast) {
+	public VoiceBroadcast addBroadcast(VoiceBroadcast broadcast) {
 		getBroadcasts().add(broadcast);
 		broadcast.setVoice(this);
 
 		return broadcast;
 	}
 
-	public Broadcast removeBroadcast(Broadcast broadcast) {
+	public VoiceBroadcast removeBroadcast(VoiceBroadcast broadcast) {
 		getBroadcasts().remove(broadcast);
 		broadcast.setVoice(null);
 

@@ -1,7 +1,12 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import webapp.model.entities.message.Message;
+import webapp.model.entities.message.VoiceMessage;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -87,14 +92,14 @@ public class InboundCall implements Serializable {
 		this.messages = messages;
 	}
 
-	public Message addMessage(Message message) {
+	public VoiceMessage addMessage(VoiceMessage message) {
 		getMessages().add(message);
 		message.setInboundCall(this);
 
 		return message;
 	}
 
-	public Message removeMessage(Message message) {
+	public VoiceMessage removeMessage(VoiceMessage message) {
 		getMessages().remove(message);
 		message.setInboundCall(null);
 
