@@ -45,6 +45,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf") {
     	exclude module: "logback-classic"
     }
+    compile("org.springframework.security:spring-security-web")
     compile("org.springframework.boot:spring-boot-starter-log4j")
     compile("com.h2database:h2")
     compile("mysql:mysql-connector-java")
