@@ -1,13 +1,14 @@
 package webapp.controllers.rest;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class RESTController {
 
-	@RequestMapping("/api")
+	@RequestMapping("/")
 	public String test(Model model) {
 		model.addAttribute("displayString", "API test");
 		return "welcome";

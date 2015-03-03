@@ -1,24 +1,68 @@
 package webapp.security.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
+
+import webapp.model.entities.User;
+import webapp.model.entities.UserPhoneNumber;
+import webapp.model.repositories.UserPhoneNumberRepository;
+import webapp.model.repositories.UserRepository;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebMvcSecurity
 public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
+
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	UserPhoneNumberRepository userPhoneNumberRepository;
+
+	@Bean
+	UserDetailsService userDetailsService() {
+		return new UserDetailsService() {
+
+			@Override
+			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+				User user = null;
+				List<User> users = userRepository.findByEmail(username);
+				if (users != null) {
+					user = users.get(0);
+				} else {
+					UserPhoneNumber number = userPhoneNumberRepository.findOne(username);
+					if (number != null) {
+						user = number.getUser();
+					}
+				}
+				if (user == null)
+					throw new UsernameNotFoundException("could not find the user " + username);
+				return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getSha256Password(),
+						true, true, true, true, AuthorityUtils.createAuthorityList("USER"));
+			}
+
+		};
+	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
-			.inMemoryAuthentication()
-				.withUser("user").password("password").roles("USER");
+			.userDetailsService(userDetailsService())
+				.passwordEncoder(new StandardPasswordEncoder());
 	}
 
 	@Configuration
@@ -29,14 +73,14 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 			http
 				.antMatcher("/api/**")                               
 					.authorizeRequests()
-					.anyRequest().hasRole("USER")
-					.and()
-				.httpBasic()
-					.and()
-				.sessionManagement()
-					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-					.and()
-				.csrf().disable();
+						.anyRequest().authenticated()
+						.and()
+					.httpBasic()
+						.and()
+					.sessionManagement()
+						.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+						.and()
+					.csrf().disable();
 		}
 
 	}
@@ -48,7 +92,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 		protected void configure(HttpSecurity http) throws Exception {
 			http
 				.authorizeRequests()
-					.anyRequest().hasRole("USER")
+					.anyRequest().authenticated()
 					.and()
 				.formLogin();
 		}
