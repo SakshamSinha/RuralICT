@@ -2,7 +2,14 @@ package webapp.model.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 
 /**
@@ -19,7 +26,11 @@ public class OrganizationMembership implements Serializable {
 	@Column(name="organization_membership_id")
 	private int organizationMembershipId;
 
-	private String role;
+	@Column(name="is_admin")
+	private int isAdmin;
+
+	@Column(name="is_publisher")
+	private int isPublisher;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
@@ -34,10 +45,11 @@ public class OrganizationMembership implements Serializable {
 	public OrganizationMembership() {
 	}
 
-	public OrganizationMembership(Organization organization, User user, String role) {
+	public OrganizationMembership(Organization organization, User user, boolean isAdmin, boolean isPublisher) {
 		this.organization = organization;
 		this.user = user;
-		this.role = role;
+		this.isAdmin = isAdmin ? 1 : 0;
+		this.isPublisher = isPublisher ? 1 : 0;
 	}
 
 	public int getOrganizationMembershipId() {
@@ -48,12 +60,20 @@ public class OrganizationMembership implements Serializable {
 		this.organizationMembershipId = organizationMembershipId;
 	}
 
-	public String getRole() {
-		return this.role;
+	public boolean getIsAdmin() {
+		return this.isAdmin != 0;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setIsAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin ? 1 : 0;
+	}
+
+	public boolean getIsPublisher() {
+		return this.isPublisher != 0;
+	}
+
+	public void setIsPublisher(boolean isPublisher) {
+		this.isPublisher = isPublisher ? 1 : 0;
 	}
 
 	public User getUser() {

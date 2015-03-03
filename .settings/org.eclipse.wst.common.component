@@ -16,6 +16,9 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/ankit/.m2/repository/org/springframework/security/spring-security-web/3.2.5.RELEASE/spring-security-web-3.2.5.RELEASE.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/ankit/.m2/repository/org/springframework/security/spring-security-config/3.2.5.RELEASE/spring-security-config-3.2.5.RELEASE.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/ankit/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-log4j/1.2.1.RELEASE/85a06a3d61328afc726c69643bddcf759ed96b9e/spring-boot-starter-log4j-1.2.1.RELEASE.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
@@ -100,9 +103,6 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/ankit/.m2/repository/org/yaml/snakeyaml/1.14/snakeyaml-1.14.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
-		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/ankit/.m2/repository/org/springframework/spring-aop/4.1.4.RELEASE/spring-aop-4.1.4.RELEASE.jar">
-			<dependency-type>uses</dependency-type>
-		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/ankit/.m2/repository/org/aspectj/aspectjrt/1.8.4/aspectjrt-1.8.4.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
@@ -173,6 +173,9 @@
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/ankit/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/4bfc12adfe4842bf07b657f0369c4cb522955686/commons-logging-1.2.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/ankit/.m2/repository/org/springframework/spring-aop/4.1.4.RELEASE/spring-aop-4.1.4.RELEASE.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib//home/ankit/.m2/repository/org/springframework/spring-beans/4.1.4.RELEASE/spring-beans-4.1.4.RELEASE.jar">

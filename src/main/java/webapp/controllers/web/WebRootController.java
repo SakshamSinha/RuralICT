@@ -1,14 +1,14 @@
-package webapp.controllers;
+package webapp.controllers.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class WelcomeController {
+public class WebRootController {
 
 	@RequestMapping("/")
-	public String welcome(Model model) {
+	public String rootRedirect(Model model) {
 		model.addAttribute("displayString", "Hello world!");
 		return "welcome";
 	}

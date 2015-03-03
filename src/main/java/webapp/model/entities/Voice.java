@@ -57,12 +57,12 @@ public class Voice implements Serializable {
 		this.voiceId = voiceId;
 	}
 
-	public int getIsDownloaded() {
-		return this.isDownloaded;
+	public boolean getIsDownloaded() {
+		return this.isDownloaded != 0;
 	}
 
-	public void setIsDownloaded(int isDownloaded) {
-		this.isDownloaded = isDownloaded;
+	public void setIsDownloaded(boolean isDownloaded) {
+		this.isDownloaded = isDownloaded ? 1 : 0;
 	}
 
 	public String getUrl() {

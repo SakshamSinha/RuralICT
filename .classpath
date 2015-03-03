@@ -26,6 +26,11 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/ankit/.m2/repository/org/springframework/security/spring-security-config/3.2.5.RELEASE/spring-security-config-3.2.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry sourcepath="/home/ankit/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-log4j/1.2.1.RELEASE/351ff2ff525c5cdb9bad19ea5426f62e97eacb57/spring-boot-starter-log4j-1.2.1.RELEASE-sources.jar" kind="lib" path="/home/ankit/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-log4j/1.2.1.RELEASE/85a06a3d61328afc726c69643bddcf759ed96b9e/spring-boot-starter-log4j-1.2.1.RELEASE.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -221,11 +226,6 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/ankit/.m2/repository/org/springframework/spring-aop/4.1.4.RELEASE/spring-aop-4.1.4.RELEASE.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="/home/ankit/.m2/repository/org/aspectj/aspectjrt/1.8.4/aspectjrt-1.8.4.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -347,6 +347,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="/home/ankit/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/ecf26c7507d67782a3bbd148d170b31dfad001aa/commons-logging-1.2-sources.jar" kind="lib" path="/home/ankit/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/4bfc12adfe4842bf07b657f0369c4cb522955686/commons-logging-1.2.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/ankit/.m2/repository/org/springframework/spring-aop/4.1.4.RELEASE/spring-aop-4.1.4.RELEASE.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
