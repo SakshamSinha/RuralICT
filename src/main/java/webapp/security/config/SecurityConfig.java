@@ -18,23 +18,27 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 			.inMemoryAuthentication()
-			.withUser("user").password("password").roles("USER").and()
-			.withUser("admin").password("password").roles("USER", "ADMIN");
+				.withUser("user").password("password").roles("USER");
 	}
 
 	@Configuration
 	@Order(1)                                                        
 	public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+	
 		protected void configure(HttpSecurity http) throws Exception {
 			http
 				.antMatcher("/api/**")                               
-				.authorizeRequests()
-				.anyRequest().hasRole("MEMBER")
-				.and()
+					.authorizeRequests()
+					.anyRequest().hasRole("USER")
+					.and()
 				.httpBasic()
-				.and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+					.and()
+				.sessionManagement()
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+					.and()
+				.csrf().disable();
 		}
+
 	}
 
 	@Configuration                                                  
@@ -44,10 +48,11 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 		protected void configure(HttpSecurity http) throws Exception {
 			http
 				.authorizeRequests()
-				.anyRequest().hasRole("ADMIN")
-				.and()
+					.anyRequest().hasRole("USER")
+					.and()
 				.formLogin();
 		}
+
 	}
 
 }
