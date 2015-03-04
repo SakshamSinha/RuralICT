@@ -41,17 +41,27 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 				User user = null;
 
-				List<User> users = userRepository.findByEmail(username);
-				if (users != null && !users.isEmpty()) {
-					user = users.get(0);
-				} else {
-					UserPhoneNumber number = userPhoneNumberRepository.findOne(username);
-					if (number != null) {
-						user = number.getUser();
+				if (username.startsWith("@User")) {
+					String userId = username.substring("@User".length());
+					try {
+						user = userRepository.findOne(Integer.parseInt(userId));
+					} catch (NumberFormatException e) {
+						e.printStackTrace(); // this should never happen, assuming we have done proper validation of emails
 					}
 				}
-				if (user == null)
-					throw new UsernameNotFoundException("could not find the user " + username);
+				if (user == null) {
+					List<User> users = userRepository.findByEmail(username);
+					if (users != null && !users.isEmpty()) {
+						user = users.get(0);
+					} else {
+						UserPhoneNumber number = userPhoneNumberRepository.findOne(username);
+						if (number != null) {
+							user = number.getUser();
+						}
+					}
+					if (user == null)
+						throw new UsernameNotFoundException("could not find the user " + username);
+				}
 
 				return new AuthenticatedUser(user, userPhoneNumberRepository);
 			}

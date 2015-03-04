@@ -21,9 +21,9 @@ public class AuthenticatedUser implements UserDetails {
 
 	public AuthenticatedUser(User user, UserPhoneNumberRepository userPhoneNumberRepository) {
 		userId = user.getUserId();
-		username = user.getEmail();
 		password = user.getSha256Password();
 
+		username = user.getEmail();
 		if (username == null || username.isEmpty()) {
 			UserPhoneNumber number = userPhoneNumberRepository.findByUserAndPrimary(user, 1);
 			username = number.getPhoneNumber();
