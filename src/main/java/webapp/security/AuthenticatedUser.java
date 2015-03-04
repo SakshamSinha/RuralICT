@@ -1,12 +1,16 @@
 package webapp.security;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import webapp.model.entities.Organization;
+import webapp.model.entities.OrganizationMembership;
 import webapp.model.entities.User;
 import webapp.model.entities.UserPhoneNumber;
 import webapp.model.repositories.UserPhoneNumberRepository;
@@ -31,7 +35,17 @@ public class AuthenticatedUser implements UserDetails {
 				username = "@User" + user.getUserId(); // we should probably never come to this
 		}
 
-		authorities = AuthorityUtils.createAuthorityList("ROLE_USER");
+		Set<String> authoritiesSet = new HashSet<String>();
+		List<OrganizationMembership> memberships = user.getOrganizationMemberships();
+		for (OrganizationMembership membership : memberships) {
+			Organization organization = membership.getOrganization();
+			authoritiesSet.add("ROLE_MEMBER_" + organization.getAbbreviation());
+			if (membership.getIsPublisher())
+				authoritiesSet.add("ROLE_PUBLISHER_" + organization.getAbbreviation());
+			if (membership.getIsAdmin())
+				authoritiesSet.add("ROLE_ADMIN_" + organization.getAbbreviation());
+		}
+		authorities = AuthorityUtils.createAuthorityList(authoritiesSet.toArray(new String[authoritiesSet.size()]));
 	}
 
 	public int getUserId() {

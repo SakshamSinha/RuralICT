@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import webapp.model.entities.User;
 import webapp.model.entities.UserPhoneNumber;
@@ -25,6 +27,7 @@ import webapp.security.AuthenticatedUser;
 
 @Configuration
 @EnableWebMvcSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 
 	@Bean
@@ -38,6 +41,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 			UserPhoneNumberRepository userPhoneNumberRepository;
 
 			@Override
+			@Transactional
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 				User user = null;
 
