@@ -1,6 +1,7 @@
 package webapp.controllers.rest;
 
-import org.springframework.ui.Model;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class RESTController {
 
-	@RequestMapping("/")
-	public String test(Model model) {
-		model.addAttribute("displayString", "API test");
-		return "welcome";
+	@RequestMapping
+	public String test() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return "API test for " + auth.getName();
 	}
 
 }
