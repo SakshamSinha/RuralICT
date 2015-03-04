@@ -18,19 +18,19 @@ public class RESTController {
 	}
 
 	@RequestMapping(value="/{org}/member")
-	@PreAuthorize("hasRole('ROLE_MEMBER_'+#org)")
+	@PreAuthorize("hasRole('MEMBER'+#org)")
 	public String testPermissionsMember(@PathVariable String org) {
 		return "Authorized member!";
 	}
 
 	@RequestMapping(value="/{org}/publisher")
-	@PreAuthorize("hasRole('ROLE_PUBLISHER_'+#org)")
+	@PreAuthorize("hasRole('PUBLISHER'+#org)")
 	public String testPermissionsPublisher(@PathVariable String org) {
 		return "Authorized publisher!";
 	}
 
 	@RequestMapping(value="/{org}/admin")
-	@PreAuthorize("hasRole('ROLE_ADMIN_'+#org)")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String testPermissionsAdmin(@PathVariable String org) {
 		return "Authorized admin!";
 	}
