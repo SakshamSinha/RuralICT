@@ -1,7 +1,13 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -80,6 +86,9 @@ public class BroadcastDefaultSetting implements Serializable {
 		this.askResponse = askResponse ? 1 : 0;
 	}
 
+	@JsonProperty(value="organizationId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -88,6 +97,9 @@ public class BroadcastDefaultSetting implements Serializable {
 		this.organization = organization;
 	}
 
+	@JsonProperty(value="groupId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="groupId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Group getGroup() {
 		return this.group;
 	}

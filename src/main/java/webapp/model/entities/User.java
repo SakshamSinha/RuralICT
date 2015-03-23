@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import webapp.model.entities.broadcast.Broadcast;
 import webapp.model.entities.message.Message;
 
@@ -40,27 +42,33 @@ public class User implements Serializable {
 	private String webLocale;
 
 	//bi-directional many-to-one association to Broadcast
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="publisher")
+	@JsonIgnore
 	private List<Broadcast> broadcasts;
 
 	//bi-directional many-to-one association to BroadcastRecipient
 	@OneToMany(mappedBy="user")
+	@JsonIgnore
 	private List<BroadcastRecipient> broadcastRecipients;
 
 	//bi-directional many-to-one association to GroupMembership
 	@OneToMany(mappedBy="user")
+	@JsonIgnore
 	private List<GroupMembership> groupMemberships;
 
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="user")
+	@JsonIgnore
 	private List<Message> messages;
 
 	//bi-directional many-to-one association to OrganizationMembership
 	@OneToMany(mappedBy="user")
+	@JsonIgnore
 	private List<OrganizationMembership> organizationMemberships;
 
 	//bi-directional many-to-one association to UserPhoneNumber
 	@OneToMany(mappedBy="user")
+	@JsonIgnore
 	private List<UserPhoneNumber> userPhoneNumbers;
 
 	public User() {
@@ -140,14 +148,14 @@ public class User implements Serializable {
 
 	public Broadcast addBroadcast(Broadcast broadcast) {
 		getBroadcasts().add(broadcast);
-		broadcast.setUser(this);
+		broadcast.setPublisher(this);
 
 		return broadcast;
 	}
 
 	public Broadcast removeBroadcast(Broadcast broadcast) {
 		getBroadcasts().remove(broadcast);
-		broadcast.setUser(null);
+		broadcast.setPublisher(null);
 
 		return broadcast;
 	}

@@ -5,6 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import webapp.model.entities.InboundCall;
 import webapp.model.entities.Order;
 import webapp.model.entities.User;
@@ -37,6 +42,9 @@ public class VoiceMessage extends Message {
 		this.inboundCall = inboundCall;
 	}
 
+	@JsonProperty(value="voiceId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="voiceId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Voice getVoice() {
 		return this.voice;
 	}
@@ -45,6 +53,9 @@ public class VoiceMessage extends Message {
 		this.voice = voice;
 	}
 
+	@JsonProperty(value="inboundCallId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="inboundCallId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public InboundCall getInboundCall() {
 		return this.inboundCall;
 	}

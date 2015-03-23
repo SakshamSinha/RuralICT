@@ -1,12 +1,25 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import webapp.model.entities.broadcast.Broadcast;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -78,18 +91,22 @@ public class Organization implements Serializable {
 
 	//bi-directional many-to-one association to Broadcast
 	@OneToMany(mappedBy="organization")
+	@JsonIgnore
 	private List<Broadcast> broadcasts;
 
 	//bi-directional many-to-one association to BroadcastDefaultSetting
 	@OneToMany(mappedBy="organization")
+	@JsonIgnore
 	private List<BroadcastDefaultSetting> broadcastDefaultSettings;
 
 	//bi-directional many-to-one association to Group
 	@OneToMany(mappedBy="organization")
+	@JsonIgnore
 	private List<Group> groups;
 
 	//bi-directional many-to-one association to InboundCall
 	@OneToMany(mappedBy="organization")
+	@JsonIgnore
 	private List<InboundCall> inboundCalls;
 
 	//bi-directional many-to-one association to Organization
@@ -99,26 +116,32 @@ public class Organization implements Serializable {
 
 	//bi-directional many-to-one association to Organization
 	@OneToMany(mappedBy="parentOrganization")
+	@JsonIgnore
 	private List<Organization> subOrganizations;
 
 	//bi-directional many-to-one association to OrganizationMembership
 	@OneToMany(mappedBy="organization")
+	@JsonIgnore
 	private List<OrganizationMembership> organizationMemberships;
 
 	//bi-directional many-to-one association to PresetQuantity
 	@OneToMany(mappedBy="organization")
+	@JsonIgnore
 	private List<PresetQuantity> presetQuantities;
 
 	//bi-directional many-to-one association to Product
 	@OneToMany(mappedBy="organization")
+	@JsonIgnore
 	private List<Product> products;
 
 	//bi-directional many-to-one association to ProductType
 	@OneToMany(mappedBy="organization")
+	@JsonIgnore
 	private List<ProductType> productTypes;
 
 	//bi-directional many-to-one association to WelcomeMessage
 	@OneToMany(mappedBy="organization")
+	@JsonIgnore
 	private List<WelcomeMessage> welcomeMessages;
 
 	public Organization() {
@@ -386,6 +409,9 @@ public class Organization implements Serializable {
 		return inboundCall;
 	}
 
+	@JsonProperty(value="parentOrganizationId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getParentOrganization() {
 		return this.parentOrganization;
 	}

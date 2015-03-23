@@ -1,7 +1,13 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -44,6 +50,9 @@ public class GroupMembership implements Serializable {
 		this.groupMembershipId = groupMembershipId;
 	}
 
+	@JsonProperty(value="groupId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="groupId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Group getGroup() {
 		return this.group;
 	}
@@ -52,6 +61,9 @@ public class GroupMembership implements Serializable {
 		this.group = group;
 	}
 
+	@JsonProperty(value="userId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public User getUser() {
 		return this.user;
 	}

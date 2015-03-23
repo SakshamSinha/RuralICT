@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import webapp.model.entities.broadcast.Broadcast;
 
 import java.util.List;
@@ -35,6 +41,7 @@ public class BroadcastRecipient implements Serializable {
 
 	//bi-directional many-to-one association to OutboundCall
 	@OneToMany(mappedBy="broadcastRecipient")
+	@JsonIgnore
 	private List<OutboundCall> outboundCalls;
 
 	public BroadcastRecipient() {
@@ -53,6 +60,9 @@ public class BroadcastRecipient implements Serializable {
 		this.broadcastRecipientId = broadcastRecipientId;
 	}
 
+	@JsonProperty(value="broadcastId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Broadcast getBroadcast() {
 		return this.broadcast;
 	}
@@ -61,6 +71,9 @@ public class BroadcastRecipient implements Serializable {
 		this.broadcast = broadcast;
 	}
 
+	@JsonProperty(value="userId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public User getUser() {
 		return this.user;
 	}

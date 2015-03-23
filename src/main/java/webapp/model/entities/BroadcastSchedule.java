@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import webapp.model.entities.broadcast.Broadcast;
 
 import java.sql.Timestamp;
@@ -38,6 +44,7 @@ public class BroadcastSchedule implements Serializable {
 
 	//bi-directional many-to-one association to OutboundCall
 	@OneToMany(mappedBy="broadcastSchedule")
+	@JsonIgnore
 	private List<OutboundCall> outboundCalls;
 
 	public BroadcastSchedule() {
@@ -81,6 +88,9 @@ public class BroadcastSchedule implements Serializable {
 		this.time = time;
 	}
 
+	@JsonProperty(value="broadcastId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Broadcast getBroadcast() {
 		return this.broadcast;
 	}

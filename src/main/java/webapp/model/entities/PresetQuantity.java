@@ -1,7 +1,13 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
@@ -55,6 +61,9 @@ public class PresetQuantity implements Serializable {
 		this.quantity = quantity;
 	}
 
+	@JsonProperty(value="organizationId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -63,6 +72,9 @@ public class PresetQuantity implements Serializable {
 		this.organization = organization;
 	}
 
+	@JsonProperty(value="productTypeId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="productTypeId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public ProductType getProductType() {
 		return this.productType;
 	}

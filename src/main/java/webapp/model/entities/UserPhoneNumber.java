@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 /**
  * The persistent class for the user_phone_number database table.
@@ -50,6 +55,9 @@ public class UserPhoneNumber implements Serializable {
 		this.primary = primary ? 1 : 0;
 	}
 
+	@JsonProperty(value="userId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public User getUser() {
 		return this.user;
 	}

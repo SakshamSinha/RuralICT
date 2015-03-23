@@ -18,6 +18,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import webapp.model.entities.BroadcastRecipient;
 import webapp.model.entities.BroadcastSchedule;
 import webapp.model.entities.Group;
@@ -75,28 +81,31 @@ public abstract class Broadcast implements Serializable {
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="publisher_id")
-	private User user;
+	private User publisher;
 
 	//bi-directional many-to-one association to BroadcastRecipient
 	@OneToMany(mappedBy="broadcast")
+	@JsonIgnore
 	private List<BroadcastRecipient> broadcastRecipients;
 
 	//bi-directional many-to-one association to BroadcastSchedule
 	@OneToMany(mappedBy="broadcast")
+	@JsonIgnore
 	private List<BroadcastSchedule> broadcastSchedules;
 
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="broadcast")
+	@JsonIgnore
 	private List<Message> messages;
 
 	public Broadcast() {
 	}
 
-	public Broadcast(Organization organization, Group group, User user, String format, String mode, boolean askFeedback,
-			boolean askOrder, boolean askResponse, boolean appOnly) {
+	public Broadcast(Organization organization, Group group, User publisher, String format, String mode,
+			boolean askFeedback, boolean askOrder, boolean askResponse, boolean appOnly) {
 		this.organization = organization;
 		this.group = group;
-		this.user = user;
+		this.publisher = publisher;
 		this.format = format;
 		this.mode = mode;
 		this.askFeedback = askFeedback ? 1 : 0;
@@ -169,6 +178,9 @@ public abstract class Broadcast implements Serializable {
 		this.mode = mode;
 	}
 
+	@JsonProperty(value="organizationId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -177,6 +189,9 @@ public abstract class Broadcast implements Serializable {
 		this.organization = organization;
 	}
 
+	@JsonProperty(value="groupId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="groupId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Group getGroup() {
 		return this.group;
 	}
@@ -185,12 +200,15 @@ public abstract class Broadcast implements Serializable {
 		this.group = group;
 	}
 
-	public User getUser() {
-		return this.user;
+	@JsonProperty(value="publisherId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
+	@JsonIdentityReference(alwaysAsId=true)
+	public User getPublisher() {
+		return this.publisher;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setPublisher(User publisher) {
+		this.publisher = publisher;
 	}
 
 	public List<BroadcastRecipient> getBroadcastRecipients() {

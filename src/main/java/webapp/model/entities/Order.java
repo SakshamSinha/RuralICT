@@ -1,7 +1,11 @@
 package webapp.model.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -30,6 +34,7 @@ public class Order implements Serializable {
 
 	//bi-directional many-to-one association to OrderItem
 	@OneToMany(mappedBy="order")
+	@JsonIgnore
 	private List<OrderItem> orderItems;
 
 	public Order() {

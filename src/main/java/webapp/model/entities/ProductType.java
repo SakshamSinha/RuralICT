@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.List;
 
 
@@ -30,10 +36,12 @@ public class ProductType implements Serializable {
 
 	//bi-directional many-to-one association to PresetQuantity
 	@OneToMany(mappedBy="productType")
+	@JsonIgnore
 	private List<PresetQuantity> presetQuantities;
 
 	//bi-directional many-to-one association to Product
 	@OneToMany(mappedBy="productType")
+	@JsonIgnore
 	private List<Product> products;
 
 	//bi-directional many-to-one association to Organization
@@ -48,6 +56,7 @@ public class ProductType implements Serializable {
 
 	//bi-directional many-to-one association to ProductType
 	@OneToMany(mappedBy="parentProductType")
+	@JsonIgnore
 	private List<ProductType> subProductTypes;
 
 	public ProductType() {
@@ -139,6 +148,9 @@ public class ProductType implements Serializable {
 		return product;
 	}
 
+	@JsonProperty(value="organizationId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -147,6 +159,9 @@ public class ProductType implements Serializable {
 		this.organization = organization;
 	}
 
+	@JsonProperty(value="parentProductTypeId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="productTypeId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public ProductType getParentProductType() {
 		return this.parentProductType;
 	}

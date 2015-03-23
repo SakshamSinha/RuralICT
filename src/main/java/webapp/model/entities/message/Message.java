@@ -15,6 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import webapp.model.entities.Order;
 import webapp.model.entities.User;
 import webapp.model.entities.broadcast.Broadcast;
@@ -125,6 +130,9 @@ public abstract class Message implements Serializable {
 		this.type = type;
 	}
 
+	@JsonProperty(value="userId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public User getUser() {
 		return this.user;
 	}
@@ -133,6 +141,9 @@ public abstract class Message implements Serializable {
 		this.user = user;
 	}
 
+	@JsonProperty(value="broadcastId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Broadcast getBroadcast() {
 		return this.broadcast;
 	}
@@ -141,6 +152,9 @@ public abstract class Message implements Serializable {
 		this.broadcast = broadcast;
 	}
 
+	@JsonProperty(value="orderId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="orderId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public Order getOrder() {
 		return this.order;
 	}

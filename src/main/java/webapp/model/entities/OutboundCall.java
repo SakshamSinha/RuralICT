@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 /**
  * The persistent class for the outbound_call database table.
@@ -81,6 +86,9 @@ public class OutboundCall implements Serializable {
 		this.statusDetail = statusDetail;
 	}
 
+	@JsonProperty(value="broadcastScheduleId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastScheduleId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public BroadcastSchedule getBroadcastSchedule() {
 		return this.broadcastSchedule;
 	}
@@ -89,6 +97,9 @@ public class OutboundCall implements Serializable {
 		this.broadcastSchedule = broadcastSchedule;
 	}
 
+	@JsonProperty(value="broadcastRecipientId")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastRecipientId")
+	@JsonIdentityReference(alwaysAsId=true)
 	public BroadcastRecipient getBroadcastRecipient() {
 		return this.broadcastRecipient;
 	}
