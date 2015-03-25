@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import webapp.model.entities.Organization;
 import webapp.model.repositories.OrganizationRepository;
 
+// TODO: Move all the business logic and interaction with data layer to the service layer!
 @RestController
 @RequestMapping("/api")
 public class OrganizationController {

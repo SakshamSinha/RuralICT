@@ -9,4 +9,5 @@ public class RuralIvrsApplication {
     public static void main(String[] args) {
         SpringApplication.run(RuralIvrsApplication.class, args);
     }
+
 }
