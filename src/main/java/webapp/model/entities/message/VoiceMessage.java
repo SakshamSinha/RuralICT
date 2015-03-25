@@ -5,19 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import webapp.model.entities.InboundCall;
 import webapp.model.entities.Order;
 import webapp.model.entities.User;
 import webapp.model.entities.Voice;
 import webapp.model.entities.broadcast.Broadcast;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @DiscriminatorValue("voice")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="messageId")
 public class VoiceMessage extends Message {
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +44,6 @@ public class VoiceMessage extends Message {
 	}
 
 	@JsonProperty(value="voiceId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="voiceId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Voice getVoice() {
 		return this.voice;
@@ -54,7 +54,6 @@ public class VoiceMessage extends Message {
 	}
 
 	@JsonProperty(value="inboundCallId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="inboundCallId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public InboundCall getInboundCall() {
 		return this.inboundCall;

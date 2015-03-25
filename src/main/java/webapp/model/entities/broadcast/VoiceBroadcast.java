@@ -6,18 +6,19 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import webapp.model.entities.Group;
 import webapp.model.entities.Organization;
 import webapp.model.entities.User;
 import webapp.model.entities.Voice;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @DiscriminatorValue("voice")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastId")
 public class VoiceBroadcast extends Broadcast {
 	private static final long serialVersionUID = 1L;
 
@@ -49,7 +50,6 @@ public class VoiceBroadcast extends Broadcast {
 	}
 
 	@JsonProperty(value="voiceId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="voiceId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Voice getVoice() {
 		return this.voice;

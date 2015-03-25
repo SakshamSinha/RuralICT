@@ -31,8 +31,9 @@ import webapp.model.entities.broadcast.Broadcast;
  */
 @Entity
 @Table(name="message")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
-@DiscriminatorColumn(name="format", discriminatorType=DiscriminatorType.STRING)  
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="format", discriminatorType=DiscriminatorType.STRING)
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="messageId")
 public abstract class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -131,7 +132,6 @@ public abstract class Message implements Serializable {
 	}
 
 	@JsonProperty(value="userId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public User getUser() {
 		return this.user;
@@ -142,7 +142,6 @@ public abstract class Message implements Serializable {
 	}
 
 	@JsonProperty(value="broadcastId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Broadcast getBroadcast() {
 		return this.broadcast;
@@ -153,7 +152,6 @@ public abstract class Message implements Serializable {
 	}
 
 	@JsonProperty(value="orderId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="orderId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Order getOrder() {
 		return this.order;

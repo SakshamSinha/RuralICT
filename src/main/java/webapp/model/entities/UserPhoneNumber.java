@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name="user_phone_number")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="phoneNumber")
 public class UserPhoneNumber implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -56,7 +57,6 @@ public class UserPhoneNumber implements Serializable {
 	}
 
 	@JsonProperty(value="userId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public User getUser() {
 		return this.user;

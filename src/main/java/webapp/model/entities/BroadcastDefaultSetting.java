@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name="broadcast_default_settings")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastDefaultSettingsId")
 public class BroadcastDefaultSetting implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -87,7 +88,6 @@ public class BroadcastDefaultSetting implements Serializable {
 	}
 
 	@JsonProperty(value="organizationId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
@@ -98,7 +98,6 @@ public class BroadcastDefaultSetting implements Serializable {
 	}
 
 	@JsonProperty(value="groupId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="groupId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Group getGroup() {
 		return this.group;

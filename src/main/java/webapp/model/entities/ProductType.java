@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="product_type")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="productTypeId")
 public class ProductType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -149,7 +150,6 @@ public class ProductType implements Serializable {
 	}
 
 	@JsonProperty(value="organizationId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
@@ -160,7 +160,6 @@ public class ProductType implements Serializable {
 	}
 
 	@JsonProperty(value="parentProductTypeId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="productTypeId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public ProductType getParentProductType() {
 		return this.parentProductType;

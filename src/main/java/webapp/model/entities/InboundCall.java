@@ -29,6 +29,7 @@ import webapp.model.entities.message.VoiceMessage;
  */
 @Entity
 @Table(name="inbound_call")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="inboundCallId")
 public class InboundCall implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -97,7 +98,6 @@ public class InboundCall implements Serializable {
 	}
 
 	@JsonProperty(value="organizationId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;

@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="order")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="orderId")
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -3,12 +3,16 @@ package webapp.model.entities.broadcast;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import webapp.model.entities.Group;
 import webapp.model.entities.Organization;
 import webapp.model.entities.User;
 
 @Entity
 @DiscriminatorValue("video")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastId")
 public class VideoBroadcast extends Broadcast {
 	private static final long serialVersionUID = 1L;
 

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name="group_membership")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="groupMembershipId")
 public class GroupMembership implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -51,7 +52,6 @@ public class GroupMembership implements Serializable {
 	}
 
 	@JsonProperty(value="groupId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="groupId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Group getGroup() {
 		return this.group;
@@ -62,7 +62,6 @@ public class GroupMembership implements Serializable {
 	}
 
 	@JsonProperty(value="userId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public User getUser() {
 		return this.user;

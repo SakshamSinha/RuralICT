@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name="organization_membership")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationMembershipId")
 public class OrganizationMembership implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -82,7 +83,6 @@ public class OrganizationMembership implements Serializable {
 	}
 
 	@JsonProperty(value="userId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public User getUser() {
 		return this.user;
@@ -93,7 +93,6 @@ public class OrganizationMembership implements Serializable {
 	}
 
 	@JsonProperty(value="organizationId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;

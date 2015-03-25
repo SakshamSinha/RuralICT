@@ -22,6 +22,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="broadcast_schedule")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastScheduleId")
 public class BroadcastSchedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -89,7 +90,6 @@ public class BroadcastSchedule implements Serializable {
 	}
 
 	@JsonProperty(value="broadcastId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Broadcast getBroadcast() {
 		return this.broadcast;

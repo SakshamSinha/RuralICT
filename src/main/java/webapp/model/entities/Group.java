@@ -21,6 +21,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="group")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="groupId")
 public class Group implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -131,7 +132,6 @@ public class Group implements Serializable {
 	}
 
 	@JsonProperty(value="organizationId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
@@ -142,7 +142,6 @@ public class Group implements Serializable {
 	}
 
 	@JsonProperty(value="parentGroupId")
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="groupId")
 	@JsonIdentityReference(alwaysAsId=true)
 	public Group getParentGroup() {
 		return this.parentGroup;
