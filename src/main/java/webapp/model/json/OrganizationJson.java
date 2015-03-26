@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import webapp.model.entities.Organization;
 
-public class OrganizationDetached implements Serializable {
+public class OrganizationJson implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer organizationId;
@@ -29,10 +29,10 @@ public class OrganizationDetached implements Serializable {
 	private String name;
 	private Integer parentOrganizationId;
 
-	public OrganizationDetached() {
+	public OrganizationJson() {
 	}
 
-	public OrganizationDetached(Organization org) {
+	public OrganizationJson(Organization org) {
 		setOrganizationId(org.getOrganizationId());
 		setAbbreviation(org.getAbbreviation());
 		// TODO etc. write a script to generate these..
