@@ -1,11 +1,9 @@
 package webapp.model.json;
 
-import java.io.Serializable;
-
 import webapp.model.entities.Organization;
 import webapp.model.repositories.OrganizationRepository;
 
-public class OrganizationJson implements Serializable {
+public class OrganizationJson implements EntityJson<Organization, OrganizationRepository> {
 	private static final long serialVersionUID = 1L;
 
 	private Integer organizationId;
@@ -61,9 +59,10 @@ public class OrganizationJson implements Serializable {
 	}
 
 	/**
-	 * Update an entity from a JSON object
+	 * Update an entity from this JSON object
 	 */
-	public void updateOrganization(Organization org, OrganizationRepository repo) {
+	@Override
+	public void updateEntity(Organization org, OrganizationRepository repo) {
 		if (organizationId != null) org.setOrganizationId(organizationId);
 		if (abbreviation != null) org.setAbbreviation(abbreviation);
 		if (address != null) org.setAddress(address);

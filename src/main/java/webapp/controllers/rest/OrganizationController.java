@@ -1,10 +1,9 @@
 package webapp.controllers.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,53 +12,50 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import webapp.model.entities.Organization;
+import webapp.model.json.OrganizationJson;
 import webapp.model.repositories.OrganizationRepository;
+import webapp.service.OrganizationService;
 
-// TODO: Move all the business logic and interaction with data layer to the service layer!
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/organizations")
 public class OrganizationController {
 
 	@Autowired
-	OrganizationRepository organizationRepo;
+	OrganizationService service;
+
+	@Autowired
+	OrganizationRepository repository;
 
 	@RequestMapping(method=RequestMethod.GET)
-	public List<Organization> getAllOrganizations() {
-		return organizationRepo.findAll();
+	public List<OrganizationJson> allOrganizations() {
+		List<OrganizationJson> orgs = new ArrayList<OrganizationJson>();
+		for (Organization org : service.getAllOrganizations()) {
+			orgs.add(new OrganizationJson(org));
+		}
+		return orgs;
 	}
 
 	@RequestMapping(value="/{orgId}", method=RequestMethod.GET)
-	public ResponseEntity<Organization> getOrganization(@PathVariable int orgId) {
-		Organization currentOrg = organizationRepo.findOne(orgId);
-		if (currentOrg == null)
-			return new ResponseEntity<Organization>(HttpStatus.NOT_FOUND);
-
-		return new ResponseEntity<Organization>(currentOrg, HttpStatus.OK);
+	public OrganizationJson showOrganization(@PathVariable int orgId) {
+		return new OrganizationJson(service.getOrganizationById(orgId));
 	}
 
 	@RequestMapping(value="/{orgId}", method=RequestMethod.PUT)
 	@PreAuthorize("hasRole('ADMIN'+#orgId)")
-	public ResponseEntity<Organization> updateOrganization(@PathVariable int orgId, @RequestBody Organization updatedOrg) {
-		Organization currentOrg = organizationRepo.findOne(orgId);
-		if (currentOrg == null)
-			return new ResponseEntity<Organization>(HttpStatus.NOT_FOUND);
-		if (currentOrg.getOrganizationId() != updatedOrg.getOrganizationId())
-			return new ResponseEntity<Organization>(HttpStatus.CONFLICT);
-
-		return new ResponseEntity<Organization>(organizationRepo.save(updatedOrg), HttpStatus.OK);
+	public OrganizationJson updateOrganization(@PathVariable int orgId, @RequestBody OrganizationJson updated) {
+		Organization currentOrg = service.getOrganizationById(orgId);
+		updated.updateEntity(currentOrg, repository);
+		service.saveOrganization(currentOrg);
+		return new OrganizationJson(currentOrg);
 	}
 
 	@RequestMapping(value="/{orgId}", method=RequestMethod.POST)
 	@PreAuthorize("hasRole('ADMIN'+#orgId)")
-	public ResponseEntity<Organization> addChildOrganization(@PathVariable int orgId, @RequestBody Organization childOrg) {
-		Organization currentOrg = organizationRepo.findOne(orgId);
-		if (currentOrg == null)
-			return new ResponseEntity<Organization>(HttpStatus.NOT_FOUND);
-		if (organizationRepo.findOne(childOrg.getOrganizationId()) != null)
-			return new ResponseEntity<Organization>(HttpStatus.CONFLICT);
-
-		childOrg.setParentOrganization(currentOrg);
-		return new ResponseEntity<Organization>(organizationRepo.save(childOrg), HttpStatus.OK);
+	public OrganizationJson addOrganization(@PathVariable int orgId, @RequestBody OrganizationJson childOrg) {
+		Organization newOrg = new Organization();
+		childOrg.updateEntity(newOrg, repository);
+		service.addOrganization(newOrg, orgId);
+		return new OrganizationJson(newOrg);
 	}
 
 }

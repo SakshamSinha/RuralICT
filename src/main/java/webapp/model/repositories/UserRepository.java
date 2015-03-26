@@ -9,4 +9,5 @@ import webapp.model.entities.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 	List<User> findByEmail(String email);
+
 }

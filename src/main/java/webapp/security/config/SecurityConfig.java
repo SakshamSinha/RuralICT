@@ -114,9 +114,9 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 		protected void configure(HttpSecurity http) throws Exception {
 			http
 				.csrf()
-					.disable() // XXX: This disables CSRF protection for everything, including the web part!
-					           //      I couldn't figure out how to do it only for the REST part. If someone figures
-					           //      this out, please do it.  --Ankit
+					.disable() // This disables CSRF protection for everything, including the web part!
+					           // I couldn't figure out how to do it only for the REST part. If someone figures
+					           // this out, please do it.  --Ankit
 				.authorizeRequests()
 					.anyRequest().authenticated()
 					.and()
