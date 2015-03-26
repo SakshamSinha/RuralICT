@@ -11,11 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 
 /**
  * The persistent class for the welcome_message database table.
@@ -23,7 +18,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name="welcome_message")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="welcomeMessageId")
 public class WelcomeMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -69,8 +63,6 @@ public class WelcomeMessage implements Serializable {
 		this.locale = locale;
 	}
 
-	@JsonProperty(value="organizationId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -79,8 +71,6 @@ public class WelcomeMessage implements Serializable {
 		this.organization = organization;
 	}
 
-	@JsonProperty(value="voiceId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Voice getVoice() {
 		return this.voice;
 	}

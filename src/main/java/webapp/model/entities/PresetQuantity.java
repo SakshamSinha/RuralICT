@@ -4,11 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 
 /**
  * The persistent class for the preset_quantity database table.
@@ -16,7 +11,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name="preset_quantity")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="presetQuantityId")
 public class PresetQuantity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -62,8 +56,6 @@ public class PresetQuantity implements Serializable {
 		this.quantity = quantity;
 	}
 
-	@JsonProperty(value="organizationId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -72,8 +64,6 @@ public class PresetQuantity implements Serializable {
 		this.organization = organization;
 	}
 
-	@JsonProperty(value="productTypeId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public ProductType getProductType() {
 		return this.productType;
 	}

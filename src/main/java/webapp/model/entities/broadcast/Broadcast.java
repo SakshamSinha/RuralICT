@@ -18,12 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import webapp.model.entities.BroadcastRecipient;
 import webapp.model.entities.BroadcastSchedule;
 import webapp.model.entities.Group;
@@ -40,7 +34,6 @@ import webapp.model.entities.message.Message;
 @Table(name="broadcast")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="format", discriminatorType=DiscriminatorType.STRING)
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastId")
 public abstract class Broadcast implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -86,17 +79,14 @@ public abstract class Broadcast implements Serializable {
 
 	//bi-directional many-to-one association to BroadcastRecipient
 	@OneToMany(mappedBy="broadcast")
-	@JsonIgnore
 	private List<BroadcastRecipient> broadcastRecipients;
 
 	//bi-directional many-to-one association to BroadcastSchedule
 	@OneToMany(mappedBy="broadcast")
-	@JsonIgnore
 	private List<BroadcastSchedule> broadcastSchedules;
 
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="broadcast")
-	@JsonIgnore
 	private List<Message> messages;
 
 	public Broadcast() {
@@ -179,8 +169,6 @@ public abstract class Broadcast implements Serializable {
 		this.mode = mode;
 	}
 
-	@JsonProperty(value="organizationId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -189,8 +177,6 @@ public abstract class Broadcast implements Serializable {
 		this.organization = organization;
 	}
 
-	@JsonProperty(value="groupId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Group getGroup() {
 		return this.group;
 	}
@@ -199,8 +185,6 @@ public abstract class Broadcast implements Serializable {
 		this.group = group;
 	}
 
-	@JsonProperty(value="publisherId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public User getPublisher() {
 		return this.publisher;
 	}

@@ -4,16 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import webapp.model.entities.Group;
 import webapp.model.entities.Organization;
 import webapp.model.entities.User;
 
 @Entity
 @DiscriminatorValue("text")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastId")
 public class TextBroadcast extends Broadcast {
 	private static final long serialVersionUID = 1L;
 

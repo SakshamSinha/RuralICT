@@ -4,11 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 
 /**
  * The persistent class for the broadcast_default_settings database table.
@@ -16,7 +11,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name="broadcast_default_settings")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastDefaultSettingsId")
 public class BroadcastDefaultSetting implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -87,8 +81,6 @@ public class BroadcastDefaultSetting implements Serializable {
 		this.askResponse = askResponse ? 1 : 0;
 	}
 
-	@JsonProperty(value="organizationId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -97,8 +89,6 @@ public class BroadcastDefaultSetting implements Serializable {
 		this.organization = organization;
 	}
 
-	@JsonProperty(value="groupId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Group getGroup() {
 		return this.group;
 	}

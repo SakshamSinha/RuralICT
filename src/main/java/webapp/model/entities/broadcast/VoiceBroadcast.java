@@ -11,14 +11,9 @@ import webapp.model.entities.Organization;
 import webapp.model.entities.User;
 import webapp.model.entities.Voice;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @DiscriminatorValue("voice")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="broadcastId")
 public class VoiceBroadcast extends Broadcast {
 	private static final long serialVersionUID = 1L;
 
@@ -49,8 +44,6 @@ public class VoiceBroadcast extends Broadcast {
 		this.voiceBroadcastDraft = voiceBroadcastDraft ? 1 : 0;
 	}
 
-	@JsonProperty(value="voiceId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Voice getVoice() {
 		return this.voice;
 	}

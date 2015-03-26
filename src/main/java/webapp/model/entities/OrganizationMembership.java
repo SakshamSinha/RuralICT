@@ -11,11 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 
 /**
  * The persistent class for the organization_membership database table.
@@ -23,7 +18,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name="organization_membership")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="organizationMembershipId")
 public class OrganizationMembership implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -82,8 +76,6 @@ public class OrganizationMembership implements Serializable {
 		this.isPublisher = isPublisher ? 1 : 0;
 	}
 
-	@JsonProperty(value="userId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public User getUser() {
 		return this.user;
 	}
@@ -92,8 +84,6 @@ public class OrganizationMembership implements Serializable {
 		this.user = user;
 	}
 
-	@JsonProperty(value="organizationId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}

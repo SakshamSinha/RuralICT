@@ -4,11 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 
 /**
  * The persistent class for the group_membership database table.
@@ -16,7 +11,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name="group_membership")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="groupMembershipId")
 public class GroupMembership implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -51,8 +45,6 @@ public class GroupMembership implements Serializable {
 		this.groupMembershipId = groupMembershipId;
 	}
 
-	@JsonProperty(value="groupId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Group getGroup() {
 		return this.group;
 	}
@@ -61,8 +53,6 @@ public class GroupMembership implements Serializable {
 		this.group = group;
 	}
 
-	@JsonProperty(value="userId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public User getUser() {
 		return this.user;
 	}

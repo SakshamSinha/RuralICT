@@ -11,10 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import webapp.model.entities.broadcast.VoiceBroadcast;
 
 
@@ -24,7 +20,6 @@ import webapp.model.entities.broadcast.VoiceBroadcast;
  */
 @Entity
 @Table(name="voice")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="voiceId")
 public class Voice implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -40,12 +35,10 @@ public class Voice implements Serializable {
 
 	//bi-directional many-to-one association to Broadcast
 	@OneToMany(mappedBy="voice")
-	@JsonIgnore
 	private List<VoiceBroadcast> broadcasts;
 
 	//bi-directional many-to-one association to WelcomeMessage
 	@OneToMany(mappedBy="voice")
-	@JsonIgnore
 	private List<WelcomeMessage> welcomeMessages;
 
 	public Voice() {

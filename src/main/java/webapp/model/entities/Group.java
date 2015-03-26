@@ -4,12 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import webapp.model.entities.broadcast.Broadcast;
 
 import java.util.List;
@@ -21,7 +15,6 @@ import java.util.List;
  */
 @Entity
 @Table(name="group")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="groupId")
 public class Group implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -34,12 +27,10 @@ public class Group implements Serializable {
 
 	//bi-directional many-to-one association to Broadcast
 	@OneToMany(mappedBy="group")
-	@JsonIgnore
 	private List<Broadcast> broadcasts;
 
 	//bi-directional many-to-one association to BroadcastDefaultSetting
 	@OneToMany(mappedBy="group")
-	@JsonIgnore
 	private List<BroadcastDefaultSetting> broadcastDefaultSettings;
 
 	//bi-directional many-to-one association to Organization
@@ -54,12 +45,10 @@ public class Group implements Serializable {
 
 	//bi-directional many-to-one association to Group
 	@OneToMany(mappedBy="parentGroup")
-	@JsonIgnore
 	private List<Group> subGroups;
 
 	//bi-directional many-to-one association to GroupMembership
 	@OneToMany(mappedBy="group")
-	@JsonIgnore
 	private List<GroupMembership> groupMemberships;
 
 	public Group() {
@@ -131,8 +120,6 @@ public class Group implements Serializable {
 		return broadcastDefaultSetting;
 	}
 
-	@JsonProperty(value="organizationId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -141,8 +128,6 @@ public class Group implements Serializable {
 		this.organization = organization;
 	}
 
-	@JsonProperty(value="parentGroupId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Group getParentGroup() {
 		return this.parentGroup;
 	}

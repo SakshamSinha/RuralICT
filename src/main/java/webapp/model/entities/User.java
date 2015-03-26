@@ -4,10 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import webapp.model.entities.broadcast.Broadcast;
 import webapp.model.entities.message.Message;
 
@@ -20,7 +16,6 @@ import java.util.List;
  */
 @Entity
 @Table(name="user")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="userId")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -46,32 +41,26 @@ public class User implements Serializable {
 
 	//bi-directional many-to-one association to Broadcast
 	@OneToMany(mappedBy="publisher")
-	@JsonIgnore
 	private List<Broadcast> broadcasts;
 
 	//bi-directional many-to-one association to BroadcastRecipient
 	@OneToMany(mappedBy="user")
-	@JsonIgnore
 	private List<BroadcastRecipient> broadcastRecipients;
 
 	//bi-directional many-to-one association to GroupMembership
 	@OneToMany(mappedBy="user")
-	@JsonIgnore
 	private List<GroupMembership> groupMemberships;
 
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="user")
-	@JsonIgnore
 	private List<Message> messages;
 
 	//bi-directional many-to-one association to OrganizationMembership
 	@OneToMany(mappedBy="user")
-	@JsonIgnore
 	private List<OrganizationMembership> organizationMemberships;
 
 	//bi-directional many-to-one association to UserPhoneNumber
 	@OneToMany(mappedBy="user")
-	@JsonIgnore
 	private List<UserPhoneNumber> userPhoneNumbers;
 
 	public User() {

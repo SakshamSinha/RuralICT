@@ -14,12 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import webapp.model.entities.message.VoiceMessage;
 
 
@@ -29,7 +23,6 @@ import webapp.model.entities.message.VoiceMessage;
  */
 @Entity
 @Table(name="inbound_call")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="inboundCallId")
 public class InboundCall implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -52,7 +45,6 @@ public class InboundCall implements Serializable {
 
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="inboundCall")
-	@JsonIgnore
 	private List<VoiceMessage> messages;
 
 	public InboundCall() {
@@ -97,8 +89,6 @@ public class InboundCall implements Serializable {
 		this.time = time;
 	}
 
-	@JsonProperty(value="organizationId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}

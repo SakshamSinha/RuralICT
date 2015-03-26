@@ -4,12 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import java.util.List;
 
 
@@ -19,7 +13,6 @@ import java.util.List;
  */
 @Entity
 @Table(name="product")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="productId")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +35,6 @@ public class Product implements Serializable {
 
 	//bi-directional many-to-one association to OrderItem
 	@OneToMany(mappedBy="product")
-	@JsonIgnore
 	private List<OrderItem> orderItems;
 
 	//bi-directional many-to-one association to Organization
@@ -140,8 +132,6 @@ public class Product implements Serializable {
 		return orderItem;
 	}
 
-	@JsonProperty(value="organizationId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public Organization getOrganization() {
 		return this.organization;
 	}
@@ -150,8 +140,6 @@ public class Product implements Serializable {
 		this.organization = organization;
 	}
 
-	@JsonProperty(value="productTypeId")
-	@JsonIdentityReference(alwaysAsId=true)
 	public ProductType getProductType() {
 		return this.productType;
 	}
