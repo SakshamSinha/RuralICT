@@ -55,7 +55,8 @@ public class OrganizationJson implements EntityJson<Organization, OrganizationRe
 		setIncomingSmsCode(org.getIncomingSmsCode());
 		setIvrNumber(org.getIvrNumber());
 		setName(org.getName());
-		setParentOrganizationId(org.getParentOrganization().getOrganizationId());
+		if (org.getParentOrganization() != null)
+			setParentOrganizationId(org.getParentOrganization().getOrganizationId());
 	}
 
 	/**
