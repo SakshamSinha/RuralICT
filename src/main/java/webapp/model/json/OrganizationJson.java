@@ -3,6 +3,7 @@ package webapp.model.json;
 import java.io.Serializable;
 
 import webapp.model.entities.Organization;
+import webapp.model.repositories.OrganizationRepository;
 
 public class OrganizationJson implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -32,16 +33,58 @@ public class OrganizationJson implements Serializable {
 	public OrganizationJson() {
 	}
 
+	/**
+	 * Construct a JSON object from an entity
+	 */
 	public OrganizationJson(Organization org) {
 		setOrganizationId(org.getOrganizationId());
 		setAbbreviation(org.getAbbreviation());
-		// TODO etc. write a script to generate these..
+		setAddress(org.getAddress());
+		setContact(org.getContact());
+		setDefaultCallLocale(org.getDefaultCallLocale());
+		setDefaultWebLocale(org.getDefaultWebLocale());
+		setEnableBilling(org.getEnableBilling());
+		setEnableBroadcasts(org.getEnableBroadcasts());
+		setEnableFeedbacks(org.getEnableFeedbacks());
+		setEnableOrderCancellation(org.getEnableOrderCancellation());
+		setEnableResponses(org.getEnableResponses());
+		setEnableSms(org.getEnableSms());
+		setInboundCallAskFeedback(org.getInboundCallAskFeedback());
+		setInboundCallAskOrder(org.getInboundCallAskOrder());
+		setInboundCallAskResponse(org.getInboundCallAskResponse());
+		setInboundCallGroupwiseLatestBroadcast(org.getInboundCallGroupwiseLatestBroadcast());
+		setInboundCallPlayLatestBroadcast(org.getInboundCallPlayLatestBroadcast());
+		setIncomingSmsCode(org.getIncomingSmsCode());
+		setIvrNumber(org.getIvrNumber());
+		setName(org.getName());
+		setParentOrganizationId(org.getParentOrganization().getOrganizationId());
 	}
 
-	public void updateOrganization(Organization org) {
+	/**
+	 * Update an entity from a JSON object
+	 */
+	public void updateOrganization(Organization org, OrganizationRepository repo) {
 		if (organizationId != null) org.setOrganizationId(organizationId);
 		if (abbreviation != null) org.setAbbreviation(abbreviation);
-		// TODO etc.
+		if (address != null) org.setAddress(address);
+		if (contact != null) org.setContact(contact);
+		if (defaultCallLocale != null) org.setDefaultCallLocale(defaultCallLocale);
+		if (defaultWebLocale != null) org.setDefaultWebLocale(defaultWebLocale);
+		if (enableBilling != null) org.setEnableBilling(enableBilling);
+		if (enableBroadcasts != null) org.setEnableBroadcasts(enableBroadcasts);
+		if (enableFeedbacks != null) org.setEnableFeedbacks(enableFeedbacks);
+		if (enableOrderCancellation != null) org.setEnableOrderCancellation(enableOrderCancellation);
+		if (enableResponses != null) org.setEnableResponses(enableResponses);
+		if (enableSms != null) org.setEnableSms(enableSms);
+		if (inboundCallAskFeedback != null) org.setInboundCallAskFeedback(inboundCallAskFeedback);
+		if (inboundCallAskOrder != null) org.setInboundCallAskOrder(inboundCallAskOrder);
+		if (inboundCallAskResponse != null) org.setInboundCallAskResponse(inboundCallAskResponse);
+		if (inboundCallGroupwiseLatestBroadcast != null) org.setInboundCallGroupwiseLatestBroadcast(inboundCallGroupwiseLatestBroadcast);
+		if (inboundCallPlayLatestBroadcast != null) org.setInboundCallPlayLatestBroadcast(inboundCallPlayLatestBroadcast);
+		if (incomingSmsCode != null) org.setIncomingSmsCode(incomingSmsCode);
+		if (ivrNumber != null) org.setIvrNumber(ivrNumber);
+		if (name != null) org.setName(name);
+		if (parentOrganizationId != null) org.setParentOrganization(repo.findOne(parentOrganizationId));
 	}
 
 	public Integer getOrganizationId() {
