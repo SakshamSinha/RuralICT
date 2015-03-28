@@ -2,8 +2,8 @@ package webapp.util;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import webapp.model.entities.User;
-import webapp.model.repositories.UserRepository;
+import webapp.entities.User;
+import webapp.repositories.UserRepository;
 import webapp.security.AuthenticatedUser;
 
 /**

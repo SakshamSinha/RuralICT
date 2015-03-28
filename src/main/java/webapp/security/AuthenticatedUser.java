@@ -9,11 +9,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import webapp.model.entities.Organization;
-import webapp.model.entities.OrganizationMembership;
-import webapp.model.entities.User;
-import webapp.model.entities.UserPhoneNumber;
-import webapp.model.repositories.UserPhoneNumberRepository;
+import webapp.entities.Organization;
+import webapp.entities.OrganizationMembership;
+import webapp.entities.User;
+import webapp.entities.UserPhoneNumber;
+import webapp.repositories.UserPhoneNumberRepository;
 
 public class AuthenticatedUser implements UserDetails {
 	private static final long serialVersionUID = 1L;
