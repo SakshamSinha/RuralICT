@@ -16,7 +16,8 @@ public interface OrganizationRepository extends JpaRepository<Organization, Inte
 	@Override
 	public <S extends Organization> S save(S org);
 
-	@PreAuthorize("hasRole('ADMIN'+#org.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#org.organizationId) or "
+			+ "(#org.parentOrganization != null and hasRole('ADMIN'+#org.parentOrganization.organizationId))")
 	@Override
 	public void delete(Organization org);
 

@@ -17,23 +17,19 @@ public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+returnObject.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.organization.organizationId)")
 	@Override
 	public Broadcast findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
 	@Override
 	public List<Broadcast> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
 	@Override
 	public Page<Broadcast> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
 	@Override
 	public List<Broadcast> findAll(Sort sort);
 
@@ -41,8 +37,7 @@ public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
 	@Override
 	public <S extends Broadcast> S save(S broadcast);
 
-	@PreAuthorize("hasRole('ADMIN'+#broadcast.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+#broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#broadcast.organization.organizationId)")
 	@Override
 	public void delete(Broadcast broadcast);
 

@@ -17,23 +17,19 @@ public interface BroadcastDefaultSettingRepository extends JpaRepository<Broadca
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+returnObject.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.organization.organizationId)")
 	@Override
 	public BroadcastDefaultSetting findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
 	@Override
 	public List<BroadcastDefaultSetting> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
 	@Override
 	public Page<BroadcastDefaultSetting> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
 	@Override
 	public List<BroadcastDefaultSetting> findAll(Sort sort);
 

@@ -40,10 +40,14 @@ public class AuthenticatedUser implements UserDetails {
 		for (OrganizationMembership membership : memberships) {
 			Organization organization = membership.getOrganization();
 			authoritiesSet.add("MEMBER" + organization.getOrganizationId());
-			if (membership.getIsPublisher())
+			if (membership.getIsPublisher()) {
 				authoritiesSet.add("PUBLISHER" + organization.getOrganizationId());
-			if (membership.getIsAdmin())
+				authoritiesSet.add("ADMIN_OR_PUBLISHER" + organization.getOrganizationId());
+			}
+			if (membership.getIsAdmin()) {
 				authoritiesSet.add("ADMIN" + organization.getOrganizationId());
+				authoritiesSet.add("ADMIN_OR_PUBLISHER" + organization.getOrganizationId());
+			}
 		}
 		authorities = AuthorityUtils.createAuthorityList(authoritiesSet.toArray(new String[authoritiesSet.size()]));
 	}

@@ -17,33 +17,27 @@ public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSche
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.broadcast.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+returnObject.broadcast.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.broadcast.organization.organizationId)")
 	@Override
 	public BroadcastSchedule findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.broadcast.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+filterObject.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcast.organization.organizationId)")
 	@Override
 	public List<BroadcastSchedule> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.broadcast.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+filterObject.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcast.organization.organizationId)")
 	@Override
 	public Page<BroadcastSchedule> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.broadcast.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+filterObject.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcast.organization.organizationId)")
 	@Override
 	public List<BroadcastSchedule> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#schedule.broadcast.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+#schedule.broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#schedule.broadcast.organization.organizationId)")
 	@Override
 	public <S extends BroadcastSchedule> S save(S schedule);
 
-	@PreAuthorize("hasRole('ADMIN'+#schedule.broadcast.organization.organizationId) or "
-			+ "hasRole('PUBLISHER'+#schedule.broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#schedule.broadcast.organization.organizationId)")
 	@Override
 	public void delete(BroadcastSchedule schedule);
 
