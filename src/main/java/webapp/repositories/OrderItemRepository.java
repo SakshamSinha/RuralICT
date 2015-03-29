@@ -17,27 +17,27 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.order.messages[0].broadcast.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN'+returnObject.order.organization.organizationId)")
 	@Override
 	public OrderItem findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.order.messages[0].broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.organizationId)")
 	@Override
 	public List<OrderItem> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.order.messages[0].broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.organizationId)")
 	@Override
 	public Page<OrderItem> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.order.messages[0].broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.organizationId)")
 	@Override
 	public List<OrderItem> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#item.order.messages[0].broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('MEMBER'+#item.order.organization.organizationId)")
 	@Override
 	public <S extends OrderItem> S save(S item);
 
-	@PreAuthorize("hasRole('ADMIN'+#item.order.messages[0].broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('MEMBER'+#item.order.organization.organizationId)")
 	@Override
 	public void delete(OrderItem item);
 

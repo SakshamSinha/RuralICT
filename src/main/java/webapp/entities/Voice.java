@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import webapp.entities.broadcast.VoiceBroadcast;
 
 
@@ -57,6 +59,7 @@ public class Voice implements Serializable {
 		this.voiceId = voiceId;
 	}
 
+	@JsonIgnore
 	public boolean getIsDownloaded() {
 		return this.isDownloaded != 0;
 	}

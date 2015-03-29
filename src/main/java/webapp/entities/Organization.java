@@ -120,6 +120,10 @@ public class Organization implements Serializable {
 	@OneToMany(mappedBy="organization")
 	private List<ProductType> productTypes;
 
+	//bi-directional many-to-one association to Order
+	@OneToMany(mappedBy="organization")
+	private List<Order> orders;
+
 	//bi-directional many-to-one association to WelcomeMessage
 	@OneToMany(mappedBy="organization")
 	private List<WelcomeMessage> welcomeMessages;
@@ -483,6 +487,28 @@ public class Organization implements Serializable {
 		productType.setOrganization(null);
 
 		return productType;
+	}
+
+	public List<Order> getOrders() {
+		return this.orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+	public Order addOrder(Order order) {
+		getOrders().add(order);
+		order.setOrganization(this);
+
+		return order;
+	}
+
+	public Order removeOrder(Order order) {
+		getOrders().remove(order);
+		order.setOrganization(null);
+
+		return order;
 	}
 
 	public List<WelcomeMessage> getWelcomeMessages() {
