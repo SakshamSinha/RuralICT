@@ -116,10 +116,6 @@ public class Organization implements Serializable {
 	@OneToMany(mappedBy="organization")
 	private List<PresetQuantity> presetQuantities;
 
-	//bi-directional many-to-one association to Product
-	@OneToMany(mappedBy="organization")
-	private List<Product> products;
-
 	//bi-directional many-to-one association to ProductType
 	@OneToMany(mappedBy="organization")
 	private List<ProductType> productTypes;
@@ -465,28 +461,6 @@ public class Organization implements Serializable {
 		presetQuantity.setOrganization(null);
 
 		return presetQuantity;
-	}
-
-	public List<Product> getProducts() {
-		return this.products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
-	public Product addProduct(Product product) {
-		getProducts().add(product);
-		product.setOrganization(this);
-
-		return product;
-	}
-
-	public Product removeProduct(Product product) {
-		getProducts().remove(product);
-		product.setOrganization(null);
-
-		return product;
 	}
 
 	public List<ProductType> getProductTypes() {

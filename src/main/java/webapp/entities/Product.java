@@ -37,11 +37,6 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy="product")
 	private List<OrderItem> orderItems;
 
-	//bi-directional many-to-one association to Organization
-	@ManyToOne
-	@JoinColumn(name="organization_id")
-	private Organization organization;
-
 	//bi-directional many-to-one association to ProductType
 	@ManyToOne
 	@JoinColumn(name="product_type_id")
@@ -50,11 +45,10 @@ public class Product implements Serializable {
 	public Product() {
 	}
 
-	public Product(String name, Organization organization, ProductType productType, float unitRate, int quantity,
-			String description, String imageUrl) {
+	public Product(String name, ProductType productType, float unitRate, int quantity, String description,
+			String imageUrl) {
 
 		this.name = name;
-		this.organization = organization;
 		this.productType = productType;
 		this.unitRate = unitRate;
 		this.quantity = quantity;
@@ -130,14 +124,6 @@ public class Product implements Serializable {
 		orderItem.setProduct(null);
 
 		return orderItem;
-	}
-
-	public Organization getOrganization() {
-		return this.organization;
-	}
-
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
 	}
 
 	public ProductType getProductType() {
