@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import webapp.entities.broadcast.Broadcast;
 import webapp.entities.message.Message;
 
@@ -119,6 +121,7 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
+	@JsonIgnore
 	public String getSha256Password() {
 		return this.sha256Password;
 	}
