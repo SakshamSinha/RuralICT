@@ -1,11 +1,18 @@
 package webapp.entities;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.sql.Timestamp;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import webapp.entities.message.Message;
 
 
 /**
@@ -34,6 +41,10 @@ public class Order implements Serializable {
 	@OneToMany(mappedBy="order")
 	private List<OrderItem> orderItems;
 
+	//bi-directional many-to-one association to Message
+	@OneToMany(mappedBy="order")
+	private List<Message> messages;
+	
 	public Order() {
 	}
 
@@ -75,6 +86,14 @@ public class Order implements Serializable {
 
 	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
+	}
+
+	public List<Message> getMessages() {
+		return this.messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
 	}
 
 	public OrderItem addOrderItem(OrderItem orderItem) {
