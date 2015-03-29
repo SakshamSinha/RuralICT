@@ -17,19 +17,23 @@ public interface OrganizationMembershipRepository extends JpaRepository<Organiza
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.organizationId)")
+	@PostAuthorize("principal.userId == returnObject.user.userId or "
+			+ "hasRole('ADMIN'+returnObject.organization.organizationId)")
 	@Override
 	public OrganizationMembership findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("principal.userId == filterObject.user.userId or "
+			+ "hasRole('ADMIN'+filterObject.organization.organizationId)")
 	@Override
 	public List<OrganizationMembership> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("principal.userId == filterObject.user.userId or "
+			+ "hasRole('ADMIN'+filterObject.organization.organizationId)")
 	@Override
 	public Page<OrganizationMembership> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("principal.userId == filterObject.user.userId or "
+			+ "hasRole('ADMIN'+filterObject.organization.organizationId)")
 	@Override
 	public List<OrganizationMembership> findAll(Sort sort);
 
