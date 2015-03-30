@@ -16,7 +16,7 @@ public class Utils {
 	 * done.
 	 * @return The currently logged in user's AuthenticatedUser object.
 	 */
-	public static AuthenticatedUser getAuthenticatedUser() {
+	public static AuthenticatedUser getSecurityPrincipal() {
 		return (AuthenticatedUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
@@ -25,8 +25,8 @@ public class Utils {
 	 * @param userRepository The user repository for the user lookup.
 	 * @return The currently logged in user's persistent User object.
 	 */
-	public static User getPersistentUser(UserRepository userRepository) {
-		return userRepository.findOne(getAuthenticatedUser().getUserId());
+	public static User getCurrentUser(UserRepository userRepository) {
+		return userRepository.findOne(getSecurityPrincipal().getUserId());
 	}
 
 }

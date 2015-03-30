@@ -11,7 +11,7 @@ public class WebRootController {
 
 	@RequestMapping("/")
 	public String rootRedirect(Model model) {
-		model.addAttribute("displayString", "Hello " + Utils.getAuthenticatedUser().getUsername() + "!");
+		model.addAttribute("displayString", "Hello " + Utils.getSecurityPrincipal().getUsername() + "!");
 		return "welcome";
 	}
 
