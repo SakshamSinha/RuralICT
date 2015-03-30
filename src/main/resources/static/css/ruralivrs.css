@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+
+.header {
+	top : 0;
+}
+
+.header .navbar-inner {
+  padding-right: 0;
+  padding-left: 0;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+}
+
+.header {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.receiver  {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 1;
+  color: #000;
+}
+
+.contact {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 50;
+  line-height: 1;
+  color: #51A351;
+}
+
+.btn-default {
+	background: #33a6cc;
+	color:#ffffff;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default {
+    background: #33b6cc;
+    color:#ffffff;
+}
+
+.top-tab-bar {
+	margin-bottom: 0;
+}
+
+.bottom-tab-bar {
+	background-color:#fcfcfc;
+	padding-top: 8px;
+}
+
+.top-tab-bar > .active > a,
+.top-tab-bar > .active > a:hover {
+  background-color: #fcfcfc;
+}
+
+.bottom-tab-bar > .active > a,
+.bottom-tab-bar > .active > a:hover {
+  background-color: #fbfbfb;
+}
+
+.pullcenter {
+	display: inline-block;
+	vertical-align:middle;
+}

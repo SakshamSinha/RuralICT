@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" ng-app="ruralIvrs">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title ng-bind="$root.title">RuralIVRS - Welcome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rural IVRS Web application.">
+    <meta name="author" content="IIT Bombay">
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/site.css" rel="stylesheet">
+	<link href="css/ruralivrs.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/loading-bar.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#/home">Abhinav Farmers Club</a>
+          <div class="btn-group pull-right">
+			<a class="btn" href="my-profile.html"><i class="icon-user"></i> Admin</a>
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+			  <li><a href="my-profile.html">Profile</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Logout</a></li>
+            </ul>
+          </div>
+          <div class="nav-collapse">
+            <ul class="nav">
+			<li><a href="#/home">Home</a></li>
+              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Product Details<b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					<li><a href="#/products">Product List</a></li>
+					<li class="divider"></li>
+					<li><a href="users.html">Product Quantity</a></li>
+				</ul>
+			  </li>
+              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Order Summary<b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					<li><a href="new-role.html">Product wise</a></li>
+					<li class="divider"></li>
+					<li><a href="roles.html">Group wise</a></li>
+				</ul>
+			  </li>
+			  <li><a href="#/users">Manage Users</a></li>
+			  <li><a href="#/settings">Settings</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+        <div class="row-fluid">
+            <div class = "span6">
+            <label class="receiver">IVRS number</label>
+            <label class="contact">020 30157370</label>
+           </div>
+           <div class = "span6">
+            <label class="receiver">SMS number</label>
+            <label class="contact">0 9227507512</label>
+          </div>
+          </div>
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list" id="group-names">
+              <li class="nav-header">
+              <i class="icon-user"></i> Groups
+              <button class="btn btn-success btn-mini pull-right" id = "add_new_group" data-toggle="modal" data-title="Add new group" data-target="#add-new-group">
+              <i class="icon-white icon-plus pull-right" id = "add_new_group" data-toggle="modal" data-title="Add new group" data-target="#add-new-group"></i></button></li>
+              <li><a href="#/groups">Parent Group</a></li>
+              <li><a href="#/groups">Aundh</a></li>
+              <li><a href="#/groups">Balewadi</a></li>
+              <li><a href="#/groups">Pimpri</a></li>
+              <li><a href="#/groups">Chinchwad</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span9" ng-view>
+	        <!-- EVERYTHING GOES HERE -->
+        </div>
+      </div>
+
+      <hr>
+
+      <footer class="well">
+        &copy; Indian Institute of Technology, Bombay
+      </footer>
+
+    </div>
+    
+    <div class="modal fade" id="add-new-group" tabindex="-1" role="dialog" aria-labelledby="HeadingAddUser" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> </button>
+          <h4 class="modal-title custom_align" id="HeadingUser">Add New Group</h4>
+        </div>
+      <div class="modal-body">
+        <form class="form-horizontal"> 
+		  <div class="control-group">
+		    <label class="control-label" for="new-group-name-input">Group Name</label>
+		    <div class="controls">
+		      <input type="text" class="input-xlarge" id="new-group-name-input" placeholder="Aundh" />
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="new-group-phone-input">Phone</label>
+		    <div class="controls">
+		      <input type="text" class="input-xlarge" id="user-phone" placeholder="9988776655"/>
+		    </div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="new-group-address-input">Address</label>
+		    <div class="controls">
+		      <input type="text" class="input-xlarge" id="user-address" placeholder="A/78, Los Angeles"/>
+		    </div>
+		  </div>
+        </form>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-success" id="add-new-group" ><i class="icon-white icon-ok"></i> Add</button>
+        <button type="button" class="btn btn-default" id="cancel-new-group" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button> 
+      </div>
+    </div>
+    </div>
+    
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+	<script src="js/loading-bar.min.js"></script>
+	<script src="js/controllers.js"></script>
+	<script src="js/productList.js"></script>
+	<script src="js/groupOps.js"></script>
+  </body>
+</html>
