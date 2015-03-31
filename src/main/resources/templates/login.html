@@ -40,7 +40,7 @@
             <div class="span6">
                 <div class="area">
                 
-                    <form class="form-horizontal" action = "index.html" method = "post">
+                    <form class="form-horizontal" name="f" th:action="@{/login}" method="post">
                         <div class="heading">
                         <br>
                         <br>
@@ -49,20 +49,20 @@
 
                         <div class="control-group">
                             <label class="control-label" for=
-                            "inputUsername">Username</label>
+                            "username">Username</label>
 
                             <div class="controls">
-                                <input id="inputUsername" placeholder=
+                                <input id="username" name="username" placeholder=
                                 "E.g. sushmitasen@gmail.com" type="text">
                             </div>
                         </div>
 
                         <div class="control-group">
                             <label class="control-label" for=
-                            "inputPassword">Password</label>
+                            "password">Password</label>
 
                             <div class="controls">
-                                <input id="inputPassword" placeholder=
+                                <input id="password" name="password" placeholder=
                                 "Min. 8 Characters" type="password">
                             </div>
                         </div>
@@ -78,10 +78,15 @@
                             </div>
                         </div>
 
-                        <div class="alert alert-error">
+                        <div th:if="${param.error}" class="alert alert-error">
                             <button class="close" data-dismiss="alert" type=
                             "button">×</button> <strong>Access Denied!</strong>
                             Please provide valid authorization.
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success">
+                            <button class="close" data-dismiss="alert" type=
+                            "button">×</button> <strong>Logged out.</strong>
+                            You have been logged out.
                         </div>
                     </form>
                 </div>
@@ -91,7 +96,8 @@
     </div>
 </div>
 
-   
+<script th:src="@{/static/js/jquery.js}"></script>
+<script th:src="@{/static/js/bootstrap.min.js}"></script>
 
 </body>
 </html>
