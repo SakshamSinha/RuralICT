@@ -5,11 +5,11 @@ var website = angular.module('ruralIvrs', ['ngRoute', 'angular-loading-bar'])
 website.config(['$routeProvider', 'cfpLoadingBarProvider', function($routeProvider, cfpLoadingBarProvider) {
 
 	$routeProvider
-		.when('/home', {templateUrl: 'home.html', title: "Home"})
-		.when('/products', {templateUrl: 'productList.html', title: "Products"})
-		.when('/groups', {templateUrl: 'groupOperations.html', title: "Group Operations"})
-		.when('/users', {templateUrl: 'users.html', title: "Users"})
-		.when('/settings', {templateUrl: 'settings.html', title: "Settings"})
+		.when('/home', {templateUrl: 'home', title: "Home"})
+		.when('/products', {templateUrl: 'products', title: "Products"})
+		.when('/groups', {templateUrl: 'groups', title: "Group Operations"})
+		.when('/users', {templateUrl: 'users', title: "Users"})
+		.when('/settings', {templateUrl: 'settings', title: "Settings"})
 		.otherwise({redirectTo: '/home', title: "Home"});
 
 	cfpLoadingBarProvider.includeSpinner = false;

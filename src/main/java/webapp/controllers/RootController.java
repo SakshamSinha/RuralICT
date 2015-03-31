@@ -1,13 +1,11 @@
 package webapp.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import webapp.entities.OrganizationMembership;
 import webapp.entities.User;
 import webapp.repositories.UserRepository;
 import webapp.util.Utils;
@@ -21,15 +19,12 @@ public class RootController {
 	@RequestMapping("/")
 	public String root(Model model) {
 		User user = Utils.getCurrentUser(userRepository);
-		List<OrganizationMembership> memberships = user.getOrganizationMemberships();
-		for (OrganizationMembership m : memberships) {
-			// TODO
-		}
-		return "choose";
+		model.addAttribute("organizationMemberships", user.getOrganizationMemberships());
+		return "choose"; // TODO we need to implement this template
 	}
 
 	@RequestMapping("/{org}")
-	public String organizationRoot() {
+	public String organizationRoot(@PathVariable String org) {
 		return "index";
 	}
 

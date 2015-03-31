@@ -121,6 +121,8 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 					.anyRequest().authenticated()
 					.and()
 				.formLogin();
+					//.loginPage("/login")
+					//.permitAll();
 		}
 
 	}
