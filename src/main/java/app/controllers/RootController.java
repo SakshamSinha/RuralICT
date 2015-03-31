@@ -33,4 +33,9 @@ public class RootController {
 		return "index";
 	}
 
+	@RequestMapping(value="/web/{org}")
+	public String organizationRootWithoutSlash(@PathVariable String org) {
+		return "redirect:/web/"+org+"/";
+	}
+
 }
