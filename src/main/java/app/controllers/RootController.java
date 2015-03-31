@@ -24,7 +24,7 @@ public class RootController {
 	@RequestMapping("/web")
 	public String webRoot(Model model) {
 		User user = Utils.getCurrentUser(userRepository);
-		model.addAttribute("organizationMemberships", user.getOrganizationMemberships());
+		model.addAttribute("organizationMemberships", user.getOrganizationMemberships()); // TODO Do this via service layer?
 		return "choose"; // TODO we need to implement this template
 	}
 
