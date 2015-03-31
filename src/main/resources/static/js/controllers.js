@@ -2,7 +2,7 @@
 
 var website = angular.module('ruralIvrs', ['ngRoute', 'angular-loading-bar'])
 
-website.config(function($routeProvider, $httpProvider, cfpLoadingBarProvider) {
+website.config(['$routeProvider', 'cfpLoadingBarProvider', function($routeProvider, cfpLoadingBarProvider) {
 
 	$routeProvider
 		.when('/home', {templateUrl: 'home.html', title: "Home"})
@@ -13,14 +13,13 @@ website.config(function($routeProvider, $httpProvider, cfpLoadingBarProvider) {
 		.otherwise({redirectTo: '/home', title: "Home"});
 
 	cfpLoadingBarProvider.includeSpinner = false;
-	$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-});
+}]);
 
-website.run(function($location, $rootScope) {
+website.run(['$location', '$rootScope', function($location, $rootScope) {
 	  
 	$rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
 		$rootScope.title = current.$$route.title;
 	    });
-});
+}]);
 
 
