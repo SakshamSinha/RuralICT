@@ -7,7 +7,7 @@ website.config(['$routeProvider', 'cfpLoadingBarProvider', function($routeProvid
 	$routeProvider
 		.when('/home', {templateUrl: 'home', title: "Home"})
 		.when('/products', {templateUrl: 'products', title: "Products"})
-		.when('/groups', {templateUrl: 'groups', title: "Group Operations"})
+		.when('/group', {templateUrl: 'group', title: "Group Operations"})
 		.when('/users', {templateUrl: 'users', title: "Users"})
 		.when('/settings', {templateUrl: 'settings', title: "Settings"})
 		.otherwise({redirectTo: '/home', title: "Home"});
