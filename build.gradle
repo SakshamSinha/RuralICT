@@ -19,7 +19,7 @@ apply plugin: 'spring-boot'
 apply plugin: 'war'
 
 war {
-    baseName = 'webapp'
+    baseName = 'app'
     version = '0.0.1'
 }
 sourceCompatibility = 1.7

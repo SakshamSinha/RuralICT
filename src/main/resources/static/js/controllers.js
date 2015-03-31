@@ -5,21 +5,20 @@ var website = angular.module('ruralIvrs', ['ngRoute', 'angular-loading-bar'])
 website.config(['$routeProvider', 'cfpLoadingBarProvider', function($routeProvider, cfpLoadingBarProvider) {
 
 	$routeProvider
-		.when('/home', {templateUrl: 'home', title: "Home"})
-		.when('/products', {templateUrl: 'products', title: "Products"})
-		.when('/group', {templateUrl: 'group', title: "Group Operations"})
-		.when('/users', {templateUrl: 'users', title: "Users"})
-		.when('/settings', {templateUrl: 'settings', title: "Settings"})
-		.otherwise({redirectTo: '/home', title: "Home"});
+		.when('/home', {templateUrl: 'homePage', title: "Home"})
+		.when('/products', {templateUrl: 'productsPage', title: "Products"})
+		.when('/group', {templateUrl: 'groupPage', title: "Group Operations"})
+		.when('/users', {templateUrl: 'usersPage', title: "Users"})
+		.when('/settings', {templateUrl: 'settingsPage', title: "Settings"})
+		.otherwise({redirectTo: '/home'});
 
 	cfpLoadingBarProvider.includeSpinner = false;
 }]);
 
 website.run(['$location', '$rootScope', function($location, $rootScope) {
-	  
-	$rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
-		$rootScope.title = current.$$route.title;
-	    });
+    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+        if(current.$$route) {
+            $rootScope.title = current.$$route.title;
+        }
+    });
 }]);
-
-
