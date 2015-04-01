@@ -17,27 +17,27 @@ public interface WelcomeMessageRepository extends JpaRepository<WelcomeMessage, 
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('MEMBER'+returnObject.organization.organizationId)")
+	@PostAuthorize("hasRole('MEMBER'+returnObject.organization.abbreviation)")
 	@Override
 	public WelcomeMessage findOne(Integer id);
 
-	@PostFilter("hasRole('MEMBER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('MEMBER'+filterObject.organization.abbreviation)")
 	@Override
 	public List<WelcomeMessage> findAll();
 
-	@PostFilter("hasRole('MEMBER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('MEMBER'+filterObject.organization.abbreviation)")
 	@Override
 	public Page<WelcomeMessage> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('MEMBER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('MEMBER'+filterObject.organization.abbreviation)")
 	@Override
 	public List<WelcomeMessage> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#message.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#message.organization.abbreviation)")
 	@Override
 	public <S extends WelcomeMessage> S save(S message);
 
-	@PreAuthorize("hasRole('ADMIN'+#message.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#message.organization.abbreviation)")
 	@Override
 	public void delete(WelcomeMessage message);
 

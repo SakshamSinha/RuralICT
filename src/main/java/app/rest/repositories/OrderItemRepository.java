@@ -17,27 +17,27 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.order.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN'+returnObject.order.organization.abbreviation)")
 	@Override
 	public OrderItem findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.abbreviation)")
 	@Override
 	public List<OrderItem> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.abbreviation)")
 	@Override
 	public Page<OrderItem> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.abbreviation)")
 	@Override
 	public List<OrderItem> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('MEMBER'+#item.order.organization.organizationId)")
+	@PreAuthorize("hasRole('MEMBER'+#item.order.organization.abbreviation)")
 	@Override
 	public <S extends OrderItem> S save(S item);
 
-	@PreAuthorize("hasRole('MEMBER'+#item.order.organization.organizationId)")
+	@PreAuthorize("hasRole('MEMBER'+#item.order.organization.abbreviation)")
 	@Override
 	public void delete(OrderItem item);
 

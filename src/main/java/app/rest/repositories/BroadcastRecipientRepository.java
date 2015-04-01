@@ -17,27 +17,27 @@ public interface BroadcastRecipientRepository extends JpaRepository<BroadcastRec
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.broadcast.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.broadcast.organization.abbreviation)")
 	@Override
 	public BroadcastRecipient findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcast.organization.abbreviation)")
 	@Override
 	public List<BroadcastRecipient> findAll();
 
-	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcast.organization.abbreviation)")
 	@Override
 	public Page<BroadcastRecipient> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcast.organization.abbreviation)")
 	@Override
 	public List<BroadcastRecipient> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#recipient.broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#recipient.broadcast.organization.abbreviation)")
 	@Override
 	public <S extends BroadcastRecipient> S save(S recipient);
 
-	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#recipient.broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#recipient.broadcast.organization.abbreviation)")
 	@Override
 	public void delete(BroadcastRecipient recipient);
 

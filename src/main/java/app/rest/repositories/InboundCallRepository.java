@@ -17,27 +17,27 @@ public interface InboundCallRepository extends JpaRepository<InboundCall, Intege
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.abbreviation)")
 	@Override
 	public InboundCall findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public List<InboundCall> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public Page<InboundCall> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public List<InboundCall> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#call.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#call.organization.abbreviation)")
 	@Override
 	public <S extends InboundCall> S save(S call);
 
-	@PreAuthorize("hasRole('ADMIN'+#call.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#call.organization.abbreviation)")
 	@Override
 	public void delete(InboundCall call);
 

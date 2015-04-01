@@ -1,15 +1,17 @@
 package app.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/web")
+@RequestMapping("/web/{org}")
 public class GroupController {
 
-	@RequestMapping(value="/{org}/groupPage")
+	@RequestMapping(value="/groupPage")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String groupPage(@PathVariable String org, Model model) {
 		return "groupOperations";
 	}

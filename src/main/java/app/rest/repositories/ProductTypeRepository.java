@@ -17,27 +17,27 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Intege
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.abbreviation)")
 	@Override
 	public ProductType findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public List<ProductType> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public Page<ProductType> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public List<ProductType> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#type.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#type.organization.abbreviation)")
 	@Override
 	public <S extends ProductType> S save(S type);
 
-	@PreAuthorize("hasRole('ADMIN'+#type.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#type.organization.abbreviation)")
 	@Override
 	public void delete(ProductType type);
 

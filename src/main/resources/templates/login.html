@@ -80,8 +80,9 @@
 
                         <div th:if="${param.error}" class="alert alert-error">
                             <button class="close" data-dismiss="alert" type=
-                            "button">×</button> <strong>Access Denied!</strong>
-                            Please provide valid authorization.
+                            "button">×</button> <strong>Access Denied.</strong>
+                            Ensure that your username and password are correct, and that you're an
+                            administrator of an organization.
                         </div>
                         <div th:if="${param.logout}" class="alert alert-success">
                             <button class="close" data-dismiss="alert" type=

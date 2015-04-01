@@ -17,27 +17,27 @@ public interface BroadcastDefaultSettingRepository extends JpaRepository<Broadca
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.organization.abbreviation)")
 	@Override
 	public BroadcastDefaultSetting findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.abbreviation)")
 	@Override
 	public List<BroadcastDefaultSetting> findAll();
 
-	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.abbreviation)")
 	@Override
 	public Page<BroadcastDefaultSetting> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.abbreviation)")
 	@Override
 	public List<BroadcastDefaultSetting> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#setting.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#setting.organization.abbreviation)")
 	@Override
 	public <S extends BroadcastDefaultSetting> S save(S setting);
 
-	@PreAuthorize("hasRole('ADMIN'+#setting.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#setting.organization.abbreviation)")
 	@Override
 	public void delete(BroadcastDefaultSetting setting);
 

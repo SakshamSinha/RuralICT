@@ -17,27 +17,27 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.productType.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN'+returnObject.productType.organization.abbreviation)")
 	@Override
 	public Product findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
 	@Override
 	public List<Product> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
 	@Override
 	public Page<Product> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
 	@Override
 	public List<Product> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#product.productType.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#product.productType.organization.abbreviation)")
 	@Override
 	public <S extends Product> S save(S product);
 
-	@PreAuthorize("hasRole('ADMIN'+#product.productType.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#product.productType.organization.abbreviation)")
 	@Override
 	public void delete(Product product);
 

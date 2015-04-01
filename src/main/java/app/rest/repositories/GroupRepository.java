@@ -17,27 +17,27 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('MEMBER'+returnObject.organization.organizationId)")
+	@PostAuthorize("hasRole('MEMBER'+returnObject.organization.abbreviation)")
 	@Override
 	public Group findOne(Integer id);
 
-	@PostFilter("hasRole('MEMBER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('MEMBER'+filterObject.organization.abbreviation)")
 	@Override
 	public List<Group> findAll();
 
-	@PostFilter("hasRole('MEMBER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('MEMBER'+filterObject.organization.abbreviation)")
 	@Override
 	public Page<Group> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('MEMBER'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('MEMBER'+filterObject.organization.abbreviation)")
 	@Override
 	public List<Group> findAll(Sort sort);
 	
-	@PreAuthorize("hasRole('ADMIN'+#group.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#group.organization.abbreviation)")
 	@Override
 	public <S extends Group> S save(S group);
 
-	@PreAuthorize("hasRole('ADMIN'+#group.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#group.organization.abbreviation)")
 	@Override
 	public void delete(Group group);
 

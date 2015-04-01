@@ -17,27 +17,27 @@ public interface OutboundCallRepository extends JpaRepository<OutboundCall, Inte
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.broadcastRecipient.broadcast.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN'+returnObject.broadcastRecipient.broadcast.organization.abbreviation)")
 	@Override
 	public OutboundCall findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.broadcastRecipient.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.broadcastRecipient.broadcast.organization.abbreviation)")
 	@Override
 	public List<OutboundCall> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.broadcastRecipient.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.broadcastRecipient.broadcast.organization.abbreviation)")
 	@Override
 	public Page<OutboundCall> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.broadcastRecipient.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.broadcastRecipient.broadcast.organization.abbreviation)")
 	@Override
 	public List<OutboundCall> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#call.broadcastRecipient.broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#call.broadcastRecipient.broadcast.organization.abbreviation)")
 	@Override
 	public <S extends OutboundCall> S save(S call);
 
-	@PreAuthorize("hasRole('ADMIN'+#call.broadcastRecipient.broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#call.broadcastRecipient.broadcast.organization.abbreviation)")
 	@Override
 	public void delete(OutboundCall call);
 

@@ -17,27 +17,27 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.broadcast.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN'+returnObject.broadcast.organization.abbreviation)")
 	@Override
 	public Message findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.broadcast.organization.abbreviation)")
 	@Override
 	public List<Message> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.broadcast.organization.abbreviation)")
 	@Override
 	public Page<Message> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.broadcast.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.broadcast.organization.abbreviation)")
 	@Override
 	public List<Message> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#message.broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#message.broadcast.organization.abbreviation)")
 	@Override
 	public <S extends Message> S save(S message);
 
-	@PreAuthorize("hasRole('ADMIN'+#message.broadcast.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#message.broadcast.organization.abbreviation)")
 	@Override
 	public void delete(Message message);
 

@@ -17,27 +17,27 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.organizationId)")
+	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.abbreviation)")
 	@Override
 	public Order findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public List<Order> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public Page<Order> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
+	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public List<Order> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('MEMBER'+#order.organization.organizationId)")
+	@PreAuthorize("hasRole('MEMBER'+#order.organization.abbreviation)")
 	@Override
 	public <S extends Order> S save(S order);
 
-	@PreAuthorize("hasRole('MEMBER'+#order.organization.organizationId)")
+	@PreAuthorize("hasRole('MEMBER'+#order.organization.abbreviation)")
 	@Override
 	public void delete(Order order);
 

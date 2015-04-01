@@ -18,30 +18,30 @@ public interface OrganizationMembershipRepository extends JpaRepository<Organiza
 	 */
 
 	@PostAuthorize("principal.userId == returnObject.user.userId or "
-			+ "hasRole('ADMIN'+returnObject.organization.organizationId)")
+			+ "hasRole('ADMIN'+returnObject.organization.abbreviation)")
 	@Override
 	public OrganizationMembership findOne(Integer id);
 
 	@PostFilter("principal.userId == filterObject.user.userId or "
-			+ "hasRole('ADMIN'+filterObject.organization.organizationId)")
+			+ "hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public List<OrganizationMembership> findAll();
 
 	@PostFilter("principal.userId == filterObject.user.userId or "
-			+ "hasRole('ADMIN'+filterObject.organization.organizationId)")
+			+ "hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public Page<OrganizationMembership> findAll(Pageable pageable);
 
 	@PostFilter("principal.userId == filterObject.user.userId or "
-			+ "hasRole('ADMIN'+filterObject.organization.organizationId)")
+			+ "hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public List<OrganizationMembership> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#membership.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#membership.organization.abbreviation)")
 	@Override
 	public <S extends OrganizationMembership> S save(S membership);
 
-	@PreAuthorize("hasRole('ADMIN'+#membership.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#membership.organization.abbreviation)")
 	@Override
 	public void delete(OrganizationMembership membership);
 
