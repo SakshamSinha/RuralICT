@@ -21,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import app.entities.User;
 import app.entities.UserPhoneNumber;
-import app.repositories.UserPhoneNumberRepository;
-import app.repositories.UserRepository;
+import app.rest.repositories.UserPhoneNumberRepository;
+import app.rest.repositories.UserRepository;
 import app.security.AuthenticatedUser;
 
 @Configuration

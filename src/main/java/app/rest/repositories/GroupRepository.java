@@ -1,4 +1,4 @@
-package app.repositories;
+package app.rest.repositories;
 
 import java.util.List;
 
@@ -10,36 +10,36 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import app.entities.WelcomeMessage;
+import app.entities.Group;
 
-public interface WelcomeMessageRepository extends JpaRepository<WelcomeMessage, Integer> {
+public interface GroupRepository extends JpaRepository<Group, Integer> {
 	/*
 	 * Default functions
 	 */
 
 	@PostAuthorize("hasRole('MEMBER'+returnObject.organization.organizationId)")
 	@Override
-	public WelcomeMessage findOne(Integer id);
+	public Group findOne(Integer id);
 
 	@PostFilter("hasRole('MEMBER'+filterObject.organization.organizationId)")
 	@Override
-	public List<WelcomeMessage> findAll();
+	public List<Group> findAll();
 
 	@PostFilter("hasRole('MEMBER'+filterObject.organization.organizationId)")
 	@Override
-	public Page<WelcomeMessage> findAll(Pageable pageable);
+	public Page<Group> findAll(Pageable pageable);
 
 	@PostFilter("hasRole('MEMBER'+filterObject.organization.organizationId)")
 	@Override
-	public List<WelcomeMessage> findAll(Sort sort);
-
-	@PreAuthorize("hasRole('ADMIN'+#message.organization.organizationId)")
+	public List<Group> findAll(Sort sort);
+	
+	@PreAuthorize("hasRole('ADMIN'+#group.organization.organizationId)")
 	@Override
-	public <S extends WelcomeMessage> S save(S message);
+	public <S extends Group> S save(S group);
 
-	@PreAuthorize("hasRole('ADMIN'+#message.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#group.organization.organizationId)")
 	@Override
-	public void delete(WelcomeMessage message);
+	public void delete(Group group);
 
 	/*
 	 * Search functions

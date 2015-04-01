@@ -1,4 +1,4 @@
-package app.repositories;
+package app.rest.repositories;
 
 import java.util.List;
 
@@ -10,36 +10,36 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import app.entities.InboundCall;
+import app.entities.PresetQuantity;
 
-public interface InboundCallRepository extends JpaRepository<InboundCall, Integer> {
+public interface PresetQuantityRepository extends JpaRepository<PresetQuantity, Integer> {
 	/*
 	 * Default functions
 	 */
 
 	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.organizationId)")
 	@Override
-	public InboundCall findOne(Integer id);
+	public PresetQuantity findOne(Integer id);
 
 	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
 	@Override
-	public List<InboundCall> findAll();
+	public List<PresetQuantity> findAll();
 
 	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
 	@Override
-	public Page<InboundCall> findAll(Pageable pageable);
+	public Page<PresetQuantity> findAll(Pageable pageable);
 
 	@PostFilter("hasRole('ADMIN'+filterObject.organization.organizationId)")
 	@Override
-	public List<InboundCall> findAll(Sort sort);
+	public List<PresetQuantity> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#call.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#quantity.organization.organizationId)")
 	@Override
-	public <S extends InboundCall> S save(S call);
+	public <S extends PresetQuantity> S save(S quantity);
 
-	@PreAuthorize("hasRole('ADMIN'+#call.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN'+#quantity.organization.organizationId)")
 	@Override
-	public void delete(InboundCall call);
+	public void delete(PresetQuantity quantity);
 
 	/*
 	 * Search functions

@@ -13,7 +13,7 @@ import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
-import app.repositories.UserPhoneNumberRepository;
+import app.rest.repositories.UserPhoneNumberRepository;
 
 public class AuthenticatedUser implements UserDetails {
 	private static final long serialVersionUID = 1L;

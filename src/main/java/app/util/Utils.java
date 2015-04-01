@@ -3,7 +3,7 @@ package app.util;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import app.entities.User;
-import app.repositories.UserRepository;
+import app.rest.repositories.UserRepository;
 import app.security.AuthenticatedUser;
 
 /**

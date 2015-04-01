@@ -1,4 +1,4 @@
-package app.repositories;
+package app.rest.repositories;
 
 import java.util.List;
 
@@ -10,36 +10,36 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import app.entities.BroadcastDefaultSetting;
+import app.entities.broadcast.Broadcast;
 
-public interface BroadcastDefaultSettingRepository extends JpaRepository<BroadcastDefaultSetting, Integer> {
+public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
 	/*
 	 * Default functions
 	 */
 
 	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.organization.organizationId)")
 	@Override
-	public BroadcastDefaultSetting findOne(Integer id);
+	public Broadcast findOne(Integer id);
 
 	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
 	@Override
-	public List<BroadcastDefaultSetting> findAll();
+	public List<Broadcast> findAll();
 
 	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
 	@Override
-	public Page<BroadcastDefaultSetting> findAll(Pageable pageable);
+	public Page<Broadcast> findAll(Pageable pageable);
 
 	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.organizationId)")
 	@Override
-	public List<BroadcastDefaultSetting> findAll(Sort sort);
+	public List<Broadcast> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#setting.organization.organizationId)")
+	@PreAuthorize("hasRole('PUBLISHER'+#broadcast.organization.organizationId)")
 	@Override
-	public <S extends BroadcastDefaultSetting> S save(S setting);
+	public <S extends Broadcast> S save(S broadcast);
 
-	@PreAuthorize("hasRole('ADMIN'+#setting.organization.organizationId)")
+	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#broadcast.organization.organizationId)")
 	@Override
-	public void delete(BroadcastDefaultSetting setting);
+	public void delete(Broadcast broadcast);
 
 	/*
 	 * Search functions
