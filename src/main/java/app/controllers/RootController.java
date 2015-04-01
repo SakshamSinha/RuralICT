@@ -58,7 +58,7 @@ public class RootController {
 		}
 	}
 
-	@RequestMapping(value="/web/{org}/")
+	@RequestMapping("/web/{org}/")
 	public String organizationRoot(@PathVariable String org, Model model) {
 		Organization organization = organizationRepository.findByAbbreviation(org);
 		model.addAttribute("organization", organization);
@@ -69,7 +69,7 @@ public class RootController {
 	 * We want there to be a trailing slash after the organization, so that AngularJS understands that it needs to
 	 * look for resources under the organization, and not at the same path level.
 	 */
-	@RequestMapping(value="/web/{org}")
+	@RequestMapping("/web/{org}")
 	public String organizationRootWithoutSlash(@PathVariable String org) {
 		return "redirect:/web/"+org+"/";
 	}
