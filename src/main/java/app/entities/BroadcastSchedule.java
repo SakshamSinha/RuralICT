@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Type;
+
 import app.entities.broadcast.Broadcast;
 
 import java.sql.Timestamp;
@@ -24,10 +26,12 @@ public class BroadcastSchedule implements Serializable {
 	@Column(name="broadcast_schedule_id")
 	private int broadcastScheduleId;
 
-	private int cancelled;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean cancelled;
 
 	@Column(name="send_to_all")
-	private int sendToAll;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean sendToAll;
 
 	private Timestamp time;
 
@@ -46,7 +50,7 @@ public class BroadcastSchedule implements Serializable {
 	public BroadcastSchedule(Broadcast broadcast, Timestamp time, boolean sendToAll) {
 		this.broadcast = broadcast;
 		this.time = time;
-		this.sendToAll = sendToAll ? 1 : 0;
+		this.sendToAll = sendToAll;
 	}
 
 	public int getBroadcastScheduleId() {
@@ -58,19 +62,19 @@ public class BroadcastSchedule implements Serializable {
 	}
 
 	public boolean getCancelled() {
-		return this.cancelled != 0;
+		return this.cancelled;
 	}
 
 	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled ? 1 : 0;
+		this.cancelled = cancelled;
 	}
 
 	public boolean getSendToAll() {
-		return this.sendToAll != 0;
+		return this.sendToAll;
 	}
 
 	public void setSendToAll(boolean sendToAll) {
-		this.sendToAll = sendToAll ? 1 : 0;
+		this.sendToAll = sendToAll;
 	}
 
 	public Timestamp getTime() {

@@ -29,7 +29,7 @@ public class AuthenticatedUser implements UserDetails {
 
 		username = user.getEmail();
 		if (username == null || username.isEmpty()) {
-			UserPhoneNumber number = userPhoneNumberRepository.findByUserAndPrimary(user, 1);
+			UserPhoneNumber number = userPhoneNumberRepository.findByUserAndPrimaryTrue(user);
 			username = number.getPhoneNumber();
 			if (username == null || username.isEmpty())
 				username = "@User" + user.getUserId(); // we should probably never come to this

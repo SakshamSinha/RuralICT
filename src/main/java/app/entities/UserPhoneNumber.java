@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Type;
+
 
 /**
  * The persistent class for the user_phone_number database table.
@@ -18,7 +20,8 @@ public class UserPhoneNumber implements Serializable {
 	@Column(name="phone_number")
 	private String phoneNumber;
 
-	private int primary;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean primary;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
@@ -31,7 +34,7 @@ public class UserPhoneNumber implements Serializable {
 	public UserPhoneNumber(User user, String phoneNumber, boolean primary) {
 		this.user = user;
 		this.phoneNumber = phoneNumber;
-		this.primary = primary ? 1 : 0;
+		this.primary = primary;
 	}
 
 	public String getPhoneNumber() {
@@ -43,11 +46,11 @@ public class UserPhoneNumber implements Serializable {
 	}
 
 	public boolean getPrimary() {
-		return this.primary != 0;
+		return this.primary;
 	}
 
 	public void setPrimary(boolean primary) {
-		this.primary = primary ? 1 : 0;
+		this.primary = primary;
 	}
 
 	public User getUser() {

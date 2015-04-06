@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import app.entities.Order;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
@@ -43,7 +45,8 @@ public abstract class Message implements Serializable {
 
 	private String mode;
 
-	private int response;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean response;
 
 	private String type;
 
@@ -73,7 +76,7 @@ public abstract class Message implements Serializable {
 		this.mode = mode;
 		this.format = format;
 		this.type = type;
-		this.response = response ? 1 : 0;
+		this.response = response;
 		this.order = order;
 	}
 
@@ -110,11 +113,11 @@ public abstract class Message implements Serializable {
 	}
 
 	public boolean getResponse() {
-		return this.response != 0;
+		return this.response;
 	}
 
 	public void setResponse(boolean response) {
-		this.response = response ? 1 : 0;
+		this.response = response;
 	}
 
 	public String getType() {

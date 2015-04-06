@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Type;
+
 import app.entities.Group;
 import app.entities.Organization;
 import app.entities.User;
@@ -18,7 +20,8 @@ public class VoiceBroadcast extends Broadcast {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="voice_broadcast_draft")
-	private int voiceBroadcastDraft;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean voiceBroadcastDraft;
 
 	//bi-directional many-to-one association to Voice
 	@ManyToOne
@@ -33,15 +36,15 @@ public class VoiceBroadcast extends Broadcast {
 
 		super(organization, group, user, "text", mode, askFeedback, askOrder, askResponse, appOnly);
 		this.voice = voice;
-		this.voiceBroadcastDraft = voiceBroadcastDraft ? 1 : 0;
+		this.voiceBroadcastDraft = voiceBroadcastDraft;
 	}
 
 	public boolean getVoiceBroadcastDraft() {
-		return this.voiceBroadcastDraft != 0;
+		return this.voiceBroadcastDraft;
 	}
 
 	public void setVoiceBroadcastDraft(boolean voiceBroadcastDraft) {
-		this.voiceBroadcastDraft = voiceBroadcastDraft ? 1 : 0;
+		this.voiceBroadcastDraft = voiceBroadcastDraft;
 	}
 
 	public Voice getVoice() {

@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import app.entities.broadcast.Broadcast;
 
 
@@ -43,37 +45,48 @@ public class Organization implements Serializable {
 	private String defaultWebLocale;
 
 	@Column(name="enable_billing")
-	private int enableBilling;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean enableBilling;
 
 	@Column(name="enable_broadcasts")
-	private int enableBroadcasts;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean enableBroadcasts;
 
 	@Column(name="enable_feedbacks")
-	private int enableFeedbacks;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean enableFeedbacks;
 
 	@Column(name="enable_order_cancellation")
-	private int enableOrderCancellation;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean enableOrderCancellation;
 
 	@Column(name="enable_responses")
-	private int enableResponses;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean enableResponses;
 
 	@Column(name="enable_sms")
-	private int enableSms;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean enableSms;
 
 	@Column(name="inbound_call_ask_feedback")
-	private int inboundCallAskFeedback;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean inboundCallAskFeedback;
 
 	@Column(name="inbound_call_ask_order")
-	private int inboundCallAskOrder;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean inboundCallAskOrder;
 
 	@Column(name="inbound_call_ask_response")
-	private int inboundCallAskResponse;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean inboundCallAskResponse;
 
 	@Column(name="inbound_call_groupwise_latest_broadcast")
-	private int inboundCallGroupwiseLatestBroadcast;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean inboundCallGroupwiseLatestBroadcast;
 
 	@Column(name="inbound_call_play_latest_broadcast")
-	private int inboundCallPlayLatestBroadcast;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean inboundCallPlayLatestBroadcast;
 
 	@Column(name="incoming_sms_code")
 	private String incomingSmsCode;
@@ -194,91 +207,91 @@ public class Organization implements Serializable {
 	}
 
 	public boolean getEnableBilling() {
-		return this.enableBilling != 0;
+		return this.enableBilling;
 	}
 
 	public void setEnableBilling(boolean enableBilling) {
-		this.enableBilling = enableBilling ? 1 : 0;
+		this.enableBilling = enableBilling;
 	}
 
 	public boolean getEnableBroadcasts() {
-		return this.enableBroadcasts != 0;
+		return this.enableBroadcasts;
 	}
 
 	public void setEnableBroadcasts(boolean enableBroadcasts) {
-		this.enableBroadcasts = enableBroadcasts ? 1 : 0;
+		this.enableBroadcasts = enableBroadcasts;
 	}
 
 	public boolean getEnableFeedbacks() {
-		return this.enableFeedbacks != 0;
+		return this.enableFeedbacks;
 	}
 
 	public void setEnableFeedbacks(boolean enableFeedbacks) {
-		this.enableFeedbacks = enableFeedbacks ? 1 : 0;
+		this.enableFeedbacks = enableFeedbacks;
 	}
 
 	public boolean getEnableOrderCancellation() {
-		return this.enableOrderCancellation != 0;
+		return this.enableOrderCancellation;
 	}
 
 	public void setEnableOrderCancellation(boolean enableOrderCancellation) {
-		this.enableOrderCancellation = enableOrderCancellation ? 1 : 0;
+		this.enableOrderCancellation = enableOrderCancellation;
 	}
 
 	public boolean getEnableResponses() {
-		return this.enableResponses != 0;
+		return this.enableResponses;
 	}
 
 	public void setEnableResponses(boolean enableResponses) {
-		this.enableResponses = enableResponses ? 1 : 0;
+		this.enableResponses = enableResponses;
 	}
 
 	public boolean getEnableSms() {
-		return this.enableSms != 0;
+		return this.enableSms;
 	}
 
 	public void setEnableSms(boolean enableSms) {
-		this.enableSms = enableSms ? 1 : 0;
+		this.enableSms = enableSms;
 	}
 
 	public boolean getInboundCallAskFeedback() {
-		return this.inboundCallAskFeedback != 0;
+		return this.inboundCallAskFeedback;
 	}
 
 	public void setInboundCallAskFeedback(boolean inboundCallAskFeedback) {
-		this.inboundCallAskFeedback = inboundCallAskFeedback ? 1 : 0;
+		this.inboundCallAskFeedback = inboundCallAskFeedback;
 	}
 
 	public boolean getInboundCallAskOrder() {
-		return this.inboundCallAskOrder != 0;
+		return this.inboundCallAskOrder;
 	}
 
 	public void setInboundCallAskOrder(boolean inboundCallAskOrder) {
-		this.inboundCallAskOrder = inboundCallAskOrder ? 1 : 0;
+		this.inboundCallAskOrder = inboundCallAskOrder;
 	}
 
 	public boolean getInboundCallAskResponse() {
-		return this.inboundCallAskResponse != 0;
+		return this.inboundCallAskResponse;
 	}
 
 	public void setInboundCallAskResponse(boolean inboundCallAskResponse) {
-		this.inboundCallAskResponse = inboundCallAskResponse ? 1 : 0;
+		this.inboundCallAskResponse = inboundCallAskResponse;
 	}
 
 	public boolean getInboundCallGroupwiseLatestBroadcast() {
-		return this.inboundCallGroupwiseLatestBroadcast != 0;
+		return this.inboundCallGroupwiseLatestBroadcast;
 	}
 
 	public void setInboundCallGroupwiseLatestBroadcast(boolean inboundCallGroupwiseLatestBroadcast) {
-		this.inboundCallGroupwiseLatestBroadcast = inboundCallGroupwiseLatestBroadcast ? 1 : 0;
+		this.inboundCallGroupwiseLatestBroadcast = inboundCallGroupwiseLatestBroadcast;
 	}
 
 	public boolean getInboundCallPlayLatestBroadcast() {
-		return this.inboundCallPlayLatestBroadcast != 0;
+		return this.inboundCallPlayLatestBroadcast;
 	}
 
 	public void setInboundCallPlayLatestBroadcast(boolean inboundCallPlayLatestBroadcast) {
-		this.inboundCallPlayLatestBroadcast = inboundCallPlayLatestBroadcast ? 1 : 0;
+		this.inboundCallPlayLatestBroadcast = inboundCallPlayLatestBroadcast;
 	}
 
 	public String getIncomingSmsCode() {

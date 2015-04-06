@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 
 /**
  * The persistent class for the organization_membership database table.
@@ -27,10 +29,12 @@ public class OrganizationMembership implements Serializable {
 	private int organizationMembershipId;
 
 	@Column(name="is_admin")
-	private int isAdmin;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean isAdmin;
 
 	@Column(name="is_publisher")
-	private int isPublisher;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean isPublisher;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
@@ -48,8 +52,8 @@ public class OrganizationMembership implements Serializable {
 	public OrganizationMembership(Organization organization, User user, boolean isAdmin, boolean isPublisher) {
 		this.organization = organization;
 		this.user = user;
-		this.isAdmin = isAdmin ? 1 : 0;
-		this.isPublisher = isPublisher ? 1 : 0;
+		this.isAdmin = isAdmin;
+		this.isPublisher = isPublisher;
 	}
 
 	public int getOrganizationMembershipId() {
@@ -61,19 +65,19 @@ public class OrganizationMembership implements Serializable {
 	}
 
 	public boolean getIsAdmin() {
-		return this.isAdmin != 0;
+		return this.isAdmin;
 	}
 
 	public void setIsAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin ? 1 : 0;
+		this.isAdmin = isAdmin;
 	}
 
 	public boolean getIsPublisher() {
-		return this.isPublisher != 0;
+		return this.isPublisher;
 	}
 
 	public void setIsPublisher(boolean isPublisher) {
-		this.isPublisher = isPublisher ? 1 : 0;
+		this.isPublisher = isPublisher;
 	}
 
 	public User getUser() {

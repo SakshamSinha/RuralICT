@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
 import app.entities.Group;
@@ -43,16 +45,20 @@ public abstract class Broadcast implements Serializable {
 	private int broadcastId;
 
 	@Column(name="app_only")
-	private int appOnly;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean appOnly;
 
 	@Column(name="ask_feedback")
-	private int askFeedback;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean askFeedback;
 
 	@Column(name="ask_order")
-	private int askOrder;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean askOrder;
 
 	@Column(name="ask_response")
-	private int askResponse;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean askResponse;
 
 	@Column(name="broadcasted_time")
 	private Timestamp broadcastedTime;
@@ -99,10 +105,10 @@ public abstract class Broadcast implements Serializable {
 		this.publisher = publisher;
 		this.format = format;
 		this.mode = mode;
-		this.askFeedback = askFeedback ? 1 : 0;
-		this.askOrder = askOrder ? 1 : 0;
-		this.askResponse = askResponse ? 1 : 0;
-		this.appOnly = appOnly ? 1 : 0;
+		this.askFeedback = askFeedback;
+		this.askOrder = askOrder;
+		this.askResponse = askResponse;
+		this.appOnly = appOnly;
 	}
 
 	public int getBroadcastId() {
@@ -114,35 +120,35 @@ public abstract class Broadcast implements Serializable {
 	}
 
 	public boolean getAppOnly() {
-		return this.appOnly != 0;
+		return this.appOnly;
 	}
 
 	public void setAppOnly(boolean appOnly) {
-		this.appOnly = appOnly ? 1 : 0;
+		this.appOnly = appOnly;
 	}
 
 	public boolean getAskFeedback() {
-		return this.askFeedback != 0;
+		return this.askFeedback;
 	}
 
 	public void setAskFeedback(boolean askFeedback) {
-		this.askFeedback = askFeedback ? 1 : 0;
+		this.askFeedback = askFeedback;
 	}
 
 	public boolean getAskOrder() {
-		return this.askOrder != 0;
+		return this.askOrder;
 	}
 
 	public void setAskOrder(boolean askOrder) {
-		this.askOrder = askOrder ? 1 : 0;
+		this.askOrder = askOrder;
 	}
 
 	public boolean getAskResponse() {
-		return this.askResponse != 0;
+		return this.askResponse;
 	}
 
 	public void setAskResponse(boolean askResponse) {
-		this.askResponse = askResponse ? 1 : 0;
+		this.askResponse = askResponse;
 	}
 
 	public Timestamp getBroadcastedTime() {

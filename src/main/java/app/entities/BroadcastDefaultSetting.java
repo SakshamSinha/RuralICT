@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Type;
+
 
 /**
  * The persistent class for the broadcast_default_settings database table.
@@ -20,13 +22,16 @@ public class BroadcastDefaultSetting implements Serializable {
 	private int broadcastDefaultSettingsId;
 
 	@Column(name="ask_feedback")
-	private int askFeedback;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean askFeedback;
 
 	@Column(name="ask_order")
-	private int askOrder;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean askOrder;
 
 	@Column(name="ask_response")
-	private int askResponse;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean askResponse;
 
 	//bi-directional many-to-one association to Organization
 	@ManyToOne
@@ -44,9 +49,9 @@ public class BroadcastDefaultSetting implements Serializable {
 	public BroadcastDefaultSetting(Organization organization, Group group, boolean askFeedback, boolean askOrder, boolean askResponse) {
 		this.organization = organization;
 		this.group = group;
-		this.askFeedback = askFeedback ? 1 : 0;
-		this.askOrder = askOrder ? 1 : 0;
-		this.askResponse = askResponse ? 1 : 0;
+		this.askFeedback = askFeedback;
+		this.askOrder = askOrder;
+		this.askResponse = askResponse;
 	}
 
 	public int getBroadcastDefaultSettingsId() {
@@ -58,27 +63,27 @@ public class BroadcastDefaultSetting implements Serializable {
 	}
 
 	public boolean getAskFeedback() {
-		return this.askFeedback != 0;
+		return this.askFeedback;
 	}
 
 	public void setAskFeedback(boolean askFeedback) {
-		this.askFeedback = askFeedback ? 1 : 0;
+		this.askFeedback = askFeedback;
 	}
 
 	public boolean getAskOrder() {
-		return this.askOrder != 0;
+		return this.askOrder;
 	}
 
 	public void setAskOrder(boolean askOrder) {
-		this.askOrder = askOrder ? 1 : 0;
+		this.askOrder = askOrder;
 	}
 
 	public boolean getAskResponse() {
-		return this.askResponse != 0;
+		return this.askResponse;
 	}
 
 	public void setAskResponse(boolean askResponse) {
-		this.askResponse = askResponse ? 1 : 0;
+		this.askResponse = askResponse;
 	}
 
 	public Organization getOrganization() {

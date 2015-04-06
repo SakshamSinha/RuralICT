@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import app.entities.broadcast.VoiceBroadcast;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,7 +33,8 @@ public class Voice implements Serializable {
 	private int voiceId;
 
 	@Column(name="is_downloaded")
-	private int isDownloaded;
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean isDownloaded;
 
 	private String url;
 
@@ -46,7 +49,7 @@ public class Voice implements Serializable {
 	public Voice() {
 	}
 
-	public Voice(String url, int isDownloaded) {
+	public Voice(String url, boolean isDownloaded) {
 		this.url = url;
 		this.isDownloaded = isDownloaded;
 	}
@@ -61,11 +64,11 @@ public class Voice implements Serializable {
 
 	@JsonIgnore
 	public boolean getIsDownloaded() {
-		return this.isDownloaded != 0;
+		return this.isDownloaded;
 	}
 
 	public void setIsDownloaded(boolean isDownloaded) {
-		this.isDownloaded = isDownloaded ? 1 : 0;
+		this.isDownloaded = isDownloaded;
 	}
 
 	public String getUrl() {
