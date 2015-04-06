@@ -7,9 +7,9 @@ website.config(['$routeProvider', '$provide', '$httpProvider', 'cfpLoadingBarPro
 	$routeProvider
 		.when('/home', {templateUrl: 'homePage', title: "Home"})
 		.when('/products', {templateUrl: 'productsPage', title: "Products"})
-		.when('/group', {templateUrl: 'groupPage', title: "Group Operations"})
 		.when('/users', {templateUrl: 'usersPage', title: "Users"})
 		.when('/settings', {templateUrl: 'settingsPage', title: "Settings"})
+		.when('/group/:groupId', {templateUrl: function(params){ return 'groupPage/' + params.groupId; }, title: "Group Operations"})
 		.otherwise({redirectTo: '/home'});
 
 	$provide.factory('myHttpInterceptor', function($q) {
