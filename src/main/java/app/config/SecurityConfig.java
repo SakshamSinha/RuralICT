@@ -95,11 +95,13 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 						.and()
 					.httpBasic()
 						.and()
-					.sessionManagement()
-						.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-						.and()
 					.csrf()
 						.disable();
+					//.sessionManagement()
+					//	.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+					//
+					// ^ Ideally, you want a REST API to be stateless. But we're letting it be sessioned so that its
+					//   easy for the web interface to call the REST service without going through hoops.
 		}
 
 	}
