@@ -1,12 +1,20 @@
 package app.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import app.entities.broadcast.Broadcast;
-
-import java.util.List;
+import app.entities.message.Message;
 
 
 /**
@@ -28,6 +36,10 @@ public class Group implements Serializable {
 	//bi-directional many-to-one association to Broadcast
 	@OneToMany(mappedBy="group")
 	private List<Broadcast> broadcasts;
+
+	//bi-directional many-to-one association to Message
+	@OneToMany(mappedBy="group")
+	private List<Message> messages;
 
 	//bi-directional many-to-one association to BroadcastDefaultSetting
 	@OneToMany(mappedBy="group")
@@ -96,6 +108,28 @@ public class Group implements Serializable {
 		broadcast.setGroup(null);
 
 		return broadcast;
+	}
+
+	public List<Message> getMessages() {
+		return this.messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
+	}
+
+	public Message addMessage(Message message) {
+		getMessages().add(message);
+		message.setGroup(this);
+
+		return message;
+	}
+
+	public Message removeMessage(Message message) {
+		getMessages().remove(message);
+		message.setGroup(null);
+
+		return message;
 	}
 
 	public List<BroadcastDefaultSetting> getBroadcastDefaultSettings() {

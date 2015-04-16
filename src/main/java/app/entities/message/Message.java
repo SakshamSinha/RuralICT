@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import app.entities.Group;
 import app.entities.Order;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
@@ -59,6 +60,11 @@ public abstract class Message implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="source_broadcast_id")
 	private Broadcast broadcast;
+
+	//bi-directional many-to-one association to Group
+	@ManyToOne
+	@JoinColumn(name="group_id")
+	private Group group;
 
 	//uni-directional many-to-one association to Order
 	@ManyToOne
@@ -142,6 +148,14 @@ public abstract class Message implements Serializable {
 
 	public void setBroadcast(Broadcast broadcast) {
 		this.broadcast = broadcast;
+	}
+
+	public Group getGroup() {
+		return this.group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	public Order getOrder() {
