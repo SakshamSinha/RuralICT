@@ -3,7 +3,7 @@
  */
 
 //adding new user users.html
-$('#add-new').click(function(e) {  
+$("#page-content").on("click", "#add-new-user", function(e) {  
     e.preventDefault();
     var name = $.trim($('#new-user-name-input').val());
     var email = $.trim($('#new-user-email-input').val());
@@ -27,6 +27,5 @@ $('#add-new').click(function(e) {
     
     $('#new-product-input').val("");
     $('#new-price-input').val("");
-    alert("added");
    
 });

@@ -1,27 +1,23 @@
-$(document).ready(function(){
-$("#producttable #checkall").click(function () {
-        if ($("#producttable #checkall").is(':checked')) {
-            $("#producttable input[type=checkbox]").each(function () {
-                $(this).prop("checked", true);
-            });
-
-        } else {
-            $("#producttable input[type=checkbox]").each(function () {
-                $(this).prop("checked", false);
-            });
-        }
-    });
-    
-    //$("[data-toggle=modal]").tooltip();
+$("#page-content").on("click", "#producttable #checkall", function () {
+    if ($("#producttable #checkall").is(':checked')) {
+        $("#producttable input[type=checkbox]").each(function () {
+            $(this).prop("checked", true);
+        });
+    } else {
+        $("#producttable input[type=checkbox]").each(function () {
+            $(this).prop("checked", false);
+        });
+    }
+});
 
 //deleting a product entry
-$('#btnYesDelete').on('click', function(e) {  
+$("#page-content").on("click", "#btnYesDelete", function(e) {  
     e.preventDefault();
     $(this).parent('tr').remove();
 });
    
 //adding new product
-$('#add-new').click(function(e) {  
+$("#page-content").on("click", "#add-new-product", function(e) {  
     e.preventDefault();
     var product = $.trim($('#new-product-input').val());
     var price = $.trim($('#new-price-input').val());
@@ -42,13 +38,11 @@ $('#add-new').click(function(e) {
     
     $('#new-product-input').val("");
     $('#new-price-input').val("");
-    alert("added");
    
 });
 
-
 //Dynamic modal for edit
-$(document).on("click", ".open-edit-modal", function () {
+$("#page-content").on("click", ".open-edit-modal", function () {
     var productName = $(this).data('product');
     $(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
     $(".modal-body #update-product-input").html(productName);
@@ -64,19 +58,4 @@ $(document).on("click", ".open-edit-modal", function () {
     	document.getElementById("price0").innerHTML = cost;
     });
 
-});
-
-function getProductName() {
-    var product = document.getElementById("product0");
-    
-    return product;
-}
-
-function getProductPrice() {
-    var price = document.getElementById("price0").val();
-    
-    return price;
-}
-
-	
 });

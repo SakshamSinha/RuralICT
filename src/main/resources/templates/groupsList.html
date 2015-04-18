@@ -1,11 +1,9 @@
 <ul class="nav nav-list" id="group-names">
 	<li class="nav-header"><i class="icon-user"></i> Groups
-		<button class="btn btn-success btn-mini pull-right" id="add_new_group"
+		<button class="btn btn-success btn-mini pull-right"
 			data-toggle="modal" data-title="Add new group"
-			data-target="#add-new-group">
-			<i class="icon-white icon-plus pull-right" id="add_new_group"
-				data-toggle="modal" data-title="Add new group"
-				data-target="#add-new-group"></i>
+			data-target="#add-new-group-modal">
+			<i class="icon-white icon-plus pull-right"></i>
 		</button></li>
 	<li th:each="group : ${groups}"><a th:href="@{#/group/} + ${group.groupId}" th:text="${group.name}">Group name</a></li>
 </ul>

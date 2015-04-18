@@ -3,9 +3,7 @@
  */
 
 //add new group from index.html
-
-$('#add-new-group').click(function(e) {  
-	e.preventDefault();
+$("#add-new-group").click(function() {  
     var groupName = $.trim($('#new-group-name-input').val());
     var ul = document.getElementById("group-names");
 	var li = document.createElement("li");
