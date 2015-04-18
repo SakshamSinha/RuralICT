@@ -14,12 +14,12 @@ public interface OrganizationRepository extends JpaRepository<Organization, Inte
 	@PreAuthorize("hasRole('ADMIN'+#org.abbreviation) or "
 			+ "(#org.parentOrganization != null and hasRole('ADMIN'+#org.parentOrganization.abbreviation))")
 	@Override
-	public <S extends Organization> S save(S org);
+	public <S extends Organization> S save(@Param("org") S org);
 
 	@PreAuthorize("hasRole('ADMIN'+#org.abbreviation) or "
 			+ "(#org.parentOrganization != null and hasRole('ADMIN'+#org.parentOrganization.abbreviation))")
 	@Override
-	public void delete(Organization org);
+	public void delete(@Param("org") Organization org);
 
 	/*
 	 * Search functions

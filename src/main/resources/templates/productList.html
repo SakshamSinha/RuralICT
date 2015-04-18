@@ -1,9 +1,10 @@
+<div ng-controller="ProductsCtrl">
 <div class="row-fluid">
   <div class="page-header">
     <h1>Product List <small>Edit items</small></h1>
   </div>
   <div class="row-fluid">
-    <button class="btn btn-success" id = "add_new_product" data-toggle="modal" data-title="Add new product" data-target="#add">
+    <button class="btn btn-success" id = "add_new_product" data-toggle="modal" data-title="Add new product" data-target="#add-product-modal">
     <i class="icon-white icon-plus-sign"></i> Add new product</button>
     <br>
     <br>
@@ -24,7 +25,7 @@
           <td th:text="${product.unitRate}">50</td>
           <td>
             <p data-placement="top" data-toggle="tooltip" title="Edit">
-              <button class="open-edit-modal btn btn-primary btn-xs" data-title="Edit"  data-toggle="modal" th:attr="data-product=${product.name}" data-price="50" data-target="#edit" >
+              <button class="open-edit-modal btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" >
               <i class="icon-white icon-pencil"></i> Edit</button>
             </p>
           </td>
@@ -93,7 +94,7 @@
   </div>
   <!-- /.modal-dialog --> 
 </div>
-<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="HeadingAdd" aria-hidden="true">
+<div class="modal fade" id="add-product-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingAdd" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> </button>
@@ -105,6 +106,15 @@
 		    <label class="control-label" for="new-product-input">Product</label>
 			<div class="controls">
 			  <input type="text" class="input-large" id="new-product-input" placeholder="Potato" />
+			</div>
+		  </div>
+		  <div class="control-group">
+		    <label class="control-label" for="new-product-type-input">Product Type</label>
+			<div class="controls">
+				<select id="new-product-type-input">
+				  <option>-Select-</option>
+				  <option th:each="productType : ${productTypes}" th:value="'productTypes/' + ${productType.productTypeId}" th:text="${productType.name}">Product type</option>
+				</select>
 			</div>
 		  </div>
 		  <div class="control-group">
@@ -123,3 +133,44 @@
 </div>
 <!-- /.modal-content --> 
 <!-- /.modal-dialog -->
+
+<div class="modal fade" id="product-add-failed-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddFailed" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="HeadingAddFailed">Failed to add product</h4>
+      </div>
+      <div class="modal-body">
+	    <b>Technical details:</b><br/>
+        <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>{{failure}}</div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> OK</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+<div class="modal fade" id="product-add-success-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddSuccess" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="HeadingAddSuccess">Product added</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success"><span class="glyphicon glyphicon-success-sign"></span>Product <b>{{productName}}</b> successfully added!</div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="icon-white icon-remove"></i> OK</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+</div>

@@ -14,11 +14,11 @@ public interface UserPhoneNumberRepository extends JpaRepository<UserPhoneNumber
 
 	@PreAuthorize("principal.userId == #number.user.userId")
 	@Override
-	public <S extends UserPhoneNumber> S save(S number);
+	public <S extends UserPhoneNumber> S save(@Param("number") S number);
 
 	@PreAuthorize("principal.userId == #number.user.userId")
 	@Override
-	public void delete(UserPhoneNumber number);
+	public void delete(@Param("number") UserPhoneNumber number);
 
 	/*
 	 * Search functions

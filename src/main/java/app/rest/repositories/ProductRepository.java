@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,11 +36,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	@PreAuthorize("hasRole('ADMIN'+#product.productType.organization.abbreviation)")
 	@Override
-	public <S extends Product> S save(S product);
+	public <S extends Product> S save(@Param("product") S product);
 
 	@PreAuthorize("hasRole('ADMIN'+#product.productType.organization.abbreviation)")
 	@Override
-	public void delete(Product product);
+	public void delete(@Param("product") Product product);
 
 	/*
 	 * Search functions

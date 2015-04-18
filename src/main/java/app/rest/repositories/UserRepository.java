@@ -15,11 +15,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	@PreAuthorize("principal.userId == #user.userId")
 	@Override
-	public <S extends User> S save(S user);
+	public <S extends User> S save(@Param("user") S user);
 
 	@PreAuthorize("principal.userId == #user.userId")
 	@Override
-	public void delete(User user);
+	public void delete(@Param("user") User user);
 
 	/*
 	 * Search functions

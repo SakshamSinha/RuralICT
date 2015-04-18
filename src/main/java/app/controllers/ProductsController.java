@@ -28,12 +28,13 @@ public class ProductsController {
 	@Transactional
 	public String productsPage(@PathVariable String org, Model model) {
 		Organization organization = organizationRepository.findByAbbreviation(org);
-		List<ProductType> productTypes = organization.getProductTypes();
+		List<ProductType> productTypes = new ArrayList<ProductType>(organization.getProductTypes());
 		List<Product> products = new ArrayList<Product>();
 
 		for (ProductType productType : productTypes) {
 			products.addAll(productType.getProducts());
 		}
+		model.addAttribute("productTypes", productTypes);
 		model.addAttribute("products", products);
 		return "productList";
 	}

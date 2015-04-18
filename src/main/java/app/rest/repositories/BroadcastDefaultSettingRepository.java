@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,11 +36,11 @@ public interface BroadcastDefaultSettingRepository extends JpaRepository<Broadca
 
 	@PreAuthorize("hasRole('ADMIN'+#setting.organization.abbreviation)")
 	@Override
-	public <S extends BroadcastDefaultSetting> S save(S setting);
+	public <S extends BroadcastDefaultSetting> S save(@Param("setting") S setting);
 
 	@PreAuthorize("hasRole('ADMIN'+#setting.organization.abbreviation)")
 	@Override
-	public void delete(BroadcastDefaultSetting setting);
+	public void delete(@Param("setting") BroadcastDefaultSetting setting);
 
 	/*
 	 * Search functions

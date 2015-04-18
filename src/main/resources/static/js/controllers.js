@@ -1,6 +1,6 @@
 'use strict';
 
-var website = angular.module('ruralIvrs', ['ngRoute', 'angular-loading-bar'])
+var website = angular.module('ruralIvrs', ['ngRoute', 'ngResource', 'angular-loading-bar'])
 
 website.config(['$routeProvider', '$provide', '$httpProvider', 'cfpLoadingBarProvider', function($routeProvider, $provide, $httpProvider, cfpLoadingBarProvider) {
 
@@ -17,7 +17,7 @@ website.config(['$routeProvider', '$provide', '$httpProvider', 'cfpLoadingBarPro
 			'response': function(response) {
 				if ($(response.data).filter('title').text().search('Login') != -1) {
 					/*
-					 * Assuming the login page has the word 'Login' in it. Is there a better way without losing
+					 * Assuming the login page's title has the word 'Login' in it. Is there a better way without losing
 					 * auto-redirect to /login ?  --Ankit
 					 */
 					document.location.reload(true);
