@@ -7,6 +7,7 @@ website.config(['$routeProvider', '$provide', '$httpProvider', 'cfpLoadingBarPro
 	$routeProvider
 		.when('/home', {templateUrl: 'homePage', title: "Home"})
 		.when('/products', {templateUrl: 'productsPage', title: "Products"})
+		.when('/productquantity', {templateUrl: 'productQuantityPage', title: "ProductQuantity"})
 		.when('/users', {templateUrl: 'usersPage', title: "Users"})
 		.when('/settings', {templateUrl: 'settingsPage', title: "Settings"})
 		.when('/group/:groupId', {templateUrl: function(params){ return 'groupPage/' + params.groupId; }, title: "Group Operations"})
