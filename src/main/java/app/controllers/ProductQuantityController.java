@@ -28,7 +28,6 @@ public class ProductQuantityController {
 	@Transactional
 	public String productsPage(@PathVariable String org, Model model) {
 		Organization organization = organizationRepository.findByAbbreviation(org);
-	
 		return "productQuantityList";
 	}
 	

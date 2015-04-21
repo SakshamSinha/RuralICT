@@ -22,19 +22,19 @@ import app.rest.repositories.UserRepository;
 @Controller
 @RequestMapping("/web/{org}")
 public class UsersController {
-	
+
 	@Autowired
 	OrganizationRepository organizationRepository;
 
 	@Autowired
-	UserPhoneNumberRepository userphonenumberrepository;
+	UserPhoneNumberRepository userPhoneNumberRepository;
 	@Autowired
-	UserRepository userrepository;
-	
+	UserRepository userRepository;
+
 	static private class UserRow {
 		private User user;
 		private UserPhoneNumber phone;
-		
+
 		private String role;
 		public String getRole() {
 			return role;
@@ -58,47 +58,45 @@ public class UsersController {
 		}
 		public void setPhone(UserPhoneNumber phone) {
 			this.phone = phone;
-			
+
 		}
 	}
 
-	
+
 	@RequestMapping(value="/usersPage")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String usersPage(@PathVariable String org, Model model) {
-					
-			Organization organization = organizationRepository.findByAbbreviation(org);
-			System.out.println( organization.getName());
-			String admin=null;
-			List<OrganizationMembership> getOrganizationMemberships = organization.getOrganizationMemberships();
-		
-			List<UserRow> phoneNumber = new ArrayList<UserRow>();
-			for (OrganizationMembership OrganizationMembership :getOrganizationMemberships) {
-				
-					UserPhoneNumber users = userphonenumberrepository.findByUserAndPrimaryTrue(OrganizationMembership.getUser());
-	       			System.out.println(OrganizationMembership.getIsAdmin()==true && OrganizationMembership.getIsPublisher()==false);
-	       			if(OrganizationMembership.getIsAdmin()==true && OrganizationMembership.getIsPublisher()==false){
-	       				 admin="Admin";
-	       			}
-	       			else if(OrganizationMembership.getIsPublisher()==true && OrganizationMembership.getIsAdmin()==false){
-	       				admin="Publisher";
-	       			}
-	       			else if(OrganizationMembership.getIsAdmin()==false && OrganizationMembership.getIsPublisher()==false){
-	       				 admin="User";
-	       			}
-	       			else if(OrganizationMembership.getIsPublisher()==true && OrganizationMembership.getIsAdmin()==true){
-	       				admin="Member Publisher";
-	       			}
-	       			System.out.println(OrganizationMembership.getOrganization());
-	       			UserRow row = new UserRow(OrganizationMembership.getUser(), users , admin );
-	       			phoneNumber.add(row);
-	       			
-				}
-			model.addAttribute("organizationmemberships",phoneNumber);
-			
-	return "users";
+
+		Organization organization = organizationRepository.findByAbbreviation(org);
+		String role=null;
+		List<OrganizationMembership> membershipList = organization.getOrganizationMemberships();
+
+		List<UserRow> rows = new ArrayList<UserRow>();
+		for (OrganizationMembership organizationMembership :membershipList) {
+
+			UserPhoneNumber phoneNumber = userPhoneNumberRepository.findByUserAndPrimaryTrue(organizationMembership.getUser());
+
+			if(organizationMembership.getIsAdmin()==true && organizationMembership.getIsPublisher()==false){
+				role="Admin";
+			}
+			else if(organizationMembership.getIsPublisher()==true && organizationMembership.getIsAdmin()==false){
+				role="Publisher";
+			}
+			else if(organizationMembership.getIsAdmin()==false && organizationMembership.getIsPublisher()==false){
+				role="User";
+			}
+			else if(organizationMembership.getIsPublisher()==true && organizationMembership.getIsAdmin()==true){
+				role="Member Publisher";
+			}
+
+			UserRow row = new UserRow(organizationMembership.getUser(), phoneNumber , role );
+			rows.add(row);
+
+		}
+		model.addAttribute("organizationMemberships",rows);
+		return "users";
 	}
-	
-	
+
+
 }
