@@ -1,160 +1,179 @@
 <div class="row-fluid">
-  <div class="page-header">
-    <h1 th:text="${group.name}">Parent Group <small>Group operations</small></h1>
-  </div>
-</div>  
+	<div class="page-header">
+		<h1 th:text="${group.name}">
+			Parent Group <small>Group operations</small>
+		</h1>
+	</div>
+</div>
 <ul class="nav nav-tabs top-tab-bar" id="interest_tabs">
-    <!--top level tabs-->
-  <li><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
-  <li><a href="#voice-message-response" data-toggle="tab">Voice Message Response</a></li>
-  <li><a href="#text-message-response" data-toggle="tab">Text Message Response</a></li>
-  <li><a href="#send-sms" data-toggle="tab">Send SMS</a></li>
-  <li><a href="#manage" data-toggle="tab">Manage</a></li>
+	<!--top level tabs-->
+	<li><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
+	<li><a href="#voice-message-response" data-toggle="tab">Voice
+			Message Response</a></li>
+	<li><a href="#text-message-response" data-toggle="tab">Text
+			Message Response</a></li>
+	<li><a href="#send-sms" data-toggle="tab">Send SMS</a></li>
+	<li><a href="#manage" data-toggle="tab">Manage</a></li>
 </ul>
 
 <!--top level tab content-->
 <div class="tab-content">
-    <!--all tab menu-->
-    <div id="voice-message-response" class="tab-pane">
-        <ul class="nav nav-tabs bottom-tab-bar" id="all_tabs">
-            <li><a href="#voice-message-response-inbox" data-toggle="tab">Inbox</a></li>
-            <li><a href="#voice-message-response-saved" data-toggle="tab">Saved</a></li>
-            <li><a href="#voice-message-response-processed" data-toggle="tab">Processed</a></li>
-            <li><a href="#voice-message-response-feedback" data-toggle="tab">Feedback</a></li>
-        </ul>
-        <!--all tab content-->
-    	<div class="tab-content">
-        <div id="voice-message-response-inbox" class="tab-pane">
-            <i>voice-message-response-inbox</i>
-        </div>
-        <div id="voice-message-response-saved" class="tab-pane">
-            <i>voice-message-response-saved</i>
-        </div>
-        <div id="voice-message-response-processed" class="tab-pane">
-            <i>voice-message-response-processed</i>
-        </div>
-        <div id="voice-message-response-feedback" class="tab-pane">
-            <i>voice-message-response-feedback</i>
-        </div>
-    </div>
-    </div>
-
-    <!--brands tab menu-->
-    <div id="broadcast" class="tab-pane">
-        <ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
-            <li><a href="#broadcast-voice-message" data-toggle="tab">Voice Message</a></li>
-            <li><a href="#broadcast-text-message" data-toggle="tab">Text Message</a></li>
-        </ul>
-        <!--brands tab content-->
+	<!--all tab menu-->
+	<div id="voice-message-response" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="all_tabs">
+			<li><a href="#voice-message-response-inbox" data-toggle="tab">Inbox</a></li>
+			<li><a href="#voice-message-response-saved" data-toggle="tab">Saved</a></li>
+			<li><a href="#voice-message-response-processed"
+				data-toggle="tab">Processed</a></li>
+			<li><a href="#voice-message-response-feedback" data-toggle="tab">Feedback</a></li>
+			<li><a href="#voice-message-response-response" data-toggle="tab">Response</a>
+		</ul>
+		<!--all tab content-->
 		<div class="tab-content">
-		    <div id="broadcast-voice-message" class="tab-pane">
-		        <i>broadcast-voice-message</i>
-		    </div>
-		    <div id="broadcast-text-message" class="tab-pane">
-		        <i>broadcast-text-message</i>
-		    </div>
+			<div id="voice-message-response-inbox" class="tab-pane">
+				<i>voice-message-response-inbox</i>
+			</div>
+			<div id="voice-message-response-saved" class="tab-pane">
+				<i>voice-message-response-saved</i>
+			</div>
+			<div id="voice-message-response-processed" class="tab-pane">
+				<i>voice-message-response-processed</i>
+			</div>
+			<div id="voice-message-response-feedback" class="tab-pane">
+				<i>voice-message-response-feedback</i>
+			</div>
+			<div id="voice-message-response-response" class="tab-pane">
+				<i>voice-message-response-response</i>
+			</div>
 		</div>
-    </div>
+	</div>
 
-    <!--media tab menu-->
-    <div id="text-message-response" class="tab-pane">
-        <ul class="nav nav-tabs bottom-tab-bar" id="media_tabs">
-            <li><a href="#text-message-response-inbox" data-toggle="tab">Inbox</a></li>
-            <li><a href="#text-message-response-accepted" data-toggle="tab">Accepted</a></li>
-            <li><a href="#text-message-response-rejected" data-toggle="tab">Rejected</a></li>
-            <li><a href="#text-message-response-response-binary" data-toggle="tab">Response(Yes/No)</a></li>
-            <li><a href="#text-message-response-feedback" data-toggle="tab">Feedback</a></li>
-            <li><a href="#text-message-response-default-message" data-toggle="tab">Default Message</a></li>
-        </ul>
-        <!--media tab content-->
+	<!--brands tab menu-->
+	<div id="broadcast" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
+			<li><a href="#broadcast-voice-message" data-toggle="tab">Voice
+					Message</a></li>
+			<li><a href="#broadcast-text-message" data-toggle="tab">Text
+					Message</a></li>
+		</ul>
+		<!--brands tab content-->
 		<div class="tab-content">
-		    <div id="text-message-response-inbox" class="tab-pane">
-		        <i>text-message-response-inbox</i>
-		    </div>
-		    <div id="text-message-response-accepted" class="tab-pane">
-		        <i>text-message-response-accepted</i>
-		    </div>
-		    <div id="text-message-response-rejected" class="tab-pane">
-		        <i>text-message-response-rejected</i>
-		    </div>
-		    <div id="text-message-response-response-binary" class="tab-pane">
-		        <i>text-message-response-response-binary</i>
-		    </div>
-		    <div id="text-message-response-feedback" class="tab-pane">
-		        <i>text-message-response-feedback</i>
-		    </div>
-		    <div id="text-message-response-default-message" class="tab-pane">
-		        <i>text-message-response-default-message</i>
-		    </div>
+			<div id="broadcast-voice-message" class="tab-pane">
+				<i>broadcast-voice-message</i>
+			</div>
+			<div id="broadcast-text-message" class="tab-pane">
+				<i>broadcast-text-message</i>
+			</div>
 		</div>
-    </div>
+	</div>
 
-    <!--music tab menu-->
-    <div id="send-sms" class="tab-pane">
-        <ul class="nav nav-tabs bottom-tab-bar" id="music_tabs">
-            <li><a href="#send-sms-outgoing-sms" data-toggle="tab">Outgoing SMS</a></li>
-        </ul>
-        <!--music tab content-->
+	<!--media tab menu-->
+	<div id="text-message-response" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="media_tabs">
+			<li><a href="#text-message-response-inbox" data-toggle="tab">Inbox</a></li>
+			<li><a href="#text-message-response-accepted" data-toggle="tab">Accepted</a></li>
+			<li><a href="#text-message-response-rejected" data-toggle="tab">Rejected</a></li>
+			<li><a href="#text-message-response-response-binary"
+				data-toggle="tab">Response(Yes/No)</a></li>
+			<li><a href="#text-message-response-feedback" data-toggle="tab">Feedback</a></li>
+			<li><a href="#text-message-response-default-message"
+				data-toggle="tab">Default Message</a></li>
+		</ul>
+		<!--media tab content-->
 		<div class="tab-content">
-		    <div id="send-sms-outgoing-sms" class="tab-pane">
-		        <i>send-sms-outgoing-sms</i>
-		    </div>
+			<div id="text-message-response-inbox" class="tab-pane">
+				<ng-include
+					th:attr="src='\'textInboxMessage/'+${group.groupId}+'\''"></ng-include>
+			</div>
+			<div id="text-message-response-accepted" class="tab-pane">
+				<i>text-message-response-accepted</i>
+			</div>
+			<div id="text-message-response-rejected" class="tab-pane">
+				<i>text-message-response-rejected</i>
+			</div>
+			<div id="text-message-response-response-binary" class="tab-pane">
+				<ng-include
+					th:attr="src='\'textMessage/'+ Response+'/' +${group.groupId}+'\''"></ng-include>
+			</div>
+			<div id="text-message-response-feedback" class="tab-pane">
+				<ng-include
+					th:attr="src='\'textMessage/'+ Feedback+'/' +${group.groupId}+'\''"></ng-include>
+			</div>
+			<div id="text-message-response-default-message" class="tab-pane">
+				<ng-include
+					th:attr="src='\'textMessage/'+ Default+'/' +${group.groupId}+'\''"></ng-include>
+			</div>
 		</div>
-    </div>
+	</div>
 
-    <!--public_figures tab menu-->
-    <div id="manage" class="tab-pane">
-        <ul class="nav nav-tabs bottom-tab-bar" id="public_figures_tabs">
-            <li><a href="#manage-members" data-toggle="tab">Members</a></li>
-            <li><a href="#manage-reports" data-toggle="tab">Reports</a></li>
-            <li><a href="#manage-settings" data-toggle="tab">Settings</a></li>
-        </ul>
-        <!--public_figures tab content-->
+	<!--music tab menu-->
+	<div id="send-sms" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="music_tabs">
+			<li><a href="#send-sms-outgoing-sms" data-toggle="tab">Outgoing
+					SMS</a></li>
+		</ul>
+		<!--music tab content-->
 		<div class="tab-content">
-		    <div id="manage-members" class="tab-pane">
-		        <i>manage-members</i>
-		    </div>
-		    <div id="manage-reports" class="tab-pane">
-		        <i>manage-reports</i>
-		    </div>
-		    <div id="manage-settings" class="tab-pane">
-		        <i>manage-settings</i>
-		    </div>
+			<div id="send-sms-outgoing-sms" class="tab-pane">
+				<ng-include
+					th:attr="src='\'outgoiningSmsList/'+${group.groupId}+'\''"></ng-include>
+			</div>
 		</div>
-    </div>
+	</div>
 
-    <!--sports tab menu-->
-    <div id="sports" class="tab-pane">
-        <ul class="nav nav-tabs bottom-tab-bar" id="sports_tabs">
-            <li><a href="#sports_popular" data-toggle="tab">Popular</a></li>
-            <li><a href="#sports_unique" data-toggle="tab">Unique</a></li>
-        </ul>
-        <!--sports tab content-->
+	<!--public_figures tab menu-->
+	<div id="manage" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="public_figures_tabs">
+			<li><a href="#manage-members" data-toggle="tab">Members</a></li>
+			<li><a href="#manage-reports" data-toggle="tab">Reports</a></li>
+			<li><a href="#manage-settings" data-toggle="tab">Settings</a></li>
+		</ul>
+		<!--public_figures tab content-->
 		<div class="tab-content">
-		    <div id="sports_popular" class="tab-pane">
-		        <i>sports_popular interests go here</i>
-		    </div>
-		    <div id="sports_unique" class="tab-pane">
-		        <i>sports_unique interests go here</i>
-		    </div>
+			<div id="manage-members" class="tab-pane">
+				<i>manage-members</i>
+			</div>
+			<div id="manage-reports" class="tab-pane">
+				<i>manage-reports</i>
+			</div>
+			<div id="manage-settings" class="tab-pane">
+		<i>manage-settings</i>
+			</div>
 		</div>
-    </div>
+	</div>
 
-  <!--tv/movies tab menu-->
-    <div id="tv_movies" class="tab-pane">
-        <ul class="nav nav-tabs bottom-tab-bar" id="tv_movies_tabs">
-            <li><a href="#tv_movies_popular" data-toggle="tab">Popular</a></li>
-            <li><a href="#tv_movies_unique" data-toggle="tab">Unique</a></li>
-        </ul>
-        <!--tv_movies tab content-->
+	<!--sports tab menu-->
+	<div id="sports" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="sports_tabs">
+			<li><a href="#sports_popular" data-toggle="tab">Popular</a></li>
+			<li><a href="#sports_unique" data-toggle="tab">Unique</a></li>
+		</ul>
+		<!--sports tab content-->
 		<div class="tab-content">
-		    <div id="tv_movies_popular" class="tab-pane">
-		        <i>tv_movies_popular interests go here</i>
-		    </div>
-		    <div id="tv_movies_unique" class="tab-pane">
-		        <i>tv_movies_unique interests go here</i>
-		    </div>
+			<div id="sports_popular" class="tab-pane">
+				<i>sports_popular interests go here</i>
+			</div>
+			<div id="sports_unique" class="tab-pane">
+				<i>sports_unique interests go here</i>
+			</div>
 		</div>
-    </div>
+	</div>
 
- </div>
+	<!--tv/movies tab menu-->
+	<div id="tv_movies" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="tv_movies_tabs">
+			<li><a href="#tv_movies_popular" data-toggle="tab">Popular</a></li>
+			<li><a href="#tv_movies_unique" data-toggle="tab">Unique</a></li>
+		</ul>
+		<!--tv_movies tab content-->
+		<div class="tab-content">
+			<div id="tv_movies_popular" class="tab-pane">
+				<i>tv_movies_popular interests go here</i>
+			</div>
+			<div id="tv_movies_unique" class="tab-pane">
+				<i>tv_movies_unique interests go here</i>
+			</div>
+		</div>
+	</div>
+
+</div>
