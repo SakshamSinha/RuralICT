@@ -31,7 +31,8 @@
 		<!--all tab content-->
 		<div class="tab-content">
 			<div id="voice-message-response-inbox" class="tab-pane">
-				<i>voice-message-response-inbox</i>
+				<ng-include
+					th:attr="src='\'voiceInboxMessages/'+ ${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="voice-message-response-saved" class="tab-pane">
 				<i>voice-message-response-saved</i>
@@ -40,10 +41,12 @@
 				<i>voice-message-response-processed</i>
 			</div>
 			<div id="voice-message-response-feedback" class="tab-pane">
-				<i>voice-message-response-feedback</i>
+				<ng-include
+					th:attr="src='\'voiceMessage/'+ Feedback+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="voice-message-response-response" class="tab-pane">
-				<i>voice-message-response-response</i>
+				<ng-include
+					th:attr="src='\'voiceMessage/'+ Response+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 		</div>
 	</div>
@@ -62,7 +65,7 @@
 				<i>broadcast-voice-message</i>
 			</div>
 			<div id="broadcast-text-message" class="tab-pane">
-				<i>broadcast-text-message</i>
+			<i>broadcast-text-message</i>
 			</div>
 		</div>
 	</div>
@@ -86,10 +89,12 @@
 					th:attr="src='\'textInboxMessage/'+${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="text-message-response-accepted" class="tab-pane">
-				<i>text-message-response-accepted</i>
+				<!-- <ng-include
+					th:attr="src='\'textAcceptRejectMessage/'+Accept+'/' +${group.groupId}+'\''"></ng-include> -->
 			</div>
 			<div id="text-message-response-rejected" class="tab-pane">
-				<i>text-message-response-rejected</i>
+				<!-- <ng-include
+					th:attr="src='\'textAcceptRejectMessage/'+Reject+'/' +${group.groupId}+'\''"></ng-include> -->
 			</div>
 			<div id="text-message-response-response-binary" class="tab-pane">
 				<ng-include
@@ -137,7 +142,7 @@
 				<i>manage-reports</i>
 			</div>
 			<div id="manage-settings" class="tab-pane">
-		<i>manage-settings</i>
+				<i>manage-settings</i>
 			</div>
 		</div>
 	</div>
