@@ -39,7 +39,7 @@ public class OutgoiningSmsList {
 			
 			if(message.getFormat().equalsIgnoreCase("text")){
 				broadcastedMessage.add(message);
-				model.addAttribute("outgoiningSms", broadcastedMessage);
+				model.addAttribute("outGoiningSms", broadcastedMessage);
 
 			}
 

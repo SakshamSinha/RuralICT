@@ -79,4 +79,28 @@ public class TextMessageListController {
 
 		return "textInboxMessage";
 	}
+
+	@RequestMapping(value="/textAcceptRejectMessage/{type}/{groupId}")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String textAcceptRejectMessage(@PathVariable String org, @PathVariable int groupId,@PathVariable String type, Model model) {
+
+		Group group = groupRepository.findOne(groupId);
+		List<Message> messageList = group.getMessages();
+		List textMessageList = new ArrayList();
+		for(Message message: messageList){
+
+			if(message.getType().equalsIgnoreCase("order") && message.getFormat().equalsIgnoreCase("text") && message.getOrder().getStatus().equals("Accept")&& type.equalsIgnoreCase("Accept")){
+				textMessageList.add(message);
+				model.addAttribute("textMessage",textMessageList);
+			}
+			else if(message.getType().equalsIgnoreCase("order") && message.getFormat().equalsIgnoreCase("text") && type.equalsIgnoreCase("Reject") && message.getOrder().getStatus().equalsIgnoreCase("Reject")){
+				textMessageList.add(message);
+				model.addAttribute("textMessage",textMessageList);
+			}
+
+		}
+
+		return "textMessages";
+	}
 }

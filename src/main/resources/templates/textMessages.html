@@ -1,4 +1,6 @@
+
 <div class="row-fluid">
+<div th:if="${textMessage !=null}">
 	<table class="table table-striped table-bordered table-condensed"
 		id="usertable">
 		<thead>
@@ -21,7 +23,12 @@
 			</tr>
 		</tbody>
 	</table>
+</div>
 
+<div th:if="${textMessage == null}">
+No New Message
+
+</div>
 </div>
 
 
