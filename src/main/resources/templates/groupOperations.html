@@ -89,12 +89,12 @@
 					th:attr="src='\'textInboxMessage/'+${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="text-message-response-accepted" class="tab-pane">
-				<!-- <ng-include
-					th:attr="src='\'textAcceptRejectMessage/'+Accept+'/' +${group.groupId}+'\''"></ng-include> -->
+				 <ng-include
+					th:attr="src='\'textAcceptRejectMessage/'+Accept+'/' +${group.groupId}+'\''"></ng-include> 
 			</div>
 			<div id="text-message-response-rejected" class="tab-pane">
-				<!-- <ng-include
-					th:attr="src='\'textAcceptRejectMessage/'+Reject+'/' +${group.groupId}+'\''"></ng-include> -->
+				 <ng-include
+					th:attr="src='\'textAcceptRejectMessage/'+Reject+'/' +${group.groupId}+'\''"></ng-include> 
 			</div>
 			<div id="text-message-response-response-binary" class="tab-pane">
 				<ng-include
@@ -142,7 +142,29 @@
 				<i>manage-reports</i>
 			</div>
 			<div id="manage-settings" class="tab-pane">
-				<i>manage-settings</i>
+				<form class="form-horizontal">
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label" for="name">Group Id</label>
+							<div class="controls">
+								<input type="text" class="input-xlarge" id="groupId"
+									th:value="${group.groupId}" />
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label" for="groupName">Group Name</label>
+							<div class="controls">
+								<input type="text" class="input-xlarge" id="groupName"
+									th:value="${group.name}" />
+							</div>
+						</div>
+
+						<div class="form-actions">
+							<input type="submit" class="btn btn-success" value="Save Deatils" />
+						</div>
+					</fieldset>
+				</form>
 			</div>
 		</div>
 	</div>

@@ -71,7 +71,7 @@ public class TextMessageListController {
 		List orderList = new ArrayList();
 		for(Message message: messageList){
 
-			if(message.getType().equalsIgnoreCase("order") && message.getFormat().equalsIgnoreCase("text")){
+			if(message.getType().equalsIgnoreCase("order") && message.getFormat().equalsIgnoreCase("text") && message.getFormat().equalsIgnoreCase("text") && message.getOrder().getStatus().equalsIgnoreCase("order")){
 				orderList.add(message);
 				model.addAttribute("textMessage",orderList);
 			}
