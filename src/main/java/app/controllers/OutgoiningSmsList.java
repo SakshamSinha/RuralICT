@@ -26,7 +26,7 @@ public class OutgoiningSmsList {
 	GroupRepository groupRepository;
 
 
-	@RequestMapping(value="/outgoiningSmsList/{groupId}")
+	@RequestMapping(value="/outGoingSmsList/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String outgoingSmsList(@PathVariable String org, @PathVariable int groupId, Model model ) {
@@ -39,7 +39,7 @@ public class OutgoiningSmsList {
 			
 			if(message.getFormat().equalsIgnoreCase("text")){
 				broadcastedMessage.add(message);
-				model.addAttribute("outGoiningSms", broadcastedMessage);
+				model.addAttribute("outGoingSms", broadcastedMessage);
 
 			}
 
