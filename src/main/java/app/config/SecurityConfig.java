@@ -18,10 +18,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import app.data.repositories.UserPhoneNumberRepository;
+import app.data.repositories.UserRepository;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
-import app.rest.repositories.UserPhoneNumberRepository;
-import app.rest.repositories.UserRepository;
 import app.security.AuthenticatedUser;
 
 @Configuration
