@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import app.data.repositories.UserRepository;
+import app.business.services.UserService;
 import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.util.Utils;
@@ -21,7 +21,7 @@ import app.util.Utils;
 public class RootController {
 
 	@Autowired
-	UserRepository userRepository;
+	UserService userService;
 
 	@RequestMapping("/")
 	public String contextRoot() {
@@ -40,17 +40,14 @@ public class RootController {
 	@RequestMapping("/web")
 	@Transactional
 	public String webRoot(Model model, HttpSession session) {
-		User user = Utils.getCurrentUser(userRepository);
-		List<OrganizationMembership> authenticated = new ArrayList<OrganizationMembership>();
 
 		/*
 		 * Right now, we're only letting admins access the web interface. So only take into consideration orgs
 		 * that the user is an admin of.
 		 */
-		for (OrganizationMembership m : user.getOrganizationMemberships()) {
-			if (m.getIsAdmin())
-				authenticated.add(m);
-		}
+		
+		User currentUser = userService.getCurrentUser();
+		List<OrganizationMembership> authenticated = userService.getAdminMembershipList(currentUser);
 
 		/*
 		 * If the user is an admin in only one org, forward them to that org, else
