@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.entities.Organization;
+import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
 
@@ -15,25 +17,21 @@ import app.entities.UserPhoneNumber;
  * from three different repos which makes managing of code little cumbersome. 
  */
 
+
+
 @Service
 public class UserRowService {
 	
 	@Autowired
 	UserService userService;
 	
-	/*
-	  
-	 Coming Soon
-	 
 	@Autowired
 	OrganizationService organizationService;
-	
-	*/
 	
 	/*
 	 * A Row class declared to return data to controller in nicer format
 	 */
-	static private class UserRow {
+	static public class UserRow {
 		private User user;
 		private UserPhoneNumber phone;
 
@@ -67,38 +65,24 @@ public class UserRowService {
 	/*
 	 * This method generates the list of user rows for a particular organization  
 	 */
-	public List<UserRow> getUserRowForOrg(String org){
+	public List<UserRow> getUserRowForOrganization(String org){
 		
-		/*
-		 
-		Coming Soon 
-		Organization organization = organizationService.getOrganizationByAbbr(org);
-		
-		*/
-		
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		String role=null;
 		
-		/* 
-		 
-		Coming Soon
-		List<OrganizationMembership> membershipList = organization.getOrganizationMembershipList(organization);
-		int organizationId = organizationService.getOrganizationId(organization);
-		
-		*/
+		List<OrganizationMembership> membershipList = organizationService.getOrganizationMembershipList(organization);
 		
 		List<UserRow> rows = new ArrayList<UserRow>();
 		
-		
-		/*
 		for (OrganizationMembership organizationMembership : membershipList) {
 			User user = organizationMembership.getUser();
 			UserPhoneNumber phoneNumber = userService.getUserPhoneNumberByPrimaryTrue(user);
-			role = userService.getRole(user,organizationId);
+			role = userService.getUserRole(user,organization);
 			
 			UserRow row = new UserRow(organizationMembership.getUser(), phoneNumber , role );
 			rows.add(row);
 		}
-		*/
+		
 		
 		return rows;
 	}
