@@ -1,7 +1,5 @@
 package app.business.controllers;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -9,9 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import app.data.repositories.OrganizationRepository;
-import app.entities.Group;
+import app.business.services.OrganizationService;
 import app.entities.Organization;
 
 @Controller
@@ -19,14 +15,14 @@ import app.entities.Organization;
 public class GroupsListController {
 
 	@Autowired
-	OrganizationRepository organizationRepository;
+	OrganizationService organizationService;
 
 	@RequestMapping(value="/groupsList")
 	@PreAuthorize("hasRole('MEMBER'+#org)")
 	@Transactional
 	public String groupsList(@PathVariable String org, Model model) {
-		Organization organization = organizationRepository.findByAbbreviation(org);
-		model.addAttribute("groups", new ArrayList<Group>(organization.getGroups()));
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		model.addAttribute("groups",organizationService.getOrganizationGroupList(organization));
 		return "groupsList";
 	}
 

@@ -6,21 +6,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import app.data.repositories.OrganizationRepository;
+import app.business.services.OrganizationService;
 import app.entities.Organization;
+
 
 @Controller
 @RequestMapping("/web/{org}")
 public class IndexController {
 
 	@Autowired
-	OrganizationRepository organizationRepository;
+	OrganizationService organizationService;
 
 	@RequestMapping(value="/")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String indexPage(@PathVariable String org, Model model) {
-		Organization organization = organizationRepository.findByAbbreviation(org);
+		
+	    Organization organization= organizationService.getOrganizationByAbbreviation(org);
 		model.addAttribute("organization", organization);
 		return "index";
 	}
