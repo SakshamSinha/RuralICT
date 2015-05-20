@@ -11,7 +11,9 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Organization;
 import app.entities.OrganizationMembership;
+import app.entities.User;
 
 public interface OrganizationMembershipRepository extends JpaRepository<OrganizationMembership, Integer> {
 	/*
@@ -49,5 +51,6 @@ public interface OrganizationMembershipRepository extends JpaRepository<Organiza
 	/*
 	 * Search functions
 	 */
+	public List<OrganizationMembership> findOrganizationMembershipByUserAndOrganization(User user, Organization organization);
 
 }
