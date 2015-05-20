@@ -11,7 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import app.data.repositories.OrganizationRepository;
+import app.business.services.OrganizationService;
+import app.business.services.ProductService;
 import app.entities.Organization;
 import app.entities.Product;
 import app.entities.ProductType;
@@ -21,19 +22,18 @@ import app.entities.ProductType;
 public class ProductsController {
 
 	@Autowired
-	OrganizationRepository organizationRepository;
+	OrganizationService organizationService;
+	@Autowired
+	ProductService productService;
 
 	@RequestMapping(value="/productsPage")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String productsPage(@PathVariable String org, Model model) {
-		Organization organization = organizationRepository.findByAbbreviation(org);
-		List<ProductType> productTypes = new ArrayList<ProductType>(organization.getProductTypes());
-		List<Product> products = new ArrayList<Product>();
-
-		for (ProductType productType : productTypes) {
-			products.addAll(productType.getProducts());
-		}
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		List<ProductType> productTypes = productService.getProductTypeList(organization);
+		List<Product> products = productService.getProductList(productTypes);
+		
 		model.addAttribute("productTypes", productTypes);
 		model.addAttribute("products", products);
 		return "productList";
