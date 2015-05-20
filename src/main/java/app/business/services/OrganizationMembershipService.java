@@ -23,34 +23,14 @@ public class OrganizationMembershipService {
 	 * Note here is that we can technically create many to many relation between these two objects.
 	 * Do we have any mechanism for that? 
 	 */
-	public OrganizationMembership getOrganizationMembership(User user, Organization organization){
-	
-		List<OrganizationMembership> organizationMembershipList =  origanizationMembershipRepository.findAll();
+	public OrganizationMembership getUserOrganizationMembership(User user, Organization organization){
 		
-		for(OrganizationMembership organizationMembership : organizationMembershipList){
-			
-			if(organizationMembership.getUser().equals(user) &&  organizationMembership.getOrganization().equals(organization)){
-				
-				return organizationMembership;
-			}
-		}
-		return null;
+		return origanizationMembershipRepository.findOrganizationMembershipByUserAndOrganization(user, organization).iterator().next();
 	}
 	
 	public List<OrganizationMembership> getOrganizationMembershipList(User user){
 		
-		List<OrganizationMembership> userMembershipList = new ArrayList<OrganizationMembership>();
-		
-		List<OrganizationMembership> organizationMembershipList =  origanizationMembershipRepository.findAll();
-		
-		for(OrganizationMembership organizationMembership : organizationMembershipList){
-			
-			if(organizationMembership.getUser().equals(user)){
-				
-				userMembershipList.add(organizationMembership);
-			}
-		}
-		return userMembershipList;
+		return user.getOrganizationMemberships();
 	}
 	
 	public List<OrganizationMembership> getOrganizationMembershipList(){
@@ -60,49 +40,7 @@ public class OrganizationMembershipService {
 	
 	public List<OrganizationMembership> getOrganizationMembershipList(Organization organization){
 		
-		List<OrganizationMembership> userMembershipList = new ArrayList<OrganizationMembership>();
-		
-		List<OrganizationMembership> organizationMembershipList =  origanizationMembershipRepository.findAll();
-		
-		for(OrganizationMembership organizationMembership : organizationMembershipList){
-			
-			if(organizationMembership.getOrganization().equals(organization)){
-				
-				userMembershipList.add(organizationMembership);
-			}
-		}
-		return userMembershipList;
+		return organization.getOrganizationMemberships();
 	}
 	
-	public List<OrganizationMembership> getAdminMembershipList(User user){
-		
-		List<OrganizationMembership> userMembershipList = new ArrayList<OrganizationMembership>();
-		
-		List<OrganizationMembership> organizationMembershipList =  origanizationMembershipRepository.findAll();
-		
-		for(OrganizationMembership organizationMembership : organizationMembershipList){
-			
-			if(organizationMembership.getUser().equals(user) && organizationMembership.getIsAdmin()){
-				
-				userMembershipList.add(organizationMembership);
-			}
-		}
-		return userMembershipList;
-	}
-	
-	public List<OrganizationMembership> getAdminMembershipList(Organization organization){
-		
-		List<OrganizationMembership> userMembershipList = new ArrayList<OrganizationMembership>();
-		
-		List<OrganizationMembership> organizationMembershipList =  origanizationMembershipRepository.findAll();
-		
-		for(OrganizationMembership organizationMembership : organizationMembershipList){
-			
-			if(organizationMembership.getOrganization().equals(organization) && organizationMembership.getIsAdmin()){
-				
-				userMembershipList.add(organizationMembership);
-			}
-		}
-		return userMembershipList;
-	}
 }

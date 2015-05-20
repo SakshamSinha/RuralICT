@@ -27,6 +27,8 @@ public class UserService {
 	@Autowired
 	UserPhoneNumberRepository userPhoneNumberRepository;
 	
+	@Autowired
+	OrganizationMembershipService organizationMembershipService;
 	
 	/*
 	 * Method to get organization memberships of user.
@@ -57,27 +59,12 @@ public class UserService {
 		return adminMemberships;
 	}
 	
-	/*
-	 * Method to get list of user memberships for particular organization.
-	 */
-	public OrganizationMembership getUserMembership(User user, Organization organization){
-		
-		for (OrganizationMembership userMembership : this.getUserMembershipList(user)) {
-			
-			if (userMembership.getOrganization().equals(organization)){
-				
-				return userMembership;
-			
-			}
-		}
-		return null;
-	}
 	
 	/*
 	 * Service layer function to get details of current user object.
 	 */
 	public User getCurrentUser(){
-		return Utils.getCurrentUser(userRepository);
+		return userRepository.findOne(Utils.getSecurityPrincipal().getUserId());
 	}
 	
 	/*
@@ -95,7 +82,7 @@ public class UserService {
 		
 		String role = null;
 		
-		OrganizationMembership organizationMembership = this.getUserMembership(user,organization);
+		OrganizationMembership organizationMembership = organizationMembershipService.getUserOrganizationMembership(user,organization);
 		
 		if(organizationMembership.getIsAdmin()==true && organizationMembership.getIsPublisher()==false){
 			role="Admin";
