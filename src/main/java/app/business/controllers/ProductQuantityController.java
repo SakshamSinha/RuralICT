@@ -1,8 +1,5 @@
 package app.business.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -11,23 +8,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import app.data.repositories.OrganizationRepository;
+import app.business.services.OrganizationService;
 import app.entities.Organization;
-import app.entities.Product;
-import app.entities.ProductType;
 
 @Controller
 @RequestMapping("/web/{org}")
 public class ProductQuantityController {
 
 	@Autowired
-	OrganizationRepository organizationRepository;
+	OrganizationService organizationService;
 
 	@RequestMapping(value="/productQuantityPage")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String productsPage(@PathVariable String org, Model model) {
-		Organization organization = organizationRepository.findByAbbreviation(org);
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		//No change in model here yet
 		return "productQuantityList";
 	}
 	
