@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import app.entities.Organization;
+import app.entities.PresetQuantity;
 import app.entities.Product;
 import app.entities.ProductType;
 import app.rest.repositories.OrganizationRepository;
@@ -28,6 +29,14 @@ public class ProductQuantityController {
 	@Transactional
 	public String productsPage(@PathVariable String org, Model model) {
 		Organization organization = organizationRepository.findByAbbreviation(org);
+		List<ProductType> productTypes = new ArrayList<ProductType>(organization.getProductTypes());
+		List<PresetQuantity> presetQuantity = new ArrayList<PresetQuantity>();
+
+		for (ProductType productType : productTypes) {
+			presetQuantity.addAll(productType.getPresetQuantities());
+		}
+		model.addAttribute("productTypes", productTypes);
+		model.addAttribute("products", presetQuantity);
 		return "productQuantityList";
 	}
 	

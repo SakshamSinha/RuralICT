@@ -1,3 +1,4 @@
+<div ng-controller="PresetQuantitiesCtrl">
 <div class="row-fluid">
   <div class="page-header">
     <h1>Product Quantity List <small>Edit items</small></h1>
@@ -18,10 +19,10 @@
        <!--  <th>Price</th> -->
       </thead>
       <tbody>
-        <tr >
+      <tr >
+          <tr th:each="product : ${products}">
           <td><input type="checkbox" class="checkthis" /></td>
-          <td > 1 </td>
-          <!-- <td th:text="${product.unitRate}">50</td> -->
+          <td th:text="${product.quantity}">quantity</td>
           <td>
             <p data-placement="top" data-toggle="tooltip" title="Edit">
               <button class="open-edit-modal btn btn-primary btn-xs" data-title="Edit"  data-toggle="modal" data-price="50" data-target="#edit" >
@@ -58,9 +59,9 @@
     <div class="modal-body">
       <form class="form-horizontal"> 
 		  <div class="control-group">
-		    <label class="control-label" id="update-product-input"></label>
+		    <label class="control-label" id="update-quantity-input"></label>
 			<div class="controls">
-			  <input type="text" class="input-small" id="update-price-input" />
+			  <input type="text" class="input-small" id="update-quantity-input" />
 			</div>
 		  </div>
 	  </form>
@@ -97,29 +98,72 @@
   <div class="modal-dialog">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> </button>
-      <h4 class="modal-title custom_align" id="HeadingEdit">Add New Product</h4>
+      <h4 class="modal-title custom_align" id="HeadingEdit">Add New Quantity</h4>
     </div>
     <div class="modal-body">
       <form class="form-horizontal"> 
 		  <div class="control-group">
-		    <label class="control-label" for="new-product-input">Product</label>
+		    <label class="control-label" for="new-quantity-input">Quantity</label>
 			<div class="controls">
-			  <input type="text" class="input-large" id="new-product-input" placeholder="Potato" />
+			  <input type="text" class="input-large" id="new-quantity-input" placeholder="1" />
 			</div>
 		  </div>
 		  <div class="control-group">
-		    <label class="control-label" for="new-price-input">Price</label>
 			<div class="controls">
-			  <input type="text" class="input-large" id="new-price-input" placeholder="45"/>
+			 <select id="new-product-type-input">
+				  <option>-Select-</option>
+				  <option th:each="productType : ${productTypes}" th:value="'productTypes/' + ${productType.productTypeId}" th:text="${productType.name}">Product type</option>
+				</select>
 			</div>
 		  </div>
 	  </form>
     </div>
   </div>
   <div class="modal-footer ">
-    <button type="button" class="btn btn-success" id="add-new" ><i class="icon-white icon-ok"></i> Add</button>
+    <button type="button" class="btn btn-success" id="add-new-quantity" ><i class="icon-white icon-ok"></i> Add</button>
     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button> 
   </div>
+</div>
+
+<div class="modal fade" id="quantity-add-failed-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddFailed" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="HeadingAddFailed">Failed to add quantity</h4>
+      </div>
+      <div class="modal-body">
+	    <b>Technical details:</b><br/>
+        <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>{{failure}}</div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> OK</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+<div class="modal fade" id="quantity-add-success-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddSuccess" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="HeadingAddSuccess">Quantity added</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success"><span class="glyphicon glyphicon-success-sign"></span>Quantity <b>{{productQuantity}}</b> successfully added!</div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="icon-white icon-remove"></i> OK</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
 </div>
 <!-- /.modal-content --> 
 <!-- /.modal-dialog -->
