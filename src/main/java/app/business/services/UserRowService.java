@@ -65,7 +65,7 @@ public class UserRowService {
 	/*
 	 * This method generates the list of user rows for a particular organization  
 	 */
-	public List<UserRow> getUserRowForOrganization(String org){
+	public List<UserRow> getUserRowsForOrganization(String org){
 		
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		String role=null;
