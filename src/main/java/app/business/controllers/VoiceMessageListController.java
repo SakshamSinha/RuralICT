@@ -33,11 +33,7 @@ public class VoiceMessageListController {
 		List voiceMessageList = new ArrayList<>();
 		for(Message message: messageList){
 
-			if(message.getFormat().equalsIgnoreCase("voice") && message.getType().equalsIgnoreCase("order") && type.equalsIgnoreCase("order") ){
-				voiceMessageList.add(message);
-				model.addAttribute("message",voiceMessageList);
-			}
-			else if(message.getFormat().equalsIgnoreCase("voice") && message.getType().equalsIgnoreCase("feedback") && type.equalsIgnoreCase("feedback")){
+			if(message.getFormat().equalsIgnoreCase("voice") && message.getType().equalsIgnoreCase("feedback") && type.equalsIgnoreCase("feedback")){
 
 				voiceMessageList.add(message);
 				model.addAttribute("message", voiceMessageList);
