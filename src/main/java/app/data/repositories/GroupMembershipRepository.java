@@ -11,7 +11,9 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Group;
 import app.entities.GroupMembership;
+import app.entities.User;
 
 public interface GroupMembershipRepository extends JpaRepository<GroupMembership, Integer> {
 	/*
@@ -45,6 +47,12 @@ public interface GroupMembershipRepository extends JpaRepository<GroupMembership
 	@PreAuthorize("hasRole('ADMIN'+#membership.group.organization.abbreviation)")
 	@Override
 	public void delete(@Param("membership") GroupMembership membership);
+	
+	public List<GroupMembership> findByUserAndGroup(User user,Group group);
+	
+	public List<GroupMembership> findByUser(User user);
+	
+	public List<GroupMembership> findByGroup(Group group);
 
 	/*
 	 * Search functions
