@@ -80,20 +80,4 @@ public class MessageService {
 	Order getOrder(Message message){  
 		return message.getOrder();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-    
-	
-	
 }
