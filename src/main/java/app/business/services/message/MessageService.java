@@ -1,6 +1,7 @@
 package app.business.services.message;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,27 +19,27 @@ public class MessageService {
 	
 	// Returns messages with 'Yes' Response for a group
 	List<Message> getPositiveResponseList(Group group) {
-		return messageRepository.findByGroupAndResponseAndType(group, true,"response");
+		return (new ArrayList<Message>(messageRepository.findByGroupAndResponseAndType(group, true,"response")));
 	}
 	
 	// Return messages with 'No' Response for a group
 	List<Message> getNegativeResponseList(Group group) {
-		return messageRepository.findByGroupAndResponseAndType(group, false,"response");
+		return (new ArrayList<Message>(messageRepository.findByGroupAndResponseAndType(group, false,"response")));
 	}
 	
 	// returns messages which are of type 'response' for a group
 	List<Message> getResponseList(Group group) {
-		return messageRepository.findByGroupAndType(group,"response");
+		return (new ArrayList<Message>(messageRepository.findByGroupAndType(group,"response")));
 	}
 	
 	// return messages which are of type 'feedback' for a group
 	List<Message> getFeedbackList(Group group) {
-		return messageRepository.findByGroupAndType(group,"feedback");
+		return (new ArrayList<Message>(messageRepository.findByGroupAndType(group,"feedback")));
 	}
 	
 	// returns messages which are of type 'order' for a group
 	List<Message> getOrderList(Group group) {
-		return messageRepository.findByGroupAndType(group,"order");
+		return (new ArrayList<Message>(messageRepository.findByGroupAndType(group,"order")));
 	}
 	
 	// adds new message to database
@@ -58,7 +59,7 @@ public class MessageService {
 	
 	// returns all messages for a group 
 	List<Message> getAllMessageList(Group group){
-		return messageRepository.findByGroup(group);
+		return (new ArrayList<Message>(messageRepository.findByGroup(group)));
 	}
 	
 	// returns messageId for a given message
