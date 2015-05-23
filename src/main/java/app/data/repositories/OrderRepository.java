@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.Order;
+import app.entities.Organization;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 	/*
@@ -45,5 +46,5 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	/*
 	 * Search functions
 	 */
-
+   
 }

@@ -16,58 +16,68 @@ public class MessageService {
 	@Autowired
 	MessageRepository messageRepository;
 	
-	// gives unchecked list errors
+	// Returns messages with 'Yes' Response for a group
 	List<Message> getPositiveResponseList(Group group) {
 		return messageRepository.findByGroupAndResponseAndType(group, true,"response");
-		// should it be new List<Messages>
 	}
 	
+	// Return messages with 'No' Response for a group
 	List<Message> getNegativeResponseList(Group group) {
 		return messageRepository.findByGroupAndResponseAndType(group, false,"response");
 	}
 	
+	// returns messages which are of type 'response' for a group
 	List<Message> getResponseList(Group group) {
 		return messageRepository.findByGroupAndType(group,"response");
 	}
 	
+	// return messages which are of type 'feedback' for a group
 	List<Message> getFeedbackList(Group group) {
 		return messageRepository.findByGroupAndType(group,"feedback");
 	}
 	
+	// returns messages which are of type 'order' for a group
 	List<Message> getOrderList(Group group) {
 		return messageRepository.findByGroupAndType(group,"order");
 	}
 	
+	// adds new message to database
 	void addMessage(Message message){
 		messageRepository.save(message);
-		
 	}
 	
+	// removes message from the database
 	void removeMessage(Message message){
 		messageRepository.delete(message);
 	}
 	
+	// returns message according to the messageID
 	Message getMessage(int messageId){
 		return messageRepository.findOne(messageId);
 	}
 	
+	// returns all messages for a group 
 	List<Message> getAllMessageList(Group group){
 		return messageRepository.findByGroup(group);
 	}
 	
-	int getMessageId(Message message){   // duplicate method
+	// returns messageId for a given message
+	int getMessageId(Message message){   
 		return message.getMessageId();
 	}
 	
-	String getMessageType(Message message){ // duplicate method
+	// returns type of the message
+	String getMessageType(Message message){ 
 		return message.getType();
 	}
 	
-	String getMessageFormat(Message message) {  // duplicate method
+	// returns format of the message
+	String getMessageFormat(Message message) {  
 		return message.getFormat(); 
 	}
 	
-	Order getOrder(Message message){    // duplicate method
+	// returns order created from the message
+	Order getOrder(Message message){  
 		return message.getOrder();
 	}
 	
