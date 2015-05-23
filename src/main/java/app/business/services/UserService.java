@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import app.data.repositories.UserPhoneNumberRepository;
 import app.data.repositories.UserRepository;
+import app.entities.Group;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
-import app.entities.UserPhoneNumber;
 import app.util.Utils;
 
 /*
@@ -23,9 +23,6 @@ public class UserService {
 	
 	@Autowired
 	UserRepository userRepository;
-	
-	@Autowired
-	UserPhoneNumberRepository userPhoneNumberRepository;
 	
 	@Autowired
 	OrganizationMembershipService organizationMembershipService;
@@ -68,14 +65,6 @@ public class UserService {
 	}
 	
 	/*
-	 * Get user phone number only if primary is set as true.
-	 */
-	public UserPhoneNumber getUserPhoneNumberByPrimaryTrue(User user){
-		
-		return userPhoneNumberRepository.findByUserAndPrimaryTrue(user);
-	}
-	
-	/*
 	 * Decide on the role that user plays.
 	 */
 	public String getUserRole(User user, Organization organization){
@@ -98,5 +87,46 @@ public class UserService {
 		}
 		
 		return role;
+	}
+
+	/*
+	 * add a user to database
+	 */
+	public void addUser(User user) {
+			
+		userRepository.save(user);		
+	}
+		
+	/*
+	 * delete a user from database
+	 */
+	public void removeUser(User user) {
+			
+			userRepository.delete(user);
+		
+	}
+	
+	/*
+	 * Get UserPhoneNumber object by phoneNumber
+	 */
+	public User getUser(int userId) {
+		
+		return userRepository.findOne(userId);
+	}
+	
+	/*
+	 * Get all users from database
+	 */
+	public List<User> getAllUserList() {
+		
+		return userRepository.findAll();
+	}
+	
+	/*
+	 * Returns userId of the user
+	 */
+	public int getUserId(User user) {
+		
+		return user.getUserId();
 	}
 }

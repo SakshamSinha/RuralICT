@@ -1,5 +1,7 @@
 package app.data.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,5 +27,7 @@ public interface UserPhoneNumberRepository extends JpaRepository<UserPhoneNumber
 	 */
 
 	UserPhoneNumber findByUserAndPrimaryTrue(@Param("user") User user);
+	
+	List<UserPhoneNumber> findByUser(@Param("user") User user);
 
 }

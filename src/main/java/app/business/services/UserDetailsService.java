@@ -20,10 +20,13 @@ import app.entities.UserPhoneNumber;
 
 
 @Service
-public class UserRowService {
+public class UserDetailsService {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserPhoneNumberService userPhoneNumberService;
 	
 	@Autowired
 	OrganizationService organizationService;
@@ -65,7 +68,7 @@ public class UserRowService {
 	/*
 	 * This method generates the list of user rows for a particular organization  
 	 */
-	public List<UserRow> getUserRowsForOrganization(String org){
+	public List<UserRow> getUserRowsByOrganization(String org){
 		
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		String role=null;
@@ -76,7 +79,7 @@ public class UserRowService {
 		
 		for (OrganizationMembership organizationMembership : membershipList) {
 			User user = organizationMembership.getUser();
-			UserPhoneNumber phoneNumber = userService.getUserPhoneNumberByPrimaryTrue(user);
+			UserPhoneNumber phoneNumber = userPhoneNumberService.getUserPhoneNumberByPrimaryTrue(user);
 			role = userService.getUserRole(user,organization);
 			
 			UserRow row = new UserRow(organizationMembership.getUser(), phoneNumber , role );
@@ -85,5 +88,29 @@ public class UserRowService {
 		
 		
 		return rows;
+	}
+	
+	public Boolean addUserDetails(UserRow userRow) {
+		try {
+			userService.addUser(userRow.getUser());
+			userPhoneNumberService.addUserPhoneNumber(userRow.getPhone());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public Boolean removeUserDetails(UserRow userRow) {
+		try {
+			userService.removeUser(userRow.getUser());
+			userPhoneNumberService.removeUserPhoneNumber(userRow.getPhone());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 }

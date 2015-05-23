@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Organization;
 import app.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -26,5 +27,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	 */
 
 	List<User> findByEmail(@Param("email") String email);
+	
+	List<User> findByOrganization(@Param("organization") Organization organization);
+	
+	List<User> findByGroup(@Param("group") Group group);
 
 }
