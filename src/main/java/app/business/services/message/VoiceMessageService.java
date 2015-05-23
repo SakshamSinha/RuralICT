@@ -24,11 +24,18 @@ public class VoiceMessageService {
 	@Transactional
 	public List<Message> getVoiceMessage(int groupId, String type) { 
 	    // Try changing generic raw list to parameterized list  //
+		
+		// Pass Group as parameter to function //
+		// Then no need of below line //
 		Group group = groupRepository.findOne(groupId);
+		
 		List<Message> messageList = group.getMessages();
 		List<Message> voiceMessageList = new ArrayList<>();
 		for(Message message: messageList){
 
+			
+			String format = message.getFormat();
+			String msgtype = message.getType();
 			if(message.getFormat().equalsIgnoreCase("voice") && message.getType().equalsIgnoreCase("order") && type.equalsIgnoreCase("order") ){
 				voiceMessageList.add(message);
 				
