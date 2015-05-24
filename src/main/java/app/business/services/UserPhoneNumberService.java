@@ -33,52 +33,26 @@ public class UserPhoneNumberService {
 	/*
 	 * add a phone number to database
 	 */
-	public Boolean addUserPhoneNumber(UserPhoneNumber userPhoneNumber) {
-		
-		try {
+	public void addUserPhoneNumber(UserPhoneNumber userPhoneNumber) {
 			userPhoneNumberRepository.save(userPhoneNumber);
-			return true;
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
 	}
 	
 	/*
 	 * delete a userPhoneNumber from database
 	 */
-	public Boolean removeUserPhoneNumber(UserPhoneNumber userPhoneNumber) {
-		
-		try {
+	public void removeUserPhoneNumber(UserPhoneNumber userPhoneNumber) {
 			
-			userPhoneNumberRepository.delete(userPhoneNumber);
-		}
-		catch(Exception e) {
-			
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
+		userPhoneNumberRepository.delete(userPhoneNumber);
 	}
 	
 	/*
 	 * Delete all numbers corresponding to a user
 	 */
-	public Boolean removeUserPhoneNumber(User user) {
-		
-		try {
+	public void removeUserPhoneNumber(User user) {
 			List<UserPhoneNumber> userPhoneNumberList = this.getAllUserPhoneNumberList(user);
 			
 			for(UserPhoneNumber userPhoneNumber: userPhoneNumberList) {	
 				this.removeUserPhoneNumber(userPhoneNumber);
-			}
-			return true;
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return false;
 		}
 	}
 	

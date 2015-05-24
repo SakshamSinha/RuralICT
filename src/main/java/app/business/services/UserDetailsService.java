@@ -34,7 +34,7 @@ public class UserDetailsService {
 	/*
 	 * A Row class declared to return data to controller in nicer format
 	 */
-	static public class UserRow {
+	static public class UserDetails {
 		private User user;
 		private UserPhoneNumber phone;
 
@@ -45,7 +45,7 @@ public class UserDetailsService {
 		public void setRole(String role) {
 			this.role = role;
 		}
-		public UserRow(User user, UserPhoneNumber primaryPhoneNo , String role) {
+		public UserDetails(User user, UserPhoneNumber primaryPhoneNo , String role) {
 			this.user = user;
 			this.phone = primaryPhoneNo;
 			this.role=role;
@@ -68,21 +68,21 @@ public class UserDetailsService {
 	/*
 	 * This method generates the list of user rows for a particular organization  
 	 */
-	public List<UserRow> getUserRowsByOrganization(String org){
+	public List<UserDetails> getUserDetailsByOrganization(String org){
 		
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		String role=null;
 		
 		List<OrganizationMembership> membershipList = organizationService.getOrganizationMembershipList(organization);
 		
-		List<UserRow> rows = new ArrayList<UserRow>();
+		List<UserDetails> rows = new ArrayList<UserDetails>();
 		
 		for (OrganizationMembership organizationMembership : membershipList) {
 			User user = organizationMembership.getUser();
 			UserPhoneNumber phoneNumber = userPhoneNumberService.getUserPhoneNumberByPrimaryTrue(user);
 			role = userService.getUserRole(user,organization);
 			
-			UserRow row = new UserRow(organizationMembership.getUser(), phoneNumber , role );
+			UserDetails row = new UserDetails(organizationMembership.getUser(), phoneNumber , role );
 			rows.add(row);
 		}
 		
@@ -90,27 +90,29 @@ public class UserDetailsService {
 		return rows;
 	}
 	
-	public Boolean addUserDetails(UserRow userRow) {
-		try {
-			userService.addUser(userRow.getUser());
-			userPhoneNumberService.addUserPhoneNumber(userRow.getPhone());
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
+	public void addUserDetails(UserDetails userDetails) {
+
+			userService.addUser(userDetails.getUser());
+			userPhoneNumberService.addUserPhoneNumber(userDetails.getPhone());
 	}
 	
-	public Boolean removeUserDetails(UserRow userRow) {
-		try {
-			userService.removeUser(userRow.getUser());
-			userPhoneNumberService.removeUserPhoneNumber(userRow.getPhone());
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
+	public void removeUserDetails(UserDetails userDetails) {
+
+			userService.removeUser(userDetails.getUser());
+			userPhoneNumberService.removeUserPhoneNumber(userDetails.getPhone());
+	}
+	
+	/*
+	 * Returns UserDetails for a given pair of user and organization
+	 */
+	public UserDetails getUserDetails(User user, Organization organization) {
+		return new UserDetails(user, userPhoneNumberService.getUserPhoneNumberByPrimaryTrue(user), userService.getUserRole(user,organization));
+	} 
+	 
+	/*
+	 * Returns UserDetails for a given user
+	 */
+	public UserDetails getUserDetails(User user) {
+		return new UserDetails(user, userPhoneNumberService.getUserPhoneNumberByPrimaryTrue(user), "");
 	}
 }

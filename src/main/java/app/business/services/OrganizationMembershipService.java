@@ -24,7 +24,7 @@ public class OrganizationMembershipService {
 	 */
 	public OrganizationMembership getUserOrganizationMembership(User user, Organization organization){
 		
-		return origanizationMembershipRepository.findOrganizationMembershipByUserAndOrganization(user, organization).iterator().next();
+		return origanizationMembershipRepository.findByUserAndOrganization(user, organization).iterator().next();
 	}
 	
 	public List<OrganizationMembership> getOrganizationMembershipList(User user){
@@ -55,9 +55,5 @@ public class OrganizationMembershipService {
 	public OrganizationMembership getOrganizationMembership(int organizationMembershipId) {
 		
 		return origanizationMembershipRepository.findOne(organizationMembershipId);
-	}
-	
-	int getOrganizationMembershipId(OrganizationMembership organizationMembership) {
-		return organizationMembership.getOrganizationMembershipId();
 	}
 }

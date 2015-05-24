@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.data.repositories.UserPhoneNumberRepository;
 import app.data.repositories.UserRepository;
-import app.entities.Group;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
@@ -107,7 +105,7 @@ public class UserService {
 	}
 	
 	/*
-	 * Get UserPhoneNumber object by phoneNumber
+	 * Get User object by userId
 	 */
 	public User getUser(int userId) {
 		
@@ -120,13 +118,5 @@ public class UserService {
 	public List<User> getAllUserList() {
 		
 		return userRepository.findAll();
-	}
-	
-	/*
-	 * Returns userId of the user
-	 */
-	public int getUserId(User user) {
-		
-		return user.getUserId();
 	}
 }
