@@ -85,4 +85,11 @@ public class MessageService {
 	List<Message> getMessageListByFormat(Group group, String format){
 		return (new ArrayList<Message>(messageRepository.findByGroupAndFormat(group, format)));
 	}
+	
+	/*
+	 * Returns messages of a given order status for a group 
+	 */
+	List<Message> getMessageListByOrderStatus(Group group, String format, String status){
+		return (new ArrayList<Message>(messageRepository.findByGroupAndFormatAndOrder_Status(group, format, status)));
+	}
 }

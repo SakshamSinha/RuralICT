@@ -19,6 +19,34 @@ public class VoiceMessageService extends MessageService {
 	 * Returns voice messages for a group  
 	 */
 	List<Message> getVoiceMessageList(Group group) {
-		return getMessageListByFormat(group,"voice");
+		return getMessageListByFormat(group, "voice");
+	}
+	
+	/*
+	 * Returns inbox voice messages for a group  
+	 */
+	List<Message> getInboxVoiceMessageList(Group group) {
+		return getMessageListByOrderStatus(group, "voice", "new");
+	}
+	
+	/*
+	 * Returns saved voice messages for a group  
+	 */
+	List<Message> getSavedVoiceMessageList(Group group) {
+		return getMessageListByOrderStatus(group, "voice", "saved");
+	}
+	
+	/*
+	 * Returns processed voice messages for a group  
+	 */
+	List<Message> getProcessedVoiceMessageList(Group group) {
+		return getMessageListByOrderStatus(group, "voice", "processed");
+	}
+	
+	/*
+	 * Returns rejected voice messages for a group  
+	 */
+	List<Message> getRejectedVoiceMessageList(Group group) {
+		return getMessageListByOrderStatus(group, "voice", "rejected");
 	}
 }
