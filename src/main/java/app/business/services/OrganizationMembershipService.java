@@ -1,6 +1,5 @@
 package app.business.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class OrganizationMembershipService {
 	 */
 	public OrganizationMembership getUserOrganizationMembership(User user, Organization organization){
 		
-		return origanizationMembershipRepository.findOrganizationMembershipByUserAndOrganization(user, organization).iterator().next();
+		return origanizationMembershipRepository.findByUserAndOrganization(user, organization).iterator().next();
 	}
 	
 	public List<OrganizationMembership> getOrganizationMembershipList(User user){
@@ -33,7 +32,7 @@ public class OrganizationMembershipService {
 		return user.getOrganizationMemberships();
 	}
 	
-	public List<OrganizationMembership> getOrganizationMembershipList(){
+	public List<OrganizationMembership> getAllOrganizationMembershipList(){
 		
 		return origanizationMembershipRepository.findAll();
 	}
@@ -43,4 +42,18 @@ public class OrganizationMembershipService {
 		return organization.getOrganizationMemberships();
 	}
 	
+	public void addOrganizationMembership(OrganizationMembership organizationMembership) {
+		
+		origanizationMembershipRepository.save(organizationMembership);
+	}
+	
+	public void removeOrganizationMembership(OrganizationMembership organizationMembership) {
+		
+		origanizationMembershipRepository.delete(organizationMembership);
+	}
+	
+	public OrganizationMembership getOrganizationMembership(int organizationMembershipId) {
+		
+		return origanizationMembershipRepository.findOne(organizationMembershipId);
+	}
 }
