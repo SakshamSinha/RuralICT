@@ -11,7 +11,12 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Group;
 import app.entities.Order;
+import app.entities.OrderItem;
+import app.entities.Organization;
+import app.entities.Product;
+import app.entities.message.Message;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 	/*
@@ -45,5 +50,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	/*
 	 * Search functions
 	 */
-
+     
+	public List<Order> findByOrganization(Organization organization);
+	
 }

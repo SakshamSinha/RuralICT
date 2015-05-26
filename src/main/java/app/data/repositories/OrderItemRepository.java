@@ -11,7 +11,9 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Group;
 import app.entities.OrderItem;
+import app.entities.Product;
 
 public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	/*
@@ -21,7 +23,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	@PostAuthorize("hasRole('ADMIN'+returnObject.order.organization.abbreviation)")
 	@Override
 	public OrderItem findOne(Integer id);
-
 	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.abbreviation)")
 	@Override
 	public List<OrderItem> findAll();
@@ -45,5 +46,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	/*
 	 * Search functions
 	 */
-
+	
+	public List<OrderItem> findByProduct(Product product);
+	//public List<OrderItem> findByProduct_Organization_Group(Group group);
 }
