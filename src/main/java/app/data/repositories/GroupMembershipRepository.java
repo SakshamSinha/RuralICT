@@ -48,14 +48,26 @@ public interface GroupMembershipRepository extends JpaRepository<GroupMembership
 	@Override
 	public void delete(@Param("membership") GroupMembership membership);
 	
-	public List<GroupMembership> findByUserAndGroup(User user,Group group);
+	/*
+	 * Search functions
+	 */
+	
+	public GroupMembership findByUserAndGroup(User user,Group group);
 	
 	public List<GroupMembership> findByUser(User user);
 	
 	public List<GroupMembership> findByGroup(Group group);
+	
+	public List<GroupMembership> findByGroupOrderByUser_NameAsc(Group group);
+	
+	public List<GroupMembership> findByUserOrderByGroup_NameAsc(User user);
+	
+	public List<GroupMembership> findAllByOrderByGroup_NameAsc();
+	
+	public List<GroupMembership> findAllByOrderByUser_NameAsc();
+	
+	
+	
 
-	/*
-	 * Search functions
-	 */
 
 }

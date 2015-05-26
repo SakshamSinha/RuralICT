@@ -16,92 +16,49 @@ import app.entities.User;
 public class GroupMembershipService {
 	@Autowired
 	GroupMembershipRepository groupMembershipRepository;
-	
-	public static Comparator<GroupMembership> GroupMembershipUserComparator = new Comparator<GroupMembership>() {
-
-		public int compare(GroupMembership g1, GroupMembership g2) {
-		   String UserName1 = g1.getUser().getName().toLowerCase();	   
-		   String UserName2 = g2.getUser().getName().toLowerCase();
-
-		   //ascending order
-		   return UserName1.compareTo(UserName2);  
-	    }};
-	    
-	public static Comparator<GroupMembership> GroupMembershipGroupComparator = new Comparator<GroupMembership>() {
-
-			public int compare(GroupMembership g1, GroupMembership g2) {
-			   String GroupName1 = g1.getGroup().getName().toLowerCase();	   
-			   String GroupName2 = g2.getUser().getName().toLowerCase();
-
-			   //ascending order
-			   return GroupName1.compareTo(GroupName2);   
-		    }};
 		
-		
-		
-	boolean isUserGroupMembership(User user, Group group){
-		List<GroupMembership> bool= groupMembershipRepository.findByUserAndGroup(user,group);
-		if (bool.equals("null"))
-			return false;
-		else
-			return true;
-		
+	public GroupMembership isUserGroupMembership(User user, Group group){
+		return groupMembershipRepository.findByUserAndGroup(user,group);
 	}
 	
-	List<GroupMembership> getGroupMembershipListByUser(User user){
-		return (new ArrayList<GroupMembership>(groupMembershipRepository.findByUser(user)));
-	}
-	List<GroupMembership> getGroupMembershipListByUserSorted(User user){
-		//There can be a better method to do this using custom queries
-		List<GroupMembership> groupMembershipListSortedByUserName = getGroupMembershipListByUser(user);
-		Collections.sort(groupMembershipListSortedByUserName,GroupMembershipUserComparator);
-		return groupMembershipListSortedByUserName;
+	public List<GroupMembership> getGroupMembershipListByUser(User user){
+		return groupMembershipRepository.findByUser(user);
 	}
 	
-	List<GroupMembership> getGroupMembershipListByGroup(Group group){
-		return (new ArrayList<GroupMembership>(groupMembershipRepository.findByGroup(group)));
+	public List<GroupMembership> getGroupMembershipListByUserSortedByGroupName(User user){
+		return groupMembershipRepository.findByUserOrderByGroup_NameAsc(user);
 	}
 	
-	List<GroupMembership> getGroupMembershipListByGroupSorted(Group group){
-		List<GroupMembership> groupMembershipListSortedByGroupName = getGroupMembershipListByGroup(group);
-		Collections.sort(groupMembershipListSortedByGroupName,GroupMembershipGroupComparator);
-		return groupMembershipListSortedByGroupName;
+	public List<GroupMembership> getGroupMembershipListByGroup(Group group){
+		return groupMembershipRepository.findByGroup(group);
 	}
 	
-	void addGroupMembership(GroupMembership groupMembership){
+	public List<GroupMembership> getGroupMembershipListByGroupSortedByUserName(Group group){
+		return groupMembershipRepository.findByGroupOrderByUser_NameAsc(group);
+	}
+	
+	public void addGroupMembership(GroupMembership groupMembership){
 		groupMembershipRepository.save(groupMembership);
 	}
 	
-	void removeGroupMembership(GroupMembership groupMembership){
+	public void removeGroupMembership(GroupMembership groupMembership){
 		groupMembershipRepository.delete(groupMembership);
 	}
 	
-	GroupMembership getGroupMembershipById(int groupMembershipId){
+	public GroupMembership getGroupMembershipById(int groupMembershipId){
 		return groupMembershipRepository.findOne(groupMembershipId);
 	}
 	
-	List<GroupMembership> getAllGroupMembershipList(){
-		return (new ArrayList<GroupMembership>(groupMembershipRepository.findAll()));
+	public List<GroupMembership> getAllGroupMembershipList(){
+		return groupMembershipRepository.findAll();
 	}
 	
-	List<GroupMembership> getAllGroupMembershipListSortedByUserName(){
-		List<GroupMembership> allGroupMembershipListSortedByUserName = getAllGroupMembershipList();
-		Collections.sort(allGroupMembershipListSortedByUserName,GroupMembershipUserComparator);
-		return allGroupMembershipListSortedByUserName;
-	}
-	List<GroupMembership> getAllGroupMembershipListSortedByGroupName(){
-		List<GroupMembership> allGroupMembershipListSortedByGroupName = getAllGroupMembershipList();
-		Collections.sort(allGroupMembershipListSortedByGroupName,GroupMembershipGroupComparator);
-		return allGroupMembershipListSortedByGroupName;
-		
+	public List<GroupMembership> getAllGroupMembershipListSortedByUserName(){
+		return groupMembershipRepository.findAllByOrderByUser_NameAsc();
 	}
 	
-
-	int getGroupMembershipId(GroupMembership groupMembership){
-		return groupMembership.getGroupMembershipId();
+	public List<GroupMembership> getAllGroupMembershipListSortedByGroupName(){
+		return groupMembershipRepository.findAllByOrderByGroup_NameAsc();
 	}
 	
-
-	
-
 }

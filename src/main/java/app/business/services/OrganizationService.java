@@ -27,8 +27,7 @@ public class OrganizationService {
 	}
 	
 	public List<Group> getOrganizationGroupList(Organization organization){
-		return (new ArrayList<Group>(organization.getGroups()));
-		
+		return organization.getGroups();
 	}
 	
 	public void addOrganization(Organization organization){
@@ -39,10 +38,9 @@ public class OrganizationService {
 		organizationRepository.delete(organization);
 	}
 	
-	void updateParentOrganization(Organization organization,Organization newParentOrganization){
+	public void updateParentOrganization(Organization organization,Organization newParentOrganization){
 		organization.getParentOrganization().removeSubOrganization(organization);
 		organization.setParentOrganization(newParentOrganization);
-		
 	}
 	
 	public Organization getOrganizationById(int organizationId){
@@ -50,7 +48,7 @@ public class OrganizationService {
 	}
 	
 	public List<Organization> getAllOrganizationList(){
-		return (new ArrayList<Organization> (organizationRepository.findAll()));
+		return organizationRepository.findAll();
 	}
 	
 	public List<Organization> getAllOrganizationListSortedByName(){

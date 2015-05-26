@@ -1,7 +1,5 @@
 package app.business.services;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
@@ -16,24 +14,23 @@ public class ProductTypeService {
 	@Autowired
 	ProductTypeRepository productTypeRepository;
 	
-	void addProductType(ProductType productType){
+	public void addProductType(ProductType productType){
 		productTypeRepository.save(productType);
-		
 	}
 	
-	void removeProductType(ProductType productType){
+	public void removeProductType(ProductType productType){
 		productTypeRepository.delete(productType);
 	}
 	
-	void getProductTypeById(int productTypeId){
+	public void getProductTypeById(int productTypeId){
 		productTypeRepository.findOne(productTypeId);
 		
 	}
 	
 	public List<ProductType> getAllProductTypeList(){
-		return (new ArrayList<ProductType>(productTypeRepository.findAll()));
-		
+		return productTypeRepository.findAll();
 	}
+	
 	public List<ProductType> getAllProductTypeListSortedByName(){
 		/*
 		 * The query can also be done by the statement new Sort(Sort.Direction.ASC, "name") in the repository as well. 

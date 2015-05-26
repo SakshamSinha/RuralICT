@@ -14,20 +14,19 @@ public class GroupService {
 	@Autowired
 	GroupRepository groupRepository;
 	
-	Group getGroup(int groupId){
+	public Group getGroup(int groupId){
 		return groupRepository.findOne(groupId);
 	}
 	
-	void addGroup(Group group){
+	public void addGroup(Group group){
 		groupRepository.save(group);
 	}
 	
-	void removeGroup(Group group){
+	public void removeGroup(Group group){
 		groupRepository.delete(group);
 	}
 	
-	void updateParentGroup(Group group,Group newParentGroup){
-		//what if the newParentGroup doesnt exist
+	public void updateParentGroup(Group group,Group newParentGroup){
 		group.getParentGroup().removeSubGroup(group);
 		group.setParentGroup(newParentGroup);
 	}
@@ -37,9 +36,6 @@ public class GroupService {
 	}
 	
 	public List<Group> getAllGroupListSortedByName(){
-		/*
-		 * The query can also be done by the statement public List<Organization> findAllByOrderByNameAsc(); in the repository as well. 
-		 */
 		return groupRepository.findAllByOrderByNameAsc();
 	}
 

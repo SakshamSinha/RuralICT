@@ -17,7 +17,7 @@ public class ProductService {
 	@Autowired
 	ProductRepository productRepository;
 	public List<ProductType> getProductTypeList(Organization organization){
-		return new ArrayList<ProductType>(organization.getProductTypes()); 
+		return organization.getProductTypes(); 
 	}
 	//Doubt regarding naming convention. Should it be getProductListByProductType or just getProductList
 	public List<Product> getProductList(List<ProductType> productTypes){
@@ -45,7 +45,7 @@ public class ProductService {
 	}
 	
 	public List<Product> getAllProductList(){
-		return (new ArrayList<Product> (productRepository.findAll()));
+		return productRepository.findAll();
 	}
 	
 	public List<Product> getAllProductListSortedByName(){
