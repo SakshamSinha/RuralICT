@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Group;
+import app.entities.Organization;
 import app.entities.broadcast.Broadcast;
 
 public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
@@ -45,5 +47,7 @@ public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
 	/*
 	 * Search functions
 	 */
-
+	List<Broadcast> findByOrganizationAndFormat(Organization organization, String format);
+	
+	List<Broadcast> findByGroupAndFormat(Group group, String format);
 }
