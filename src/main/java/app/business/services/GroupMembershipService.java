@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import app.data.repositories.GroupMembershipRepository;
 import app.entities.Group;
 import app.entities.GroupMembership;
+import app.entities.Organization;
 import app.entities.User;
 
 
@@ -61,4 +62,12 @@ public class GroupMembershipService {
 		return groupMembershipRepository.findAllByOrderByGroup_NameAsc();
 	}
 	
+	public List<GroupMembership> getGroupsByUserAndOrganization(User user,Organization organization){
+		return groupMembershipRepository.findByUserAndGroup_Organization(user,organization);
+	}
+	
+	public List<GroupMembership> getGroupsByUserAndOrganizationSorted(User user,Organization organization){
+		return groupMembershipRepository.findByUserAndGroup_OrganizationOrderByGroup_NameAsc(user,organization);
+	}
+
 }

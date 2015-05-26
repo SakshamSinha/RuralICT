@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.Group;
 import app.entities.GroupMembership;
+import app.entities.Organization;
 import app.entities.User;
 
 public interface GroupMembershipRepository extends JpaRepository<GroupMembership, Integer> {
@@ -66,8 +67,8 @@ public interface GroupMembershipRepository extends JpaRepository<GroupMembership
 	
 	public List<GroupMembership> findAllByOrderByUser_NameAsc();
 	
+	public List<GroupMembership> findByUserAndGroup_Organization(User user,Organization organization);
 	
-	
-
+	public List<GroupMembership> findByUserAndGroup_OrganizationOrderByGroup_NameAsc(User user,Organization organization);
 
 }

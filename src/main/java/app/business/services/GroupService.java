@@ -28,7 +28,7 @@ public class GroupService {
 	
 	public void updateParentGroup(Group group,Group newParentGroup){
 		group.getParentGroup().removeSubGroup(group);
-		group.setParentGroup(newParentGroup);
+		newParentGroup.addSubGroup(group);
 	}
 	
 	public List<Group> getAllGroupList(){

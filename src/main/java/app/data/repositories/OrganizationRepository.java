@@ -37,4 +37,6 @@ public interface OrganizationRepository extends JpaRepository<Organization, Inte
 	
 	public List<Organization> findAllByOrderByNameAsc();
 	
+	public Organization findByIvrNumber(@Param("ivr_number") String ivrNumber);
+	
 }

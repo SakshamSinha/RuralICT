@@ -19,7 +19,7 @@ public class ProductService {
 	public List<ProductType> getProductTypeList(Organization organization){
 		return organization.getProductTypes(); 
 	}
-	//Doubt regarding naming convention. Should it be getProductListByProductType or just getProductList
+	
 	public List<Product> getProductList(List<ProductType> productTypes){
 		List<Product> products = new ArrayList<Product>();
 		for (ProductType productType : productTypes){

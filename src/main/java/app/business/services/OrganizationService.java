@@ -40,7 +40,7 @@ public class OrganizationService {
 	
 	public void updateParentOrganization(Organization organization,Organization newParentOrganization){
 		organization.getParentOrganization().removeSubOrganization(organization);
-		organization.setParentOrganization(newParentOrganization);
+		newParentOrganization.addSubOrganization(organization);
 	}
 	
 	public Organization getOrganizationById(int organizationId){
@@ -58,6 +58,9 @@ public class OrganizationService {
 		return organizationRepository.findAllByOrderByNameAsc();
 	}
 	
+	public Organization getOrganizationByIVRS(String ivrNumber){
+		return organizationRepository.findByIvrNumber(ivrNumber);
+	}
 	
 }
 

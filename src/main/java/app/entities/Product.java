@@ -41,17 +41,12 @@ public class Product implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="product_type_id")
 	private ProductType productType;
-	
-	//bi-directional many-to-one association to Organization. Added by Abhishek.Might need to be changed.
-	@ManyToOne
-	@JoinColumn(name="organization_id")
-	private Organization organization;
 
 	public Product() {
 	}
 
 	public Product(String name, ProductType productType, float unitRate, int quantity, String description,
-			String imageUrl, Organization organization) {
+			String imageUrl) {
 
 		this.name = name;
 		this.productType = productType;
@@ -59,19 +54,10 @@ public class Product implements Serializable {
 		this.quantity = quantity;
 		this.description = description;
 		this.imageUrl = imageUrl;
-		this.organization = organization;
 	}
 
 	public int getProductId() {
 		return this.productId;
-	}
-
-	public Organization getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(Organization organization) {
-		this.organization = organization;
 	}
 
 	public void setProductId(int productId) {
