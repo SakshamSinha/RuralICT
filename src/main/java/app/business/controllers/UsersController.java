@@ -11,22 +11,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import app.business.services.UserRowService;
-import app.business.services.UserRowService.UserRow;
+import app.business.services.UserViewService;
+import app.business.services.UserViewService.UserDetails;
 
 @Controller
 @RequestMapping("/web/{org}")
 public class UsersController {
 
 	@Autowired
-	UserRowService userRowService; 
+	UserViewService userViewService; 
 
 	@RequestMapping(value="/usersPage")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String usersPage(@PathVariable String org, Model model) {
 
-		List<UserRow> rows = userRowService.getUserRowsForOrganization(org);
+		List<UserDetails> rows = userViewService.getUserDetailsByOrganization(org);
 		
 		model.addAttribute("organizationMemberships",rows);
 		return "users";

@@ -3,12 +3,13 @@ package app.business.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
 
 import app.data.repositories.UserPhoneNumberRepository;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
 
+@Service
 public class UserPhoneNumberService {
 	
 	@Autowired
@@ -17,7 +18,7 @@ public class UserPhoneNumberService {
 	/*
 	 * Get user phone number only if primary is set as true.
 	 */
-	public UserPhoneNumber getUserPhoneNumberByPrimaryTrue(User user){
+	public UserPhoneNumber getUserPrimaryPhoneNumber(User user){
 		
 		return userPhoneNumberRepository.findByUserAndPrimaryTrue(user);
 	}

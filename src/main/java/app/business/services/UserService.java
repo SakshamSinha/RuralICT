@@ -100,7 +100,7 @@ public class UserService {
 	 */
 	public void removeUser(User user) {
 			
-			userRepository.delete(user);
+		userRepository.delete(user);
 		
 	}
 	

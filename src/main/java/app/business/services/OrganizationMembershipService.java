@@ -24,7 +24,7 @@ public class OrganizationMembershipService {
 	 */
 	public OrganizationMembership getUserOrganizationMembership(User user, Organization organization){
 		
-		return origanizationMembershipRepository.findByUserAndOrganization(user, organization).iterator().next();
+		return origanizationMembershipRepository.findByUserAndOrganization(user, organization);
 	}
 	
 	public List<OrganizationMembership> getOrganizationMembershipList(User user){
