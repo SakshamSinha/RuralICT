@@ -19,16 +19,11 @@ public class OrganizationService {
 	OrganizationRepository organizationRepository;
 	public Organization getOrganizationByAbbreviation(String org)
 	{
-		Organization organization = organizationRepository.findByAbbreviation(org);
-		return organization;	
+		return organizationRepository.findByAbbreviation(org);
 	}
 	
 	public List<OrganizationMembership> getOrganizationMembershipList(Organization organization) {
 		return organization.getOrganizationMemberships();
-	}
-	
-	public int getOrganizationId(Organization organization) {
-		return organization.getOrganizationId();
 	}
 	
 	public List<Group> getOrganizationGroupList(Organization organization){
@@ -44,26 +39,27 @@ public class OrganizationService {
 		organizationRepository.delete(organization);
 	}
 	
+	void updateParentOrganization(Organization organization,Organization newParentOrganization){
+		organization.getParentOrganization().removeSubOrganization(organization);
+		organization.setParentOrganization(newParentOrganization);
+		
+	}
+	
 	public Organization getOrganizationById(int organizationId){
-		Organization organization = organizationRepository.findOne(organizationId);
-		return organization;
+		return organizationRepository.findOne(organizationId);
 	}
 	
 	public List<Organization> getAllOrganizationList(){
 		return (new ArrayList<Organization> (organizationRepository.findAll()));
 	}
+	
 	public List<Organization> getAllOrganizationListSortedByName(){
 		/*
-		 * The query can also be done by the statement public List<Organization> findAllByOrderByNameAsc(); in the repository as well. 
+		 * The query can also be done by the statement new Sort(Sort.Direction.ASC, "name" in the repository as well. 
 		 */
-		List<Organization> organizationSorted = organizationRepository.findAll(sortByName());
-		return organizationSorted;
-	}
-	private Sort sortByName(){
-		return new Sort(Sort.Direction.ASC, "name");
+		return organizationRepository.findAllByOrderByNameAsc();
 	}
 	
-
 	
-
 }
+

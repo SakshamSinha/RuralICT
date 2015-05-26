@@ -188,7 +188,6 @@ public class Group implements Serializable {
 	public Group removeSubGroup(Group subGroup) {
 		getSubGroups().remove(subGroup);
 		subGroup.setParentGroup(null);
-
 		return subGroup;
 	}
 
@@ -210,7 +209,6 @@ public class Group implements Serializable {
 	public GroupMembership removeGroupMembership(GroupMembership groupMembership) {
 		getGroupMemberships().remove(groupMembership);
 		groupMembership.setGroup(null);
-
 		return groupMembership;
 	}
 

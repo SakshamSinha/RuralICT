@@ -19,7 +19,7 @@ public class ProductService {
 	public List<ProductType> getProductTypeList(Organization organization){
 		return new ArrayList<ProductType>(organization.getProductTypes()); 
 	}
-	
+	//Doubt regarding naming convention. Should it be getProductListByProductType or just getProductList
 	public List<Product> getProductList(List<ProductType> productTypes){
 		List<Product> products = new ArrayList<Product>();
 		for (ProductType productType : productTypes){
@@ -29,42 +29,30 @@ public class ProductService {
 	}
 	
 	public List<Product> getProductList(Organization organization){
-		List<ProductType>productTypes = getProductTypeList(organization);
-		List<Product> products = getProductList(productTypes);
-		return products;
+		return getProductList(getProductTypeList(organization));
 	}
 	
 	public void addProduct(Product product){
 		productRepository.save(product);
-		
 	}
+	
 	public void removeProduct(Product product){
 		productRepository.delete(product);
 	}
 	
 	public Product getProductById(int productId){
-		Product product = productRepository.findOne(productId);
-		return product;
+		return productRepository.findOne(productId);
 	}
 	
 	public List<Product> getAllProductList(){
 		return (new ArrayList<Product> (productRepository.findAll()));
 	}
+	
 	public List<Product> getAllProductListSortedByName(){
 		/*
-		 * The query can also be done by the statement public List<Product> findAllByOrderByNameAsc(); in the repository as well. 
+		 * The query can also be done by the statement new Sort(Sort.Direction.ASC, "name") in the repository as well. 
 		 */
-		List<Product> productSorted = productRepository.findAll(sortByName());
-		return productSorted;
+		return productRepository.findAllByOrderByNameAsc();
 	}
 	
-	private Sort sortByName(){
-		return new Sort(Sort.Direction.ASC, "name");
-	}
-	
-	public int getProductId(Product product){
-		return product.getProductId();
-	}
-	
-
 }

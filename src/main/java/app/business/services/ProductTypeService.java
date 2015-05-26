@@ -36,17 +36,9 @@ public class ProductTypeService {
 	}
 	public List<ProductType> getAllProductTypeListSortedByName(){
 		/*
-		 * The query can also be done by the statement public List<ProductType> findAllByOrderByNameAsc(); in the repository as well. 
+		 * The query can also be done by the statement new Sort(Sort.Direction.ASC, "name") in the repository as well. 
 		 */
-		List<ProductType> productTypeSorted = productTypeRepository.findAll(sortByName());
-		return productTypeSorted;
-	}
-	private Sort sortByName(){
-		return new Sort(Sort.Direction.ASC, "name");
-	}
-	
-	int getProductTypeId(ProductType productType){
-		return productType.getProductTypeId();		
+		return productTypeRepository.findAllByOrderByNameAsc();
 	}
 
 }

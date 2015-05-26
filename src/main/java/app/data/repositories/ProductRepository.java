@@ -45,5 +45,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	/*
 	 * Search functions
 	 */
+	//Is there a need to add preauthorize here
+	public List<Product> findAllByOrderByNameAsc();
 
 }
