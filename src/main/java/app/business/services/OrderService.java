@@ -43,7 +43,7 @@ public class OrderService {
 	 * Returns list of Orders by an Organization  
 	 */
 	public List<Order> getOrderByOrganization(Organization organization) {
-		return (new ArrayList<Order>(orderRepository.findByOrganization(organization)));
+		return orderRepository.findByOrganization(organization);
 	}
 	
 	/*

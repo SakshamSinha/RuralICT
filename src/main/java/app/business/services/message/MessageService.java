@@ -20,35 +20,35 @@ public class MessageService {
 	 * Returns messages with 'Yes' Response for a group  
 	 */
 	public List<Message> getPositiveResponseList(Group group) {
-		return (new ArrayList<Message>(messageRepository.findByGroupAndResponseAndType(group, true, "response")));
+		return messageRepository.findByGroupAndResponseAndType(group, true, "response");
 	}
 	
 	/*
 	 * Returns messages with 'No' Response for a group  
 	 */
 	public List<Message> getNegativeResponseList(Group group) {
-		return (new ArrayList<Message>(messageRepository.findByGroupAndResponseAndType(group, false, "response")));
+		return messageRepository.findByGroupAndResponseAndType(group, false, "response");
 	}
 	
 	/*
 	 * Returns messages which are of type 'response' for a group
 	 */
 	public List<Message> getResponseList(Group group, String format) {
-		return (new ArrayList<Message>(messageRepository.findByGroupAndTypeAndFormat(group, "response", format)));
+		return messageRepository.findByGroupAndTypeAndFormat(group, "response", format);
 	}
 	
 	/*
 	 * Return messages which are of type 'feedback' for a group
 	 */
 	public List<Message> getFeedbackList(Group group, String format) {
-		return (new ArrayList<Message>(messageRepository.findByGroupAndTypeAndFormat(group, "feedback", format)));
+		return messageRepository.findByGroupAndTypeAndFormat(group, "feedback", format);
 	}
 	
 	/*
 	 * Returns messages which are of type 'order' for a group
 	 */
 	public List<Message> getOrderList(Group group, String format) {
-		return (new ArrayList<Message>(messageRepository.findByGroupAndTypeAndFormat(group, "order", format)));
+		return messageRepository.findByGroupAndTypeAndFormat(group, "order", format);
 	}
 	
 	/*
@@ -76,20 +76,20 @@ public class MessageService {
 	 * Returns all messages for a group 
 	 */
 	public List<Message> getAllMessageList(Group group){
-		return (new ArrayList<Message>(messageRepository.findByGroup(group)));
+		return messageRepository.findByGroup(group);
 	}
 	
 	/*
 	 * Returns messages of a given format for a group 
 	 */
 	public List<Message> getMessageListByFormat(Group group, String format){
-		return (new ArrayList<Message>(messageRepository.findByGroupAndFormat(group, format)));
+		return messageRepository.findByGroupAndFormat(group, format);
 	}
 	
 	/*
 	 * Returns messages of a given order status for a group 
 	 */
 	public List<Message> getMessageListByOrderStatus(Group group, String format, String status){
-		return (new ArrayList<Message>(messageRepository.findByGroupAndFormatAndOrder_Status(group, format, status)));
+		return messageRepository.findByGroupAndFormatAndOrder_Status(group, format, status);
 	}
 }
