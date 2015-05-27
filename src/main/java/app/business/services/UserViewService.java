@@ -20,10 +20,13 @@ import app.entities.UserPhoneNumber;
 
 
 @Service
-public class UserRowService {
+public class UserViewService {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserPhoneNumberService userPhoneNumberService;
 	
 	@Autowired
 	OrganizationService organizationService;
@@ -31,7 +34,7 @@ public class UserRowService {
 	/*
 	 * A Row class declared to return data to controller in nicer format
 	 */
-	static public class UserRow {
+	static public class UserView {
 		private User user;
 		private UserPhoneNumber phone;
 
@@ -42,7 +45,7 @@ public class UserRowService {
 		public void setRole(String role) {
 			this.role = role;
 		}
-		public UserRow(User user, UserPhoneNumber primaryPhoneNo , String role) {
+		public UserView(User user, UserPhoneNumber primaryPhoneNo , String role) {
 			this.user = user;
 			this.phone = primaryPhoneNo;
 			this.role=role;
@@ -65,25 +68,51 @@ public class UserRowService {
 	/*
 	 * This method generates the list of user rows for a particular organization  
 	 */
-	public List<UserRow> getUserRowsForOrganization(String org){
+	public List<UserView> getUserViewByOrganization(String org){
 		
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		String role=null;
 		
 		List<OrganizationMembership> membershipList = organizationService.getOrganizationMembershipList(organization);
 		
-		List<UserRow> rows = new ArrayList<UserRow>();
+		List<UserView> rows = new ArrayList<UserView>();
 		
 		for (OrganizationMembership organizationMembership : membershipList) {
 			User user = organizationMembership.getUser();
-			UserPhoneNumber phoneNumber = userService.getUserPhoneNumberByPrimaryTrue(user);
+			UserPhoneNumber phoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
 			role = userService.getUserRole(user,organization);
 			
-			UserRow row = new UserRow(organizationMembership.getUser(), phoneNumber , role );
+			UserView row = new UserView(organizationMembership.getUser(), phoneNumber , role );
 			rows.add(row);
 		}
 		
 		
 		return rows;
+	}
+	
+	public void addUserView(UserView userView) {
+
+			userService.addUser(userView.getUser());
+			userPhoneNumberService.addUserPhoneNumber(userView.getPhone());
+	}
+	
+	public void removeUserView(UserView userView) {
+
+			userService.removeUser(userView.getUser());
+			userPhoneNumberService.removeUserPhoneNumber(userView.getPhone());
+	}
+	
+	/*
+	 * Returns UserView for a given pair of user and organization
+	 */
+	public UserView getUserView(User user, Organization organization) {
+		return new UserView(user, userPhoneNumberService.getUserPrimaryPhoneNumber(user), userService.getUserRole(user,organization));
+	} 
+	 
+	/*
+	 * Returns UserView for a given user
+	 */
+	public UserView getUserView(User user) {
+		return new UserView(user, userPhoneNumberService.getUserPrimaryPhoneNumber(user), "");
 	}
 }
