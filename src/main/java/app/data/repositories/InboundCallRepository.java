@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.InboundCall;
+import app.entities.Organization;
 
 public interface InboundCallRepository extends JpaRepository<InboundCall, Integer> {
 	/*
@@ -45,5 +46,6 @@ public interface InboundCallRepository extends JpaRepository<InboundCall, Intege
 	/*
 	 * Search functions
 	 */
+	public List<InboundCall> findByOrganization(Organization organization);
 
 }
