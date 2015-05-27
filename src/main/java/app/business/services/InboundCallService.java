@@ -18,7 +18,7 @@ public class InboundCallService {
 	
 	
 	public List<InboundCall> getInboundCallList(Organization organization){
-	 	return inboundCallRepository.findByOrganization(organization);
+		return inboundCallRepository.findByOrganization(organization);
 	}
 	
 	public List<InboundCall> getInboundCallList(Group group){
