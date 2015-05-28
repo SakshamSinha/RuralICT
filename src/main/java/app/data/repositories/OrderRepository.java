@@ -48,5 +48,4 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	 */
      
 	public List<Order> findByOrganization(Organization organization);
-	
 }
