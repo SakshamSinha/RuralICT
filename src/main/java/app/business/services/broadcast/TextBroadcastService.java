@@ -10,7 +10,7 @@ public class TextBroadcastService extends BroadcastService{
 	public List<Broadcast> getTextBroadcast(Organization organization){
 		return broadcastRepository.findByOrganizationAndFormat(organization, "text");
 	}
-	List<Broadcast> getTextBroadcast(Group group){
+	public List<Broadcast> getTextBroadcast(Group group){
 		return broadcastRepository.findByGroupAndFormat(group, "text");
 	}
 }

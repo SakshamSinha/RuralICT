@@ -34,7 +34,7 @@ public class UserViewService {
 	/*
 	 * A Row class declared to return data to controller in nicer format
 	 */
-	static public class UserView {
+	public class UserView {
 		private User user;
 		private UserPhoneNumber phone;
 

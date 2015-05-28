@@ -7,11 +7,15 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 
+import app.util.DownloadDaemon;
+
 @SpringBootApplication
 @EnableCaching
 public class RuralIvrsApplication {
 
     public static void main(String[] args) {
+    	DownloadDaemon downloadDaemon = new DownloadDaemon();
+    	downloadDaemon.start();
         SpringApplication.run(RuralIvrsApplication.class, args);
     }
 

@@ -64,5 +64,36 @@ public class UserPhoneNumberService {
 		
 		return userPhoneNumberRepository.findOne(phoneNumber);
 	}
+	
+	/*
+	 * Set phone number as primary
+	 */
+	public void setPrimary(UserPhoneNumber userPhoneNumber) {
+		
+		userPhoneNumber.setPrimary(true);
+		userPhoneNumberRepository.save(userPhoneNumber);
+	}
+	
+	/*
+	 * unset phone number as primary
+	 */
+	public void unsetPrimary(UserPhoneNumber userPhoneNumber) {
+		
+		userPhoneNumber.setPrimary(false);
+		userPhoneNumberRepository.save(userPhoneNumber);
+	}
+	
+	/*
+	 * unset all phone numbers as primary for user
+	 */
+	public void unsetPrimary(User user) {
+		
+		List<UserPhoneNumber> userPhoneNumberList = this.getAllUserPhoneNumberList(user);
+		for(UserPhoneNumber userPhoneNumber: userPhoneNumberList) {
+			userPhoneNumber.setPrimary(false);
+			userPhoneNumberRepository.save(userPhoneNumber);
+		}
+	}
 }
+
 
