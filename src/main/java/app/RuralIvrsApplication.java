@@ -14,8 +14,9 @@ import app.util.DownloadDaemon;
 public class RuralIvrsApplication {
 
     public static void main(String[] args) {
-    	DownloadDaemon downloadDaemon = new DownloadDaemon();
-    	downloadDaemon.start();
+    	
+    	//To be turned on when we need to download files to iitb server
+    	//(new Thread(new DownloadDaemon())).start();
         SpringApplication.run(RuralIvrsApplication.class, args);
     }
 

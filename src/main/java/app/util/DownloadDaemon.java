@@ -17,9 +17,14 @@ public class DownloadDaemon extends Thread {
 	@Autowired
 	VoiceService voiceService;
 	
+	Long sleepDuration;
+	
 	
 	@Override
 	public void run(){
+		
+		//sleep duration set to 24 hours.
+		this.setSleepDuration(new Long(1000*60*60*24));
 		
 		Timer timer = new Timer();
 		System.out.println("Start");
@@ -46,7 +51,15 @@ public class DownloadDaemon extends Thread {
 					e.printStackTrace();
 				}
 			}
-		}, 5, 30*1000);
+		}, 5, this.getSleepDuration());
+	}
+	
+	void setSleepDuration(Long sleepDuration) {
+		this.sleepDuration = sleepDuration;
+	}
+	
+	Long getSleepDuration() {
+		return this.sleepDuration;
 	}
 		
 }
