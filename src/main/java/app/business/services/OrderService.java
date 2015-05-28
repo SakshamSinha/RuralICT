@@ -1,18 +1,14 @@
 package app.business.services;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.data.repositories.MessageRepository;
 import app.data.repositories.OrderRepository;
 import app.data.repositories.OrderItemRepository;
 import app.entities.Organization;
 import app.entities.Order;
-import app.entities.Product;
-import app.entities.OrderItem;
 import app.entities.message.Message;
 
 @Service
@@ -23,21 +19,6 @@ public class OrderService {
 	
 	@Autowired
 	OrderItemRepository orderItemRepository;
-	
-	/*
-	 * Returns list of Order items by Product  
-	 */
-	public List<OrderItem> getOrderItemListByProduct(Product product) {
-		return product.getOrderItems();
-	}
-	
-	/*
-	 * Returns list of Order items by Group  
-	 */
-	//public List<OrderItem> getOrderItemListByGroup(Group group) {
-		
-	//}
-	
 	
 	/*
 	 * Returns list of Orders by an Organization  
