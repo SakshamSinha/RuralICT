@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Random;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.telephony.RuralictSession;
 import app.telephony.fsm.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
@@ -26,9 +27,13 @@ public class DoRecordMessageAction implements Action<IVRSession> {
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/broadcastMessageRecordAfterBeep.wav");
 
 		Record record = new Record();
-		record.setFileName("message" + Calendar.getInstance().getTimeInMillis() + ((new Random()).nextInt(90000) + 10000));
+		String recordName = "message" + Calendar.getInstance().getTimeInMillis() + ((new Random()).nextInt(90000) + 10000);
+		record.setFileName(recordName);
 		record.setMaxDuration(Configs.Telephony.MAX_RECORDING_DURATION);
 		record.setSilence(Configs.Telephony.RECORDING_SILENCE);
+		session.setMessageURL(recordName);
+		session.setPublisher(true);
+		
 		response.addRecord(record);
 	}
 
