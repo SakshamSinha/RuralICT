@@ -45,5 +45,6 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Intege
 	/*
 	 * Search functions
 	 */
+	public List<ProductType> findAllByOrderByNameAsc();
 
 }
