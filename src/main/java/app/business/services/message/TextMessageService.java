@@ -18,28 +18,28 @@ public class TextMessageService extends MessageService {
 	/*
 	 * Returns text messages for a group  
 	 */
-	List<Message> getTextMessageList(Group group) {
+	public List<Message> getTextMessageList(Group group) {
 		return getMessageListByFormat(group, "text");
 	}
 	
 	/*
 	 * Returns inbox text messages for a group  
 	 */
-	List<Message> getInboxTextMessageList(Group group) {
+	public List<Message> getInboxTextMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "text", "new");
 	}
 	
 	/*
 	 * Returns accepted voice messages for a group  
 	 */
-	List<Message> getAcceptedVoiceMessageList(Group group) {
+	public List<Message> getAcceptedVoiceMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "text", "accepted");
 	}
 	
 	/*
 	 * Returns rejected voice messages for a group  
 	 */
-	List<Message> getRejectedVoiceMessageList(Group group) {
+	public List<Message> getRejectedVoiceMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "text", "rejected");
 	}
 }
