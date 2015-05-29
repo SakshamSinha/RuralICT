@@ -70,5 +70,7 @@ public interface GroupMembershipRepository extends JpaRepository<GroupMembership
 	public List<GroupMembership> findByUserAndGroup_Organization(User user,Organization organization);
 	
 	public List<GroupMembership> findByUserAndGroup_OrganizationOrderByGroup_NameAsc(User user,Organization organization);
+	
+	
 
 }
