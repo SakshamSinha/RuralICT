@@ -53,69 +53,69 @@ public class Utils {
 			}
 		});
 			
-	    URL url = new URL(fileURL);
-	    
-	    HttpURLConnection httpConn = (HttpURLConnection) url.openConnection(proxy);
-	    
-	    int responseCode = httpConn.getResponseCode();
-	    String location = httpConn.getHeaderField("Location");
-	    
-	    // always check HTTP response code first
-	    if (responseCode == HttpURLConnection.HTTP_OK) {
-	    	String fileName = "";
-	    	
-	        String contentType = httpConn.getContentType();
-	        String disposition = httpConn.getHeaderField("Content-Disposition");;
-	        int contentLength = httpConn.getContentLength();
+		URL url = new URL(fileURL);
+		
+		HttpURLConnection httpConn = (HttpURLConnection) url.openConnection(proxy);
+		
+		int responseCode = httpConn.getResponseCode();
+		String location = httpConn.getHeaderField("Location");
+		
+		// always check HTTP response code first
+		if (responseCode == HttpURLConnection.HTTP_OK) {
+			String fileName = "";
+			
+			String contentType = httpConn.getContentType();
+			String disposition = httpConn.getHeaderField("Content-Disposition");;
+			int contentLength = httpConn.getContentLength();
 	 
-	        if (disposition != null) {
-	        	// extracts file name from header field
-	            int index = disposition.indexOf("filename=");
-	            if (index > 0) {
-	                fileName = disposition.substring(index + 10, disposition.length() - 1);
-	            }
-	        } 
-	        else {
-	            // extracts file name from URL
-	            fileName = fileURL.substring(fileURL.lastIndexOf("/") + 1, fileURL.length());
-	        }
+			if (disposition != null) {
+				// extracts file name from header field
+				int index = disposition.indexOf("filename=");
+				if (index > 0) {
+					fileName = disposition.substring(index + 10, disposition.length() - 1);
+				}
+			} 
+			else {
+				// extracts file name from URL
+				fileName = fileURL.substring(fileURL.lastIndexOf("/") + 1, fileURL.length());
+			}
 	 
-	        System.out.println("Content-Type = " + contentType);
-	        System.out.println("Content-Disposition = " + disposition);
-	        System.out.println("Content-Length = " + contentLength);
-	        
-	        System.out.println("fileName = " + fileName);
+			System.out.println("Content-Type = " + contentType);
+			System.out.println("Content-Disposition = " + disposition);
+			System.out.println("Content-Length = " + contentLength);
+			
+			System.out.println("fileName = " + fileName);
 	 
-	        // opens input stream from the HTTP connection
-	        InputStream inputStream = httpConn.getInputStream();
-	        String saveFilePath = saveDir + File.separator + fileName;
-	         
-	        // opens an output stream to save into file
-	        FileOutputStream outputStream = new FileOutputStream(saveFilePath);
+			// opens input stream from the HTTP connection
+			InputStream inputStream = httpConn.getInputStream();
+			String saveFilePath = saveDir + File.separator + fileName;
+			 
+			// opens an output stream to save into file
+			FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 	 
-	        int bytesRead = -1;
-	        byte[] buffer = new byte[1<<56];
-	        while ((bytesRead = inputStream.read(buffer)) != -1) {
-	            outputStream.write(buffer, 0, bytesRead);
-	        }
+			int bytesRead = -1;
+			byte[] buffer = new byte[1<<56];
+			while ((bytesRead = inputStream.read(buffer)) != -1) {
+				outputStream.write(buffer, 0, bytesRead);
+			}
 	 
-	        outputStream.close();
-	        inputStream.close();
+			outputStream.close();
+			inputStream.close();
 	 
-	        System.out.println("File downloaded");
-	        return fileName;
-	    } 
-	    else if(location != null) {
-	    	
-	    	String fileName = Utils.downloadFile(location, saveDir);
-	    	return fileName;
-	    }
-	    else {
-	        System.out.println("No file to download. Server replied HTTP code: " + responseCode);
-	        
-	    }
-	    httpConn.disconnect();
-	    return null;
+			System.out.println("File downloaded");
+			return fileName;
+		} 
+		else if(location != null) {
+			
+			String fileName = Utils.downloadFile(location, saveDir);
+			return fileName;
+		}
+		else {
+			System.out.println("No file to download. Server replied HTTP code: " + responseCode);
+			
+		}
+		httpConn.disconnect();
+		return null;
 	}
 
 }

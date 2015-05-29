@@ -67,8 +67,9 @@ public class UserPhoneNumberService {
 	
 	/*
 	 * Set phone number as primary
+	 * Kept private so that no controller or service can use this method from outside.
 	 */
-	public void setPrimary(UserPhoneNumber userPhoneNumber) {
+	private void setPrimary(UserPhoneNumber userPhoneNumber) {
 		
 		userPhoneNumber.setPrimary(true);
 		userPhoneNumberRepository.save(userPhoneNumber);
@@ -86,13 +87,22 @@ public class UserPhoneNumberService {
 	/*
 	 * unset all phone numbers as primary for user
 	 */
-	public void unsetPrimary(User user) {
+	public void unsetPrimaryPhoneNumberByUser(User user) {
 		
-		List<UserPhoneNumber> userPhoneNumberList = this.getAllUserPhoneNumberList(user);
-		for(UserPhoneNumber userPhoneNumber: userPhoneNumberList) {
-			userPhoneNumber.setPrimary(false);
-			userPhoneNumberRepository.save(userPhoneNumber);
-		}
+		UserPhoneNumber userPhoneNumber = this.getUserPrimaryPhoneNumber(user);
+		userPhoneNumber.setPrimary(false);
+		userPhoneNumberRepository.save(userPhoneNumber);
+	
+	}
+	
+	public void setPrimaryPhoneNumberByUser(User user, UserPhoneNumber userPhoneNumber) {
+		
+		UserPhoneNumber currentPrimary = this.getUserPrimaryPhoneNumber(user);
+		userPhoneNumber.setPrimary(false);
+		userPhoneNumberRepository.save(currentPrimary);
+		userPhoneNumber.setPrimary(true);
+		userPhoneNumberRepository.save(userPhoneNumber);
+	
 	}
 }
 

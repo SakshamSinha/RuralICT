@@ -53,7 +53,7 @@ public class DownloadDaemon extends Thread {
 			}
 		}, 5, this.getSleepDuration());
 	}
-	
+		
 	void setSleepDuration(Long sleepDuration) {
 		this.sleepDuration = sleepDuration;
 	}
