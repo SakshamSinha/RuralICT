@@ -12,18 +12,18 @@ public class BroadcastService {
 	@Autowired
 	BroadcastRepository broadcastRepository;
 	
-	void setBroadcastTime(Timestamp timestamp, Broadcast broadcast) {
+	public void setBroadcastTime(Timestamp timestamp, Broadcast broadcast) {
 		
 		broadcast.setBroadcastedTime(timestamp);
 		broadcastRepository.save(broadcast);
 	}
 	
-	void addBroadcast(Broadcast broadcast) {
+	public void addBroadcast(Broadcast broadcast) {
 		
 		broadcastRepository.save(broadcast);
 	}
 	
-	void deleteBroadcast(Broadcast broadcast) {
+	public void deleteBroadcast(Broadcast broadcast) {
 		
 		broadcastRepository.delete(broadcast);
 	}
