@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import app.data.repositories.UserPhoneNumberRepository;
 import app.entities.User;
@@ -65,40 +66,11 @@ public class UserPhoneNumberService {
 		return userPhoneNumberRepository.findOne(phoneNumber);
 	}
 	
-	/*
-	 * Set phone number as primary
-	 * Kept private so that no controller or service can use this method from outside.
-	 */
-	private void setPrimary(UserPhoneNumber userPhoneNumber) {
-		
-		userPhoneNumber.setPrimary(true);
-		userPhoneNumberRepository.save(userPhoneNumber);
-	}
-	
-	/*
-	 * unset phone number as primary
-	 */
-	public void unsetPrimary(UserPhoneNumber userPhoneNumber) {
-		
-		userPhoneNumber.setPrimary(false);
-		userPhoneNumberRepository.save(userPhoneNumber);
-	}
-	
-	/*
-	 * unset all phone numbers as primary for user
-	 */
-	public void unsetPrimaryPhoneNumberByUser(User user) {
-		
-		UserPhoneNumber userPhoneNumber = this.getUserPrimaryPhoneNumber(user);
-		userPhoneNumber.setPrimary(false);
-		userPhoneNumberRepository.save(userPhoneNumber);
-	
-	}
-	
+	@Transactional
 	public void setPrimaryPhoneNumberByUser(User user, UserPhoneNumber userPhoneNumber) {
 		
 		UserPhoneNumber currentPrimary = this.getUserPrimaryPhoneNumber(user);
-		userPhoneNumber.setPrimary(false);
+		currentPrimary.setPrimary(false);
 		userPhoneNumberRepository.save(currentPrimary);
 		userPhoneNumber.setPrimary(true);
 		userPhoneNumberRepository.save(userPhoneNumber);
