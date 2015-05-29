@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
@@ -90,12 +91,14 @@ public class UserViewService {
 		return rows;
 	}
 	
+	@Transactional
 	public void addUserView(UserView userView) {
 
 			userService.addUser(userView.getUser());
 			userPhoneNumberService.addUserPhoneNumber(userView.getPhone());
 	}
 	
+	@Transactional
 	public void removeUserView(UserView userView) {
 
 			userService.removeUser(userView.getUser());
