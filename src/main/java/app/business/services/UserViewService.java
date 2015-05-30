@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
@@ -20,7 +21,7 @@ import app.entities.UserPhoneNumber;
 
 
 @Service
-public class UserDetailsService {
+public class UserViewService {
 	
 	@Autowired
 	UserService userService;
@@ -34,7 +35,7 @@ public class UserDetailsService {
 	/*
 	 * A Row class declared to return data to controller in nicer format
 	 */
-	static public class UserDetails {
+	public static class UserView {
 		private User user;
 		private UserPhoneNumber phone;
 
@@ -45,7 +46,7 @@ public class UserDetailsService {
 		public void setRole(String role) {
 			this.role = role;
 		}
-		public UserDetails(User user, UserPhoneNumber primaryPhoneNo , String role) {
+		public UserView(User user, UserPhoneNumber primaryPhoneNo , String role) {
 			this.user = user;
 			this.phone = primaryPhoneNo;
 			this.role=role;
@@ -68,21 +69,21 @@ public class UserDetailsService {
 	/*
 	 * This method generates the list of user rows for a particular organization  
 	 */
-	public List<UserDetails> getUserDetailsByOrganization(String org){
+	public List<UserView> getUserViewByOrganization(String org){
 		
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		String role=null;
 		
 		List<OrganizationMembership> membershipList = organizationService.getOrganizationMembershipList(organization);
 		
-		List<UserDetails> rows = new ArrayList<UserDetails>();
+		List<UserView> rows = new ArrayList<UserView>();
 		
 		for (OrganizationMembership organizationMembership : membershipList) {
 			User user = organizationMembership.getUser();
-			UserPhoneNumber phoneNumber = userPhoneNumberService.getUserPhoneNumberByPrimaryTrue(user);
+			UserPhoneNumber phoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
 			role = userService.getUserRole(user,organization);
 			
-			UserDetails row = new UserDetails(organizationMembership.getUser(), phoneNumber , role );
+			UserView row = new UserView(organizationMembership.getUser(), phoneNumber , role );
 			rows.add(row);
 		}
 		
@@ -90,29 +91,31 @@ public class UserDetailsService {
 		return rows;
 	}
 	
-	public void addUserDetails(UserDetails userDetails) {
+	@Transactional
+	public void addUserView(UserView userView) {
 
-			userService.addUser(userDetails.getUser());
-			userPhoneNumberService.addUserPhoneNumber(userDetails.getPhone());
+			userService.addUser(userView.getUser());
+			userPhoneNumberService.addUserPhoneNumber(userView.getPhone());
 	}
 	
-	public void removeUserDetails(UserDetails userDetails) {
+	@Transactional
+	public void removeUserView(UserView userView) {
 
-			userService.removeUser(userDetails.getUser());
-			userPhoneNumberService.removeUserPhoneNumber(userDetails.getPhone());
+			userService.removeUser(userView.getUser());
+			userPhoneNumberService.removeUserPhoneNumber(userView.getPhone());
 	}
 	
 	/*
-	 * Returns UserDetails for a given pair of user and organization
+	 * Returns UserView for a given pair of user and organization
 	 */
-	public UserDetails getUserDetails(User user, Organization organization) {
-		return new UserDetails(user, userPhoneNumberService.getUserPhoneNumberByPrimaryTrue(user), userService.getUserRole(user,organization));
+	public UserView getUserView(User user, Organization organization) {
+		return new UserView(user, userPhoneNumberService.getUserPrimaryPhoneNumber(user), userService.getUserRole(user,organization));
 	} 
 	 
 	/*
-	 * Returns UserDetails for a given user
+	 * Returns UserView for a given user
 	 */
-	public UserDetails getUserDetails(User user) {
-		return new UserDetails(user, userPhoneNumberService.getUserPhoneNumberByPrimaryTrue(user), "");
+	public UserView getUserView(User user) {
+		return new UserView(user, userPhoneNumberService.getUserPrimaryPhoneNumber(user), "");
 	}
 }

@@ -3,12 +3,14 @@ package app.business.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import app.data.repositories.UserPhoneNumberRepository;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
 
+@Service
 public class UserPhoneNumberService {
 	
 	@Autowired
@@ -17,7 +19,7 @@ public class UserPhoneNumberService {
 	/*
 	 * Get user phone number only if primary is set as true.
 	 */
-	public UserPhoneNumber getUserPhoneNumberByPrimaryTrue(User user){
+	public UserPhoneNumber getUserPrimaryPhoneNumber(User user){
 		
 		return userPhoneNumberRepository.findByUserAndPrimaryTrue(user);
 	}
@@ -63,5 +65,17 @@ public class UserPhoneNumberService {
 		
 		return userPhoneNumberRepository.findOne(phoneNumber);
 	}
+	
+	@Transactional
+	public void setPrimaryPhoneNumberByUser(User user, UserPhoneNumber userPhoneNumber) {
+		
+		UserPhoneNumber currentPrimary = this.getUserPrimaryPhoneNumber(user);
+		currentPrimary.setPrimary(false);
+		userPhoneNumberRepository.save(currentPrimary);
+		userPhoneNumber.setPrimary(true);
+		userPhoneNumberRepository.save(userPhoneNumber);
+	
+	}
 }
+
 

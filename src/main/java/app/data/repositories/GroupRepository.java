@@ -45,5 +45,6 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 	/*
 	 * Search functions
 	 */
-
+	public List<Group> findAllByOrderByNameAsc();
+	
 }
