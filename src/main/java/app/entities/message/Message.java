@@ -1,6 +1,7 @@
 package app.entities.message;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -39,6 +40,8 @@ public abstract class Message implements Serializable {
 	@Column(name="message_id")
 	private int messageId;
 
+	private Timestamp time;
+
 	private String comments;
 
 	@Column(insertable=false, updatable=false)
@@ -74,11 +77,12 @@ public abstract class Message implements Serializable {
 	public Message() {
 	}
 
-	public Message(User user, Broadcast broadcast, String mode, String format, String type, boolean response,
-			Order order) {
+	public Message(User user, Broadcast broadcast, Timestamp time, String mode, String format, String type,
+			boolean response, Order order) {
 
 		this.user = user;
 		this.broadcast = broadcast;
+		this.time = time;
 		this.mode = mode;
 		this.format = format;
 		this.type = type;
@@ -92,6 +96,14 @@ public abstract class Message implements Serializable {
 
 	public void setMessageId(int messageId) {
 		this.messageId = messageId;
+	}
+
+	public Timestamp getTime() {
+		return this.time;
+	}
+
+	public void setTime(Timestamp time) {
+		this.time = time;
 	}
 
 	public String getComments() {
