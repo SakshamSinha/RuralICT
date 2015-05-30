@@ -41,7 +41,7 @@ public class BroadcastService {
 			groupList.add(groupMembership.getGroup());
 		}
 		
-		broadcastRepository.findTop1ByGroupInAndOrganization(groupList, organization);
+		broadcastRepository.findTop1ByGroupInAndOrganizationOrderByBroadcastedTime(groupList, organization);
 	}
 	
 	
