@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import app.data.repositories.UserPhoneNumberRepository;
 import app.entities.User;
@@ -64,5 +65,17 @@ public class UserPhoneNumberService {
 		
 		return userPhoneNumberRepository.findOne(phoneNumber);
 	}
+	
+	@Transactional
+	public void setPrimaryPhoneNumberByUser(User user, UserPhoneNumber userPhoneNumber) {
+		
+		UserPhoneNumber currentPrimary = this.getUserPrimaryPhoneNumber(user);
+		currentPrimary.setPrimary(false);
+		userPhoneNumberRepository.save(currentPrimary);
+		userPhoneNumber.setPrimary(true);
+		userPhoneNumberRepository.save(userPhoneNumber);
+	
+	}
 }
+
 

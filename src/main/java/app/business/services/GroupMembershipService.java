@@ -1,8 +1,6 @@
 package app.business.services;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,12 +60,22 @@ public class GroupMembershipService {
 		return groupMembershipRepository.findAllByOrderByGroup_NameAsc();
 	}
 	
-	public List<GroupMembership> getGroupsByUserAndOrganization(User user,Organization organization){
+	public List<GroupMembership> getGroupMembershipListByUserAndOrganization(User user,Organization organization){
 		return groupMembershipRepository.findByUserAndGroup_Organization(user,organization);
+	}
+	
+	public List<Group> getGroupListByUserAndOrganization(User user,Organization organization){
+		List<GroupMembership> groupMembershipList = getGroupMembershipListByUserAndOrganization(user, organization);
+		List<Group> groupList = new ArrayList<Group>();
+		for(GroupMembership groupMembership : groupMembershipList) {
+			groupList.add(groupMembership.getGroup());
+		}
+		return groupList;
 	}
 	
 	public List<GroupMembership> getGroupsByUserAndOrganizationSorted(User user,Organization organization){
 		return groupMembershipRepository.findByUserAndGroup_OrganizationOrderByGroup_NameAsc(user,organization);
 	}
+	
 
 }

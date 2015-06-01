@@ -33,9 +33,8 @@ public class VoiceMessage extends Message {
 	public VoiceMessage(User user, Broadcast broadcast, String mode, String type, boolean response, Order order,
 			Voice voice, InboundCall inboundCall) {
 
-		super(user, broadcast, mode, "voice", type, response, order);
+		super(user, broadcast, inboundCall.getTime(), mode, "voice", type, response, order);
 		this.voice = voice;
-		this.inboundCall = inboundCall;
 	}
 
 	public Voice getVoice() {
