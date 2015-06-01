@@ -4,17 +4,23 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.data.repositories.BroadcastScheduleRepository;
 import app.data.repositories.OutboundCallRepository;
 import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
 import app.entities.Group;
 import app.entities.Organization;
 import app.entities.OutboundCall;
+import app.entities.broadcast.Broadcast;
 
 @Service
 public class OutboundCallService {
+	
 	@Autowired
 	OutboundCallRepository outboundCallRepository;
+	
+	@Autowired
+	BroadcastScheduleRepository	broadcastScheduleRepository;
 	
 	public List<OutboundCall> getOutboundCallList(Organization organization){
 		//**********************************************
@@ -38,4 +44,52 @@ public class OutboundCallService {
 		
 		return outboundCallRepository.findByBroadcastScheduleAndBroadcastRecipient(broadcastSchedule, broadcastRecipient);
 	}
+	
+	public void scheduleNextOutboundCall(OutboundCall prevOutboundCall) {
+		
+		Broadcast broadcast = prevOutboundCall.getBroadcastSchedule().getBroadcast();
+		BroadcastRecipient broadcastRecipient = prevOutboundCall.getBroadcastRecipient();
+		BroadcastSchedule nextBroadcastSchedule = new BroadcastSchedule();
+		
+		if(broadcast.getBroadcastedTime() != null) {
+				if(prevOutboundCall.getStatus() == "") {
+					
+					/*
+					 * if call was picked, get all broadcast schedules with send to all fields true and
+					 * which are scheduled after broadcast and return the first one 
+					 */
+					List<BroadcastSchedule> forcedBroadcastScheduleList = broadcastScheduleRepository.findByBroadcastAndSendToAllTrueAndTimeGreaterThanOrderByTimeAsc(broadcast, broadcast.getBroadcastedTime());
+					nextBroadcastSchedule = forcedBroadcastScheduleList.iterator().next();
+				}
+			
+				/*
+				 * If call was not picked at all, get the list of all schedules 
+				 * after last broadcast time and return the first one
+				 */
+				List<BroadcastSchedule> backupBroadcastScheduleList = broadcastScheduleRepository.findByBroadcastAndTimeGreaterThanOrderByTimeAsc(broadcast, broadcast.getBroadcastedTime());
+				nextBroadcastSchedule = backupBroadcastScheduleList.iterator().next();
+		
+		}
+		this.addOutboundCall(new OutboundCall(broadcastRecipient, nextBroadcastSchedule, null, null, 0));
+	}
+	
+	public void setOutboundCallStatus(OutboundCall outboundCall, String status){
+		
+		outboundCall.setStatus(status);
+		outboundCallRepository.save(outboundCall);
+	}
+	
+	public void setOutboundCallStatusDetail(OutboundCall outboundCall, String statusDetail){
+		
+		outboundCall.setStatusDetail(statusDetail);
+		outboundCallRepository.save(outboundCall);
+	}
+	
+	public void setOutboundCallDuration(OutboundCall outboundCall, int duration){
+		
+		outboundCall.setDuration(duration);
+		outboundCallRepository.save(outboundCall);
+	}
+
+
 }

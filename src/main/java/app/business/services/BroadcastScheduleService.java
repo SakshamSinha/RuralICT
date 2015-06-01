@@ -34,9 +34,9 @@ public class BroadcastScheduleService {
 		broadcastScheduleRepository.delete(broadcastSchedule);
 	}
 	
-	public BroadcastSchedule getLatestBroadcastSchedule(BroadcastRecipient broadcastRecipient, Broadcast broadcast) {
+	public BroadcastSchedule getNextBroadcastSchedule(BroadcastRecipient broadcastRecipient, Broadcast broadcast) {
 		
-		List<BroadcastSchedule> broadcastScheduleList =  broadcastScheduleRepository.findByBroadcastOrderByTimeAsc(broadcast);
+List<BroadcastSchedule> broadcastScheduleList =  broadcastScheduleRepository.findByBroadcastOrderByTimeAsc(broadcast);
 		
 		if(broadcast.getBroadcastedTime() == null) {
 			

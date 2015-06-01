@@ -51,5 +51,6 @@ public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
 	
 	List<Broadcast> findByGroupAndFormat(Group group, String format);
 	
-	List<Broadcast> findTop1ByGroupInAndOrganizationOrderByBroadcastedTime(List<Group> groupList, Organization organization);
+	
+	List<Broadcast> findTopByGroupInAndOrganization(List<Group> groupList, Organization organization, Sort sort);
 }
