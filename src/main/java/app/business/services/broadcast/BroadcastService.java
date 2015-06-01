@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 
 import app.data.repositories.BroadcastRepository;
 import app.entities.Group;
@@ -41,7 +42,7 @@ public class BroadcastService {
 			groupList.add(groupMembership.getGroup());
 		}
 		
-		broadcastRepository.findTop1ByGroupInAndOrganization(groupList, organization);
+		broadcastRepository.findTopByGroupInAndOrganization(groupList, organization, (new Sort(Sort.Direction.DESC, "broadcastedTime")));
 	}
 	
 	

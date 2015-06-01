@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.data.repositories.OrderRepository;
-import app.entities.Organization;
 import app.entities.Order;
+import app.entities.Organization;
 import app.entities.message.Message;
 
 @Service
@@ -65,5 +65,10 @@ public class OrderService {
 	public List<Message> getMessageListByOrder(Order order)
 	{
 		return order.getMessages();
+	}
+	
+	public Order getOrder(int orderId) {
+		
+		return orderRepository.findOne(orderId);
 	}
 }
