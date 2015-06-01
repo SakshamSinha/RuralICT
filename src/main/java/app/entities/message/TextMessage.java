@@ -18,18 +18,14 @@ public class TextMessage extends Message {
 	@Column(name="text_content")
 	private String textContent;
 
-	@Column(name="text_time")
-	private Timestamp textTime;
-
 	public TextMessage() {
 	}
 
 	public TextMessage(User user, Broadcast broadcast, String mode, String type, boolean response, Order order,
 			String textContent, Timestamp textTime) {
 
-		super(user, broadcast, mode, "text", type, response, order);
+		super(user, broadcast, textTime, mode, "text", type, response, order);
 		this.textContent = textContent;
-		this.textTime = textTime;
 	}
 
 	public String getTextContent() {
@@ -38,14 +34,6 @@ public class TextMessage extends Message {
 
 	public void setTextContent(String textContent) {
 		this.textContent = textContent;
-	}
-
-	public Timestamp getTextTime() {
-		return this.textTime;
-	}
-
-	public void setTextTime(Timestamp textTime) {
-		this.textTime = textTime;
 	}
 
 }
