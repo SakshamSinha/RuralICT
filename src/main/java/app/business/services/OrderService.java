@@ -71,4 +71,14 @@ public class OrderService {
 		
 		return orderRepository.findOne(orderId);
 	}
+	
+	public void addOrder(Order order) {
+		
+		orderRepository.save(order);
+	}
+
+	public void removeOrder(Order order) {
+	
+		orderRepository.delete(order);
+}
 }
