@@ -51,7 +51,7 @@ public class OutboundCallService {
 		BroadcastRecipient broadcastRecipient = prevOutboundCall.getBroadcastRecipient();
 		BroadcastSchedule nextBroadcastSchedule = new BroadcastSchedule();
 				
-		if(prevOutboundCall.getStatus().equals("answer")) {
+		if(prevOutboundCall.getStatus().equals("answered")) {
 			
 			/*
 			 * if call was picked, get all broadcast schedules with send to all fields true and
