@@ -3,12 +3,14 @@ package app.business.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import app.data.repositories.BroadcastRecipientRepository;
 import app.entities.BroadcastRecipient;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
 
+@Service
 public class BroadcastRecipientService {
 
 	@Autowired

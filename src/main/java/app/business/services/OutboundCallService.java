@@ -50,25 +50,25 @@ public class OutboundCallService {
 		Broadcast broadcast = prevOutboundCall.getBroadcastSchedule().getBroadcast();
 		BroadcastRecipient broadcastRecipient = prevOutboundCall.getBroadcastRecipient();
 		BroadcastSchedule nextBroadcastSchedule = new BroadcastSchedule();
-		
-		if(broadcast.getBroadcastedTime() != null) {
-				if(prevOutboundCall.getStatus() == "") {
-					
-					/*
-					 * if call was picked, get all broadcast schedules with send to all fields true and
-					 * which are scheduled after broadcast and return the first one 
-					 */
-					List<BroadcastSchedule> forcedBroadcastScheduleList = broadcastScheduleRepository.findByBroadcastAndSendToAllTrueAndTimeGreaterThanOrderByTimeAsc(broadcast, broadcast.getBroadcastedTime());
-					nextBroadcastSchedule = forcedBroadcastScheduleList.iterator().next();
-				}
+				
+		if(prevOutboundCall.getStatus().equals("answer")) {
 			
-				/*
-				 * If call was not picked at all, get the list of all schedules 
-				 * after last broadcast time and return the first one
-				 */
-				List<BroadcastSchedule> backupBroadcastScheduleList = broadcastScheduleRepository.findByBroadcastAndTimeGreaterThanOrderByTimeAsc(broadcast, broadcast.getBroadcastedTime());
-				nextBroadcastSchedule = backupBroadcastScheduleList.iterator().next();
-		
+			/*
+			 * if call was picked, get all broadcast schedules with send to all fields true and
+			 * which are scheduled after broadcast and return the first one 
+			 */
+			List<BroadcastSchedule> forcedBroadcastScheduleList = broadcastScheduleRepository.findByBroadcastAndSendToAllTrueAndTimeGreaterThanOrderByTimeAsc(broadcast, broadcast.getBroadcastedTime());
+			nextBroadcastSchedule = forcedBroadcastScheduleList.iterator().next();
+		}
+		else {
+	
+			/*
+			 * If call was not picked at all, get the list of all schedules 
+			 * after last broadcast time and return the first one
+			 */
+			List<BroadcastSchedule> backupBroadcastScheduleList = broadcastScheduleRepository.findByBroadcastAndTimeGreaterThanOrderByTimeAsc(broadcast, broadcast.getBroadcastedTime());
+			nextBroadcastSchedule = backupBroadcastScheduleList.iterator().next();
+
 		}
 		this.addOutboundCall(new OutboundCall(broadcastRecipient, nextBroadcastSchedule, null, null, 0));
 	}

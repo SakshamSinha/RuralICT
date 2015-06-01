@@ -4,12 +4,14 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import app.data.repositories.BroadcastScheduleRepository;
 import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
 import app.entities.broadcast.Broadcast;
 
+@Service
 public class BroadcastScheduleService {
 	
 	@Autowired
@@ -36,7 +38,7 @@ public class BroadcastScheduleService {
 	
 	public BroadcastSchedule getNextBroadcastSchedule(BroadcastRecipient broadcastRecipient, Broadcast broadcast) {
 		
-List<BroadcastSchedule> broadcastScheduleList =  broadcastScheduleRepository.findByBroadcastOrderByTimeAsc(broadcast);
+		List<BroadcastSchedule> broadcastScheduleList =  broadcastScheduleRepository.findByBroadcastOrderByTimeAsc(broadcast);
 		
 		if(broadcast.getBroadcastedTime() == null) {
 			
