@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.BroadcastRecipient;
+import app.entities.BroadcastSchedule;
 import app.entities.OutboundCall;
 
 public interface OutboundCallRepository extends JpaRepository<OutboundCall, Integer> {
@@ -45,5 +47,5 @@ public interface OutboundCallRepository extends JpaRepository<OutboundCall, Inte
 	/*
 	 * Search functions
 	 */
-
+	public OutboundCall findByBroadcastScheduleAndBroadcastRecipient(BroadcastSchedule broadcastSchedule, BroadcastRecipient broadcastRecipient);
 }

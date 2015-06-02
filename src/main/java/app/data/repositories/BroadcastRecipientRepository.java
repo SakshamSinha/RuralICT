@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import app.entities.BroadcastRecipient;
 import app.entities.Organization;
 import app.entities.User;
+import app.entities.broadcast.Broadcast;
 
 public interface BroadcastRecipientRepository extends JpaRepository<BroadcastRecipient, Integer> {
 	/*
@@ -49,4 +50,6 @@ public interface BroadcastRecipientRepository extends JpaRepository<BroadcastRec
 	 */
 	
 	public BroadcastRecipient findTop1ByUserAndBroadcast_OrganizationOrderByBroadcast_BroadcastedTimeDesc(User user,Organization organization);
+	
+	public BroadcastRecipient findByUserAndBroadcast(User user, Broadcast broadcast);
 }

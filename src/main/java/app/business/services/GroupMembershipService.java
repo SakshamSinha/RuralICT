@@ -11,7 +11,6 @@ import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.User;
 
-
 public class GroupMembershipService {
 	@Autowired
 	GroupMembershipRepository groupMembershipRepository;
