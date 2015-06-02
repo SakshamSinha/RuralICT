@@ -15,7 +15,7 @@ public class GroupMembershipService {
 	@Autowired
 	GroupMembershipRepository groupMembershipRepository;
 		
-	public GroupMembership isUserGroupMembership(User user, Group group){
+	public GroupMembership getUserGroupMembership(User user, Group group){
 		return groupMembershipRepository.findByUserAndGroup(user,group);
 	}
 	

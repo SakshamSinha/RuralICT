@@ -53,7 +53,7 @@ public class Order implements Serializable {
 
 	//bi-directional many-to-one association to Message
 	@OneToMany(mappedBy="order")
-	private List<Message> messages;
+	private Message message;
 
 	public Order() {
 	}
@@ -106,12 +106,12 @@ public class Order implements Serializable {
 		this.organization = organization;
 	}
 
-	public List<Message> getMessages() {
-		return this.messages;
+	public Message getMessage() {
+		return this.message;
 	}
 
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
+	public void setMessages(Message message) {
+		this.message = message;
 	}
 
 	public OrderItem addOrderItem(OrderItem orderItem) {
