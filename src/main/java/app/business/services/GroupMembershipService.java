@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import app.data.repositories.GroupMembershipRepository;
 import app.entities.Group;
@@ -11,6 +12,8 @@ import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.User;
 
+
+@Service
 public class GroupMembershipService {
 	@Autowired
 	GroupMembershipRepository groupMembershipRepository;
