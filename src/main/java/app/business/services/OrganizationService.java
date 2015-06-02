@@ -59,6 +59,8 @@ public class OrganizationService {
 	}
 	
 	public Organization getOrganizationByIVRS(String ivrNumber){
+		System.out.println("ivrNumber: " + ivrNumber);
+		System.out.println("repo: " + organizationRepository != null);
 		return organizationRepository.findByIvrNumber(ivrNumber);
 	}
 	

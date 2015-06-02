@@ -38,7 +38,7 @@ public class PlayGroupIDsAction implements Action<IVRSession> {
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/theGroupIDsAre.wav");
 		
 		HashMap<String,String> groups = new HashMap<String, String>();
-		List<GroupMembership>  groupMemberships = groupMembershipService.getGroupsByUserAndOrganization(
+		List<GroupMembership>  groupMemberships = groupMembershipService.getGroupsByUserAndOrganizationSorted(
 				userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), 
 				organizationService.getOrganizationByIVRS(session.getIvrNumber()));
 		

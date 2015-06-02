@@ -4,12 +4,20 @@ import java.sql.Timestamp;
 
 
 
+
+
+
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 
 import com.continuent.tungsten.commons.patterns.fsm.*;
 
+import app.business.services.GroupService;
 import app.business.services.OrganizationService;
+import app.business.services.UserPhoneNumberService;
+import app.business.services.UserService;
 import app.entities.InboundCall;
+import app.entities.Organization;
 import app.entities.Voice;
 import app.telephony.fsm.*;
 
@@ -24,14 +32,52 @@ public class RuralictSession extends IVRSession {
 	 */
 	//Message recordedMessage;
 	Voice voiceMessage ;
+	OrganizationService organizationService;
+	UserPhoneNumberService userPhoneNumberService ;
+	GroupService groupService;
 	
+	public GroupService getGroupService() {
+		return groupService;
+	}
+
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
+
+	UserService userService;
 	
 
+	public OrganizationService getOrganizationService() {
+		return organizationService;
+	}
+
+	public void setOrganizationService(OrganizationService organizationService) {
+		this.organizationService = organizationService;
+	}
+
+	public UserPhoneNumberService getUserPhoneNumberService() {
+		return userPhoneNumberService;
+	}
+
+	public void setUserPhoneNumberService(
+			UserPhoneNumberService userPhoneNumberService) {
+		this.userPhoneNumberService = userPhoneNumberService;
+	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
 	/**
+	 * @param groupService 
 	 * @throws InstantiationException 
 	 * @see {@link IVRSession#IVRSession(String, String, String, String, String, Class)}
 	 */
-	public RuralictSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator)
+	public RuralictSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator,OrganizationService organizationService,UserPhoneNumberService userPhoneNumberService , UserService userService, GroupService groupService)
 			throws FiniteStateException, InstantiationException {
 
 		super(sessionId, userNumber, ivrNumber, circle, operator, RuralictStateMachine.class);
@@ -46,12 +92,16 @@ public class RuralictSession extends IVRSession {
 			em.persist(user);
 		}*/
 		
-		OrganizationService orgService=new OrganizationService();
+		this.organizationService = organizationService;
+		this.userPhoneNumberService = userPhoneNumberService;
+		this.userService = userService;
+		this.groupService = groupService;
 
+		
 		call = new InboundCall();
 		call.setTime(new Timestamp(getStartTime().getTime()));
 		call.setFromNumber(userNumber);
-		call.setOrganization(orgService.getOrganizationByIVRS(ivrNumber));
+		call.setOrganization(organizationService.getOrganizationByIVRS(ivrNumber));
 
 		//call.setUser(user);
 		//em.persist(call);

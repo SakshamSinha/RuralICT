@@ -1,5 +1,5 @@
 package app.telephony.fsm;
-import java.util.Dictionary;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import app.telephony.fsm.action.*;
@@ -10,16 +10,20 @@ import app.telephony.fsm.action.member.AskForOrderMenuAction;
 import app.telephony.fsm.action.member.AskForResponseAction;
 import app.telephony.fsm.action.member.AskForResponseTypeAction;
 import app.telephony.fsm.action.member.DoAskPlayFeedbackMessagesAction;
+import app.telephony.fsm.action.member.DoStoreFeedbackMessageAction;
+import app.telephony.fsm.action.member.DoStoreOrderMessageAction;
 import app.telephony.fsm.action.member.PlayFeedbackRecordAction;
 import app.telephony.fsm.action.member.PlayInvalidOrderAction;
 import app.telephony.fsm.action.member.PlayOrderCancelAction;
-import app.telephony.fsm.action.member.PlayOrderIDAction;
+import app.telephony.fsm.action.member.AskOrderIDAction;
 import app.telephony.fsm.action.member.PlayOrderRecordAction;
 import app.telephony.fsm.action.member.PlayResponeIsNoAction;
 import app.telephony.fsm.action.member.PlayResponeIsYesAction;
 import app.telephony.fsm.action.member.PlayWelcomeMessageAction;
+import app.telephony.fsm.guards.OnGroupIDExist;
 import app.telephony.fsm.guards.OnIsPublisher;
 import app.telephony.fsm.guards.OnLanguageSelect;
+import app.telephony.fsm.guards.OnOrderIDExist;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.FiniteStateException;
@@ -50,9 +54,8 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		}
 	}
 
-	public RuralictStateMachine(StateTransitionMap<IVRSession> map,
-			IVRSession entity) {
-		super(map, entity);
+	public RuralictStateMachine(IVRSession entity) {
+		super(transitionMap, entity);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -76,15 +79,17 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		// asking user for action
 		Action<IVRSession> askForLanguageAction = new AskForLanguageAction();
 		Action<IVRSession> askForResponseTypeAction = new AskForResponseTypeAction();
-		Action<IVRSession> askForOrderMenuACtion = new AskForOrderMenuAction();
+		Action<IVRSession> askForOrderMenuAction = new AskForOrderMenuAction();
 		Action<IVRSession> askForResponseAction = new AskForResponseAction();
 		Action<IVRSession> askConfirmOrderAction = new AskConfirmOrderAction();
+		Action<IVRSession> askOrderIDAction = new AskOrderIDAction();
 		Action<IVRSession> askConfirmFeedbackAction = new AskConfirmFeedbackAction();
 
 		// actions that do something with the system
 		Action<IVRSession> doAskPlayFeedbackMessagesAction = new DoAskPlayFeedbackMessagesAction();
 		//Action<IVRSession> doRecordOrderMessageAction = new DoRecordOrderMessageAction();
-		//Action<IVRSession> doStoreOrderMessageAction = new DoStoreOrderMessageAction();
+		Action<IVRSession> doStoreOrderMessageAction = new DoStoreOrderMessageAction();
+		Action<IVRSession> doStoreFeedbackMessageAction = new DoStoreFeedbackMessageAction();
 		Action<IVRSession> doDisconnectAction = new DoDisconnectAction();
 		Action<IVRSession> doEndAction = new DoEndAction();
 		Action<IVRSession> doInvalidInputAction = new DoInvalidInputAction();		
@@ -93,7 +98,6 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Action<IVRSession> playFeedbackRecordAction = new PlayFeedbackRecordAction();
 		Action<IVRSession> playOrderRecordAction = new PlayOrderRecordAction();
 		Action<IVRSession> playInvalidOrderAction = new PlayInvalidOrderAction();
-		Action<IVRSession> playOrderIDAction = new PlayOrderIDAction();
 		Action<IVRSession> playThankYouMessageAction = new PlayThankYouMessageAction();
 		Action<IVRSession> playWelcomeMessageAction = new PlayWelcomeMessageAction();
 		Action<IVRSession> playOrderCancelAction = new PlayOrderCancelAction();
@@ -137,20 +141,20 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		State<IVRSession> publisherCallFlow = map.addActiveState("PublisherCallFlow", parentCallFlow, null);
 
 		// state to initiate disconnection
-		State<IVRSession> disconnect = map.addActiveState("Disconnect", parentCallFlow, doDisconnectAction);
+	//	State<IVRSession> disconnect = map.addActiveState("Disconnect", parentCallFlow, doDisconnectAction);
 
 		//states for user call flow
 		State<IVRSession> userStart = map.addActiveState("UserStart", userCallFlow, playWelcomeMessageAction);
 		State<IVRSession> languageMenu = map.addActiveState("LanguageMenu", userCallFlow, askForLanguageAction);
 		State<IVRSession> responseType = map.addActiveState("ResponseType", userCallFlow, askForResponseTypeAction);
 		State<IVRSession> recordFeedback = map.addActiveState("RecordFeedback", userCallFlow,playFeedbackRecordAction);
-		State<IVRSession> orderMenu = map.addActiveState("OrderMenu", userCallFlow, askForOrderMenuACtion);
+		State<IVRSession> orderMenu = map.addActiveState("OrderMenu", userCallFlow, askForOrderMenuAction);
 		State<IVRSession> confirmFeedbackMessage = map.addActiveState("ConfirmFeedbackMessage", userCallFlow, askConfirmFeedbackAction);
 		State<IVRSession> recordOrder = map.addActiveState("RecordOrder", userCallFlow, playOrderRecordAction);
-		State<IVRSession> enterOrderID = map.addActiveState("EnterOrderID", userCallFlow, playOrderIDAction);
+		State<IVRSession> enterOrderID = map.addActiveState("EnterOrderID", userCallFlow, askOrderIDAction);
         State<IVRSession> responseMenu = map.addActiveState("ResponseMenu",userCallFlow,askForResponseAction);
 		State<IVRSession> customerExit = map.addActiveState("CustomerExit",userCallFlow,playThankYouMessageAction);
-		State<IVRSession> listenFeedbackMessages = map.addActiveState("ListenMessages",userCallFlow, doAskPlayFeedbackMessagesAction);
+		/*State<IVRSession> listenFeedbackMessages = map.addActiveState("ListenFeedbackMessages",userCallFlow, doAskPlayFeedbackMessagesAction);*/
 		
 		//states for publisher call flow
 
@@ -167,19 +171,13 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Guard<IVRSession, Object> onGotDTMFKeyNot1nor2 = new OnGotDTMFKey(new String[] {"1", "2"}, false);
 		Guard<IVRSession, Object> onGotDTMFKey1 = new OnGotDTMFKey(new String[] {"1"}, true);
 		Guard<IVRSession, Object> onGotDTMFKey2 = new OnGotDTMFKey(new String[] {"2"}, true);
-		Guard<IVRSession, Object> onDTMFGroupIDExist = new OnGotDTMFKey(
-				new String[] {"54"} //TODO: service that returns string
-				, true); 			   //array containing group IDs
-		Guard<IVRSession, Object> onDTMFGroupIDNotExist = new OnGotDTMFKey(
-				new String[] {"54"} //TODO: service that returns string
-				, false); 			   //array containing group IDs
+		Guard<IVRSession, Object> onDTMFGroupIDExist = new OnGroupIDExist(true);
+		Guard<IVRSession, Object> onDTMFGroupIDNotExist = new OnGroupIDExist(false);
 		Guard<IVRSession, Object> onGotDTMFKeyNot1nor2nor3 = new OnGotDTMFKey(new String[] {"1", "2" ,"3"}, false);
 		Guard<IVRSession, Object> onLanguageSelect = new OnLanguageSelect(tempLanguageMap);
-		Guard<IVRSession,Object> onGotDTMFKeyNot1 = new OnGotDTMFKey(new String[]{"1"},false);
 		Guard<IVRSession, Object> onGotDTMFKey3 = new OnGotDTMFKey(new String[] {"3"}, true);
-		Guard<IVRSession, Object> onDTMFOrderIDExist = new OnGotDTMFKey(
-				new String[] {"54"} //TODO: service that returns string
-				, true); 			   //array containing group IDs
+		Guard<IVRSession, Object> onDTMFOrderIDExist = new OnOrderIDExist(true);
+		Guard<IVRSession, Object> onDTMFOrderIDNotExist = new OnOrderIDExist(false);
 		Guard<IVRSession, Object> onIsPublisher = new OnIsPublisher(true);
 		Guard<IVRSession, Object> onIsUser = new OnIsPublisher(false);
 		
@@ -197,7 +195,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 
 		// transitions from responseType(Order , Feedback , Response)
 		map.allowTransition(responseType, onGotDTMFKey1,orderMenu, null);
-		map.allowTransition(responseType, onGotDTMFKey2,recordFeedback, null);
+		map.allowTransition(responseType, onGotDTMFKey2,recordFeedback, doAskPlayFeedbackMessagesAction);
 		map.allowTransition(responseType,onGotDTMFKey3,responseMenu,null);
 		map.allowTransition(responseType, onGotDTMFKeyNot1nor2nor3,responseType, doInvalidInputAction);
 		
@@ -217,17 +215,23 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 	    map.allowTransition(responseMenu,onGotDTMFKey2, customerExit, playResponseIsNoAction);
 	    map.allowTransition(responseMenu,onGotDTMFKeyNot1nor2 ,responseMenu,null);
 	    
-	    // transitions from confirmFeedbackMessage
-	    map.allowTransition(confirmFeedbackMessage, onGotDTMFKey1, listenFeedbackMessages, null);
-	    map.allowTransition(confirmFeedbackMessage, onGotDTMFKeyNot1,recordFeedback, null);
-        
+
+/*	    map.allowTransition(confirmFeedbackMessage, onGotDTMFKey1, listenFeedbackMessages, null);
+	    map.allowTransition(confirmFeedbackMessage, onGotDTMFKeyNot1,recordFeedback, null);*/
 	    
-	   // transition from enterOrderID
+	    // transitions from confirmFeedbackMessage
+	    map.allowTransition(confirmFeedbackMessage, EventGuard.proceed,customerExit , doStoreFeedbackMessageAction);
+        
+	    // transitions from orderMenu
+	    map.allowTransition(orderMenu, onGotDTMFKey1, recordOrder, null);
+	    map.allowTransition(orderMenu, onGotDTMFKey2, enterOrderID, null);
+	   
+	    // transition from enterOrderID
 	    map.allowTransition(enterOrderID,onDTMFOrderIDExist,customerExit, playOrderCancelAction);
-	    map.allowTransition(enterOrderID, onDTMFGroupIDNotExist, enterOrderID, playInvalidOrderAction);
+	    map.allowTransition(enterOrderID, onDTMFOrderIDNotExist, enterOrderID, playInvalidOrderAction);
 	 
 	    // transitions from recordOrder
-	    map.allowTransition(recordOrder, EventGuard.proceed,customerExit, null);
+	    map.allowTransition(recordOrder, EventGuard.proceed,customerExit, doStoreOrderMessageAction);
 	    
 	    // transitions from call flow
 	 	map.allowTransition(parentCallFlow, EventGuard.onDisconnect, end, null);

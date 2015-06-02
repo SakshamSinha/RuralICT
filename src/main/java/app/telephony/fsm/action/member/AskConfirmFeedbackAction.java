@@ -20,7 +20,7 @@ public class AskConfirmFeedbackAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
 
-		//cd.addPlayText("If you are satisfied with your message, press 1. To cancel your message, press 2.", Configs.Telephony.TTS_SPEED);
+		
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirmFeedback"+session.getLanguage()+".wav");
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecordFeedback.wav");
 

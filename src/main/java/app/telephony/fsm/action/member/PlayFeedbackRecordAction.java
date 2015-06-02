@@ -1,5 +1,8 @@
 package app.telephony.fsm.action.member;
 
+import java.util.Calendar;
+import java.util.Random;
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 
 
@@ -11,6 +14,7 @@ import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
 import com.continuent.tungsten.commons.patterns.fsm.TransitionFailureException;
 import com.continuent.tungsten.commons.patterns.fsm.TransitionRollbackException;
+import com.ozonetel.kookoo.Record;
 import com.ozonetel.kookoo.Response;
 
 public class PlayFeedbackRecordAction implements Action<IVRSession> {
@@ -20,9 +24,20 @@ public class PlayFeedbackRecordAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
+		
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageRecordAfterBeep.wav");
 
-		//response.addPlayText("Your message has been cancelled.", Configs.Telephony.TTS_SPEED);
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/pleaseRecordFeedback.wav");
+		Record record = new Record();
+		String recordName = "message" + Calendar.getInstance().getTimeInMillis() + ((new Random()).nextInt(90000) + 10000);
+		record.setFileName(recordName);
+		record.setMaxDuration(Configs.Telephony.MAX_RECORDING_DURATION);
+		record.setSilence(Configs.Telephony.RECORDING_SILENCE);
+		session.setMessageURL(recordName);
+		
+		
+		session.setPublisher(false);
+		
+		response.addRecord(record);
 	}
 
 }
