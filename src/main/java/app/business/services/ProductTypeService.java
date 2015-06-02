@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import app.data.repositories.ProductTypeRepository;
 import app.entities.ProductType;
+
 @Service
 public class ProductTypeService {
 	

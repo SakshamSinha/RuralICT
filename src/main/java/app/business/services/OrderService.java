@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import app.data.repositories.OrderRepository;
 import app.entities.Order;
 import app.entities.Organization;
+import app.entities.User;
 import app.entities.message.Message;
 
 @Service
@@ -62,9 +63,14 @@ public class OrderService {
 	/*
 	 * Return List of messages for a particular order
 	 */
-	public List<Message> getMessageListByOrder(Order order)
+	public Message getMessageByOrder(Order order)
 	{
-		return order.getMessages();
+		return order.getMessage();
+	}
+	
+	public User getMessageUserByOrder(Order order)
+	{
+		return order.getMessage().getUser();
 	}
 	
 	public Order getOrder(int orderId) {

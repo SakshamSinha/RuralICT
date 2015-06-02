@@ -12,13 +12,12 @@ import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.User;
 
-
 @Service
 public class GroupMembershipService {
 	@Autowired
 	GroupMembershipRepository groupMembershipRepository;
 		
-	public GroupMembership isUserGroupMembership(User user, Group group){
+	public GroupMembership getUserGroupMembership(User user, Group group){
 		return groupMembershipRepository.findByUserAndGroup(user,group);
 	}
 	
