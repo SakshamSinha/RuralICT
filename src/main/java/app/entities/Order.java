@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -52,7 +53,7 @@ public class Order implements Serializable {
 	private Organization organization;
 
 	//bi-directional many-to-one association to Message
-	@OneToMany(mappedBy="order")
+	@OneToOne(mappedBy="order")
 	private Message message;
 
 	public Order() {
