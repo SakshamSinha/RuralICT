@@ -12,7 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import app.data.repositories.GroupRepository;
+import app.business.services.GroupService;
+import app.business.services.message.MessageService;
 import app.entities.Group;
 import app.entities.message.Message;
 
@@ -21,32 +22,25 @@ import app.entities.message.Message;
 @RequestMapping("/web/{org}")
 public class VoiceMessageListController {
 	@Autowired
-	GroupRepository groupRepository;
+	GroupService groupService;
+	@Autowired
+	MessageService messageService;
 
-	@RequestMapping(value="/voiceMessage/{type}/{groupId}")
+	@RequestMapping(value="/voiceMessage/feedback/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
-	public String voiceMessage(@PathVariable String org, @PathVariable int groupId, Model model , @PathVariable String type) {
-
-		Group group = groupRepository.findOne(groupId);
-		List<Message> messageList = group.getMessages();
-		List voiceMessageList = new ArrayList<>();
-		for(Message message: messageList){
-
-			if(message.getFormat().equalsIgnoreCase("voice") && message.getType().equalsIgnoreCase("feedback") && type.equalsIgnoreCase("feedback")){
-
-				voiceMessageList.add(message);
-				model.addAttribute("message", voiceMessageList);
-			}
-			else if(message.getFormat().equalsIgnoreCase("voice") && message.getType().equalsIgnoreCase("response") && type.equalsIgnoreCase("response")){
-
-				voiceMessageList.add(message);
-				model.addAttribute("message", voiceMessageList);
-			}
-
-		}
-
-
+	public String voiceFeedbackMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+			List<Message> voiceFeedbackMessageList=messageService.getFeedbackList(groupService.getGroup(groupId),"voice");
+			model.addAttribute("message",voiceFeedbackMessageList);
+		return "voiceMessage";
+	}
+	
+	@RequestMapping(value="/voiceMessage/response/{groupId}")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String voiceResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+			List<Message> voiceResponseMessageList=messageService.getResponseList(groupService.getGroup(groupId),"voice");
+			model.addAttribute("message",voiceResponseMessageList);
 		return "voiceMessage";
 	}
 
@@ -54,21 +48,8 @@ public class VoiceMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String voiceInboxMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-		Group group = groupRepository.findOne(groupId);
-		List<Message> messageList = group.getMessages();
-		List voiceInboxMessageList = new ArrayList<>();
-		for(Message message: messageList){
-
-			if(message.getFormat().equalsIgnoreCase("voice") && message.getType().equalsIgnoreCase("order")){
-
-				voiceInboxMessageList.add(message);
-				model.addAttribute("message",voiceInboxMessageList);
-			}
-
-
-		}
+		List<Message> voiceInboxMessageList=messageService.getOrderList(groupService.getGroup(groupId),"voice");
+		model.addAttribute("message",voiceInboxMessageList);
 		return "voiceInboxMessage";
 	}
-
-
 }

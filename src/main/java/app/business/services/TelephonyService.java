@@ -17,6 +17,7 @@ import app.entities.message.VoiceMessage;
 public class TelephonyService {
 	@Autowired
 	MessageService messageService;
+	@Autowired
 	VoiceService voiceService;
 	
 	void addVoiceMessage(User user, String mode, String type, boolean response, String url, InboundCall inboundCall){
@@ -31,7 +32,7 @@ public class TelephonyService {
 		messageService.addMessage(textMessage);
 	}
 	
-	void addBinaryMessage(User user, Timestamp time, String mode, String type, boolean response){
+	void addBinaryMessage(User user, String mode, String type, boolean response, Timestamp time){
 		BinaryMessage binaryMessage=new BinaryMessage(user, null, time, mode, type, response, null);
 		messageService.addMessage(binaryMessage);
 	}

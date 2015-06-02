@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.Group;
+import app.entities.Order;
 import app.entities.message.Message;
 
 public interface MessageRepository extends JpaRepository<Message, Integer> {
@@ -50,7 +51,10 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	
 	public List<Message> findByGroupAndTypeAndFormat(Group group,String type,String format);
 	public List<Message> findByGroupAndFormat(Group group,String format);
-	public List<Message> findByGroupAndFormatAndOrder_Status(Group group,String format,String status);
+	//These are commented because these may be required if our function with sort would not work....
+	//public List<Message> findByGroupAndFormatAndOrder_Status(Group group,String format,String status);
+	//public List<Message> findByGroupAndFormatAndOrder_StatusOrderByTime(Group group,String format,String status);
+	public List<Message> findByGroupAndFormatAndOrder_Status(Group group,String format,String status,Sort sort);
 	public List<Message> findByGroupAndResponseAndType(Group group, boolean response,String type);
 	public List<Message> findByGroup(Group group);
 }

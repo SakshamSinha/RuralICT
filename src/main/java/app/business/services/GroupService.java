@@ -1,15 +1,14 @@
 package app.business.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import app.data.repositories.GroupRepository;
 import app.entities.Group;
-import app.entities.Organization;
 
+@Service
 public class GroupService {
 	@Autowired
 	GroupRepository groupRepository;
