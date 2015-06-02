@@ -1,5 +1,6 @@
 package app.data.repositories;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.BroadcastSchedule;
+import app.entities.broadcast.Broadcast;
 
 public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSchedule, Integer> {
 	/*
@@ -45,5 +47,8 @@ public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSche
 	/*
 	 * Search functions
 	 */
+	public List<BroadcastSchedule> findByBroadcastOrderByTimeAsc(Broadcast broadcast);
+	public List<BroadcastSchedule> findByBroadcastAndSendToAllTrueAndTimeGreaterThanOrderByTimeAsc(Broadcast broadcast, Timestamp time);
+	public List<BroadcastSchedule> findByBroadcastAndTimeGreaterThanOrderByTimeAsc(Broadcast broadcast, Timestamp time);
 
 }

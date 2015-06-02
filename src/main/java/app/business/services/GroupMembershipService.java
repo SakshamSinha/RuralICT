@@ -12,6 +12,7 @@ import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.User;
 
+
 @Service
 public class GroupMembershipService {
 	@Autowired
