@@ -59,8 +59,6 @@ dependencies {
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("junit:junit")
-    testCompile("com.github.springtestdbunit:spring-test-dbunit:1.2.1")
-    testCompile("org.dbunit:dbunit:2.5.1")
 }
 
 eclipse {
