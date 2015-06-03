@@ -1,14 +1,14 @@
 package app.business.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import app.data.repositories.ProductTypeRepository;
-import app.entities.Organization;
 import app.entities.ProductType;
 
+@Service
 public class ProductTypeService {
 	
 	@Autowired

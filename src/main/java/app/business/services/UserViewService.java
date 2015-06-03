@@ -69,7 +69,7 @@ public class UserViewService {
 	/*
 	 * This method generates the list of user rows for a particular organization  
 	 */
-	public List<UserView> getUserViewByOrganization(String org){
+	public List<UserView> getUserViewListByOrganization(String org){
 		
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		String role=null;

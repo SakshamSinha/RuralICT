@@ -18,9 +18,7 @@ public class OrganizationMembershipService {
 	
 	
 	/*
-	 * Method to get one to one membership between user and organization
-	 * Note here is that we can technically create many to many relation between these two objects.
-	 * Do we have any mechanism for that? 
+	 * Method to get one to one membership between user and organization 
 	 */
 	public OrganizationMembership getUserOrganizationMembership(User user, Organization organization){
 		
