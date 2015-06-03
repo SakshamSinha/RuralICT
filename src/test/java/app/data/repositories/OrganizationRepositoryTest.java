@@ -45,7 +45,7 @@ public class OrganizationRepositoryTest {
 			has(
                         property("organizationId", is(1)),
                         property("name", is("IITBombay")),
-                        property("address",is("add"))
+                        property("address",is("new address"))
                 ));
 	}
 	
@@ -56,9 +56,9 @@ public class OrganizationRepositoryTest {
 		Organization element = organizationRepository.findByIvrNumber("1233");
 		assertThat(element,
 			has(
-                        property("organizationId", is(1)),
-                        property("name", is("IITBombay")),
-                        property("address",is("new address"))
+                        property("organizationId", is(2)),
+                        property("name", is("Testing")),
+                        property("address",is("add"))
                 ));
 	}
 	
@@ -75,12 +75,12 @@ public class OrganizationRepositoryTest {
                     property("address",is("new address"))
             ),
             has(
-            		property("organizationId", is(2)),
+            		property("organizationId", is(3)),
                     property("name", is("Testging")),
                     property("address",is("dsf"))
             ),
             has(
-            		property("organizationId", is(3)),
+            		property("organizationId", is(2)),
                     property("name", is("Testing")),
                     property("address",is("add"))
             )));
@@ -96,7 +96,7 @@ public class OrganizationRepositoryTest {
 		newParentOrganization.addSubOrganization(organization);
 		assertThat(organization,
 				has(
-						property("organizationId", is(1)),
+						property("organizationId", is(3)),
 	                    property("name", is("Testging")),
                         property("parentOrganization.organizationId", is(2)),
                         property("address",is("dsf"))

@@ -48,27 +48,27 @@ public class ProductRepositoryTest {
                         property("name", is("Beans"))
                 ),
 				has(
-                        property("productTypeId", is(16)),
+                        property("productId", is(16)),
                         property("name", is("Beet Root"))
                 ),
                 has(
-                		property("productTypeId", is(17)),
-                        property("name", is("Bitter Gourd"))
+                		property("productId", is(17)),
+                        property("name", is("Bittergourd"))
                 ),
                 has(
-                		property("productTypeId", is(5)),
+                		property("productId", is(5)),
                         property("name", is("Cabbage"))
                 ),
                 has(
-                		property("productTypeId", is(6)),
+                		property("productId", is(6)),
                         property("name", is("Onion"))
                 ),
                 has(
-                		property("productTypeId", is(19)),
+                		property("productId", is(19)),
                         property("name", is("Potato"))
                 ),
                 has(
-                		property("productTypeId", is(4)),
+                		property("productId", is(4)),
                         property("name", is("Tomato"))
                 )));
 	}

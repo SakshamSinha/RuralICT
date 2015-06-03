@@ -49,7 +49,7 @@ public class ProductTypeRepositoryTest {
                 ),
 				has(
                         property("productTypeId", is(1)),
-                        property("name", is("Vegetable"))
+                        property("name", is("Vegetables"))
                 )
                 ));
 	}
