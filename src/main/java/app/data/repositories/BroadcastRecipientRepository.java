@@ -49,7 +49,7 @@ public interface BroadcastRecipientRepository extends JpaRepository<BroadcastRec
 	 * Search functions
 	 */
 	
-	public BroadcastRecipient findTop1ByUserAndBroadcast_OrganizationOrderByBroadcast_BroadcastedTimeDesc(User user,Organization organization);
+	public BroadcastRecipient findTopByUserAndBroadcast_OrganizationOrderByBroadcast_BroadcastedTimeDesc(User user,Organization organization);
 	
 	public BroadcastRecipient findByUserAndBroadcast(User user, Broadcast broadcast);
 }
