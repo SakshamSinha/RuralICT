@@ -47,6 +47,7 @@ public class BroadcastRecipientRepositoryTest {
 	@Autowired
 	BroadcastRepository broadcastRepository;
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getTopBroadcast(){
@@ -59,6 +60,7 @@ public class BroadcastRecipientRepositoryTest {
 	                ));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getBroadcastRecipientByUserAndBroadcast(){

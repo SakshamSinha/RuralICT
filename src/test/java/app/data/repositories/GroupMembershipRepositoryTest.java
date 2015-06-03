@@ -60,6 +60,7 @@ public class GroupMembershipRepositoryTest {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getGroupMembershipListByUser(){
@@ -80,6 +81,7 @@ public class GroupMembershipRepositoryTest {
 				
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getGroupMembershipListByUserSortedByGroupName(){
@@ -98,6 +100,7 @@ public class GroupMembershipRepositoryTest {
                 )));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getGroupMembershipListByGroup(){
@@ -112,6 +115,7 @@ public class GroupMembershipRepositoryTest {
                 )));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getGroupMembershipListByGroupSortedByUserName(){
@@ -130,6 +134,7 @@ public class GroupMembershipRepositoryTest {
                 )));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	//It again reverses the order. Again no stable sort.
@@ -159,7 +164,7 @@ public class GroupMembershipRepositoryTest {
                 )));
 	}
 	
-
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getAllGroupMembershipListSortedByGroupName(){
@@ -190,6 +195,7 @@ public class GroupMembershipRepositoryTest {
                 )));        
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getGroupMembershipListByUserAndOrganization(){
@@ -208,6 +214,7 @@ public class GroupMembershipRepositoryTest {
                 )));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getGroupsByUserAndOrganizationSorted(){
