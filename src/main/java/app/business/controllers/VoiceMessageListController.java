@@ -30,8 +30,8 @@ public class VoiceMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String voiceFeedbackMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-			List<Message> voiceFeedbackMessageList=messageService.getFeedbackList(groupService.getGroup(groupId),"voice");
-			model.addAttribute("message",voiceFeedbackMessageList);
+		List<Message> voiceFeedbackMessageList=messageService.getFeedbackList(groupService.getGroup(groupId),"voice");
+		model.addAttribute("message",voiceFeedbackMessageList);
 		return "voiceMessage";
 	}
 	
@@ -39,8 +39,8 @@ public class VoiceMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String voiceResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-			List<Message> voiceResponseMessageList=messageService.getResponseList(groupService.getGroup(groupId),"voice");
-			model.addAttribute("message",voiceResponseMessageList);
+		List<Message> voiceResponseMessageList=messageService.getResponseList(groupService.getGroup(groupId),"voice");
+		model.addAttribute("message",voiceResponseMessageList);
 		return "voiceMessage";
 	}
 
