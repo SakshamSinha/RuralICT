@@ -12,6 +12,6 @@ public interface VoiceRepository extends JpaRepository<Voice, Integer> {
 	/*
 	 * Search functions
 	 */
-	public List<Voice> findByIsDownloaded(boolean isdownloaded);
+	public List<Voice> findByIsDownloaded(boolean isDownloaded);
 
 }
