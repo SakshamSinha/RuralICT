@@ -1,5 +1,6 @@
 package app.data.repositories;
 
+import java.security.Timestamp;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.OrderItem;
+import app.entities.Organization;
 
 public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	/*
@@ -45,4 +47,8 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	/*
 	 * Search functions
 	 */
+	
+	public List<OrderItem> findByOrder_OrganizationAndProduct_NameAndOrder_Message_TimeBetween(Organization organization, String name, Timestamp from, Timestamp to);
+	
+	public List<OrderItem> findByOrder_OrganizationAndOrder_Message_Group_NameAndOrder_Message_TimeBetween(Organization organization, String name, Timestamp from, Timestamp to);
 }

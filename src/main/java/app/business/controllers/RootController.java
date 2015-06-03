@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import app.business.services.UserService;
 import app.entities.OrganizationMembership;
 import app.entities.User;
+import app.util.DownloadDaemon;
 import app.util.Utils;
 
 @Controller
@@ -27,6 +28,8 @@ public class RootController {
 	public String contextRoot() {
 		return "redirect:/web";
 	}
+	
+	
 
 	/*
 	 * We want there to be a trailing slash after the organization, so that AngularJS understands that it needs to
@@ -53,6 +56,9 @@ public class RootController {
 		 * If the user is an admin in only one org, forward them to that org, else
 		 * show them a list of orgs they can access.
 		 */
+		
+		
+		
 		if (authenticated.size() == 1) {
 			return "redirect:/web/"+authenticated.get(0).getOrganization().getAbbreviation()+"/";
 		} else if (authenticated.size() > 1) {
