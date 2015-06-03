@@ -25,12 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import app.data.repositories.BroadcastRepository;
 import app.data.repositories.BroadcastScheduleRepository;
-import app.data.repositories.GroupRepository;
-import app.data.repositories.MessageRepository;
 import app.entities.BroadcastSchedule;
-import app.entities.Group;
 import app.entities.broadcast.Broadcast;
-import app.entities.message.Message;
 
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
