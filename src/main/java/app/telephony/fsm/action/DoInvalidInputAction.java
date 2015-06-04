@@ -16,7 +16,7 @@ public class DoInvalidInputAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		System.out.println("I am here now!");
+		
 		/*session.addInvalidTry();*/
 		Response response = session.getResponse();
 

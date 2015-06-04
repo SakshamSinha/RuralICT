@@ -24,6 +24,7 @@ import app.telephony.fsm.guards.OnGroupIDExist;
 import app.telephony.fsm.guards.OnIsPublisher;
 import app.telephony.fsm.guards.OnLanguageSelect;
 import app.telephony.fsm.guards.OnOrderIDExist;
+import app.telephony.fsm.guards.OnResponseType;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.FiniteStateException;
@@ -46,6 +47,9 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 	 */
 	static StateTransitionMap<IVRSession> transitionMap;
 
+	public static HashMap<String,String> tempLanguageMap;
+	public static HashMap<String,String> tempResponseMap;
+	
 	static {
 		try {
 			transitionMap = buildTransitionMap();
@@ -68,11 +72,17 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		IVRStateTransitionMap map = new IVRStateTransitionMap();
 		
 		
-		/* RUDIMENTARY VARIABLES */
-		HashMap<String,String> tempLanguageMap = new HashMap<String, String>();
+		/* INITIALIZING RUDIMENTARY VARIABLES */
+		tempLanguageMap = new HashMap<String, String>();
 		tempLanguageMap.put("1", "Hindi");
 		tempLanguageMap.put("2", "Marathi");
 		tempLanguageMap.put("3", "English");
+		
+
+		tempResponseMap = new HashMap<String, String>();
+		tempResponseMap.put("1", "Order");
+		tempResponseMap.put("2", "Feedback");
+		tempResponseMap.put("3", "Response");
 
 		/* ACTIONS FOR USER CALL FLOW  */
 
@@ -175,12 +185,15 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Guard<IVRSession, Object> onDTMFGroupIDNotExist = new OnGroupIDExist(false);
 		Guard<IVRSession, Object> onGotDTMFKeyNot1nor2nor3 = new OnGotDTMFKey(new String[] {"1", "2" ,"3"}, false);
 		Guard<IVRSession, Object> onGotDTMFKeyEmpty = new OnGotDTMFKey(new String[] {""}, true);
-		Guard<IVRSession, Object> onLanguageSelect = new OnLanguageSelect(tempLanguageMap);
+		Guard<IVRSession, Object> onLanguageSelect = new OnLanguageSelect();
 		Guard<IVRSession, Object> onGotDTMFKey3 = new OnGotDTMFKey(new String[] {"3"}, true);
 		Guard<IVRSession, Object> onDTMFOrderIDExist = new OnOrderIDExist(true);
 		Guard<IVRSession, Object> onDTMFOrderIDNotExist = new OnOrderIDExist(false);
 		Guard<IVRSession, Object> onIsPublisher = new OnIsPublisher(true);
 		Guard<IVRSession, Object> onIsUser = new OnIsPublisher(false);
+		Guard<IVRSession, Object> onGotDTMFOrder = new OnResponseType("Order");
+		Guard<IVRSession, Object> onGotDTMFFeedback = new OnResponseType("Feedback");
+		Guard<IVRSession, Object> onGotDTMFResponse = new OnResponseType("Response");
 		
 		/* TRANSITIONS */
 
@@ -195,9 +208,9 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(userStart, EventGuard.proceed,languageMenu, null);
 
 		// transitions from responseType(Order , Feedback , Response)
-		map.allowTransition(responseType, onGotDTMFKey1,orderMenu, null);
-		map.allowTransition(responseType, onGotDTMFKey2,recordFeedback, playFeedbackRecordAction);
-		map.allowTransition(responseType,onGotDTMFKey3,responseMenu,null);
+		map.allowTransition(responseType, onGotDTMFOrder,orderMenu, null);
+		map.allowTransition(responseType, onGotDTMFFeedback,recordFeedback, playFeedbackRecordAction);
+		map.allowTransition(responseType, onGotDTMFResponse,responseMenu,null);
 		map.allowTransition(responseType, onGotDTMFKeyNot1nor2nor3,responseType, doInvalidInputAction);
 		
 		// transitions from langugaeMenu(Hindi , English , Marathi)
@@ -253,8 +266,8 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(confirmPCMessage, onGotDTMFKeyNot1nor2, confirmPCMessage,doInvalidInputAction);
 		
 		// transitions from choosePhoneGroup
-	    map.allowTransition(choosePhoneGroup, onGotDTMFKey1, playGroupIDs, null);
-	    map.allowTransition(choosePhoneGroup, onGotDTMFKey2, enterGroupID, null);
+	    map.allowTransition(choosePhoneGroup, onGotDTMFKey1, enterGroupID, null);
+	    map.allowTransition(choosePhoneGroup, onGotDTMFKey2, playGroupIDs, null);
 	    map.allowTransition(choosePhoneGroup, onGotDTMFKeyNot1nor2, choosePhoneGroup, playGroupIDsAction);
 	    
 	    // transitions from playGroupIDs

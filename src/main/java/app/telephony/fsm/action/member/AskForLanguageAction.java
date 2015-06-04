@@ -1,6 +1,11 @@
 package app.telephony.fsm.action.member;
 
+import java.util.Arrays;
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.business.services.OrganizationService;
+import app.business.services.springcontext.SpringContextBridge;
+import app.telephony.fsm.RuralictStateMachine;
 import app.telephony.fsm.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
@@ -22,9 +27,42 @@ public class AskForLanguageAction implements Action<IVRSession> {
 		
 		/*cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForHindi.wav");
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForMarathi.wav");*/
-		System.out.println("I am here!");
+			
+		//cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/languageMenu.wav");
 		
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/languageMenu.wav");
+		OrganizationService organisationService = SpringContextBridge.services().getOrganizationService();
+		String langs = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
+		
+		int i=1;
+		String[] responses = new String[RuralictStateMachine.tempLanguageMap.size()];
+		Object[] keys = RuralictStateMachine.tempLanguageMap.keySet().toArray();
+		Arrays.sort(keys);
+		for(Object k:keys){
+			if(langs.contains((String)k)){
+				String l = RuralictStateMachine.tempLanguageMap.get(k);
+				
+				if(l.equalsIgnoreCase("English"))
+				{
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for"+l+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+l+".wav"); //language
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press"+l+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+""+l+".wav"); // 'i'
+				}
+				else
+				{
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+l+".wav"); //language
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for"+l+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+""+l+".wav"); // 'i'
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press"+l+".wav"); //Press
+				}
+				responses[i-1]=l;
+				i++;
+			}
+		}
+		RuralictStateMachine.tempLanguageMap.clear();
+		for(i=0;i<responses.length;i++){
+			RuralictStateMachine.tempLanguageMap.put((i+1)+"", responses[i]);
+		}
 		
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
