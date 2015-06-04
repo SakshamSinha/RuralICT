@@ -54,6 +54,12 @@
 	padding-top: 8px;
 }
 
+.audio-control {
+	position: relative;
+	right: -150px;
+	
+}
+
 .top-tab-bar > .active > a,
 .top-tab-bar > .active > a:hover {
   background-color: #fcfcfc;
