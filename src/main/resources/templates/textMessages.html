@@ -14,7 +14,7 @@
 		<tbody>
 			<tr class="list-users" th:each="message : ${textMessage} ">
 
-				<td th:text="${message.textTime}">Time</td>
+				<!-- <td th:text="${message.textTime}">Time</td> -->
 				<td th:text="${message.user.name}">User Name</td>
 				<td th:text="${message.textContent}">Text Content</td>
 				<td><input type="textarea" class="input-xlarge" id="comment"

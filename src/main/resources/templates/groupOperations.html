@@ -62,10 +62,36 @@
 		<!--brands tab content-->
 		<div class="tab-content">
 			<div id="broadcast-voice-message" class="tab-pane">
-				<i>broadcast-voice-message</i>
+				<ng-include
+					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="broadcast-text-message" class="tab-pane">
-			<i>broadcast-text-message</i>
+				<form class="form-horizontal">
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label" for="name">Message to be
+								sent</label>
+							<div class="controls">
+								<textarea name="message" rows="5" cols="30" id="sms-message"
+									onkeyup="countChar(this)" required></textarea>
+							</div>
+						</div>
+
+						<div class="control">Message Response</div>
+						<div class="control-group">
+							<br> <input type="radio" id="radio1" name="value"
+								value="order">Order <br> <input type="radio"
+								id="radio2" name="value" value="feedback">Feedback <br>
+							<input type="radio" name="value" id="radio3" value="response">Response
+							<br> <input type="radio" name="value" id="radio4"
+								value="noresponse">No Response <br>
+						</div>
+
+						<div class="form-actions">
+							<input type="submit" class="btn btn-success" value="Save Deatils" />
+						</div>
+					</fieldset>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -89,12 +115,12 @@
 					th:attr="src='\'textInboxMessage/'+${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="text-message-response-accepted" class="tab-pane">
-				 <ng-include
-					th:attr="src='\'textAcceptRejectMessage/'+Accept+'/' +${group.groupId}+'\''"></ng-include> 
+				<ng-include
+					th:attr="src='\'textAcceptRejectMessage/'+Accept+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="text-message-response-rejected" class="tab-pane">
-				 <ng-include
-					th:attr="src='\'textAcceptRejectMessage/'+Reject+'/' +${group.groupId}+'\''"></ng-include> 
+				<ng-include
+					th:attr="src='\'textAcceptRejectMessage/'+Reject+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="text-message-response-response-binary" class="tab-pane">
 				<ng-include
@@ -120,8 +146,7 @@
 		<!--music tab content-->
 		<div class="tab-content">
 			<div id="send-sms-outgoing-sms" class="tab-pane">
-				<ng-include
-					th:attr="src='\'outGoingSmsList/'+${group.groupId}+'\''"></ng-include>
+				<ng-include th:attr="src='\'outGoingSmsList/'+${group.groupId}+'\''"></ng-include>
 			</div>
 		</div>
 	</div>
@@ -136,7 +161,7 @@
 		<!--public_figures tab content-->
 		<div class="tab-content">
 			<div id="manage-members" class="tab-pane">
-				<i>manage-members</i>
+				<ng-include th:attr="src='\'memberList/'+${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="manage-reports" class="tab-pane">
 				<i>manage-reports</i>
