@@ -26,7 +26,7 @@ public class UsersController {
 	@Transactional
 	public String usersPage(@PathVariable String org, Model model) {
 
-		List<UserView> rows = userViewService.getUserViewByOrganization(org);
+		List<UserView> rows = userViewService.getUserViewListByOrganization(org);
 		
 		model.addAttribute("organizationMemberships",rows);
 		return "users";

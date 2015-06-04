@@ -21,6 +21,7 @@ import app.business.services.GroupService;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
+import app.business.services.VoiceService;
 import app.entities.Organization;
 import app.entities.UserPhoneNumber;
 import app.telephony.RuralictSession;
@@ -44,13 +45,15 @@ public class CallHandlerController implements IVRSessionFactory {
 
 	@Autowired
 	GroupService groupService;
+	@Autowired
+	VoiceService voiceService;
 
 	@Override
 	public IVRSession createSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator) throws Exception {
 
 
 
-		return new RuralictSession(sessionId, userNumber, ivrNumber, circle, operator,organizationService,userPhoneNumberService,userService,groupService);
+		return new RuralictSession(sessionId, userNumber, ivrNumber, circle, operator,organizationService,userPhoneNumberService,userService,groupService, voiceService);
 	}
 
 	/**
