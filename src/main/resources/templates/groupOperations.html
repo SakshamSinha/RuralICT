@@ -18,7 +18,16 @@
 
 <!--top level tab content-->
 <div class="tab-content">
-	<!--all tab menu-->
+	<!--broadcast tab menu-->
+	<div id="broadcast" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
+			<li><a href="#broadcast-voice-message" data-toggle="tab">Voice
+					Message</a></li>
+			<li><a href="#broadcast-text-message" data-toggle="tab">Text
+					Message</a></li>
+		</ul>
+	</div>
+	<!--Voice message response tab menu-->
 	<div id="voice-message-response" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="all_tabs">
 			<li><a href="#voice-message-response-inbox" data-toggle="tab">Inbox</a></li>
@@ -32,7 +41,7 @@
 		<div class="tab-content">
 			<div id="voice-message-response-inbox" class="tab-pane">
 				<ng-include
-					th:attr="src='\'voiceInboxMessages/'+ ${group.groupId}+'\''"></ng-include>
+					th:attr="src='\'voiceMessage/'+ inbox+'/'+ ${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="voice-message-response-saved" class="tab-pane">
 				<i>voice-message-response-saved</i>
@@ -42,33 +51,16 @@
 			</div>
 			<div id="voice-message-response-feedback" class="tab-pane">
 				<ng-include
-					th:attr="src='\'voiceMessage/'+ Feedback+'/' +${group.groupId}+'\''"></ng-include>
+					th:attr="src='\'voiceMessage/'+ feedback+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="voice-message-response-response" class="tab-pane">
 				<ng-include
-					th:attr="src='\'voiceMessage/'+ Response+'/' +${group.groupId}+'\''"></ng-include>
+					th:attr="src='\'voiceMessage/'+ response+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 		</div>
 	</div>
 
-	<!--brands tab menu-->
-	<div id="broadcast" class="tab-pane">
-		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
-			<li><a href="#broadcast-voice-message" data-toggle="tab">Voice
-					Message</a></li>
-			<li><a href="#broadcast-text-message" data-toggle="tab">Text
-					Message</a></li>
-		</ul>
-		<!--brands tab content-->
-		<div class="tab-content">
-			<div id="broadcast-voice-message" class="tab-pane">
-				<i>broadcast-voice-message</i>
-			</div>
-			<div id="broadcast-text-message" class="tab-pane">
-			<i>broadcast-text-message</i>
-			</div>
-		</div>
-	</div>
+	
 
 	<!--media tab menu-->
 	<div id="text-message-response" class="tab-pane">
@@ -168,39 +160,4 @@
 			</div>
 		</div>
 	</div>
-
-	<!--sports tab menu-->
-	<div id="sports" class="tab-pane">
-		<ul class="nav nav-tabs bottom-tab-bar" id="sports_tabs">
-			<li><a href="#sports_popular" data-toggle="tab">Popular</a></li>
-			<li><a href="#sports_unique" data-toggle="tab">Unique</a></li>
-		</ul>
-		<!--sports tab content-->
-		<div class="tab-content">
-			<div id="sports_popular" class="tab-pane">
-				<i>sports_popular interests go here</i>
-			</div>
-			<div id="sports_unique" class="tab-pane">
-				<i>sports_unique interests go here</i>
-			</div>
-		</div>
-	</div>
-
-	<!--tv/movies tab menu-->
-	<div id="tv_movies" class="tab-pane">
-		<ul class="nav nav-tabs bottom-tab-bar" id="tv_movies_tabs">
-			<li><a href="#tv_movies_popular" data-toggle="tab">Popular</a></li>
-			<li><a href="#tv_movies_unique" data-toggle="tab">Unique</a></li>
-		</ul>
-		<!--tv_movies tab content-->
-		<div class="tab-content">
-			<div id="tv_movies_popular" class="tab-pane">
-				<i>tv_movies_popular interests go here</i>
-			</div>
-			<div id="tv_movies_unique" class="tab-pane">
-				<i>tv_movies_unique interests go here</i>
-			</div>
-		</div>
-	</div>
-
 </div>

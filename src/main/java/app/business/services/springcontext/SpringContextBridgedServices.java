@@ -11,6 +11,7 @@ import app.business.services.OrganizationService;
 import app.business.services.OutboundCallService;
 import app.business.services.ProductService;
 import app.business.services.ProductTypeService;
+import app.business.services.TelephonyService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.UserViewService;
@@ -44,4 +45,5 @@ public interface SpringContextBridgedServices {
 	public VoiceBroadcastService getVoiceBroadcastService();
 	public TextMessageService getTextMessageService();
 	public VoiceMessageService getVoiceMessageService();
+	public TelephonyService getTelephonyService();
 }

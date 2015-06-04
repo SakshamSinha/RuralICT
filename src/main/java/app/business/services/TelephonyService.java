@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import app.business.services.message.MessageService;
 import app.entities.InboundCall;
 import app.entities.User;
+import app.entities.UserPhoneNumber;
 import app.entities.Voice;
 import app.entities.message.BinaryMessage;
 import app.entities.message.TextMessage;
@@ -15,15 +16,27 @@ import app.entities.message.VoiceMessage;
 
 @Service
 public class TelephonyService {
+	
 	@Autowired
 	MessageService messageService;
+	
 	@Autowired
 	VoiceService voiceService;
+	
+	@Autowired
+	UserPhoneNumberService userPhoneNumberService;
 	
 	void addVoiceMessage(User user, String mode, String type, boolean response, String url, InboundCall inboundCall){
 		Voice voice=new Voice(url,false);
 		voiceService.addVoice(voice);
 		VoiceMessage voiceMessage=new VoiceMessage(user, null, mode, type, response, null, voice, inboundCall);
+		messageService.addMessage(voiceMessage);
+	}
+	
+	void addVoiceMessage(String userPhoneNumber, String mode, String type, boolean response, String url, InboundCall inboundCall){
+		Voice voice=new Voice(url,false);
+		voiceService.addVoice(voice);
+		VoiceMessage voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), null, mode, type, response, null, voice, inboundCall);
 		messageService.addMessage(voiceMessage);
 	}
 	
