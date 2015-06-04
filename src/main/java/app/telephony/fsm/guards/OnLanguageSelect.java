@@ -15,18 +15,19 @@ public class OnLanguageSelect extends EventTypeGuard<IVRSession> {
 	HashMap<String,String> languages;
 	
 	public OnLanguageSelect(HashMap<String,String> languageMap) {
-		// TODO Auto-generated constructor stub
+		
 		super(GotDTMFEvent.class);
 		languages = new HashMap<String,String>(languageMap);
 	}	
 	
 	@Override
 	public boolean accept(Event<Object> event, IVRSession session, State<?> state) {
-		// TODO Auto-generated method stub
+		
 		if(super.accept(event, session, state))
 		{
 			GotDTMFEvent ev = (GotDTMFEvent) event;
 			String input=ev.getInput();
+			System.out.println(input.equalsIgnoreCase("")+"=checking = "+ev.getInput());
 			
 			if(languages.containsKey(input)){
 				session.setLanguage(languages.get(input));

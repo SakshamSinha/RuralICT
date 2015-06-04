@@ -33,7 +33,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * The IVR number being used for this application. Outbound calls will be made from this number.
 		 */
-		public static final String IVR_NUMBER = "912233578383";
+		public static final String IVR_NUMBER = "912030157457";
 		/**
 		 * The Text-to-speech speed for KooKoo.
 		 */
@@ -63,7 +63,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * The root URL where all the voice files are.
 		 */
-		public static final String VOICE_DIR = "http://ruralict.cse.iitb.ac.in/ruralivrs/voice";
+		public static final String VOICE_DIR = "http://ruralict.cse.iitb.ac.in/Downloads/AFC/voice";
 	}
 
 }

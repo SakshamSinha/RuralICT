@@ -19,7 +19,7 @@ public class PlayResponeIsYesAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 
 		//response.addPlayText("Your message has been cancelled.", Configs.Telephony.TTS_SPEED);
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes"+session.getLanguage()+".wav");
 				
 	}
 

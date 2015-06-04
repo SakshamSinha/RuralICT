@@ -14,7 +14,7 @@ public class AskConfirmOrderAction implements Action<IVRSession> {
 	public void doAction(Event<?> arg0, IVRSession arg1,
 			Transition<IVRSession, ?> arg2, int arg3)
 			throws TransitionRollbackException, TransitionFailureException {
-		// TODO Auto-generated method stub
+		
 
 	}
 

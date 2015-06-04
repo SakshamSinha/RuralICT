@@ -39,7 +39,6 @@ public class OnGroupIDExist extends EventTypeGuard<IVRSession> {
 	// returns false in all other cases	
 	@Override
 	public boolean accept(Event<Object>event, IVRSession session, State<?> state) {
-		// TODO Auto-generated method stub
 		
 		RuralictSession ictSession = (RuralictSession) session;
 		OrganizationService orgService = ictSession.getOrganizationService();

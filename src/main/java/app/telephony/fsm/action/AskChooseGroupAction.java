@@ -16,15 +16,11 @@ public class AskChooseGroupAction implements Action<IVRSession> {
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
-		// TODO Auto-generated method stub
 		
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-
-		//cd.addPlayText("If you are satisfied with your message, press 1. To cancel your message, press 2.", Configs.Telephony.TTS_SPEED);
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToEnterGroupID.wav");
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToListenGroupIDs.wav");
-	
 
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);

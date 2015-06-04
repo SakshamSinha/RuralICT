@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.business.services.VoiceService;
 import app.entities.Voice;
+import app.telephony.RuralictSession;
 import app.telephony.fsm.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
@@ -18,7 +19,9 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 
 	@Autowired
 	Voice voice;
-	VoiceService voiceService;
+	
+	//@Autowired
+	//VoiceService voiceService;
 	
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
@@ -27,12 +30,14 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 		String messageURL=session.getMessageURL();
 		voice = new Voice(messageURL , false);
+		RuralictSession ictSession = (RuralictSession) session;
+		VoiceService voiceService = ictSession.getVoiceService();
+		System.out.println((voiceService==null)+" ---- "+(voice==null));
 		
 		voiceService.addVoice(voice);
 				   
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageConfirmed.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageConfirmed"+session.getLanguage()+".wav");
 		
-		//TODO: store the messages in database and server storage
  	}
 
 }

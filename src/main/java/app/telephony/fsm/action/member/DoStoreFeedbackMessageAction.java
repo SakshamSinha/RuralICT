@@ -28,12 +28,11 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 		String messageURL=session.getMessageURL();
 		voice = new Voice(messageURL , false);
-		
 		voiceService.addVoice(voice);
-				   
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageConfirmed.wav");
+		   
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageConfirmed"+session.getLanguage()+".wav");
 		
-		//TODO: store the messages in database and server storage
+		
  	}
 
 

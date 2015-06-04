@@ -21,9 +21,9 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 		CollectDtmf cd = new CollectDtmf();
 
 		//cd.addPlayText("If you are satisfied with your message, press 1. To cancel your message, press 2.", Configs.Telephony.TTS_SPEED);
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForOrder.wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForFeedback.wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press3ForResponse.wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForOrder"+session.getLanguage()+".wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForFeedback"+session.getLanguage()+".wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press3ForResponse"+session.getLanguage()+".wav");
 		
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);

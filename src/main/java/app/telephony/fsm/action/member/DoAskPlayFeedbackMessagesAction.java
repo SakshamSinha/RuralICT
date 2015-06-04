@@ -16,14 +16,11 @@ public class DoAskPlayFeedbackMessagesAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		Response response = session.getResponse();
-		
-	   
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordedFeedbackMessageIs.wav");
+		Response response = session.getResponse();   
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordedFeedbackMessageIs"+session.getLanguage()+".wav");
 		String feedback = session.getMessageURL();
-		
 		response.addPlayAudio(feedback);
-		//TODO: store the messages in database and server storage
+		
  	}
 
 }

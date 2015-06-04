@@ -22,7 +22,7 @@ public class AskConfirmFeedbackAction implements Action<IVRSession> {
 
 		
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirmFeedback"+session.getLanguage()+".wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecordFeedback.wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecordFeedback"+session.getLanguage()+".wav");
 
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);

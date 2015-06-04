@@ -19,11 +19,12 @@ public class AskForLanguageAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-
-		//cd.addPlayText("If you are satisfied with your message, press 1. To cancel your message, press 2.", Configs.Telephony.TTS_SPEED);
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForHindi.wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForMarathi.wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press3ForEnglish.wav");
+		
+		/*cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForHindi.wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForMarathi.wav");*/
+		System.out.println("I am here!");
+		
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/languageMenu.wav");
 		
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);

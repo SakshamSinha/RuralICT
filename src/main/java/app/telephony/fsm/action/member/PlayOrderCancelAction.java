@@ -17,9 +17,8 @@ public class PlayOrderCancelAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-
-		//response.addPlayText("Your message has been cancelled.", Configs.Telephony.TTS_SPEED);
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourOrderIsCancelled.wav");
+	
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourOrderIsCancelled"+session.getLanguage()+".wav");
 				
 	}
 

@@ -16,13 +16,10 @@ public class AskBroadcastMediumAction implements Action<IVRSession> {
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
-		// TODO Auto-generated method stub
 		
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-
-		//cd.addPlayText("If you are satisfied with your message, press 1. To cancel your message, press 2.", Configs.Telephony.TTS_SPEED);
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForPhome.wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForPhone.wav");
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForPC.wav");
 
 		cd.setMaxDigits(1);

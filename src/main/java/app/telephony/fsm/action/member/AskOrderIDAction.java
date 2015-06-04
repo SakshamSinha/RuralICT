@@ -23,7 +23,7 @@ public class AskOrderIDAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/enterOrderId.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/enterOrderId"+session.getLanguage()+".wav");
 		
 		cd.setMaxDigits(4);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);

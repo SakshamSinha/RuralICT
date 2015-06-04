@@ -35,7 +35,7 @@ public class IvrsPublisherStateMachine extends StateMachine<IVRSession>{
 	public IvrsPublisherStateMachine(StateTransitionMap<IVRSession> map,
 			IVRSession entity) {
 		super(map, entity);
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	/**
