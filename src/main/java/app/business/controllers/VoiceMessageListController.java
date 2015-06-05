@@ -32,7 +32,7 @@ public class VoiceMessageListController {
 	public String voiceFeedbackMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
 		List<Message> voiceFeedbackMessageList=messageService.getFeedbackList(groupService.getGroup(groupId),"voice");
 		model.addAttribute("message",voiceFeedbackMessageList);
-		return "voiceMessage";
+		return "voiceFeedbackMessage";
 	}
 	
 	@RequestMapping(value="/voiceMessage/response/{groupId}")
@@ -41,10 +41,10 @@ public class VoiceMessageListController {
 	public String voiceResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
 		List<Message> voiceResponseMessageList=messageService.getResponseList(groupService.getGroup(groupId),"voice");
 		model.addAttribute("message",voiceResponseMessageList);
-		return "voiceMessage";
+		return "voiceResponseMessage";
 	}
 
-	@RequestMapping(value="/voiceInboxMessages/{groupId}")
+	@RequestMapping(value="/voiceMessage/inbox/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String voiceInboxMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
