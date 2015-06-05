@@ -26,26 +26,26 @@ public class TelephonyService {
 	@Autowired
 	UserPhoneNumberService userPhoneNumberService;
 	
-	void addVoiceMessage(User user, String mode, String type, boolean response, String url, InboundCall inboundCall){
+	public void addVoiceMessage(User user, String mode, String type, boolean response, String url, InboundCall inboundCall){
 		Voice voice=new Voice(url,false);
 		voiceService.addVoice(voice);
 		VoiceMessage voiceMessage=new VoiceMessage(user, null, mode, type, response, null, voice, inboundCall);
 		messageService.addMessage(voiceMessage);
 	}
 	
-	void addVoiceMessage(String userPhoneNumber, String mode, String type, boolean response, String url, InboundCall inboundCall){
+	public void addVoiceMessage(String userPhoneNumber, String mode, String type, boolean response, String url, InboundCall inboundCall){
 		Voice voice=new Voice(url,false);
 		voiceService.addVoice(voice);
 		VoiceMessage voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), null, mode, type, response, null, voice, inboundCall);
 		messageService.addMessage(voiceMessage);
 	}
 	
-	void addTextMessage(User user, String mode, String type, boolean response,String textContent, Timestamp textTime){
+	public void addTextMessage(User user, String mode, String type, boolean response,String textContent, Timestamp textTime){
 		TextMessage textMessage=new TextMessage(user, null, mode, type, response, null, textContent, textTime);
 		messageService.addMessage(textMessage);
 	}
 	
-	void addBinaryMessage(User user, String mode, String type, boolean response, Timestamp time){
+	public void addBinaryMessage(User user, String mode, String type, boolean response, Timestamp time){
 		BinaryMessage binaryMessage=new BinaryMessage(user, null, time, mode, type, response, null);
 		messageService.addMessage(binaryMessage);
 	}
