@@ -130,7 +130,7 @@ public class GroupMembershipRepositoryTest {
 	}
 	
 	@Test
-	@Transactional
+	@Rollback
 	//It again reverses the order. Again no stable sort.
 	public void getAllGroupMembershipListSortedByUserName(){
 		List<GroupMembership> list = groupMembershipRepository.findAllByOrderByUser_NameAsc();
@@ -160,7 +160,7 @@ public class GroupMembershipRepositoryTest {
 	
 
 	@Test
-	@Transactional
+	@Rollback
 	public void getAllGroupMembershipListSortedByGroupName(){
 		List<GroupMembership> sort=groupMembershipRepository.findAllByOrderByGroup_NameAsc();
 		
