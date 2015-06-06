@@ -3,7 +3,10 @@ package app.telephony.fsm.action.member;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.business.services.TelephonyService;
 import app.business.services.VoiceService;
+import app.business.services.springcontext.SpringContextBridge;
+import app.entities.InboundCall;
 import app.entities.Voice;
 import app.telephony.fsm.config.Configs;
 
@@ -19,19 +22,32 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 	
 	@Autowired
 	Voice voice;
-	@Autowired
-	VoiceService voiceService;
+
 	
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
+		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
 		Response response = session.getResponse();
 		String messageURL=session.getMessageURL();
-		voice = new Voice(messageURL , false);
+		InboundCall inboundCall= new InboundCall();
+		Voice voiceMessage = new Voice();
+        String mode = "web";
+        String type ="voice";
+        String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
+		
+        voice = new Voice(url , false);
 		voiceService.addVoice(voice);
-		   
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageConfirmed"+session.getLanguage()+".wav");
+		voiceMessage.setUrl(messageURL);
+	//	inboundCall.setDuration(recordEvent.getDuration());
+		
+			
+		voice = new Voice("http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav" , false);
+				
+		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
+		telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url, inboundCall);
+        response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageConfirmed"+session.getLanguage()+".wav");
 		
 		
  	}

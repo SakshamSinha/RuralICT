@@ -36,26 +36,26 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 		String messageURL=session.getMessageURL();
 		
-		/*
+		
 		RecordEvent recordEvent = (RecordEvent) event;
-*/		RuralictSession ruralictSession = (RuralictSession) session;
-		Voice message = new Voice();
-		System.out.println(message.toString());
-		InboundCall messagea = new InboundCall();
-
-		/*messagea.setDuration(recordEvent.getDuration());*/
-		message.setUrl(messageURL);
 		
-		ruralictSession.setVoiceMessage(message);
+		Voice voiceMessage = new Voice();
+		InboundCall inboundCall= new InboundCall();
+        String mode = "web";
+        String type ="voice";
+        String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		
+		voiceMessage.setUrl(messageURL);
+		inboundCall.setDuration(recordEvent.getDuration());
+		
+			
 		voice = new Voice("http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav" , false);
-		RuralictSession ictSession = (RuralictSession) session;
-		VoiceService voiceService = ictSession.getVoiceService();
-		
-		/*VoiceService voiceService = SpringContextBridge.services().getVoiceService();*/
+				
+		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
 		System.out.println((voiceService==null)+" ---- "+(voice==null));
-	/*	TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
-		telephonyService.addVoiceMessage(session.getUserNumber(),)*/
+		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
+		
+		telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url, inboundCall);
 		
 		voiceService.addVoice(voice);
 				   

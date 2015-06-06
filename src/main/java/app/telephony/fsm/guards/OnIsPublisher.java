@@ -1,9 +1,12 @@
 package app.telephony.fsm.guards;
 
+import javax.swing.Spring;
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
+import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Organization;
 import app.entities.UserPhoneNumber;
 import app.telephony.RuralictSession;
@@ -25,11 +28,12 @@ public class OnIsPublisher implements Guard<IVRSession,Object>{
 
 	@Override
 	public boolean accept(Event<Object> event, IVRSession session, State<?> state) {
-		RuralictSession ictSession = (RuralictSession) session;
-		UserPhoneNumberService userPhoneNumberService = ictSession.getUserPhoneNumberService();
-		OrganizationService orgService = ictSession.getOrganizationService();
-		UserService userService = ictSession.getUserService();
 		
+		OrganizationService orgService = SpringContextBridge.services().getOrganizationService();
+		UserService userService =SpringContextBridge.services().getUserService();
+		
+		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
+	
 		String userNumber = session.getUserNumber();
 		String orgNumber = session.getIvrNumber();
 		

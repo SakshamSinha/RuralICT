@@ -53,7 +53,7 @@ public class CallHandlerController implements IVRSessionFactory {
 
 
 
-		return new RuralictSession(sessionId, userNumber, ivrNumber, circle, operator,organizationService,userPhoneNumberService,userService,groupService, voiceService);
+		return new RuralictSession(sessionId, userNumber, ivrNumber, circle, operator);
 	}
 
 	/**

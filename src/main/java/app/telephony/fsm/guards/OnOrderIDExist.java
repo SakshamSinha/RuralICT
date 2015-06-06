@@ -6,6 +6,7 @@ import in.ac.iitb.ivrs.telephony.base.events.GotDTMFEvent;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
@@ -13,6 +14,7 @@ import app.business.services.OrderService;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
+import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Order;
 import app.telephony.RuralictSession;
 
@@ -43,8 +45,9 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 	@Override
 	public boolean accept(Event<Object>event, IVRSession session, State<?> state) {
 		
-		RuralictSession ictSession = (RuralictSession) session;
-		OrganizationService orgService = ictSession.getOrganizationService();
+		
+		OrganizationService orgService = SpringContextBridge.services().getOrganizationService();
+		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		
 		
 		if (super.accept(event, session, state)) {
@@ -55,9 +58,9 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 			Order o=orderService.getOrder(orderID);
 			if(o!=null){
 				if(!(o.getStatus().equalsIgnoreCase("reject") || o.getStatus().equalsIgnoreCase("processed"))
-						&& o.getOrganization() == orgService.getOrganizationByIVRS(ictSession.getIvrNumber())
-						&& true
-						/*userPhoneNumberService.getUserPhoneNumber(ictSession.getUserNumber()).getUser() == */ 
+						&& o.getOrganization() == orgService.getOrganizationByIVRS(session.getIvrNumber())
+						&&  true
+						/*userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser() == */ 
 						){
 					return (true==allow);
 				}				
