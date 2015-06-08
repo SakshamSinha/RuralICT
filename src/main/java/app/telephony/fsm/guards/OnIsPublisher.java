@@ -39,21 +39,24 @@ public class OnIsPublisher implements Guard<IVRSession,Object>{
 		
 	    UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(userNumber);
 		Organization organization = orgService.getOrganizationByIVRS(orgNumber);
-		
-		System.out.println("userService: " + (userService != null));
-		System.out.println("userPhoneNumber: " + (userPhoneNumberService != null));
-		System.out.println("organization: " + (organization != null));
+
+		if(userPhoneNumber == null){
+			return false;
+		}
+		else {
 		String userRole= userService.getUserRole(userPhoneNumber.getUser(), organization);
-		
+
 		if(userRole.contains("Publisher")==allow){
 			
 			return true;
 			
 		}
-		
+				
 		return false;
+		}
 	}
 	
 	
+
 
 }

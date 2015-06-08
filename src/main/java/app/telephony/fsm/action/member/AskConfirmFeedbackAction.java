@@ -19,7 +19,10 @@ public class AskConfirmFeedbackAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-
+		 
+		/*response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordedFeedbackMessageIs"+session.getLanguage()+".wav");
+		String feedback = session.getMessageURL();
+		response.addPlayAudio("http://recordings.kookoo.in/vishwajeet/"+feedback+".wav");*/
 		
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirmFeedback"+session.getLanguage()+".wav");
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecordFeedback"+session.getLanguage()+".wav");

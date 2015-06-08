@@ -31,14 +31,16 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 		
-		VoiceBroadcast b;
-	/*	b = (VoiceBroadcast) broadcastService.getTopBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), organizationService.getOrganizationByIVRS(session.getIvrNumber()));
+/*		VoiceBroadcast b;
+		b = (VoiceBroadcast) broadcastService.getTopBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), organizationService.getOrganizationByIVRS(session.getIvrNumber()));
 		Voice v = b.getVoice();
 		session.setGroupID(b.getGroup().getGroupId()+"");*/
 		
+		/*b= broadcastService.getTopBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), organizationService.getOrganizationByIVRS(session.getIvrNumber()));*/
+		
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/welcomeMessage.wav");
-		/*response.addPlayAudio(v.getUrl());*/
-
+	/*	response.addPlayAudio(v.getUrl());
+*/
 		session.setPublisher(false);
 				
 	}

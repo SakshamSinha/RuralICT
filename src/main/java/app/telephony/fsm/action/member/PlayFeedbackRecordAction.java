@@ -33,10 +33,6 @@ public class PlayFeedbackRecordAction implements Action<IVRSession> {
 		record.setMaxDuration(Configs.Telephony.MAX_RECORDING_DURATION);
 		record.setSilence(Configs.Telephony.RECORDING_SILENCE);
 		session.setMessageURL(recordName);
-		
-		
-		session.setPublisher(false);
-		
 		response.addRecord(record);
 	}
 

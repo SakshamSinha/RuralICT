@@ -9,6 +9,10 @@ import java.sql.Timestamp;
 
 
 
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 
 import com.continuent.tungsten.commons.patterns.fsm.*;
@@ -18,6 +22,7 @@ import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.VoiceService;
+import app.business.services.springcontext.SpringContextBridge;
 import app.entities.InboundCall;
 import app.entities.Organization;
 import app.entities.Voice;
@@ -34,27 +39,16 @@ public class RuralictSession extends IVRSession {
 	 */
 	//Message recordedMessage;
 	Voice voiceMessage ;
-	OrganizationService organizationService;
-	UserPhoneNumberService userPhoneNumberService ;
-	GroupService groupService;
-	VoiceService voiceService;
 	
+	OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 	
-
-	public VoiceService getVoiceService() {
-		return voiceService;
-	}
-
-	public void setVoiceService(VoiceService voiceService) {
-		this.voiceService = voiceService;
-	}
 
 	/**
 	 * @param groupService 
 	 * @throws InstantiationException 
 	 * @see {@link IVRSession#IVRSession(String, String, String, String, String, Class)}
 	 */
-	public RuralictSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator,OrganizationService organizationService,UserPhoneNumberService userPhoneNumberService , UserService userService, GroupService groupService , VoiceService voiceService)
+	public RuralictSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator)
 			throws FiniteStateException, InstantiationException {
 
 		super(sessionId, userNumber, ivrNumber, circle, operator, RuralictStateMachine.class);
@@ -69,11 +63,7 @@ public class RuralictSession extends IVRSession {
 			em.persist(user);
 		}*/
 		
-		this.organizationService = organizationService;
-		this.userPhoneNumberService = userPhoneNumberService;
-		this.userService = userService;
-		this.groupService = groupService;
-		this.voiceService=voiceService;
+	
 
 		
 		call = new InboundCall();
@@ -117,14 +107,7 @@ public class RuralictSession extends IVRSession {
 		this.voiceMessage = voiceMessage;
 	}
 	
-	public GroupService getGroupService() {
-		return groupService;
-	}
-
-	public void setGroupService(GroupService groupService) {
-		this.groupService = groupService;
-	}
-
+	
 	UserService userService;
 	
 
@@ -136,15 +119,7 @@ public class RuralictSession extends IVRSession {
 		this.organizationService = organizationService;
 	}
 
-	public UserPhoneNumberService getUserPhoneNumberService() {
-		return userPhoneNumberService;
-	}
-
-	public void setUserPhoneNumberService(
-			UserPhoneNumberService userPhoneNumberService) {
-		this.userPhoneNumberService = userPhoneNumberService;
-	}
-
+	
 	public UserService getUserService() {
 		return userService;
 	}

@@ -37,8 +37,8 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
         String type ="voice";
         String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		
-        voice = new Voice(url , false);
-		voiceService.addVoice(voice);
+       /* voice = new Voice(url , false);
+		voiceService.addVoice(voice);*/
 		voiceMessage.setUrl(messageURL);
 	//	inboundCall.setDuration(recordEvent.getDuration());
 		
@@ -47,7 +47,7 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 				
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url, inboundCall);
-        response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageConfirmed"+session.getLanguage()+".wav");
+       // response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageConfirmed"+session.getLanguage()+".wav");
 		
 		
  	}

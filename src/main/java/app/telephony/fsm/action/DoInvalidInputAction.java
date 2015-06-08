@@ -21,7 +21,7 @@ public class DoInvalidInputAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 
 		//response.addPlayText("Your message has been cancelled.", Configs.Telephony.TTS_SPEED);
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes"+session.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput"+".wav");
 	}
 
 }

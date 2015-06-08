@@ -27,10 +27,12 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 
 		OrganizationService organisationService = SpringContextBridge.services().getOrganizationService();
 		boolean[] responses = new boolean[] {false,false,false};
-		responses[0] = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskResponse();
-		responses[1] = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskOrder();
-		responses[2] = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskFeedback();
-		
+		responses[0] = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskOrder();
+		System.out.println(responses[0]);
+		responses[1] = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskFeedback();
+		System.out.println(responses[1]);
+		responses[2] = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskResponse();
+		System.out.println(responses[2]);
 		int i=1;
 		String[] newResponses = new String[RuralictStateMachine.tempResponseMap.size()];
 		Object[] keys = RuralictStateMachine.tempResponseMap.keySet().toArray();
@@ -60,7 +62,7 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 			}
 		}
 		RuralictStateMachine.tempResponseMap.clear();
-		for(i=0;i<responses.length;i++){
+		for(i=0;i<newResponses.length;i++){
 			RuralictStateMachine.tempResponseMap.put((i+1)+"", newResponses[i]);
 		}
 		

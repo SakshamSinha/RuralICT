@@ -37,7 +37,7 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 		String messageURL=session.getMessageURL();
 		
 		
-		RecordEvent recordEvent = (RecordEvent) event;
+	//	RecordEvent recordEvent = (RecordEvent) event;
 		
 		Voice voiceMessage = new Voice();
 		InboundCall inboundCall= new InboundCall();
@@ -46,7 +46,7 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
         String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		
 		voiceMessage.setUrl(messageURL);
-		inboundCall.setDuration(recordEvent.getDuration());
+	//	inboundCall.setDuration(recordEvent.getDuration());
 		
 			
 		voice = new Voice("http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav" , false);
@@ -56,9 +56,9 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		
 		telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url, inboundCall);
-		
-		voiceService.addVoice(voice);
-				   
+		System.out.println("hello");
+		/*voiceService.addVoice(voice);
+				 System.out.println("test");  */
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageConfirmed"+session.getLanguage()+".wav");
 		
  	}
