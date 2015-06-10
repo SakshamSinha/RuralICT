@@ -35,31 +35,22 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		String messageURL=session.getMessageURL();
-		
-		
-	//	RecordEvent recordEvent = (RecordEvent) event;
-		
-		Voice voiceMessage = new Voice();
+		RecordEvent recordEvent = (RecordEvent) event;
+		RuralictSession ruralictSession = (RuralictSession) session;
+	
+	 	Voice voiceMessage = new Voice();
 		InboundCall inboundCall= new InboundCall();
         String mode = "web";
-        String type ="voice";
+        String type ="order";
         String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		
 		voiceMessage.setUrl(messageURL);
-	//	inboundCall.setDuration(recordEvent.getDuration());
-		
-			
-		voice = new Voice("http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav" , false);
-				
-		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
-		System.out.println((voiceService==null)+" ---- "+(voice==null));
+		ruralictSession.setVoiceMessage(voiceMessage);
+		inboundCall.setDuration(recordEvent.getDuration());
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		
 		telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url, inboundCall);
-		System.out.println("hello");
-		/*voiceService.addVoice(voice);
-				 System.out.println("test");  */
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageConfirmed"+session.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageConfirmed_"+session.getLanguage()+".wav");
 		
  	}
 

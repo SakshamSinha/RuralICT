@@ -21,7 +21,7 @@ public class PlayRecordedBroadcastMessageAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 
 		//response.addPlayText("Your message is:", Configs.Telephony.TTS_SPEED);
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourMessageIs.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourBroadcastMessageIs.wav");
 
 	//	response.addPlayAudio(ruralictSession.getRecordedMessage().getMessageUrl());
 		response.addPlayAudio(ruralictSession.getVoiceMessage().getUrl());

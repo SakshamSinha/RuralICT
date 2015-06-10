@@ -25,14 +25,9 @@ public class AskForLanguageAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
 		
-		/*cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForHindi.wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForMarathi.wav");*/
-			
-		//cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/languageMenu.wav");
-		
 		OrganizationService organisationService = SpringContextBridge.services().getOrganizationService();
-		String langs = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
-		
+		String langs = "123";
+		//organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
 		int i=1;
 		String[] responses = new String[RuralictStateMachine.tempLanguageMap.size()];
 		Object[] keys = RuralictStateMachine.tempLanguageMap.keySet().toArray();
@@ -41,19 +36,19 @@ public class AskForLanguageAction implements Action<IVRSession> {
 			if(langs.contains((String)k)){
 				String l = RuralictStateMachine.tempLanguageMap.get(k);
 				
-				if(l.equalsIgnoreCase("English"))
+				if(l.equalsIgnoreCase("en"))
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for"+l+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+l+".wav"); //language
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press"+l+".wav"); //Press
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+""+l+".wav"); // 'i'
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
 				}
 				else
 				{
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+l+".wav"); //language
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for"+l+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+""+l+".wav"); // 'i'
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press"+l+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
 				}
 				responses[i-1]=l;
 				i++;

@@ -25,7 +25,7 @@ public class PlayFeedbackRecordAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageRecordAfterBeep"+session.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageRecordAfterBeep_"+session.getLanguage()+".wav");
 
 		Record record = new Record();
 		String recordName = "message" + Calendar.getInstance().getTimeInMillis() + ((new Random()).nextInt(90000) + 10000);

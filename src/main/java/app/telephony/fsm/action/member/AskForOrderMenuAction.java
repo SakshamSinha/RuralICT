@@ -21,8 +21,8 @@ public class AskForOrderMenuAction implements Action<IVRSession> {
 		CollectDtmf cd = new CollectDtmf();
 
 		//cd.addPlayText("If you are satisfied with your message, press 1. To cancel your message, press 2.", Configs.Telephony.TTS_SPEED);
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForPlaceOrder"+session.getLanguage()+".wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForCancelOrder"+session.getLanguage()+".wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForPlaceOrder_"+session.getLanguage()+".wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForCancelOrder_"+session.getLanguage()+".wav");
 				
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);

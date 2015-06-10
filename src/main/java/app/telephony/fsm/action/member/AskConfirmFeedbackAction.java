@@ -24,8 +24,8 @@ public class AskConfirmFeedbackAction implements Action<IVRSession> {
 		String feedback = session.getMessageURL();
 		response.addPlayAudio("http://recordings.kookoo.in/vishwajeet/"+feedback+".wav");*/
 		
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirmFeedback"+session.getLanguage()+".wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecordFeedback"+session.getLanguage()+".wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirmFeedback_"+session.getLanguage()+".wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecordFeedback_"+session.getLanguage()+".wav");
 
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);

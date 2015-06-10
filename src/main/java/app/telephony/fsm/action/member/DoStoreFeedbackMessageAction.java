@@ -33,17 +33,16 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		String messageURL=session.getMessageURL();
 		InboundCall inboundCall= new InboundCall();
 		Voice voiceMessage = new Voice();
+		//	RecordEvent recordEvent = (RecordEvent) event;
+		//inboundCall.setDuration(recordEvent.getDuration());
         String mode = "web";
-        String type ="voice";
+        String type ="feedback";
         String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		
-       /* voice = new Voice(url , false);
-		voiceService.addVoice(voice);*/
-		voiceMessage.setUrl(messageURL);
-	//	inboundCall.setDuration(recordEvent.getDuration());
+      	voiceMessage.setUrl(messageURL);
 		
 			
-		voice = new Voice("http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav" , false);
+	//	voice = new Voice("http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav" , false);
 				
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url, inboundCall);

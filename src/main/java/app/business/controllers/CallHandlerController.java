@@ -25,6 +25,7 @@ import app.business.services.VoiceService;
 import app.entities.Organization;
 import app.entities.UserPhoneNumber;
 import app.telephony.RuralictSession;
+import app.telephony.fsm.config.Configs;
 
 @Controller
 public class CallHandlerController implements IVRSessionFactory {
@@ -114,8 +115,21 @@ public class CallHandlerController implements IVRSessionFactory {
 		//	log("GET request received in CallHandler");
 		printParameterMap(request.getParameterMap());
 		System.out.println(request.getParameterMap());
+		String isOutbound = "no";
+		if(request.getParameterMap().containsKey("isOutBound"))
+		{
+			isOutbound = request.getParameter("isOutBound");
+		}
 		try {
-			response.getOutputStream().println(IVRUtils.doCallHandling(request.getParameterMap(), request.getSession(), this));
+			if(isOutbound.equalsIgnoreCase("yes")){
+				String userNumber = request.getParameter("userNumber");
+				String ivrNumber = request.getParameter("organisationIVRNumber");
+				
+				response.getOutputStream().println(IVRUtils.makeOutboundCall(userNumber, ivrNumber, Configs.Telephony.APP_URL));
+			}
+			else {
+				response.getOutputStream().println(IVRUtils.doCallHandling(request.getParameterMap(), request.getSession(), this));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			//throw new ServletException(e);

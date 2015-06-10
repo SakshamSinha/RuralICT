@@ -1,6 +1,12 @@
 package app.telephony.fsm.action.member;
 
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.business.services.TelephonyService;
+import app.business.services.VoiceService;
+import app.business.services.message.MessageService;
+import app.business.services.springcontext.SpringContextBridge;
+import app.entities.InboundCall;
 import app.telephony.fsm.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
@@ -17,9 +23,16 @@ public class PlayResponeIsYesAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
+		String mode = "web";
+        String type ="response";
+		InboundCall inboundCall = new InboundCall();
+ 
+		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
+		
+		telephonyService.addBinaryMessage(session.getUserNumber(), mode, type, true,inboundCall.getTime());
+		
 
-		//response.addPlayText("Your message has been cancelled.", Configs.Telephony.TTS_SPEED);
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes"+session.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes_"+session.getLanguage()+".wav");
 				
 	}
 

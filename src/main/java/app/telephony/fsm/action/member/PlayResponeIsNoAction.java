@@ -1,6 +1,9 @@
 package app.telephony.fsm.action.member;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.business.services.TelephonyService;
+import app.business.services.springcontext.SpringContextBridge;
+import app.entities.InboundCall;
 import app.telephony.fsm.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
@@ -18,8 +21,12 @@ public class PlayResponeIsNoAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 
-		//response.addPlayText("Your message has been cancelled.", Configs.Telephony.TTS_SPEED);
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsNo"+session.getLanguage()+".wav");
+		String mode = "web";
+        String type ="response";
+		InboundCall inboundCall = new InboundCall();
+ 		/*TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
+		telephonyService.addBinaryMessage(session.getUserNumber(), mode, type, false,inboundCall.getTime());*/
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsNo_"+session.getLanguage()+".wav");
 				
 	}
 

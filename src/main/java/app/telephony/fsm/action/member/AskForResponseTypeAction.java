@@ -44,17 +44,18 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 				
 				if(l.equalsIgnoreCase("English"))
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for"+l+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+l+".wav"); //language
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press"+l+".wav"); //Press
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+""+l+".wav"); // 'i'
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+l+".wav"); //language
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
+					
 				}
 				else
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+l+".wav"); //language
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for"+l+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+""+l+".wav"); // 'i'
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press"+l+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+l+".wav"); //language
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
 				}
 				
 				newResponses[i-1]=responseType;

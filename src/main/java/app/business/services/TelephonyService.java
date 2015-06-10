@@ -49,4 +49,9 @@ public class TelephonyService {
 		BinaryMessage binaryMessage=new BinaryMessage(user, null, time, mode, type, response, null);
 		messageService.addMessage(binaryMessage);
 	}
+	
+	public void addBinaryMessage(String userPhoneNumber, String mode, String type, boolean response, Timestamp time){
+		BinaryMessage binaryMessage=new BinaryMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), null, time, mode, type, response, null);
+		messageService.addMessage(binaryMessage);
+	}
 }

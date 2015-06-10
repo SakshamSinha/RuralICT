@@ -13,6 +13,7 @@ import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
+import app.entities.broadcast.VoiceBroadcast;
 
 public class BroadcastService {
 	
@@ -43,6 +44,7 @@ public class BroadcastService {
 		}
 		
 		broadcastRepository.findTopByGroupInAndOrganization(groupList, organization, (new Sort(Sort.Direction.DESC, "broadcastedTime")));
+		
 	}
 	
 	

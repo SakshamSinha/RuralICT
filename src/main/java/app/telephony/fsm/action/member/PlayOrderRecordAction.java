@@ -21,21 +21,14 @@ public class PlayOrderRecordAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageRecordAfterBeep"+session.getLanguage()+".wav");
-
-		System.out.println(Configs.Voice.VOICE_DIR +"/orderMessageRecordAfterBeep"+session.getLanguage()+".wav");
-		
-		
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageRecordAfterBeep_"+session.getLanguage()+".wav");
 		Record record = new Record();
 		String recordName = "message" + Calendar.getInstance().getTimeInMillis() + ((new Random()).nextInt(90000) + 10000);
 		record.setFileName(recordName);
 		record.setMaxDuration(Configs.Telephony.MAX_RECORDING_DURATION);
 		record.setSilence(Configs.Telephony.RECORDING_SILENCE);
 		session.setMessageURL(recordName);
-		
-		
 		session.setPublisher(false);
-		
 		response.addRecord(record);
 
 	

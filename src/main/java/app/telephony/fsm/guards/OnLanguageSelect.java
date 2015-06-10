@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.GotDTMFEvent;
+import app.business.services.UserPhoneNumberService;
+import app.business.services.springcontext.SpringContextBridge;
 import app.telephony.fsm.RuralictStateMachine;
 
 import com.continuent.tungsten.commons.patterns.fsm.Event;
@@ -28,6 +30,8 @@ public class OnLanguageSelect extends EventTypeGuard<IVRSession> {
 			
 			if(RuralictStateMachine.tempLanguageMap.containsKey(input)){
 				session.setLanguage(RuralictStateMachine.tempLanguageMap.get(input));
+				UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
+				userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().setCallLocale(RuralictStateMachine.tempLanguageMap.get(input));;
 				return true;
 			}
 			return false;

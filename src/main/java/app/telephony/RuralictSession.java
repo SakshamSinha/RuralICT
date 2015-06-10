@@ -39,6 +39,16 @@ public class RuralictSession extends IVRSession {
 	 */
 	//Message recordedMessage;
 	Voice voiceMessage ;
+	static boolean isOutbound=false;
+	
+	public boolean isOutbound() {
+		return isOutbound;
+	}
+
+	public void setOutbound(boolean isOutbound) {
+		this.isOutbound = isOutbound;
+	}
+
 	
 	OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 	
