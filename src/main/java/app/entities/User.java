@@ -56,7 +56,7 @@ public class User implements Serializable {
 	private List<BroadcastRecipient> broadcastRecipients;
 
 	//bi-directional many-to-one association to GroupMembership
-	@OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="user")
 	private List<GroupMembership> groupMemberships;
 
 	//bi-directional many-to-one association to Message
