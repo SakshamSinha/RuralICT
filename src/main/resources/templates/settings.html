@@ -1,4 +1,5 @@
-<div ng-controller="SettingsCtrl">
+<div th:attr="orgid=${organization.organizationId}" id="settings-page" ng-controller="SettingsCtrl">
+
 <div class="row-fluid">
     <div class="page-header">
         <h1>Settings <small>Edit</small></h1>
@@ -192,13 +193,7 @@
                             <tr>
                                 <td>Order Cancellation&nbsp;(आदेश रद्द)</td>
                                 <td>
-                                    <select id='ordercancel' class="table-input-1" name='ordercancel'>
-
-                                        <option value='0' selected>Disable(बंद करना)
-                                        </option>
-                                        <option value='1'>Enable(चालू करना)
-                                        </option>
-
+                                    <select id='ordercancel' ng-model=orderCancelSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1" name='ordercancel'>
                                     </select>
                                 </td>
                             </tr>
@@ -208,11 +203,7 @@
                                 <td>Broadcast Enabler&nbsp;(प्रसारण)</td>
 
                                 <td>
-                                    <select id='broadcast' class="table-input-1" name='broadcast' onchange="disableDropdown();">
-                                        <option value='0'>Disable(बंद करना)
-                                        </option>
-                                        <option value='1' selected>Enable(चालू करना)
-                                        </option>
+                                    <select id='broadcast' ng-model= broadcastEnableSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1" name='broadcast'>
                                     </select>
                                 </td>
                             </tr>
@@ -223,10 +214,7 @@
                                 <tr id="Latest_broadcastdiv">
                                     <td>Latest broadcast enabler:</td>
                                     <td>
-                                        <select name="Latest_broadcast" class="table-input-1 table-width " id="Latest_broadcast">
-                                            <option value="0">Disable</option>
-                                            <option value="1" selected>Enable</option>
-
+                                        <select name="Latest_broadcast"  ng-model=latestBroadcastSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1 table-width " id="Latest_broadcast">
                                         </select>
                                     </td>
                                 </tr>
@@ -236,10 +224,7 @@
                                 <tr id="Previous_broadcastdiv">
                                     <td>Previous broadcast enabler:</td>
                                     <td>
-                                        <select name="Previous_broadcast" class="table-input-1 table-width table-display" id="Previous_broadcast">
-                                            <option value="0" selected>Disable</option>
-                                            <option value="1">Enable</option>
-
+                                        <select name="Previous_broadcast" ng-model=previousBroadcastSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1 table-width table-display" id="Previous_broadcast">
                                         </select>
                                     </td>
                                 </tr>
@@ -251,10 +236,7 @@
                                 <tr id="Repeat_broadcastdiv">
                                     <td>Repeat broadcast enabler:</td>
                                     <td>
-                                        <select name="repeat_broadcast" class="table-input-1 table-width" id="repeat_broadcast">
-                                            <option value="0" selected>Disable</option>
-                                            <option value="1">Enable</option>
-
+                                        <select name="repeat_broadcast"  ng-model=repeatBroadcastSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1 table-width" id="repeat_broadcast">
                                         </select>
                                     </td>
 
