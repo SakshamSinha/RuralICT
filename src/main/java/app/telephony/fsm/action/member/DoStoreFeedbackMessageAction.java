@@ -8,6 +8,9 @@ import app.business.services.VoiceService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.InboundCall;
 import app.entities.Voice;
+import app.entities.broadcast.Broadcast;
+import app.entities.broadcast.VoiceBroadcast;
+import app.telephony.RuralictSession;
 import app.telephony.fsm.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
@@ -28,11 +31,16 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
+		RuralictSession ruralictSession = (RuralictSession) session;
 		Response response = session.getResponse();
 		String messageURL=session.getMessageURL();
 		InboundCall inboundCall= new InboundCall();
+		Broadcast broadcast  = new VoiceBroadcast();
+		broadcast.setBroadcastId(ruralictSession.getBroadcastID());
 		Voice voiceMessage = new Voice();
+		
+		boolean isOutboundCall = ruralictSession.isOutbound();
+			
 		//	RecordEvent recordEvent = (RecordEvent) event;
 		//inboundCall.setDuration(recordEvent.getDuration());
         String mode = "web";
@@ -40,13 +48,15 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
         String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		
       	voiceMessage.setUrl(messageURL);
-		
-			
-	//	voice = new Voice("http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav" , false);
-				
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
+		
+		if(isOutboundCall){
+			telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url,broadcast,inboundCall);
+		}
+		else{
 		telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url, inboundCall);
-       // response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageConfirmed"+session.getLanguage()+".wav");
+		}
+		// response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageConfirmed"+session.getLanguage()+".wav");
 		
 		
  	}

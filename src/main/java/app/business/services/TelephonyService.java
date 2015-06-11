@@ -10,6 +10,7 @@ import app.entities.InboundCall;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
 import app.entities.Voice;
+import app.entities.broadcast.Broadcast;
 import app.entities.message.BinaryMessage;
 import app.entities.message.TextMessage;
 import app.entities.message.VoiceMessage;
@@ -39,6 +40,13 @@ public class TelephonyService {
 		VoiceMessage voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), null, mode, type, response, null, voice, inboundCall);
 		messageService.addMessage(voiceMessage);
 	}
+	public void addVoiceMessage(String userPhoneNumber, String mode, String type, boolean response, String url, Broadcast broadcast ,InboundCall inboundCall){
+		Voice voice=new Voice(url,false);
+		voiceService.addVoice(voice);
+		VoiceMessage voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, mode, type, response, null, voice, inboundCall);
+		messageService.addMessage(voiceMessage);
+	}
+	
 	
 	public void addTextMessage(User user, String mode, String type, boolean response,String textContent, Timestamp textTime){
 		TextMessage textMessage=new TextMessage(user, null, mode, type, response, null, textContent, textTime);

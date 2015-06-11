@@ -36,14 +36,14 @@ public class BroadcastService {
 		broadcastRepository.delete(broadcast);
 	}
 	
-	public void getTopBroadcast(User user, Organization organization) {
+	public Broadcast getTopBroadcast(User user, Organization organization) {
 		List<GroupMembership> groupMembershipList = user.getGroupMemberships();
 		List<Group> groupList = new ArrayList<Group>();
 		for(GroupMembership groupMembership: groupMembershipList) {
 			groupList.add(groupMembership.getGroup());
 		}
 		
-		broadcastRepository.findTopByGroupInAndOrganization(groupList, organization, (new Sort(Sort.Direction.DESC, "broadcastedTime")));
+		return broadcastRepository.findTopByGroupInAndOrganization(groupList, organization, (new Sort(Sort.Direction.DESC, "broadcastedTime")));
 		
 	}
 	

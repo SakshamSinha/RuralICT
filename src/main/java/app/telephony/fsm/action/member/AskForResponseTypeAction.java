@@ -5,6 +5,7 @@ import java.util.Arrays;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.business.services.OrganizationService;
 import app.business.services.springcontext.SpringContextBridge;
+import app.telephony.RuralictSession;
 import app.telephony.fsm.RuralictStateMachine;
 import app.telephony.fsm.config.Configs;
 
@@ -22,17 +23,15 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
+		RuralictSession ruralictSession = (RuralictSession) session;
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
 
-		OrganizationService organisationService = SpringContextBridge.services().getOrganizationService();
 		boolean[] responses = new boolean[] {false,false,false};
-		responses[0] = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskOrder();
-		System.out.println(responses[0]);
-		responses[1] = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskFeedback();
-		System.out.println(responses[1]);
-		responses[2] = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskResponse();
-		System.out.println(responses[2]);
+		responses[0] = ruralictSession.isOrderAllowed();
+		responses[1] = ruralictSession.isFeedbackAllowed();
+		responses[2] = ruralictSession.isResponseAllowed();
+		
 		int i=1;
 		String[] newResponses = new String[RuralictStateMachine.tempResponseMap.size()];
 		Object[] keys = RuralictStateMachine.tempResponseMap.keySet().toArray();
@@ -42,7 +41,7 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 				String responseType = RuralictStateMachine.tempResponseMap.get(k);
 				String l = session.getLanguage();
 				
-				if(l.equalsIgnoreCase("English"))
+				if(l.equalsIgnoreCase("en"))
 				{
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+l+".wav"); //language

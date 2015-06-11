@@ -32,9 +32,10 @@ public class OnUniqueOption implements Guard<IVRSession,Object> {
 		
 		int a=0;
 		String opts;
+		System.out.println("inside");
 		
 		OrganizationService organisationService = SpringContextBridge.services().getOrganizationService();
-	    UserService userService = SpringContextBridge.services().getUserService();
+	  //  UserService userService = SpringContextBridge.services().getUserService();
 	    UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		if(optionsFor.equalsIgnoreCase("language"))
 		{

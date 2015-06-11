@@ -11,6 +11,8 @@ import java.sql.Timestamp;
 
 
 
+import java.util.ResourceBundle;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
@@ -39,17 +41,14 @@ public class RuralictSession extends IVRSession {
 	 */
 	//Message recordedMessage;
 	Voice voiceMessage ;
-	static boolean isOutbound=false;
+	boolean isOutbound=false;
+	boolean orderAllowed=false;
+	boolean feedbackAllowed=false;
+	boolean responseAllowed=false;
+	int broadcastID;
 	
-	public boolean isOutbound() {
-		return isOutbound;
-	}
-
-	public void setOutbound(boolean isOutbound) {
-		this.isOutbound = isOutbound;
-	}
-
 	
+
 	OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 	
 
@@ -58,6 +57,7 @@ public class RuralictSession extends IVRSession {
 	 * @throws InstantiationException 
 	 * @see {@link IVRSession#IVRSession(String, String, String, String, String, Class)}
 	 */
+	//, ResourceBundle properties
 	public RuralictSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator)
 			throws FiniteStateException, InstantiationException {
 
@@ -137,5 +137,46 @@ public class RuralictSession extends IVRSession {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
+	public boolean isOutbound() {
+		return isOutbound;
+	}
+
+	public void setOutbound(boolean isOutbound) {
+		this.isOutbound = isOutbound;
+	}
+
+	public boolean isOrderAllowed() {
+		return orderAllowed;
+	}
+
+	public void setOrderAllowed(boolean orderAllowed) {
+		this.orderAllowed = orderAllowed;
+	}
+
+	public boolean isFeedbackAllowed() {
+		return feedbackAllowed;
+	}
+
+	public void setFeedbackAllowed(boolean feedbackAllowed) {
+		this.feedbackAllowed = feedbackAllowed;
+	}
+
+	public boolean isResponseAllowed() {
+		return responseAllowed;
+	}
+
+	public void setResponseAllowed(boolean responseAllowed) {
+		this.responseAllowed = responseAllowed;
+	}
+	public int getBroadcastID() {
+		return broadcastID;
+	}
+
+	public void setBroadcastID(int broadcastID) {
+		this.broadcastID = broadcastID;
+	}
+
+	
 }
 

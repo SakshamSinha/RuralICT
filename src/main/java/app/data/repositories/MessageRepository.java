@@ -36,7 +36,7 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	@Override
 	public List<Message> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#message.broadcast.organization.abbreviation)")
+	@PreAuthorize("hasRole('MEMBER'+#message.group.organization.abbreviation)")
 	@Override
 	public <S extends Message> S save(@Param("message") S message);
     
