@@ -31,7 +31,7 @@ public class TelephonyService {
 	void addVoiceMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, String url, InboundCall inboundCall){
 		Voice voice=new Voice(url,false);
 		voiceService.addVoice(voice);
-		VoiceMessage voiceMessage=new VoiceMessage(user, broadcast, group, mode, type, response, null, voice, inboundCall);
+		VoiceMessage voiceMessage=new VoiceMessage(user, broadcast, broadcast.getGroup(), mode, type, response, null, voice, inboundCall);
 		messageService.addMessage(voiceMessage);
 	}
 	
