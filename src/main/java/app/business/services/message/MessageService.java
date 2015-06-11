@@ -21,15 +21,15 @@ public class MessageService {
 	/*
 	 * Returns messages with 'Yes' Response for a group  
 	 */
-	public List<Message> getPositiveResponseList(Group group) {
-		return messageRepository.findByGroupAndResponseAndType(group, true, "response");
+	public List<Message> getPositiveResponseList(Group group , String format) {
+		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, true, "response",format);
 	}
 	
 	/*
 	 * Returns messages with 'No' Response for a group  
 	 */
-	public List<Message> getNegativeResponseList(Group group) {
-		return messageRepository.findByGroupAndResponseAndType(group, false, "response");
+	public List<Message> getNegativeResponseList(Group group, String format) {
+		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, false, "response",format);
 	}
 	
 	/*
