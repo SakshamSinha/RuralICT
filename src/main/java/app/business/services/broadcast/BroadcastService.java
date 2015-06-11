@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import app.data.repositories.BroadcastRepository;
 import app.entities.Group;
@@ -14,6 +16,7 @@ import app.entities.Organization;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
 
+@Service
 public class BroadcastService {
 	
 	@Autowired
@@ -35,14 +38,14 @@ public class BroadcastService {
 		broadcastRepository.delete(broadcast);
 	}
 	
-	public void getTopBroadcast(User user, Organization organization) {
-		List<GroupMembership> groupMembershipList = user.getGroupMemberships();
+	@Transactional
+	public Broadcast getTopBroadcast(User user, Organization organization, String format) {
 		List<Group> groupList = new ArrayList<Group>();
-		for(GroupMembership groupMembership: groupMembershipList) {
+		for(GroupMembership groupMembership: user.getGroupMemberships()) {
 			groupList.add(groupMembership.getGroup());
 		}
 		
-		broadcastRepository.findTopByGroupInAndOrganization(groupList, organization, (new Sort(Sort.Direction.DESC, "broadcastedTime")));
+		return broadcastRepository.findTopByGroupInAndOrganizationAndFormat(groupList, organization, format , (new Sort(Sort.Direction.DESC, "broadcastedTime")));
 	}
 	
 	

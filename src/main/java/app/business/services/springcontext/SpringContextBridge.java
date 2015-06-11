@@ -17,6 +17,7 @@ import app.business.services.OrganizationService;
 import app.business.services.OutboundCallService;
 import app.business.services.ProductService;
 import app.business.services.ProductTypeService;
+import app.business.services.TelephonyService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.UserViewService;
@@ -92,6 +93,9 @@ public class SpringContextBridge implements SpringContextBridgedServices, Applic
 	@Autowired
 	private VoiceMessageService voiceMessageService;
 
+	@Autowired
+	private TelephonyService telephonyService;
+	
 	@Override
 	public void setApplicationContext(ApplicationContext appContext) throws BeansException {
 		System.out.println("abc");
@@ -204,5 +208,10 @@ public class SpringContextBridge implements SpringContextBridgedServices, Applic
 	@Override
 	public VoiceMessageService getVoiceMessageService() {
 		return voiceMessageService;
+	}
+	
+	@Override
+	public TelephonyService getTelephonyService() {
+		return telephonyService;
 	}
 }
