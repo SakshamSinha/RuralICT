@@ -1,18 +1,20 @@
 'use strict';
 
-var website = angular.module('ruralIvrs', ['ngRoute', 'ngResource', 'angular-loading-bar'])
+var website = angular.module('ruralIvrs', ['ngRoute', 'ngResource', 'angular-loading-bar']);
 
 website.config(['$routeProvider', '$provide', '$httpProvider', 'cfpLoadingBarProvider', function($routeProvider, $provide, $httpProvider, cfpLoadingBarProvider) {
 
 	$routeProvider
 		.when('/home', {templateUrl: 'homePage', title: "Home"})
+		.when('/initial', {templateUrl: 'initial', title: "to give a chance"})
 		.when('/products', {templateUrl: 'productsPage', title: "Products"})
+		//.when('/products2',{templateUrl:'productsPage2',title:"Updated Products"})
 		.when('/productquantity', {templateUrl: 'productQuantityPage', title: "Product Quantity"})
 		.when('/users', {templateUrl: 'usersPage', title: "Users"})
 		.when('/settings', {templateUrl: 'settingsPage', title: "Settings"})
 		.when('/group/:groupId', {templateUrl: function(params){ return 'groupPage/' + params.groupId; }, title: "Group Operations"})
 		.otherwise({redirectTo: '/home'});
-
+    
 	$provide.factory('myHttpInterceptor', function($q) {
 		return {
 			'response': function(response) {
