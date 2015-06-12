@@ -78,9 +78,9 @@ public class OrderService {
 		return orderRepository.findOne(orderId);
 	}
 	
-	public void addOrder(Order order) {
+	public Order addOrder(Order order) {
 		
-		orderRepository.save(order);
+		return orderRepository.save(order);
 	}
 
 	public void removeOrder(Order order) {
