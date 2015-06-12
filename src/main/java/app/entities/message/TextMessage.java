@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import app.entities.Group;
 import app.entities.Order;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
@@ -21,10 +22,10 @@ public class TextMessage extends Message {
 	public TextMessage() {
 	}
 
-	public TextMessage(User user, Broadcast broadcast, String mode, String type, boolean response, Order order,
+	public TextMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, Order order,
 			String textContent, Timestamp textTime) {
 
-		super(user, broadcast, textTime, mode, "text", type, response, order);
+		super(user, broadcast, textTime, group, mode, "text", type, response, order);
 		this.textContent = textContent;
 	}
 
