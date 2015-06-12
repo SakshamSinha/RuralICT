@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.business.services.message.MessageService;
 import app.business.services.message.TextMessageService;
 import app.business.services.message.VoiceMessageService;
 import app.entities.Group;
@@ -19,6 +20,9 @@ import app.entities.message.VoiceMessage;
 
 @Service
 public class TelephonyService {
+	
+	@Autowired
+	MessageService messageService;
 	
 	@Autowired
 	VoiceMessageService voiceMessageService;
@@ -96,6 +100,6 @@ public class TelephonyService {
 			binaryMessage.setOrder(order);
 		}
 		
-		textMessageService.addMessage(binaryMessage);
+		messageService.addMessage(binaryMessage);
 	}
 }
