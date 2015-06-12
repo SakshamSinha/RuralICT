@@ -98,7 +98,6 @@ public class SpringContextBridge implements SpringContextBridgedServices, Applic
 	
 	@Override
 	public void setApplicationContext(ApplicationContext appContext) throws BeansException {
-		System.out.println("abc");
 		applicationContext = appContext;
 	}
 
@@ -111,7 +110,6 @@ public class SpringContextBridge implements SpringContextBridgedServices, Applic
 	 * Spring services that are bridged from the Spring context.
 	 */
 	public static SpringContextBridgedServices services() {
-		System.out.println(applicationContext);
 		return applicationContext.getBean(SpringContextBridgedServices.class);
 	}
 
