@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8"> 
+  <style>
+	table {
+	    width:100%;
+	}
+	table, th, td {
+	    border: 1px solid black;
+	    border-collapse: collapse;
+	}
+	th, td {
+	    padding: 5px;
+	    text-align: left;
+	}
+	table#t01 tr:nth-child(even) {
+	    background-color: #eee;
+	}
+	table#t01 tr:nth-child(odd) {
+	   background-color:#fff;
+	}
+	table#t01 th	{
+	    background-color: black;
+	    color: white;
+	}
+</style> 
+</head>
+<body>
+  <div ng-controller="OrderSummaryGroupsController">
+  <h2>Order Summary(Group wise)</h2><p hidden id="orgAbbrevation" th:text="${orgAbbrevation}">text</p></br>
+  <form class="simple-form">
+    Group Name: <select id="group_name" ng-model="name">
+    	<option th:each="group : ${groups}" th:value="${group.name}">
+    		<p th:text="${group.name}">text</p>
+    	</option>
+  	</select>
+  	From: <input type="date" id="fromDate" name="From" ng-model="fromDate" placeholder="yyyy-mm-dd">
+  	To: <input type="date" id="toDate" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
+    <input type="submit" id="submitGroups" value="Submit" />
+  </form>
+  <h2>{{name}}</h2>
+  <table style="width:30%" id="t01">
+  	<tr>
+    	<th>Unit Rate</th>
+    	<th>Quantity</th>
+	</tr>
+  	<tr ng-repeat="x in orderSumGroups._embedded.orderItems">
+  		<td width="50%">
+  			{{x.unitRate}}
+  		</td>
+  		<td width="50%">
+  			{{x.quantity}}
+  		</td>
+  	</tr>
+  	<tr>
+  		<td width="50%">
+  			Total 
+  		</td>
+  		<td id="totalGroups">
+  		0
+  		</td>
+  	</tr>
+  </table>
+</div>
+</body>
+</html>
