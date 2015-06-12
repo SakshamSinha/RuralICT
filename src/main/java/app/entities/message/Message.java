@@ -78,11 +78,12 @@ public abstract class Message implements Serializable {
 	public Message() {
 	}
 
-	public Message(User user, Broadcast broadcast, Timestamp time, String mode, String format, String type,
+	public Message(User user, Broadcast broadcast,Group group, Timestamp time, String mode, String format, String type,
 			boolean response, Order order) {
 
 		this.user = user;
 		this.broadcast = broadcast;
+		this.group=group;
 		this.time = time;
 		this.mode = mode;
 		this.format = format;

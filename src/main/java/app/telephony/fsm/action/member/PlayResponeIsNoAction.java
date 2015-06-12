@@ -1,10 +1,12 @@
 package app.telephony.fsm.action.member;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.business.services.GroupService;
 import app.business.services.TelephonyService;
 import app.business.services.springcontext.SpringContextBridge;
+import app.entities.Group;
 import app.entities.InboundCall;
-import app.telephony.fsm.config.Configs;
+import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
@@ -24,8 +26,12 @@ public class PlayResponeIsNoAction implements Action<IVRSession> {
 		String mode = "web";
         String type ="response";
 		InboundCall inboundCall = new InboundCall();
- 		/*TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
-		telephonyService.addBinaryMessage(session.getUserNumber(), mode, type, false,inboundCall.getTime());*/
+		String groupID = session.getGroupID();
+		int groupId = Integer.parseInt(groupID);
+		GroupService groupService = SpringContextBridge.services().getGroupService();
+		Group group = groupService.getGroup(groupId);
+ 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
+ 		 telephonyService.addBinaryMessage(session.getUserNumber(),null,group, mode, type, true,inboundCall.getTime());
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsNo_"+session.getLanguage()+".wav");
 				
 	}

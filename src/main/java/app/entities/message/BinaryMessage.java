@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import app.entities.Group;
 import app.entities.Order;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
@@ -17,9 +18,9 @@ public class BinaryMessage extends Message {
 	public BinaryMessage() {
 	}
 
-	public BinaryMessage(User user, Broadcast broadcast, Timestamp time, String mode, String type, boolean response,
+	public BinaryMessage(User user, Broadcast broadcast,Group group, Timestamp time, String mode, String type, boolean response,
 			Order order) {
-		super(user, broadcast, time, mode, "binary", type, response, order);
+		super(user, broadcast, group,time, mode, "binary", type, response, order);
 	}
 
 }

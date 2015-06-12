@@ -3,15 +3,18 @@ package app.telephony.fsm.action.member;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import in.ac.iitb.ivrs.telephony.base.events.RecordEvent;
+import app.business.services.GroupService;
 import app.business.services.TelephonyService;
 import app.business.services.VoiceService;
 import app.business.services.springcontext.SpringContextBridge;
+import app.entities.Group;
 import app.entities.InboundCall;
 import app.entities.Voice;
 import app.entities.broadcast.Broadcast;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
-import app.telephony.fsm.config.Configs;
+import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
@@ -36,13 +39,19 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		String messageURL=session.getMessageURL();
 		InboundCall inboundCall= new InboundCall();
 		Broadcast broadcast  = new VoiceBroadcast();
+		GroupService groupService = SpringContextBridge.services().getGroupService();
+
+		String groupID = session.getGroupID();
+		int groupId = Integer.parseInt(groupID);
+		Group group = groupService.getGroup(groupId);
+		
 		broadcast.setBroadcastId(ruralictSession.getBroadcastID());
 		Voice voiceMessage = new Voice();
 		
 		boolean isOutboundCall = ruralictSession.isOutbound();
 			
-		//	RecordEvent recordEvent = (RecordEvent) event;
-		//inboundCall.setDuration(recordEvent.getDuration());
+		/*RecordEvent recordEvent = (RecordEvent) event;*/
+		inboundCall.setDuration(ruralictSession.getRecordEvent().getDuration());
         String mode = "web";
         String type ="feedback";
         String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
@@ -50,12 +59,13 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
       	voiceMessage.setUrl(messageURL);
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		
-		if(isOutboundCall){
-			telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url,broadcast,inboundCall);
+		/*if(isOutboundCall){
+			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group, mode , type , false ,url,null);
 		}
-		else{
-		telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url, inboundCall);
-		}
+		else{*/
+			System.out.println(session.getUserNumber()+"--"+group+"--"+ mode+"--"+type+"0--"+url+"--"+inboundCall);
+		telephonyService.addVoiceMessage(session.getUserNumber(),null , group, mode , type , false ,url, inboundCall);
+		//}
 		// response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageConfirmed"+session.getLanguage()+".wav");
 		
 		

@@ -1,7 +1,7 @@
 package app.telephony.fsm.action;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
-import app.telephony.fsm.config.Configs;
+import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;

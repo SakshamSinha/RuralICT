@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -17,10 +16,6 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 	/*
 	 * Default functions
 	 */
-
-	@PostAuthorize("hasRole('MEMBER'+returnObject.organization.abbreviation)")
-	@Override
-	public Group findOne(Integer id);
 
 	@PostFilter("hasRole('MEMBER'+filterObject.organization.abbreviation)")
 	@Override

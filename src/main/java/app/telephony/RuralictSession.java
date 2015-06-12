@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import in.ac.iitb.ivrs.telephony.base.events.RecordEvent;
 
 import com.continuent.tungsten.commons.patterns.fsm.*;
 
@@ -46,7 +47,7 @@ public class RuralictSession extends IVRSession {
 	boolean feedbackAllowed=false;
 	boolean responseAllowed=false;
 	int broadcastID;
-	
+	RecordEvent recordEvent;
 	
 
 	OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
@@ -177,6 +178,12 @@ public class RuralictSession extends IVRSession {
 		this.broadcastID = broadcastID;
 	}
 
-	
+	public RecordEvent getRecordEvent() {
+		return recordEvent;
+	}
+
+	public void setRecordEvent(RecordEvent recordEvent) {
+		this.recordEvent = recordEvent;
+	}	
 }
 

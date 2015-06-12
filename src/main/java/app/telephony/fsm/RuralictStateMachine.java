@@ -1,8 +1,28 @@
 package app.telephony.fsm;
 
+import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import in.ac.iitb.ivrs.telephony.base.fsm.EventGuard;
+import in.ac.iitb.ivrs.telephony.base.fsm.IVRStateTransitionMap;
+import in.ac.iitb.ivrs.telephony.base.fsm.guards.OnGotDTMFKey;
+
 import java.util.HashMap;
 
-import app.telephony.fsm.action.*;
+import app.telephony.fsm.action.AskBroadcastMediumAction;
+import app.telephony.fsm.action.AskChooseGroupAction;
+import app.telephony.fsm.action.AskConfirmBroadcastMessageAction;
+import app.telephony.fsm.action.AskEnterGroupIDAction;
+import app.telephony.fsm.action.DoDisconnectAction;
+import app.telephony.fsm.action.DoEndAction;
+import app.telephony.fsm.action.DoInvalidInputAction;
+import app.telephony.fsm.action.DoReceivedBroadcastMessageAction;
+import app.telephony.fsm.action.DoRecordMessageAction;
+import app.telephony.fsm.action.DoStoreBroadcastMessageAction;
+import app.telephony.fsm.action.PlayGroupIDsAction;
+import app.telephony.fsm.action.PlayGroupSelectedAction;
+import app.telephony.fsm.action.PlayInvalidGroupAction;
+import app.telephony.fsm.action.PlayMessageDiscardedAction;
+import app.telephony.fsm.action.PlayRecordedBroadcastMessageAction;
+import app.telephony.fsm.action.PlayThankYouMessageAction;
 import app.telephony.fsm.action.member.AskConfirmFeedbackAction;
 import app.telephony.fsm.action.member.AskConfirmOrderAction;
 import app.telephony.fsm.action.member.AskForLanguageAction;
@@ -10,13 +30,13 @@ import app.telephony.fsm.action.member.AskForLanguageAndOtherAction;
 import app.telephony.fsm.action.member.AskForOrderMenuAction;
 import app.telephony.fsm.action.member.AskForResponseAction;
 import app.telephony.fsm.action.member.AskForResponseTypeAction;
+import app.telephony.fsm.action.member.AskOrderIDAction;
 import app.telephony.fsm.action.member.DoAskPlayFeedbackMessagesAction;
 import app.telephony.fsm.action.member.DoStoreFeedbackMessageAction;
 import app.telephony.fsm.action.member.DoStoreOrderMessageAction;
 import app.telephony.fsm.action.member.PlayFeedbackRecordAction;
 import app.telephony.fsm.action.member.PlayInvalidOrderAction;
 import app.telephony.fsm.action.member.PlayOrderCancelAction;
-import app.telephony.fsm.action.member.AskOrderIDAction;
 import app.telephony.fsm.action.member.PlayOrderRecordAction;
 import app.telephony.fsm.action.member.PlayRecordedMessageAction;
 import app.telephony.fsm.action.member.PlayResponeIsNoAction;
@@ -37,11 +57,6 @@ import com.continuent.tungsten.commons.patterns.fsm.Guard;
 import com.continuent.tungsten.commons.patterns.fsm.State;
 import com.continuent.tungsten.commons.patterns.fsm.StateMachine;
 import com.continuent.tungsten.commons.patterns.fsm.StateTransitionMap;
-
-import in.ac.iitb.ivrs.telephony.base.IVRSession;
-import in.ac.iitb.ivrs.telephony.base.fsm.EventGuard;
-import in.ac.iitb.ivrs.telephony.base.fsm.IVRStateTransitionMap;
-import in.ac.iitb.ivrs.telephony.base.fsm.guards.OnGotDTMFKey;
 
 public class RuralictStateMachine extends StateMachine<IVRSession>{
 	
@@ -149,7 +164,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 
 		// state to check caller role
 		State<IVRSession> checkCallerRole = map.addActiveState("CheckCallerRole", null, null);
-		
+
 		// end state
 		State<IVRSession> end = map.addEndState("End", doEndAction);
 
@@ -293,7 +308,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 	    map.allowTransition(responseMenu,onGotDTMFKeyNot1nor2 ,responseMenu,null);
 	    
 	    // transitions from confirmFeedbackMessage
-	    map.allowTransition(confirmFeedbackMessage, EventGuard.proceed,customerExit , doStoreFeedbackMessageAction);
+	 //   map.allowTransition(confirmFeedbackMessage, EventGuard.proceed,customerExit , doStoreFeedbackMessageAction);
         
 	    // transitions from orderMenu
 	    map.allowTransition(orderMenu, onGotDTMFKey1, recordOrder, null);

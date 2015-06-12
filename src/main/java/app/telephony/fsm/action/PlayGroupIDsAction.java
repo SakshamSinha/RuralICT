@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.business.services.*;
 import app.business.services.springcontext.SpringContextBridge;
-import app.telephony.fsm.config.Configs;
+import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;

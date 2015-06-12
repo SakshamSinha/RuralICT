@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import app.entities.Group;
 import app.entities.InboundCall;
 import app.entities.Order;
 import app.entities.User;
@@ -27,13 +28,12 @@ public class VoiceMessage extends Message {
 	@JoinColumn(name="voice_inbound_call_id")
 	private InboundCall inboundCall;
 
-	public VoiceMessage() {
-	}
+	
 
-	public VoiceMessage(User user, Broadcast broadcast, String mode, String type, boolean response, Order order,
+	public VoiceMessage(User user, Broadcast broadcast,Group group,String mode, String type, boolean response, Order order,
 			Voice voice, InboundCall inboundCall) {
 
-		super(user, broadcast, inboundCall.getTime(), mode, "voice", type, response, order);
+		super(user, broadcast,group,inboundCall.getTime(), mode, "voice", type, response, order);
 		this.voice = voice;
 	}
 

@@ -1,4 +1,4 @@
-package app.telephony.fsm.config;
+package app.telephony.config;
 
 import in.ac.iitb.ivrs.telephony.base.config.IVRConfigs;
 
@@ -27,9 +27,13 @@ public class Configs extends IVRConfigs {
 	 */
 	public static class Telephony {
 		/**
+		 * KooKoo application URL for Outbound Calls.
+		 */
+		public static final String OUTBOUND_APP_URL = "http://ruralict.cse.iitb.ac.in/RuralIvrs/BroadcastCallHandler";
+		/**
 		 * KooKoo application URL.
 		 */
-		public static final String APP_URL = "http://ruralict.cse.iitb.ac.in/ruralivrs/CallHandler";
+		public static final String APP_URL = "http://ruralict.cse.iitb.ac.in/RuralIvrs/CallHandler";
 		/**
 		 * The IVR number being used for this application. Outbound calls will be made from this number.
 		 */

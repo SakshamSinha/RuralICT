@@ -11,7 +11,7 @@ import app.entities.broadcast.Broadcast;
 import app.entities.broadcast.VoiceBroadcast;
 import app.entities.message.Message;
 import app.telephony.RuralictSession;
-import app.telephony.fsm.config.Configs;
+import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
@@ -34,12 +34,12 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 		
-		/*VoiceBroadcast broadcast;
-		broadcast = (VoiceBroadcast) broadcastService.getTopBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), organizationService.getOrganizationByIVRS(session.getIvrNumber()));
+		VoiceBroadcast broadcast;
+		broadcast = (VoiceBroadcast) broadcastService.getTopBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), organizationService.getOrganizationByIVRS(session.getIvrNumber()), "voice");
 		Voice v = broadcast.getVoice();
 		session.setGroupID(broadcast.getGroup().getGroupId()+"");
-		
-		if(isOutbound){
+				
+	/*	if(isOutbound){
 
 			response.addPlayAudio(v.getUrl());
 			ruralictSession.setOrderAllowed(broadcast.getAskOrder());
@@ -57,9 +57,10 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/welcomeMessage.wav");
 			
 			if(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableBroadcasts()){
-			//	response.addPlayAudio(v.getUrl());
+				response.addPlayAudio(v.getUrl());
 			}
-			session.setGroupID("0");
+			
+			//session.setGroupID("0");
 			
 		//}
 		

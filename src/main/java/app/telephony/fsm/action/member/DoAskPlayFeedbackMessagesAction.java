@@ -5,7 +5,7 @@ import in.ac.iitb.ivrs.telephony.base.events.RecordEvent;
 import app.entities.Voice;
 import app.entities.message.VoiceMessage;
 import app.telephony.RuralictSession;
-import app.telephony.fsm.config.Configs;
+import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
@@ -19,17 +19,13 @@ public class DoAskPlayFeedbackMessagesAction implements Action<IVRSession> {
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
-
-		/*Response response = session.getResponse();   
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordedFeedbackMessageIs"+session.getLanguage()+".wav");
-		String feedback = session.getMessageURL();
-		response.addPlayAudio("http://recordings.kookoo.in/vishwajeet/"+feedback+".wav");*/
 		
 		RecordEvent recordEvent = (RecordEvent) event;
 		RuralictSession ruralictSession = (RuralictSession) session;
-		Voice recordedMessage = new Voice();
-     	recordedMessage.setUrl(recordEvent.getFileURL());
+		Voice recordedMessage = new Voice(recordEvent.getFileURL(),false);
+        recordedMessage.setUrl(recordEvent.getFileURL());
         ruralictSession.setVoiceMessage(recordedMessage);
+        ruralictSession.setRecordEvent(recordEvent);
 		
  	}
 

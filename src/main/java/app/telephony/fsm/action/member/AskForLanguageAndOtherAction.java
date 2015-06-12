@@ -5,8 +5,8 @@ import java.util.Arrays;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.business.services.OrganizationService;
 import app.business.services.springcontext.SpringContextBridge;
+import app.telephony.config.Configs;
 import app.telephony.fsm.RuralictStateMachine;
-import app.telephony.fsm.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;

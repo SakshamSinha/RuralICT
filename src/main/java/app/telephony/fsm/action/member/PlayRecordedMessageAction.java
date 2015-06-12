@@ -2,7 +2,7 @@ package app.telephony.fsm.action.member;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.telephony.RuralictSession;
-import app.telephony.fsm.config.Configs;
+import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
@@ -17,11 +17,14 @@ public class PlayRecordedMessageAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		RuralictSession ruralictSession = (RuralictSession) session;
+		
 		Response response = session.getResponse();
+		RuralictSession ruralictSession = (RuralictSession) session;
+		System.out.println(Configs.Voice.VOICE_DIR + "/recordedFeedbackMessageIs_"+session.getLanguage()+".wav");
 		
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordedFeedbackMessageIs_"+session.getLanguage()+".wav");
 		response.addPlayAudio(ruralictSession.getVoiceMessage().getUrl());
+		System.out.println(ruralictSession.getVoiceMessage().getUrl());
 	}
 
 }

@@ -31,7 +31,7 @@ public class OnLanguageSelect extends EventTypeGuard<IVRSession> {
 			if(RuralictStateMachine.tempLanguageMap.containsKey(input)){
 				session.setLanguage(RuralictStateMachine.tempLanguageMap.get(input));
 				UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
-				userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().setCallLocale(RuralictStateMachine.tempLanguageMap.get(input));;
+				userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().setCallLocale(RuralictStateMachine.tempLanguageMap.get(input));
 				return true;
 			}
 			return false;

@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.RecordEvent;
+import app.business.services.GroupService;
 import app.business.services.TelephonyService;
 import app.business.services.VoiceService;
 import app.business.services.springcontext.SpringContextBridge;
+import app.entities.Group;
 import app.entities.InboundCall;
 import app.entities.Voice;
 import app.telephony.RuralictSession;
-import app.telephony.fsm.config.Configs;
+import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
@@ -48,8 +50,11 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 		ruralictSession.setVoiceMessage(voiceMessage);
 		inboundCall.setDuration(recordEvent.getDuration());
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
-		
-		telephonyService.addVoiceMessage(session.getUserNumber(), mode , type , false ,url, inboundCall);
+		String groupID = session.getGroupID();
+		int groupId = Integer.parseInt(groupID);
+		GroupService groupService = SpringContextBridge.services().getGroupService();
+		Group group = groupService.getGroup(groupId);
+	    telephonyService.addVoiceMessage(session.getUserNumber(),null,group, mode , type , false ,url, inboundCall);
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageConfirmed_"+session.getLanguage()+".wav");
 		
  	}
