@@ -1,6 +1,5 @@
 package app.business.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -15,22 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import app.business.services.UserService;
 import app.entities.OrganizationMembership;
 import app.entities.User;
-import app.util.DownloadDaemon;
-import app.util.Utils;
 
 @Controller
 public class RootController {
 
 	@Autowired
 	UserService userService;
-
+	
 	@RequestMapping("/")
-	public String contextRoot() {
+	public String contextRoot() {	
 		return "redirect:/web";
 	}
 	
-	
-
 	/*
 	 * We want there to be a trailing slash after the organization, so that AngularJS understands that it needs to
 	 * look for resources under the organization, and not at the same path level.

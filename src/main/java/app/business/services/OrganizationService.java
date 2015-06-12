@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.data.repositories.GroupRepository;
 import app.data.repositories.OrganizationRepository;
 import app.entities.Group;
 import app.entities.Organization;
@@ -15,6 +16,9 @@ public class OrganizationService {
 	
 	@Autowired
 	OrganizationRepository organizationRepository;
+	
+	@Autowired
+	GroupRepository groupRepository;
 	
 	public Organization getOrganizationByAbbreviation(String org)
 	{
@@ -61,6 +65,10 @@ public class OrganizationService {
 		System.out.println("ivrNumber: " + ivrNumber);
 		System.out.println("repo: " + organizationRepository != null);
 		return organizationRepository.findByIvrNumber(ivrNumber);
+	}
+	
+	public Group getParentGroup(Organization organization){
+		return groupRepository.findByOrganizationAndParentGroup(organization, null);
 	}
 	
 }

@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.Group;
+import app.entities.Organization;
 
 public interface GroupRepository extends JpaRepository<Group, Integer> {
 	/*
@@ -41,5 +42,7 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 	 * Search functions
 	 */
 	public List<Group> findAllByOrderByNameAsc();
+	
+	public Group findByOrganizationAndParentGroup(Organization organization, Group parentGroup);
 	
 }

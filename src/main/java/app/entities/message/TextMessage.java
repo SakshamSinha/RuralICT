@@ -22,10 +22,11 @@ public class TextMessage extends Message {
 	public TextMessage() {
 	}
 
-	public TextMessage(User user, Broadcast broadcast, Group group,String mode, String type, boolean response, Order order,
+
+	public TextMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, Order order,
 			String textContent, Timestamp textTime) {
 
-		super(user, broadcast,group, textTime, mode, "text", type, response, order);
+		super(user, broadcast, textTime, group, mode, "text", type, response, order);
 		this.textContent = textContent;
 	}
 

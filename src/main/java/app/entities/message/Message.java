@@ -78,8 +78,8 @@ public abstract class Message implements Serializable {
 	public Message() {
 	}
 
-	public Message(User user, Broadcast broadcast,Group group, Timestamp time, String mode, String format, String type,
-			boolean response, Order order) {
+
+	public Message(User user, Broadcast broadcast, Timestamp time, Group group, String mode, String format, String type, boolean response, Order order) {
 
 		this.user = user;
 		this.broadcast = broadcast;
@@ -90,6 +90,7 @@ public abstract class Message implements Serializable {
 		this.type = type;
 		this.response = response;
 		this.order = order;
+		this.group = group;
 	}
 
 	public int getMessageId() {
