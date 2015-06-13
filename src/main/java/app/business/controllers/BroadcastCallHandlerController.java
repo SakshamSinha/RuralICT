@@ -51,9 +51,8 @@ public class BroadcastCallHandlerController  implements IVRSessionFactory {
 
 		RuralictSession ruralictSession = new RuralictSession(sessionId, userNumber, ivrNumber, circle, operator);
 		ruralictSession.setOutbound(true);
-		System.out.println("kuchh bhi!");
 		return ruralictSession;
-		
+
 	}
 
 	/**
@@ -111,16 +110,14 @@ public class BroadcastCallHandlerController  implements IVRSessionFactory {
 	 */
 	@RequestMapping(value="/BroadcastCallHandler", method=RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		//	log("GET request received in CallHandler");
 		printParameterMap(request.getParameterMap());
-		System.out.println("value of broadcast="+request.getParameterMap());
-		
+
 		try {
 			response.getOutputStream().println(IVRUtils.doCallHandling(request.getParameterMap(), request.getSession(), this));
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			//throw new ServletException(e);
+
 		}
 	}
 

@@ -2,9 +2,8 @@ package app.telephony.fsm.action.member;
 
 import java.util.Arrays;
 
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
-import app.business.services.OrganizationService;
-import app.business.services.springcontext.SpringContextBridge;
 import app.telephony.config.Configs;
 import app.telephony.fsm.RuralictStateMachine;
 
@@ -24,10 +23,7 @@ public class AskForLanguageAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		
-		OrganizationService organisationService = SpringContextBridge.services().getOrganizationService();
-		String langs = "123";
-		//organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
+		String langs = "123"; //organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
 		int i=1;
 		String[] responses = new String[RuralictStateMachine.tempLanguageMap.size()];
 		Object[] keys = RuralictStateMachine.tempLanguageMap.keySet().toArray();
@@ -35,7 +31,7 @@ public class AskForLanguageAction implements Action<IVRSession> {
 		for(Object k:keys){
 			if(langs.contains((String)k)){
 				String l = RuralictStateMachine.tempLanguageMap.get(k);
-				
+
 				if(l.equalsIgnoreCase("en"))
 				{
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
@@ -58,7 +54,7 @@ public class AskForLanguageAction implements Action<IVRSession> {
 		for(i=0;i<responses.length;i++){
 			RuralictStateMachine.tempLanguageMap.put((i+1)+"", responses[i]);
 		}
-		
+
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

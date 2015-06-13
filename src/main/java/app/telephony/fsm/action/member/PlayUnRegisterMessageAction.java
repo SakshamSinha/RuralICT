@@ -17,10 +17,8 @@ public class PlayUnRegisterMessageAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-
 		response.addPlayText("Please contact your Organization.", Configs.Telephony.TTS_SPEED);
-		//response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes"+session.getLanguage()+".wav");
-				
+
 	}
 
 

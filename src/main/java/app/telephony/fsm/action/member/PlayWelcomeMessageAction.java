@@ -33,39 +33,35 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		BroadcastService broadcastService= SpringContextBridge.services().getVoiceBroadcastService();
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
-		
 		VoiceBroadcast broadcast;
 		broadcast = (VoiceBroadcast) broadcastService.getTopBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), organizationService.getOrganizationByIVRS(session.getIvrNumber()), "voice");
 		Voice v = broadcast.getVoice();
 		session.setGroupID(broadcast.getGroup().getGroupId()+"");
-				
-	/*	if(isOutbound){
+
+		if(isOutbound){
 
 			response.addPlayAudio(v.getUrl());
 			ruralictSession.setOrderAllowed(broadcast.getAskOrder());
 			ruralictSession.setFeedbackAllowed(broadcast.getAskFeedback());
 			ruralictSession.setResponseAllowed(broadcast.getAskResponse());
 			ruralictSession.setBroadcastID(broadcast.getBroadcastId());
-			
+
 		}
 		else{
-			*/
+
 			ruralictSession.setOrderAllowed(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskOrder());
 			ruralictSession.setFeedbackAllowed(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskFeedback());
 			ruralictSession.setResponseAllowed(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskResponse());
-						
+
 			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/welcomeMessage.wav");
-			
+
 			if(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableBroadcasts()){
 				response.addPlayAudio(v.getUrl());
 			}
-			
-			//session.setGroupID("0");
-			
-		//}
-		
+
+		}
 		session.setPublisher(false);
-				
+
 	}
 
 

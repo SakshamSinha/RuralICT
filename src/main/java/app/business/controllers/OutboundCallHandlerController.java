@@ -49,7 +49,6 @@ public class OutboundCallHandlerController implements IVRSessionFactory{
         
 		RuralictSession ruralictSession = new RuralictSession(sessionId, userNumber, ivrNumber, circle, operator);
 		ruralictSession.setOutbound(true);
-		System.out.println("kuchh bhi!");
 		return ruralictSession;
 	}
 
@@ -111,11 +110,10 @@ public class OutboundCallHandlerController implements IVRSessionFactory{
 	{
 		//	log("GET request received in CallHandler");
 		printParameterMap(request.getParameterMap());
-		System.out.println(request.getParameterMap());
-		
+			
 				
 		try {
-			String userNumber="9892275485";
+			String userNumber="9773232509";   //testing purpose
 					/* request.getParameter("userNumber");
 			System.out.println("userNumber="+userNumber);*/
 			//String ivrNumber = request.getParameter("organisationIVRNumber");

@@ -16,47 +16,49 @@ import com.continuent.tungsten.commons.patterns.fsm.Guard;
 import com.continuent.tungsten.commons.patterns.fsm.State;
 
 public class OnIsPublisher implements Guard<IVRSession,Object>{
-	
+
 
 	boolean allow;
-	
+
 	public OnIsPublisher(boolean allow) {
-		
+
 		this.allow=allow;
 	}
-	
+
 
 	@Override
 	public boolean accept(Event<Object> event, IVRSession session, State<?> state) {
-		
+
 		OrganizationService orgService = SpringContextBridge.services().getOrganizationService();
 		UserService userService =SpringContextBridge.services().getUserService();
-		
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
-	
 		String userNumber = session.getUserNumber();
 		String orgNumber = session.getIvrNumber();
-		
-	    UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(userNumber);
+		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(userNumber);
 		Organization organization = orgService.getOrganizationByIVRS(orgNumber);
-
+		RuralictSession ruralictSession = (RuralictSession) session;
 		if(userPhoneNumber == null){
-			return false;
+			return (allow==false);
 		}
 		else {
-		String userRole= userService.getUserRole(userPhoneNumber.getUser(), organization);
 
-		if(userRole.contains("Publisher")==allow){
-			
-			return true;
-			
-		}
-				
-		return false;
+			String userRole= userService.getUserRole(userPhoneNumber.getUser(), organization);
+
+			if(ruralictSession.isOutbound()){
+				return (allow==false);
+			}
+
+			if(userRole.contains("Publisher")==allow){
+
+				return (allow==true);
+
+			}
+
+			return (allow==false);
 		}
 	}
-	
-	
+
+
 
 
 }

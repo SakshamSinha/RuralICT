@@ -19,11 +19,8 @@ public class AskConfirmBroadcastMessageAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-
-		//cd.addPlayText("If you are satisfied with your message, press 1. To cancel your message, press 2.", Configs.Telephony.TTS_SPEED);
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirm.wav");
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecord.wav");
-
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

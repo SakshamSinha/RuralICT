@@ -20,10 +20,9 @@ public class DoReceivedBroadcastMessageAction implements Action<IVRSession> {
 		RecordEvent recordEvent = (RecordEvent) event;
 		RuralictSession ruralictSession = (RuralictSession) session;
 		Voice recordedBroadcastMessage = new Voice();
-
 		recordedBroadcastMessage.setUrl(recordEvent.getFileURL());
-
 		ruralictSession.setVoiceMessage(recordedBroadcastMessage);
+		ruralictSession.setRecordEvent(recordEvent);
 	}
 
 }

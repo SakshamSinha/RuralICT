@@ -31,7 +31,6 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 		responses[0] = ruralictSession.isOrderAllowed();
 		responses[1] = ruralictSession.isFeedbackAllowed();
 		responses[2] = ruralictSession.isResponseAllowed();
-		
 		int i=1;
 		String[] newResponses = new String[RuralictStateMachine.tempResponseMap.size()];
 		Object[] keys = RuralictStateMachine.tempResponseMap.keySet().toArray();
@@ -40,14 +39,14 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 			if(responses[Integer.parseInt((String)k)-1]){
 				String responseType = RuralictStateMachine.tempResponseMap.get(k);
 				String l = session.getLanguage();
-				
+
 				if(l.equalsIgnoreCase("en"))
 				{
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+l+".wav"); //language
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
-					
+
 				}
 				else
 				{
@@ -56,7 +55,7 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
 				}
-				
+
 				newResponses[i-1]=responseType;
 				i++;
 			}
@@ -65,13 +64,7 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 		for(i=0;i<newResponses.length;i++){
 			RuralictStateMachine.tempResponseMap.put((i+1)+"", newResponses[i]);
 		}
-		
-		//cd.addPlayText("If you are satisfied with your message, press 1. To cancel your message, press 2.", Configs.Telephony.TTS_SPEED);
-		/*
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForOrder"+session.getLanguage()+".wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForFeedback"+session.getLanguage()+".wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press3ForResponse"+session.getLanguage()+".wav");
-		*/
+
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

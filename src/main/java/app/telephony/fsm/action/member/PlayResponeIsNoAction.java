@@ -6,6 +6,9 @@ import app.business.services.TelephonyService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Group;
 import app.entities.InboundCall;
+import app.entities.broadcast.Broadcast;
+import app.entities.broadcast.VoiceBroadcast;
+import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
@@ -22,18 +25,29 @@ public class PlayResponeIsNoAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-
+		RuralictSession ruralictSession = (RuralictSession) session;
 		String mode = "web";
-        String type ="response";
-		InboundCall inboundCall = new InboundCall();
+		String type ="response";
+		InboundCall inboundCall = ruralictSession.getCall();
 		String groupID = session.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		GroupService groupService = SpringContextBridge.services().getGroupService();
 		Group group = groupService.getGroup(groupId);
- 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
- 		 telephonyService.addBinaryMessage(session.getUserNumber(),null,group, mode, type, true,inboundCall.getTime());
+		Broadcast broadcast = new VoiceBroadcast();
+		broadcast.setBroadcastId(ruralictSession.getBroadcastID());
+		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
+		if(ruralictSession.isOutbound()){
+			
+			telephonyService.addBinaryMessage(session.getUserNumber(),broadcast, group, mode , type , false , inboundCall.getTime());
+		}
+		else{
+			
+			telephonyService.addBinaryMessage(session.getUserNumber(),null,group, mode, type, false,inboundCall.getTime());
+		}
+
+
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsNo_"+session.getLanguage()+".wav");
-				
+
 	}
 
 

@@ -25,11 +25,11 @@ import com.ozonetel.kookoo.Response;
 
 public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 
-	
+
 	@Autowired
 	Voice voice;
 
-	
+
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
@@ -37,39 +37,33 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		RuralictSession ruralictSession = (RuralictSession) session;
 		Response response = session.getResponse();
 		String messageURL=session.getMessageURL();
-		InboundCall inboundCall= new InboundCall();
+		InboundCall inboundCall=ruralictSession.getCall();
 		Broadcast broadcast  = new VoiceBroadcast();
 		GroupService groupService = SpringContextBridge.services().getGroupService();
-
 		String groupID = session.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		Group group = groupService.getGroup(groupId);
-		
 		broadcast.setBroadcastId(ruralictSession.getBroadcastID());
 		Voice voiceMessage = new Voice();
-		
 		boolean isOutboundCall = ruralictSession.isOutbound();
-			
-		/*RecordEvent recordEvent = (RecordEvent) event;*/
 		inboundCall.setDuration(ruralictSession.getRecordEvent().getDuration());
-        String mode = "web";
-        String type ="feedback";
-        String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
-		
-      	voiceMessage.setUrl(messageURL);
+		String mode = "web";
+		String type ="feedback";
+		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
+		voiceMessage.setUrl(messageURL);
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
-		
-		/*if(isOutboundCall){
+		if(isOutboundCall){
+			
 			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group, mode , type , false ,url,null);
 		}
-		else{*/
-			System.out.println(session.getUserNumber()+"--"+group+"--"+ mode+"--"+type+"0--"+url+"--"+inboundCall);
-		telephonyService.addVoiceMessage(session.getUserNumber(),null , group, mode , type , false ,url, inboundCall);
-		//}
-		// response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageConfirmed"+session.getLanguage()+".wav");
-		
-		
- 	}
+		else{
+
+			telephonyService.addVoiceMessage(session.getUserNumber(),null , group, mode , type , false ,url, inboundCall);
+		}
+
+
+
+	}
 
 
 }

@@ -13,6 +13,8 @@ import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Group;
 import app.entities.InboundCall;
 import app.entities.Voice;
+import app.entities.broadcast.Broadcast;
+import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
 
@@ -27,10 +29,10 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 
 	@Autowired
 	Voice voice;
-	
+
 	//@Autowired
 	//VoiceService voiceService;
-	
+
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
@@ -39,13 +41,12 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 		String messageURL=session.getMessageURL();
 		RecordEvent recordEvent = (RecordEvent) event;
 		RuralictSession ruralictSession = (RuralictSession) session;
-	
-	 	Voice voiceMessage = new Voice();
-		InboundCall inboundCall= new InboundCall();
-        String mode = "web";
-        String type ="order";
-        String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
-		
+		Voice voiceMessage = new Voice();
+		InboundCall inboundCall= ruralictSession.getCall();
+		String mode = "web";
+		String type ="order";
+		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
+		boolean isOutboundCall = ruralictSession.isOutbound();
 		voiceMessage.setUrl(messageURL);
 		ruralictSession.setVoiceMessage(voiceMessage);
 		inboundCall.setDuration(recordEvent.getDuration());
@@ -54,9 +55,18 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 		int groupId = Integer.parseInt(groupID);
 		GroupService groupService = SpringContextBridge.services().getGroupService();
 		Group group = groupService.getGroup(groupId);
-	    telephonyService.addVoiceMessage(session.getUserNumber(),null,group, mode , type , false ,url, inboundCall);
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageConfirmed_"+session.getLanguage()+".wav");
-		
- 	}
+		Broadcast broadcast = new VoiceBroadcast();
+		broadcast.setBroadcastId(ruralictSession.getBroadcastID());
+
+		if(isOutboundCall){
+
+			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast, group, mode , type , false ,url,null);
+		}
+		else{
+
+			telephonyService.addVoiceMessage(session.getUserNumber(),null , group, mode , type , false ,url, inboundCall);
+		}
+
+	}
 
 }

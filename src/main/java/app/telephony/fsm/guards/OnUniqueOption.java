@@ -19,35 +19,36 @@ public class OnUniqueOption implements Guard<IVRSession,Object> {
 	String optionsFor;
 	String choice;
 	boolean allow;
-	
+
 	public OnUniqueOption(String optionsFor,String choice,boolean allow) {
-		
+
 		this.optionsFor = optionsFor;
 		this.allow = allow;
 		this.choice = choice;
 	}	
-	
+
 	@Override
 	public boolean accept(Event<Object> event, IVRSession session, State<?> state) {
-		
+
 		int a=0;
 		String opts;
 		System.out.println("inside");
-		
+
 		OrganizationService organisationService = SpringContextBridge.services().getOrganizationService();
-	  //  UserService userService = SpringContextBridge.services().getUserService();
-	    UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
+		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		if(optionsFor.equalsIgnoreCase("language"))
 		{
 			String lang="";
 			String userLang=userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getCallLocale();
 			opts = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
-		    if(userLang.equalsIgnoreCase("")){
-		    	return (allow==false);
-		    }
-		    session.setLanguage(userLang);
-		    return (allow==true);/*
-		    
+			if(userLang.equalsIgnoreCase("")){
+				return (allow==false);
+			}
+			session.setLanguage(userLang);
+			return (allow==true);/*
+
+
+// required this comment
 			for(int i=1;a<2 && i<10;i++){
 				if(opts.contains(i+"")){
 					a++;
@@ -85,13 +86,12 @@ public class OnUniqueOption implements Guard<IVRSession,Object> {
 			return (allow==false);*/
 		}
 		else if(optionsFor.equalsIgnoreCase("orderMenu")){
-			System.out.println("Inside Order menu-------------------");
 			if(organisationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableOrderCancellation()){
 				return (allow==false);
 			}
 			return (allow==true);
 		}
-		
+
 		return (allow==false);
 	}
 

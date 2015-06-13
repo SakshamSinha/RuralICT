@@ -16,11 +16,7 @@ public class DoInvalidInputAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		
-		/*session.addInvalidTry();*/
 		Response response = session.getResponse();
-
-		//response.addPlayText("Your message has been cancelled.", Configs.Telephony.TTS_SPEED);
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput"+".wav");
 	}
 

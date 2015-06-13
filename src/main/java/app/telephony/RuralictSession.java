@@ -48,10 +48,10 @@ public class RuralictSession extends IVRSession {
 	boolean responseAllowed=false;
 	int broadcastID;
 	RecordEvent recordEvent;
-	
+
 
 	OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
-	
+
 
 	/**
 	 * @param groupService 
@@ -64,26 +64,11 @@ public class RuralictSession extends IVRSession {
 
 		super(sessionId, userNumber, ivrNumber, circle, operator, RuralictStateMachine.class);
 
-		/*EntityManager em = EntityManagerService.getEntityManager();
-		User user = em.find(User.class, userNumber);
-		if (user == null) {
-			user = new User();
-			user.setCircle(circle);
-			user.setOperator(operator);
-			user.setPhoneNo(userNumber);
-			em.persist(user);
-		}*/
-		
-	
-
-		
 		call = new InboundCall();
 		call.setTime(new Timestamp(getStartTime().getTime()));
 		call.setFromNumber(userNumber);
 		call.setOrganization(organizationService.getOrganizationByIVRS(ivrNumber));
 
-		//call.setUser(user);
-		//em.persist(call);
 	}
 
 	/**
@@ -92,8 +77,6 @@ public class RuralictSession extends IVRSession {
 	@Override
 	public void finish(long totalCallDuration) {
 		super.finish(totalCallDuration);
-		//EntityManager em = EntityManagerService.getEntityManager();
-
 		call.setDuration((int) totalCallDuration);
 	}
 
@@ -117,10 +100,10 @@ public class RuralictSession extends IVRSession {
 	public void setVoiceMessage(Voice voiceMessage) {
 		this.voiceMessage = voiceMessage;
 	}
-	
-	
+
+
 	UserService userService;
-	
+
 
 	public OrganizationService getOrganizationService() {
 		return organizationService;
@@ -130,7 +113,7 @@ public class RuralictSession extends IVRSession {
 		this.organizationService = organizationService;
 	}
 
-	
+
 	public UserService getUserService() {
 		return userService;
 	}
@@ -138,7 +121,7 @@ public class RuralictSession extends IVRSession {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
+
 	public boolean isOutbound() {
 		return isOutbound;
 	}

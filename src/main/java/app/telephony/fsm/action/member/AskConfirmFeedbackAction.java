@@ -19,7 +19,6 @@ public class AskConfirmFeedbackAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		 
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirmFeedback_"+session.getLanguage()+".wav");
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecordFeedback_"+session.getLanguage()+".wav");
 		cd.setMaxDigits(1);

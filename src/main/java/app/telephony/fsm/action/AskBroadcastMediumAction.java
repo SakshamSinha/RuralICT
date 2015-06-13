@@ -16,12 +16,11 @@ public class AskBroadcastMediumAction implements Action<IVRSession> {
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
-		
+
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForPhone.wav");
 		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForPC.wav");
-
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

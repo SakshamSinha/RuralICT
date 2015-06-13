@@ -22,20 +22,14 @@ public class DoRecordMessageAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-
-		//response.addPlayText("Please record your message after the beep, and press # to finish.", Configs.Telephony.TTS_SPEED);
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/broadcastMessageRecordAfterBeep.wav");
-
 		Record record = new Record();
 		String recordName = "message" + Calendar.getInstance().getTimeInMillis() + ((new Random()).nextInt(90000) + 10000);
 		record.setFileName(recordName);
 		record.setMaxDuration(Configs.Telephony.MAX_RECORDING_DURATION);
 		record.setSilence(Configs.Telephony.RECORDING_SILENCE);
 		session.setMessageURL(recordName);
-		
-		
 		session.setPublisher(true);
-		
 		response.addRecord(record);
 	}
 

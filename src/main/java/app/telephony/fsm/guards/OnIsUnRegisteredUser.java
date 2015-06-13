@@ -14,34 +14,27 @@ import com.continuent.tungsten.commons.patterns.fsm.State;
 
 public class OnIsUnRegisteredUser implements Guard<IVRSession, Object> {
 
-	
+
 	boolean allow;
-	
+
 	public OnIsUnRegisteredUser(boolean allow){
-		
+
 		this.allow=allow;
 	}
-	
+
 	@Override
 	public boolean accept(Event<Object> event, IVRSession session, State<?> state) {
-		
-		OrganizationService orgService = SpringContextBridge.services().getOrganizationService();
-		UserService userService =SpringContextBridge.services().getUserService();
-		
+
+
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
-	
 		String userNumber = session.getUserNumber();
-		String orgNumber = session.getIvrNumber();
-		
-	    UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(userNumber);
-		Organization organization = orgService.getOrganizationByIVRS(orgNumber);
-				
+		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(userNumber);
 		if(userPhoneNumber == null){
-			
-			return true;
+
+			return (allow==true);
 		}
-				
-		return false;
+
+		return (allow==false);
 	}
-	
+
 }

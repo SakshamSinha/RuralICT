@@ -17,10 +17,8 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-
-		//response.addPlayText("Your message has been cancelled.", Configs.Telephony.TTS_SPEED);
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/groupHasBeenSelected.wav");
-				
+
 	}
 
 }

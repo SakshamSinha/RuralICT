@@ -55,10 +55,10 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 			String input = ev.getInput().split("#")[0];
 			int orderID = Integer.parseInt(input);
 			orderService = new OrderService();
-			Order o=orderService.getOrder(orderID);
-			if(o!=null){
-				if(!(o.getStatus().equalsIgnoreCase("reject") || o.getStatus().equalsIgnoreCase("processed"))
-						&& o.getOrganization() == orgService.getOrganizationByIVRS(session.getIvrNumber())
+			Order order=orderService.getOrder(orderID);
+			if(order!=null){
+				if(!(order.getStatus().equalsIgnoreCase("reject") || order.getStatus().equalsIgnoreCase("processed"))
+						&& order.getOrganization() == orgService.getOrganizationByIVRS(session.getIvrNumber())
 						&&  true
 						/*userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser() == */ 
 						){

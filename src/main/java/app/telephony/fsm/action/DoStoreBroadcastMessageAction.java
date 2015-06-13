@@ -31,32 +31,18 @@ public class DoStoreBroadcastMessageAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		Response response = session.getResponse();
 		String messageURL=session.getMessageURL();
 		Voice voiceMessage = new Voice();
-		InboundCall inboundCall = new InboundCall();
-		String groupID = session.getGroupID();
-		int groupId = Integer.parseInt(groupID);
-		GroupService groupService = SpringContextBridge.services().getGroupService();
-		Group group = groupService.getGroup(groupId);
-		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
-		voice = new Voice(messageURL , false);
-		voiceService.addVoice(voice);
+		RuralictSession ruralictSession = (RuralictSession) session;
+		InboundCall inboundCall = ruralictSession.getCall();
 		String mode = "web";
 		String type ="voice";
 		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
-
-		voice = new Voice(url , false);
-		voiceService.addVoice(voice);
 		voiceMessage.setUrl(url);
-		//	inboundCall.setDuration(recordEvent.getDuration());
-
-		voice = new Voice("http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav" , false);
-
+		inboundCall.setDuration(ruralictSession.getRecordEvent().getDuration());
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
-		telephonyService.addVoiceMessage(session.getUserNumber(),null,group, mode , type , false ,url, inboundCall);
+		telephonyService.addVoiceMessage(session.getUserNumber(),null,null, mode , type , false ,url, inboundCall);
 
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/broadcastMessageConfirmed.wav");
 
 
 	}

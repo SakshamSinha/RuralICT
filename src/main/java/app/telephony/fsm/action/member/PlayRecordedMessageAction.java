@@ -17,14 +17,12 @@ public class PlayRecordedMessageAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		
+
 		Response response = session.getResponse();
 		RuralictSession ruralictSession = (RuralictSession) session;
-		System.out.println(Configs.Voice.VOICE_DIR + "/recordedFeedbackMessageIs_"+session.getLanguage()+".wav");
-		
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordedFeedbackMessageIs_"+session.getLanguage()+".wav");
 		response.addPlayAudio(ruralictSession.getVoiceMessage().getUrl());
-		System.out.println(ruralictSession.getVoiceMessage().getUrl());
+
 	}
 
 }
