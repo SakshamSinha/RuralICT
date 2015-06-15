@@ -108,10 +108,9 @@ public class OutboundCallHandlerController implements IVRSessionFactory{
 	@RequestMapping(value="/OutboundCallHandler", method=RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException 
 	{
-		//	log("GET request received in CallHandler");
+		
 		printParameterMap(request.getParameterMap());
-			
-				
+					
 		try {
 			String userNumber="9773232509";   //testing purpose
 					/* request.getParameter("userNumber");

@@ -35,7 +35,6 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		RuralictSession ruralictSession = (RuralictSession) session;
-		Response response = session.getResponse();
 		String messageURL=session.getMessageURL();
 		InboundCall inboundCall=ruralictSession.getCall();
 		Broadcast broadcast  = new VoiceBroadcast();

@@ -37,7 +37,6 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		Response response = session.getResponse();
 		String messageURL=session.getMessageURL();
 		RecordEvent recordEvent = (RecordEvent) event;
 		RuralictSession ruralictSession = (RuralictSession) session;

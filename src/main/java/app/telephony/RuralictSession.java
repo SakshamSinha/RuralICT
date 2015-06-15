@@ -2,19 +2,7 @@ package app.telephony;
 
 import java.sql.Timestamp;
 
-
-
-
-
-
-
-
-
-
-import java.util.ResourceBundle;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.RecordEvent;
 
@@ -40,7 +28,7 @@ public class RuralictSession extends IVRSession {
 	/**
 	 * The last recorded message in this session, if any.
 	 */
-	//Message recordedMessage;
+	
 	Voice voiceMessage ;
 	boolean isOutbound=false;
 	boolean orderAllowed=false;
@@ -58,7 +46,7 @@ public class RuralictSession extends IVRSession {
 	 * @throws InstantiationException 
 	 * @see {@link IVRSession#IVRSession(String, String, String, String, String, Class)}
 	 */
-	//, ResourceBundle properties
+	
 	public RuralictSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator)
 			throws FiniteStateException, InstantiationException {
 

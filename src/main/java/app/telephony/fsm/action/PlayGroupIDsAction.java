@@ -40,9 +40,9 @@ public class PlayGroupIDsAction implements Action<IVRSession> {
 			response.addPlayText("You are currently not added to any groups", Configs.Telephony.TTS_SPEED);
 		}
 
-		for(GroupMembership gm : groupMemberships){
-			String groupId = gm.getGroup().getGroupId()+"";
-			String groupName = gm.getGroup().getName();
+		for(GroupMembership groupMemberShip : groupMemberships){
+			String groupId = groupMemberShip.getGroup().getGroupId()+"";
+			String groupName = groupMemberShip.getGroup().getName();
 			groups.put(groupId, groupName);
 
 		}

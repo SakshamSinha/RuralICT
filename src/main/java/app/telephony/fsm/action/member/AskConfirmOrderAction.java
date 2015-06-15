@@ -11,8 +11,7 @@ import com.continuent.tungsten.commons.patterns.fsm.TransitionRollbackException;
 public class AskConfirmOrderAction implements Action<IVRSession> {
 
 	@Override
-	public void doAction(Event<?> arg0, IVRSession arg1,
-			Transition<IVRSession, ?> arg2, int arg3)
+	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 		
 

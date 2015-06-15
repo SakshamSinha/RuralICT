@@ -17,7 +17,11 @@ public class DoInvalidInputAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput"+".wav");
+		if(session.getLanguage()!=null)
+			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput"+session.getLanguage()+".wav");
+		else
+			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput"+".wav");
+		
 	}
 
 }

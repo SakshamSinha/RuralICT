@@ -32,8 +32,6 @@ public class BroadcastCallHandlerController  implements IVRSessionFactory {
 	 * @return The new Ruralict session.
 	 */
 
-
-
 	@Autowired
 	UserPhoneNumberService userPhoneNumberService;
 	@Autowired

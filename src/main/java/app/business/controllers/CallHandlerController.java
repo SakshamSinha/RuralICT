@@ -36,9 +36,6 @@ public class CallHandlerController implements IVRSessionFactory {
 	 * Create a new IVR session.
 	 * @return The new Ruralict session.
 	 */
-
-
-
 	@Autowired
 	UserPhoneNumberService userPhoneNumberService;
 	@Autowired
@@ -53,10 +50,7 @@ public class CallHandlerController implements IVRSessionFactory {
 
 	@Override
 	public IVRSession createSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator) throws Exception {
-//, ResourceBundle properties
-
-
-		return new RuralictSession(sessionId, userNumber, ivrNumber, circle, operator);//, properties
+		return new RuralictSession(sessionId, userNumber, ivrNumber, circle, operator);
 	}
 
 	/**
@@ -114,16 +108,13 @@ public class CallHandlerController implements IVRSessionFactory {
 	 */
 	@RequestMapping(value="/CallHandler", method=RequestMethod.GET)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		//	log("GET request received in CallHandler");
 		printParameterMap(request.getParameterMap());
-		System.out.println(request.getParameterMap());
-		
+	
 		try {
 			response.getOutputStream().println(IVRUtils.doCallHandling(request.getParameterMap(), request.getSession(), this));
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			//throw new ServletException(e);
 		}
 	}
 
@@ -140,7 +131,6 @@ public class CallHandlerController implements IVRSessionFactory {
 	 */
 	@RequestMapping(value="/CallHandler", method=RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//	log("POST request received in CallHandler");
 		printParameterMap(request.getParameterMap());
 	}
 
