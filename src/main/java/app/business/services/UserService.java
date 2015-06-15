@@ -104,6 +104,16 @@ public class UserService {
 		
 	}
 	
+	public User updateCallLocale(User user, String callLocale){
+		user.setCallLocale(callLocale);
+		return userRepository.save(user);
+	}
+	
+	public User updateWebLocale(User user, String webLocale){
+		user.setWebLocale(webLocale);
+		return userRepository.save(user);
+	}
+	
 	/*
 	 * Get User object by userId
 	 */
