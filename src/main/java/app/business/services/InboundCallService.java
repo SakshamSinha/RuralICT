@@ -29,6 +29,10 @@ public class InboundCallService {
 		inboundCallRepository.save(inboundCall);
 	}
 	
+	public InboundCall getInboundCall(int inboundCallId){
+		return inboundCallRepository.findOne(inboundCallId);
+	}
+	
 	public void removeInboundCall(InboundCall inboundCall){
 		inboundCallRepository.delete(inboundCall);
 	}

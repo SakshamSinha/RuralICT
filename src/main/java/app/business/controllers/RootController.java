@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import app.business.services.GroupService;
+import app.business.services.InboundCallService;
+import app.business.services.TelephonyService;
 import app.business.services.UserService;
 import app.entities.OrganizationMembership;
 import app.entities.User;
@@ -20,6 +23,15 @@ public class RootController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	TelephonyService telephonyService;
+	
+	@Autowired
+	GroupService groupService;
+	
+	@Autowired
+	InboundCallService inboundCallService;
 	
 	@RequestMapping("/")
 	public String contextRoot() {	
@@ -32,6 +44,8 @@ public class RootController {
 	 */
 	@RequestMapping("/web/{org}")
 	public String organizationRootWithoutSlash(@PathVariable String org) {
+		telephonyService.addVoiceMessage(userService.getCurrentUser(), null, groupService.getGroup(1), "web", "order", false, "www.ameykamat.in", inboundCallService.getInboundCall(1));
+		
 		return "redirect:/web/"+org+"/";
 	}
 

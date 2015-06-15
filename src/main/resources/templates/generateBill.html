@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<title>Bill</title>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title ng-bind="title">RuralIVRS - Welcome</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="Rural IVRS Web application." />
+		<meta name="author" content="IIT Bombay" />
+		
+		<link th:href="@{/static/css/bootstrap.css}" rel="stylesheet" />
+		<link th:href="@{/static/css/bootstrap-responsive.css}" rel="stylesheet" />
+		<link th:href="@{/static/css/loading-bar.css}" rel="stylesheet" />
+		<link th:href="@{/static/css/site.css}" rel="stylesheet" />
+		<link th:href="@{/static/css/ruralivrs.css}" rel="stylesheet" />
+	</head>
+	<body style="font-family:Times New Roman; font-size:8">
+		<div class="container-fluid">
+			<div class="row-fluid" style="text-align:center">
+				<div class="span4"></div>
+				<div class="span4">
+					<table class="table table-bordered table-condensed">
+						<thead>
+							<tr>
+								<td colspan="2" style="text-align:center">
+									<b>
+										<div th:text="${organization.name}"></div>
+									</b>
+									<div th:text="${organization.address}"></div>
+									<div th:text=${organization.contact}></div>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div><b>Member: </b></div>
+									<div th:text="${message.user.name}"></div>
+									
+								</td>
+								<td>
+									<div><b>Group Name: </b></div>
+									<div th:text="${message.group.name}"></div>			
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div><b>Order Id: </b></div>
+									<div th:text="'#' + ${order.orderId}"></div>
+									
+								</td>
+								<td>
+									<div><b>Time: </b></div>
+									<div th:text="${message.time}"></div>			
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<table class="table table-bordered table-condensed">
+										<thead>
+											<th>Product</th>
+											<th>Quantity</th>
+											<th>Rate (In ₹)</th>
+											<th>Cost (In ₹)</th>
+										</thead>
+										<tbody>
+											<tr th:each="orderItem : ${order.orderItems}">
+												<td th:text="${orderItem.product.name}"></td>
+												<td style="text-align:right" th:text="${orderItem.quantity}"></td>
+												<td style="text-align:right" th:text="${orderItem.unitRate}"></td>
+												<td style="text-align:right" th:text="${orderItem.quantity * orderItem.unitRate}"></td>
+											</tr>
+										</tbody>
+									</table>			
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<table class="table table-bordered table-condensed">
+										<tbody>
+											<tr>
+												<th>Total</th>
+												<td style="text-align:right" th:text="${total}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div style="text-align:center">***Thank You***</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="span4"></div>
+			</div>
+		</div>
+	</body>
+</html>

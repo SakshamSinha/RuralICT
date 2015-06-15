@@ -23,4 +23,8 @@ public class OrderItemService {
 	public List<OrderItem> getOrderItemsByOrganisationGroupName(Organization organization, String name, Timestamp from, Timestamp to){
 		return orderItemRepository.findByOrder_OrganizationAndOrder_Message_Group_NameAndOrder_Message_TimeBetween(organization, name, from, to);
 	}
+	
+	public OrderItem addOrderItem(OrderItem orderItem) {
+		return orderItemRepository.save(orderItem);
+	}
 }

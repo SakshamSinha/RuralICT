@@ -1,6 +1,5 @@
 package app.business.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -12,96 +11,116 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-
-import app.data.repositories.GroupRepository;
-import app.entities.Group;
+import app.business.services.GroupService;
+import app.business.services.OrganizationService;
+import app.business.services.PresetQuantityService;
+import app.business.services.ProductService;
+import app.business.services.message.TextMessageService;
+import app.entities.PresetQuantity;
+import app.entities.Product;
 import app.entities.message.Message;
 
 
 @Controller
 @RequestMapping("/web/{org}")
 public class TextMessageListController {
+	
 	@Autowired
-	GroupRepository groupRepository;
+	GroupService groupService;
+	
+	@Autowired
+	TextMessageService textMessageService;
+	
+	@Autowired
+	ProductService productService;
+	
+	@Autowired
+	OrganizationService organizationService;
 
-	@RequestMapping(value="/textMessage/{type}/{groupId}")
+	@Autowired
+	PresetQuantityService presetQuantityService;
+	
+	@RequestMapping(value="/textMessage/feedback/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
-	public String textMessage(@PathVariable String org, @PathVariable int groupId, Model model , @PathVariable String type) {
-
-
-		System.out.println("voice inbox message="+ type);
-		Group group = groupRepository.findOne(groupId);
-		System.out.println(group);
-		List<Message> messageList = group.getMessages();
-		System.out.println(messageList);
-		List messagesList = new ArrayList<>();
-		for(Message message: messageList){
-
-			if(message.getFormat().equalsIgnoreCase("text") && message.getType().equalsIgnoreCase("feedback") && type.equalsIgnoreCase("feedback")){
-				messagesList.add(message);
-				model.addAttribute("textMessage", messagesList);
-			}
-			else if(message.getFormat().equalsIgnoreCase("text") && message.getType().equalsIgnoreCase("response") && type.equalsIgnoreCase("response")){
-				messagesList.add(message);
-				model.addAttribute("textMessage", messagesList);
-			}
-			else if(message.getFormat().equalsIgnoreCase("text") && type.equalsIgnoreCase("default") && (message.getType().equalsIgnoreCase("order") || message.getType().equalsIgnoreCase("feedback") || message.getType().equalsIgnoreCase("response") )){
-				messagesList.add(message);
-				model.addAttribute("textMessage", messagesList);
-			}
-
-		}
-
-
-		return "textMessages";
+	public String textFeedbackMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+		List<Message> textFeedbackMessageList=textMessageService.getFeedbackList(groupService.getGroup(groupId),"text");
+		model.addAttribute("message",textFeedbackMessageList);
+		return "textFeedbackMessage";
 	}
-
-
-	@RequestMapping(value="/textInboxMessage/{groupId}")
+	
+	@RequestMapping(value="/textMessage/response/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
-	public String textOrderMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-
-
-		Group group = groupRepository.findOne(groupId);
-		System.out.println(group);
-		List<Message> messageList = group.getMessages();
-		System.out.println(messageList);
-		List orderList = new ArrayList();
-		for(Message message: messageList){
-
-			if(message.getType().equalsIgnoreCase("order") && message.getFormat().equalsIgnoreCase("text") && message.getOrder().getStatus().equalsIgnoreCase("new")){
-				orderList.add(message);
-				model.addAttribute("textMessage",orderList);
-			}
-		}
-
+	public String textResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+		model.addAttribute(groupService.getGroup(groupId));
+		return "textResponseMessage";
+	}
+	
+	@RequestMapping(value="/textMessage/response/positive/{groupId}")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String textPositiveResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+		List<Message> textResponseMessageList=textMessageService.getPositiveResponseList(groupService.getGroup(groupId),"text");
+		model.addAttribute("message",textResponseMessageList);
+		return "textPositiveResponseMessage";
+	}
+	
+	@RequestMapping(value="/textMessage/response/negative/{groupId}")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String textNegativeResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+		List<Message> textResponseMessageList=textMessageService.getResponseList(groupService.getGroup(groupId),"text");
+		model.addAttribute("message",textResponseMessageList);
+		return "textNegativeResponseMessage";
+	}
+	
+	@RequestMapping(value="/textMessage/response/all/{groupId}")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String textAllResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+		List<Message> textResponseMessageList = textMessageService.getResponseList(groupService.getGroup(groupId),"text");
+		model.addAttribute("message",textResponseMessageList);
+		return "textAllResponseMessage";
+	}
+	
+	@RequestMapping(value="/textMessage/inbox/{groupId}")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String textInboxMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+		List<Message> textInboxMessageList= textMessageService.getInboxTextMessageList(groupService.getGroup(groupId));
+		List<Product> productList= productService.getProductList(organizationService.getOrganizationByAbbreviation(org));
+		List<PresetQuantity> presetQuantityList= presetQuantityService.getPresetQuantityList(organizationService.getOrganizationByAbbreviation(org));
+		model.addAttribute("message",textInboxMessageList);
+		model.addAttribute("products", productList);
+		model.addAttribute("presetQuantity", presetQuantityList);
 		return "textInboxMessage";
 	}
-
-	@RequestMapping(value="/textAcceptRejectMessage/{type}/{groupId}")
+	
+	@RequestMapping(value="/textMessage/accepted/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
-	public String textAcceptRejectMessage(@PathVariable String org, @PathVariable int groupId,@PathVariable String type, Model model) {
-
-		Group group = groupRepository.findOne(groupId);
-		List<Message> messageList = group.getMessages();
-		List textMessageList = new ArrayList();
-		for(Message message: messageList){
-
-			if(message.getType().equalsIgnoreCase("order") && message.getFormat().equalsIgnoreCase("text") && message.getOrder().getStatus().equals("Accept")&& type.equalsIgnoreCase("Accept")){
-				textMessageList.add(message);
-				model.addAttribute("textMessage",textMessageList);
-			}
-			else if(message.getType().equalsIgnoreCase("order") && message.getFormat().equalsIgnoreCase("text") && type.equalsIgnoreCase("Reject") && message.getOrder().getStatus().equalsIgnoreCase("Reject")){
-				textMessageList.add(message);
-				model.addAttribute("textMessage",textMessageList);
-			}
-
-		}
-
-		return "textMessages";
+	public String textProcessedMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+		List<Message> textProcessedMessageList= textMessageService.getAcceptedTextMessageList(groupService.getGroup(groupId));
+		model.addAttribute("message",textProcessedMessageList);
+		return "textAcceptedMessage";
+	}
+	
+	@RequestMapping(value="/textMessage/rejected/{groupId}")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String textSavedMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+		List<Message> textSavedMessageList=textMessageService.getRejectedTextMessageList(groupService.getGroup(groupId));
+		model.addAttribute("message",textSavedMessageList);
+		return "textRejectedMessage";
+	}
+	
+	@RequestMapping(value="/textMessage/default/{groupId}")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String defaultMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+		List<Message> textResponseMessageList=textMessageService.getTextMessageList(groupService.getGroup(groupId));
+		model.addAttribute("message",textResponseMessageList);
+		return "defaultMessage";
 	}
 }

@@ -7,27 +7,18 @@
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
-					<th>Broadcast URL</th>
+					<th>Message</th>
 					<th>Comment</th>
 
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="list-messages" th:each="voiceMessage : ${message} ">
-					<td th:text="${voiceMessage.messageId}">Id</td>
-					<td th:text="${voiceMessage.user.name}">User name</td>
-					<!-- 	<td th:text="${voiceMessage.voice.url}">Message Url</td> -->
+				<tr class="list-messages" th:each="textMessage : ${message} ">
+					<td th:text="${textMessage.messageId}">Id</td>
+					<td th:text="${textMessage.user.name}">User name</td>
+					<td th:text="${textMessage.textContent}">Text Content</td>
 					<td>
-						<audio controls>
-							<source th:attr="src=${voiceMessage.voice.url}" type="audio/wav"></source>
-							<p>Your browser does not support this audio format.</p>
-						</audio>
-					</td>
-					<td th:text="${voiceMessage.comments}">User name</td>
-					<!--
-					<td>
-						<input type="text" class="form-element" th:attr="value=${voiceMessage.comments}">
-						</span>
+						<input type="text" class="form-element" th:attr="value=${textMessage.comments}">
 					</td>
 					<td>
 						<p data-placement="top" data-toggle="tooltip" title="Edit">
@@ -36,7 +27,7 @@
 								<i class="icon-white  icon-file"></i> Edit
 							</button>
 						</p>
-					</td>  -->
+					</td>
 				</tr>
 			</tbody>
 		</table>
