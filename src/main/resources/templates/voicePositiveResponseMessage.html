@@ -7,7 +7,6 @@
 					<th>ID</th>
 					<th>Name</th>
 					<th>Response</th>
-					<th>Comment</th>
 
 				</tr>
 			</thead>
@@ -22,8 +21,6 @@
 					<td th:if="${voiceMessage.response == false}">
 						No
 					</td>
-					<td th:text="${voiceMessage.comments}">Comments</td>
-
 				</tr>
 			</tbody>
 		</table>

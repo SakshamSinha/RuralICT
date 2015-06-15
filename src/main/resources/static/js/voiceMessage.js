@@ -6,6 +6,7 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 	
 	/* Clears orderItem queue */
 	$scope.clearQueue = function(){
+		console.log("here");
 		$scope.orderItemList = [];
 	}
 	
@@ -199,7 +200,7 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 	/* Need to find out way to reload page without refresh. Work halted since message repository gives errors */
 	//TODO Eliminating this function doing hard refresh
 	$scope.reload = function(){
-		$window.location.reload();
+		setTimeout($window.location.reload,2000);
 	}
 });
 
@@ -213,7 +214,7 @@ $("#page-content").on("click", ".view-inbox-voice-message", function () {
 	var voiceMessageTime = $("#inboxVoiceMessageTime"+id).text();
 	var voiceMessageOrderId = $("#inboxVoiceMessageOrderId"+id).val();
 	var voiceMessageName = $("#inboxVoiceMessageName"+id).text();
-	var voiceMessageComment = $("#inboxVoiceMessageComment"+id).text();
+	var voiceMessageComment = $("#inboxVoiceMessageComment"+id).val();
 	var voiceMessageURL = $("#inboxVoiceMessageURL"+id).val();
 	
 	/* Dump them into modal */
@@ -243,6 +244,9 @@ $("#page-content").on("click", "#add-inbox-voice-order-items", function () {
 	var productName = $("#inboxVoiceProductName")[0].options[$("#inboxVoiceProductName")[0].selectedIndex].innerHTML
 	var productQuantity = $.trim($("#inboxVoiceProductQuantity").val());
 	var orderId = $.trim($("#inboxVoiceOrderId").val());
+	if(productQuantity == "other"){
+		productQuantity = $.trim($("#inboxVoiceCustomQuantity").val());
+	}
 	
 	/* Create and add new row element for user */
 	var new_row = $('\
@@ -267,6 +271,17 @@ $("#page-content").on("click", "#add-inbox-voice-order-items", function () {
 	data.unitRate = productUnitRate;
 	
 	angular.element($("#add-inbox-voice-order-items")).scope().addOrderItemToQueue(data);
+});
+
+$("#page-content").on('change','#inboxVoiceProductQuantity',function(e){
+	var quantity =$("#inboxVoiceProductQuantity")[0].options[$("#inboxVoiceProductQuantity")[0].selectedIndex].innerHTML;
+	if(quantity == "other"){
+		$("#inboxVoiceCustomQuantity").removeAttr("disabled");
+		
+	}
+	else{
+		$("#inboxVoiceCustomQuantity").attr("disabled", "true");
+	}
 });
 
 /* Remove orderItem from queue */
@@ -296,8 +311,10 @@ $("#page-content").on("click", "#save-inbox-voice-order", function(e) {
     angular.element($('#save-inbox-voice-order')).scope().saveOrder(orderId);
     angular.element($('#save-inbox-voice-order')).scope().updateVoiceComment(id,comment);
     $('#view-inbox-voice-message-modal').modal('toggle');
-
-    //angular.element($('#save-inbox-voice-order')).scope().reload();
+    
+    // Workaround for time being
+    angular.element($('#save-inbox-voice-order')).scope().reload();
+    
 });
 
 /* Open the modal to reject the order */
@@ -317,10 +334,33 @@ $("#page-content").on("click", "#reject-inbox-voice-order", function(e) {
     
     /* Send request to reject message */
     angular.element($('#reject-inbox-voice-order')).scope().rejectOrder(orderId);
-    angular.element($('#reject-inbox-voice-order')).scope().reload();
 
     $('#view-inbox-voice-message-modal').modal('toggle');
     $('#reject-inbox-voice-order-modal').modal('toggle');
+    
+    angular.element($('#reject-inbox-voice-order')).scope().reload();
+});
+
+/* Remove orderItem from queue */
+$("#page-content").on("click", ".inboxVoiceMessageSaveButton", function (e) {
+	e.preventDefault();
+	
+	/* Get required values from modal */
+	var id = $(this).attr("id").split(" ")[1];
+	var comment = $.trim($("#inboxVoiceMessageComment" + id).val());
+	
+	/* Remove order item from the queue */
+	angular.element($("#inboxVoiceMessageComment" + id)).scope().updateVoiceComment(id,comment);
+	
+	alert("Comment has been updated");
+	
+});
+
+$("#page-content").on("click", ".inbox-voice-modal-close", function (e) {
+	e.preventDefault();
+	document.getElementById("inboxVoiceOrderItems").innerHTML = "";
+	angular.element($("#add-inbox-voice-order-items")).scope().clearQueue();
+	//$('#view-inbox-voice-message-modal').modal('toggle');
 });
 
 /************************************************************************/
@@ -348,6 +388,17 @@ $("#page-content").on("click", ".view-saved-voice-message-modal", function () {
     angular.element($('#process-saved-voice-order')).scope().getOrderItemsByOrder(voiceMessageOrderId);
     
     $("#process-saved-voice-order").val(id);
+});
+
+$("#page-content").on('change','#savedVoiceProductQuantity',function(e){
+	var quantity =$("#savedVoiceProductQuantity")[0].options[$("#savedVoiceProductQuantity")[0].selectedIndex].innerHTML;
+	if(quantity == "other"){
+		$("#savedVoiceCustomQuantity").removeAttr("disabled");
+		
+	}
+	else{
+		$("#savedVoiceCustomQuantity").attr("disabled", "true");
+	}
 });
 
 /* Function to add new orderItem to queue */
@@ -418,13 +469,57 @@ $("#page-content").on("click", "#process-saved-voice-order", function(e) {
 	e.preventDefault();
     var id = $(this).val();
     var orderId = $.trim($("#savedVoiceOrderId").val());
-    console.log(orderId);
+    
     angular.element($('#process-saved-voice-order')).scope().addOrderItems();
     angular.element($('#process-saved-voice-order')).scope().processOrder(orderId);
     
-    
     $('#view-saved-voice-message-modal').modal('toggle');
     
-    //angular.element($('#process-saved-voice-order')).scope().reload();
+    angular.element($('#process-saved-voice-order')).scope().reload();
 });
+
+$("#page-content").on("hide", ".view-saved-voice-message-modal", function (e) {
+	e.preventDefault();
+	
+	angular.element($("#add-saved-voice-order-items")).scope().clearQueue();
+	$('#view-saved-voice-message-modal').modal('toggle');
+});
+
+$("#page-content").on("click", ".saved-voice-modal-close", function (e) {
+	e.preventDefault();
+	document.getElementById("savedVoiceOrderItems").innerHTML = "";
+	angular.element($("#add-saved-voice-order-items")).scope().clearQueue();
+	//$('#view-inbox-voice-message-modal').modal('toggle');
+});
+
+
+/**************************************************************************/
+
+$("#page-content").on("click", ".feedbackVoiceMessageSaveButton", function (e) {
+	e.preventDefault();
+	
+	/* Get required values from modal */
+	var id = $(this).attr("id").split(" ")[1];
+	var comment = $.trim($("#feedbackVoiceMessageComment" + id).val());
+	
+	/* Remove order item from the queue */
+	angular.element($("#feedbackVoiceMessageComment" + id)).scope().updateVoiceComment(id,comment);
+	
+	alert("Comment has been updated");
+	
+});
+
+$("#page-content").on("click", ".responseVoiceMessageSaveButton", function (e) {
+	e.preventDefault();
+	
+	/* Get required values from modal */
+	var id = $(this).attr("id").split(" ")[1];
+	var comment = $.trim($("#responseVoiceMessageComment" + id).val());
+	
+	/* Remove order item from the queue */
+	angular.element($("#responseVoiceMessageComment" + id)).scope().updateVoiceComment(id,comment);
+	
+	alert("Comment has been updated");
+});
+
 

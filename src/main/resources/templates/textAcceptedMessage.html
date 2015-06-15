@@ -17,7 +17,7 @@
 
 					<td th:text="${textMessage.order.orderId}">Message Id</td>
 					<td th:text="${textMessage.user.name}">Name</td>
-					<td><td th:text="${textMessage.textContent}">Text Content</td></td>
+					<td th:text="${textMessage.textContent}">Text Content</td>
 					<td	th:value="${textMessage.comments}">Comments</td>
 					<td>
 						<a th:href="'generateBill/'+${textMessage.order.orderId}" target="_blank" class="btn btn-primary">

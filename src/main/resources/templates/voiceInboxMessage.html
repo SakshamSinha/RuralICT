@@ -17,11 +17,19 @@
 					<td th:attr="id='inboxVoiceMessageTime'+${voiceMessage.messageId}" th:text="${voiceMessage.Time}">Time</td>
 					<td th:attr="id='inboxVoiceMessageName'+${voiceMessage.messageId}" th:text="${voiceMessage.user.name}">User Name</td>
 					<td>
-						<audio controls th:attr="src=${voiceMessage.voice.url}" type="audio/wav">
-							<p>Your browser does not support this audio format.</p>
-						</audio>
+						<a th:href="${voiceMessage.voice.url}" target="_blank">Play Voice Message</a>
 					</td>
-					<td th:attr="id='inboxVoiceMessageComment'+${voiceMessage.messageId}" th:text="${voiceMessage.comments}">
+					<td>
+						<span>
+							<input type="text" th:attr="id='inboxVoiceMessageComment'+${voiceMessage.messageId}" th:value="${voiceMessage.comments}">
+						</span>
+						<span>
+							<a href="#" class="inboxVoiceMessageSaveButton" th:attr="id='inboxVoiceMessageSaveButton '+${voiceMessage.messageId}">
+								S
+								<!-- <i class="icon-floppy-disk" aria-hidden="true"></i> -->
+							</a>
+						</span>
+					</td>
 					<td>
 						<p data-placement="top" data-toggle="tooltip" title="Edit">
 							<button th:value="${voiceMessage.messageId}" class="view-inbox-voice-message btn btn-primary"
@@ -38,10 +46,10 @@
 		</table>
 	</div>
 	
-	<div class="modal fade" id="view-inbox-voice-message-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
+	<div class="modal fade" data-keyboard="false" data-backdrop="static" id="view-inbox-voice-message-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
 	 	<div class="modal-dialog">
 	    	<div class="modal-header">
-	      		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove" aria-hidden="true"></i></button>
+	      		<button type="button" class="close inbox-voice-modal-close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove" aria-hidden="true"></i></button>
 	      		<h4 class="modal-title custom_align" id="HeadingEdit">Save Order</h4>
 	    	</div>
 	    	<div class="modal-body">
@@ -92,7 +100,7 @@
 				    		<div class="span3">
 				    			<div>Custom Quantity</div>
 				    			<div>
-				    				<input class="span6" type="text" id="inboxVoiceCustomQuantity">
+				    				<input class="span6" type="text" id="inboxVoiceCustomQuantity" disabled="true">
 				    			</div>
 				    		</div>
 				    		<div class="span3">
@@ -102,13 +110,16 @@
 				  		</div>
 			  		</div>
 		  		</form>
-		  		<div id="inboxVoiceOrderItems">
+		  		<div>
 		  			<div class="fluid-row">
 						<div class="span3"></div>
 						<div class="span3"><b>Product Name</b></div>
 						<div class="span3"><b>Quantity</b></div>
 						<div class="span2"><b>Rate (In ₹)</b></div>
 					</div>
+		  		</div>
+		  		<div id="inboxVoiceOrderItems">
+		  			
 		  		</div>
 	  		</div>
 	  	</div>
@@ -117,7 +128,7 @@
 	  <div class="modal-footer ">
 	    	<button type="button" id = "save-inbox-voice-order" class="btn btn-warning"><i class="icon-white icon-pencil"></i>  Save</button>
 	    	<button id="confirm-reject-inbox-voice-order" class="btn btn-primary" data-title="Reject" data-toggle="modal" data-target="#reject-inbox-voice-order-modal"><i class="icon-white  icon-file"></i> Reject</button>
-	    	<button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
+	    	<button type="button" class="btn btn-default inbox-voice-modal-close" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
 	  </div>
 	</div>
 	<!-- /.modal-content -->

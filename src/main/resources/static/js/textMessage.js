@@ -100,12 +100,13 @@ website.controller("TextMessageCtrl", function($window, $scope, $route, RemoveOr
 	
 	/* update the comment. */
 	$scope.updateTextComment = function(messageId, comment) {
-		UpdateTextMessageComment.get({"id":messageId, "comment":comment});
+		alert(comment);
+		UpdateTextMessageComment.get({"id":messageId, "comment":comment}, function(e){console.log(e);});
 	};
 	
 	//TODO Eliminating this function doing hard refresh
 	$scope.reload = function(){
-		$window.location.reload();
+		setTimeout($window.location.reload,2000);
 	}
 
 });
@@ -121,7 +122,7 @@ $("#page-content").on("click", "#accept-inbox-text-order", function(e) {
     angular.element($('#accept-inbox-text-order')).scope().addOrderItems();
     angular.element($('#accept-inbox-text-order')).scope().acceptOrder(orderId);
     angular.element($('#accept-inbox-text-order')).scope().updateTextComment(id,comment);
-    //angular.element($('#accept-inbox-text-order')).scope().reload();
+    angular.element($('#accept-inbox-text-order')).scope().reload();
 
     $('#view-inbox-text-message-modal').modal('toggle');
 	
@@ -136,12 +137,20 @@ $("#page-content").on("click", "#reject-inbox-text-order", function(e) {
     
     /* Send request to reject message */
     angular.element($('#reject-inbox-text-order')).scope().rejectOrder(id);
-    //angular.element($('#reject-inbox-text-order')).scope().reload(id);
 
     $('#view-inbox-text-message-modal').modal('toggle');
     $('#reject-inbox-text-order-modal').modal('toggle');
+    
+    angular.element($('#reject-inbox-text-order')).scope().reload();
 
 	
+});
+
+
+/* Open the modal to reject the order */
+$("#page-content").on("click", "#confirm-reject-inbox-text-order", function () {
+	var id = $(this).val();
+    $("#reject-inbox-text-order").val(id);
 });
 
 $("#page-content").on("click", ".remove-inbox-text-order-item", function () {
@@ -152,21 +161,42 @@ $("#page-content").on("click", ".remove-inbox-text-order-item", function () {
 	$("#row"+id).remove();
 	
 	/* Remove order item from the queue */
-	angular.element($("#add-inbox-text-order-items")).scope().removeOrderItem(id);
+	angular.element($("#add-inbox-text-order-items")).scope().removeOrderItemFromQueue(id);
 	
 });
 
+/* Remove orderItem from queue */
+$("#page-content").on("click", ".inboxTextMessageSaveButton", function (e) {
+	e.preventDefault();
+	
+	/* Get required values from modal */
+	var id = $(this).attr("id").split(" ")[1];
+	var comment = $.trim($("#inboxTextMessageComment" + id).val());
+	
+	/* Remove order item from the queue */
+	angular.element($("#inboxTextMessageComment" + id)).scope().updateTextComment(id,comment);
+	
+	alert("Comment has been updated");
+	
+});
+
+/* Function to add new orderItem to queue */
 $("#page-content").on("click", "#add-inbox-text-order-items", function () {
+	
 	/* Manipulate button value to store count */
 	var count = parseInt($("#add-inbox-text-order-items").val());
 	count++;
 	$("#add-inbox-text-order-items").val(count);
 	
 	/* Get values to generate orderItem objects from modal */
-	var productId = $.trim($("#inboxTextProductName").val());
+	var productId = $.trim($("#inboxTextProductName").val()).split(" ")[0];
+	var productUnitRate = $.trim($("#inboxTextProductName").val()).split(" ")[1];
 	var productName = $("#inboxTextProductName")[0].options[$("#inboxTextProductName")[0].selectedIndex].innerHTML
 	var productQuantity = $.trim($("#inboxTextProductQuantity").val());
 	var orderId = $.trim($("#inboxTextOrderId").val());
+	if(productQuantity == "other"){
+		productQuantity = $.trim($("#inboxTextCustomQuantity").val());
+	}
 	
 	/* Create and add new row element for user */
 	var new_row = $('\
@@ -174,7 +204,8 @@ $("#page-content").on("click", "#add-inbox-text-order-items", function () {
 				<div class="span3"></div>\
 				<div class="span3">'+ productName +'</div>\
 				<div class="span3">'+ productQuantity +'</div>\
-				<div class="span3">\
+				<div class="span2">'+ productUnitRate +'</div>\
+				<div class="span1">\
 					<button class="close remove-inbox-text-order-item" value="'+ count +'"><i class="icon-remove" aria-hidden="true"></i></button>\
 				</div>\
 			</div>\
@@ -184,10 +215,12 @@ $("#page-content").on("click", "#add-inbox-text-order-items", function () {
 	/* Create order item element and push it in the queue */
 	var data={};
 	data.id = count;
-	data.product = productId;
+	data.product = 'products/'+ productId;
 	data.quantity = parseInt(productQuantity);
-	data.order = orderId;
-	angular.element($("#add-inbox-text-order-items")).scope().addOrderItem(data);
+	data.order = 'orders/' + orderId;
+	data.unitRate = productUnitRate;
+	
+	angular.element($("#add-inbox-text-order-items")).scope().addOrderItemToQueue(data);
 });
 
 /* View inbox text message modal */
@@ -198,7 +231,7 @@ $("#page-content").on("click", ".view-inbox-text-message", function () {
 	var textMessageTime = $("#inboxTextMessageTime"+id).text();
 	var textMessageOrderId = $("#inboxTextMessageOrderId"+id).val();
 	var textMessageName = $("#inboxTextMessageName"+id).text();
-	var textMessageComment = $("#inboxTextMessageComment"+id).text();
+	var textMessageComment = $("#inboxTextMessageComment"+id).val();
 	var textMessageContent = $("#inboxTextMessageContent"+id).val();
 	
 	/* Dump them into modal */
@@ -206,8 +239,39 @@ $("#page-content").on("click", ".view-inbox-text-message", function () {
     $("#inboxTextOrderId").val(textMessageOrderId);
     $("#inboxTextName").html(textMessageName);
     $("#inboxTextComment").val(textMessageComment);
-    $("#inboxTextContent").html(textMessageContent);
+    $("#inboxTextContent").val(textMessageContent);
     
     $("#accept-inbox-text-order").val(id);
     $("#confirm-reject-inbox-text-order").val(textMessageOrderId);
+});
+
+$("#page-content").on('change','#inboxTextProductQuantity',function(e){
+	var quantity =$("#inboxTextProductQuantity")[0].options[$("#inboxTextProductQuantity")[0].selectedIndex].innerHTML;
+	if(quantity == "other"){
+		$("#inboxTextCustomQuantity").removeAttr("disabled");
+		
+	}
+	else{
+		$("#inboxTextCustomQuantity").attr("disabled", "true");
+	}
+});
+
+$("#page-content").on("click", ".feedbackTextMessageSaveButton", function (e) {
+	e.preventDefault();
+	
+	/* Get required values from modal */
+	var id = $(this).attr("id").split(" ")[1];
+	var comment = $.trim($("#feedbackTextMessageComment" + id).val());
+	
+	/* Remove order item from the queue */
+	angular.element($("#feedbackTextMessageComment" + id)).scope().updateTextComment(id,comment);
+	
+	alert("Comment has been updated");
+	
+});
+
+$("#page-content").on("click", ".inbox-text-modal-close", function (e) {
+	e.preventDefault();
+	document.getElementById("inboxTextOrderItems").innerHTML = "";
+	angular.element($("#add-inbox-text-order-items")).scope().clearQueue();
 });

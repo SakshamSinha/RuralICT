@@ -53,3 +53,12 @@ website.factory("UpdateVoiceMessageComment", function($resource) {
 		}
 	});
 });
+
+/* Resources for Groups */
+website.factory("AddGroup",['$resource',function($resource){
+	 return $resource("/api/groups/:id", null, {
+		 save: {
+			 method: "POST"
+		}
+	 });
+}]);

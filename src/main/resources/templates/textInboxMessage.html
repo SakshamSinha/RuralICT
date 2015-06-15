@@ -17,7 +17,17 @@
 					<td th:attr="id='inboxTextMessageTime'+${textMessage.messageId}" th:text="${textMessage.Time}">Time</td>
 					<td th:attr="id='inboxTextMessageName'+${textMessage.messageId}" th:text="${textMessage.user.name}">User Name</td>
 					<td th:attr="id='inboxTextMessageContent'+${textMessage.messageId}" th:text="${textMessage.textContent}">User Name</td>
-					<td th:attr="id='inboxTextMessageComment'+${textMessage.messageId}" th:text="${textMessage.comments}">
+					<td>
+						<span>
+							<input type="text" th:attr="id='inboxTextMessageComment'+${textMessage.messageId}" th:value="${textMessage.comments}">
+						</span>
+						<span>
+							<a href="#" class="inboxTextMessageSaveButton" th:attr="id='inboxTextMessageSaveButton '+${textMessage.messageId}">
+								S
+								<!-- <i class="icon-floppy-disk" aria-hidden="true"></i> -->
+							</a>
+						</span>
+					</td>
 					<td>
 						<p data-placement="top" data-toggle="tooltip" title="Edit">
 							<button th:value="${textMessage.messageId}" class="view-inbox-text-message btn btn-primary"
@@ -33,10 +43,10 @@
 		</table>
 	</div>
 	
-	<div class="modal fade" id="view-inbox-text-message-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
+	<div class="modal fade" id="view-inbox-text-message-modal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
 	 	<div class="modal-dialog">
 	    	<div class="modal-header">
-	      		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove" aria-hidden="true"></i></button>
+	      		<button type="button" class="close inbox-text-modal-close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove" aria-hidden="true"></i></button>
 	      		<h4 class="modal-title custom_align" id="HeadingEdit">Accept Order</h4>
 	    	</div>
 	    	<div class="modal-body">
@@ -68,7 +78,7 @@
 				    			<div>Product</div>
 				    			<div>
 				    				<select class="span10" id="inboxTextProductName">
-				    					<option th:each="product : ${products}" th:value="${product.productId}" th:text="${product.name}">Product</option>
+				    					<option th:each="product : ${products}" th:value="${product.productId} + ' ' + ${product.unitRate}" th:text="${product.name}">Product</option>
 				    				</select>
 				    			</div>
 				    		</div>
@@ -84,7 +94,7 @@
 				    		<div class="span3">
 				    			<div>Custom Quantity</div>
 				    			<div>
-				    				<input class="span6" type="text" id="inboxTextCustomQuantity">
+				    				<input class="span6" type="text" id="inboxTextCustomQuantity" disabled>
 				    			</div>
 				    		</div>
 				    		<div class="span3">
@@ -94,6 +104,14 @@
 				  		</div>
 			  		</div>
 		  		</form>
+		  		<div>
+		  			<div class="fluid-row">
+						<div class="span3"></div>
+						<div class="span3"><b>Product Name</b></div>
+						<div class="span3"><b>Quantity</b></div>
+						<div class="span2"><b>Rate (In ₹)</b></div>
+					</div>
+		  		</div>
 		  		<div id="inboxTextOrderItems"></div>
 	  		</div>
 	  	</div>
@@ -101,8 +119,8 @@
 	  	<input type="hidden" id="inboxTextOrderId">
 	  <div class="modal-footer ">
 	    	<button type="button" id = "accept-inbox-text-order" class="btn btn-warning"><i class="icon-white icon-pencil"></i>  Accept</button>
-	    	<button id="confirm-reject-inbox-text-order" class="btn btn-primary" data-title="Reject" data-toggle="modal" data-target="#reject-inbox-voice-order-modal"><i class="icon-white  icon-file"></i> Reject</button>
-	    	<button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
+	    	<button id="confirm-reject-inbox-text-order" class="btn btn-primary" data-title="Reject" data-toggle="modal" data-target="#reject-inbox-text-order-modal"><i class="icon-white  icon-file"></i> Reject</button>
+	    	<button type="button" class="btn btn-default inbox-text-modal-close" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
 	  </div>
 	</div>
 	<!-- /.modal-content -->

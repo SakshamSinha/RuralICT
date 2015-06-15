@@ -70,7 +70,7 @@ public class TextMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String textNegativeResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-		List<Message> textResponseMessageList=textMessageService.getResponseList(groupService.getGroup(groupId),"text");
+		List<Message> textResponseMessageList=textMessageService.getNegativeResponseList(groupService.getGroup(groupId),"text");
 		model.addAttribute("message",textResponseMessageList);
 		return "textNegativeResponseMessage";
 	}
@@ -110,8 +110,8 @@ public class TextMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String textSavedMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-		List<Message> textSavedMessageList=textMessageService.getRejectedTextMessageList(groupService.getGroup(groupId));
-		model.addAttribute("message",textSavedMessageList);
+		List<Message> textRejectedMessageList=textMessageService.getRejectedTextMessageList(groupService.getGroup(groupId));
+		model.addAttribute("message",textRejectedMessageList);
 		return "textRejectedMessage";
 	}
 	
