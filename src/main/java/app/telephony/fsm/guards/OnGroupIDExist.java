@@ -29,17 +29,17 @@ public class OnGroupIDExist extends EventTypeGuard<IVRSession> {
 	// returns false in all other cases	
 	@Override
 	public boolean accept(Event<Object>event, IVRSession session, State<?> state) {
-		
-		
+
+
 		OrganizationService orgService = SpringContextBridge.services().getOrganizationService();
 		GroupService groupService = SpringContextBridge.services().getGroupService();
-		
+
 		if (super.accept(event, session, state)) {
 			GotDTMFEvent ev = (GotDTMFEvent) event;
 			int groupID = Integer.parseInt(ev.getInput());
-			Group g = groupService.getGroup(groupID);
-			if(g!=null){
-				if(g.getOrganization()==orgService.getOrganizationByIVRS(session.getIvrNumber())){
+			Group group = groupService.getGroup(groupID);
+			if(group!=null){
+				if(group.getOrganization()==orgService.getOrganizationByIVRS(session.getIvrNumber())){
 					return (true==allow);
 				}
 			}

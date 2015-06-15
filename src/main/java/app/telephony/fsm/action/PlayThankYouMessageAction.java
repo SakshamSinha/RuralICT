@@ -17,7 +17,7 @@ public class PlayThankYouMessageAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/thankYou.wav_"+session.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/thankYou_"+session.getLanguage()+".wav");
 	}
 
 }

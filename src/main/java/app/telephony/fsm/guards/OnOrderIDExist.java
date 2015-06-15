@@ -14,6 +14,7 @@ import app.business.services.OrderService;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
+import app.business.services.message.MessageService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Order;
 import app.telephony.RuralictSession;
@@ -55,13 +56,14 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 			String input = ev.getInput().split("#")[0];
 			int orderID = Integer.parseInt(input);
 			orderService = new OrderService();
+			OrderService orderService = SpringContextBridge.services().getOrderService();
 			Order order=orderService.getOrder(orderID);
 			if(order!=null){
 				if(!(order.getStatus().equalsIgnoreCase("reject") || order.getStatus().equalsIgnoreCase("processed"))
 						&& order.getOrganization() == orgService.getOrganizationByIVRS(session.getIvrNumber())
-						&&  true
-						/*userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser() == */ 
-						){
+						&&  userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getUserId() == 
+						orderService.getOrder(orderID).getMessage().getUser().getUserId() )
+				{
 					return (true==allow);
 				}				
 			}

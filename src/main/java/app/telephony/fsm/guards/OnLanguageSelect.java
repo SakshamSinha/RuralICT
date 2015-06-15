@@ -3,8 +3,10 @@ package app.telephony.fsm.guards;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.GotDTMFEvent;
 import app.business.services.UserPhoneNumberService;
+import app.business.services.UserService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.telephony.fsm.RuralictStateMachine;
+
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.EventTypeGuard;
 import com.continuent.tungsten.commons.patterns.fsm.State;
@@ -24,9 +26,11 @@ public class OnLanguageSelect extends EventTypeGuard<IVRSession> {
 			GotDTMFEvent ev = (GotDTMFEvent) event;
 			String input=ev.getInput();
 			if(RuralictStateMachine.tempLanguageMap.containsKey(input)){
-				session.setLanguage(RuralictStateMachine.tempLanguageMap.get(input));
+				String lang = RuralictStateMachine.tempLanguageMap.get(input);
+				session.setLanguage(lang);
+				UserService userService = SpringContextBridge.services().getUserService();
 				UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
-				userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().setCallLocale(RuralictStateMachine.tempLanguageMap.get(input));
+				userService.updateCallLocale((userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser()), lang);
 				return true;
 			}
 			return false;
