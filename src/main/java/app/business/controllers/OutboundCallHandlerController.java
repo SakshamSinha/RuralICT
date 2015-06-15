@@ -32,18 +32,7 @@ public class OutboundCallHandlerController implements IVRSessionFactory{
 	 * Create a new IVR session.
 	 * @return The new Ruralict session.
 	 */
-	@Autowired
-	UserPhoneNumberService userPhoneNumberService;
-	@Autowired
-	OrganizationService organizationService;
-	@Autowired
-	UserService userService;
-
-	@Autowired
-	GroupService groupService;
-	@Autowired
-	VoiceService voiceService;
-
+	
 	@Override
 	public IVRSession createSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator) throws Exception {
         
@@ -141,7 +130,7 @@ public class OutboundCallHandlerController implements IVRSessionFactory{
 	 */
 	@RequestMapping(value="/OutboundCallHandler", method=RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//	log("POST request received in CallHandler");
+		
 		printParameterMap(request.getParameterMap());
 	}
 

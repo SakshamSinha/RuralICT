@@ -36,18 +36,6 @@ public class CallHandlerController implements IVRSessionFactory {
 	 * Create a new IVR session.
 	 * @return The new Ruralict session.
 	 */
-	@Autowired
-	UserPhoneNumberService userPhoneNumberService;
-	@Autowired
-	OrganizationService organizationService;
-	@Autowired
-	UserService userService;
-
-	@Autowired
-	GroupService groupService;
-	@Autowired
-	VoiceService voiceService;
-
 	@Override
 	public IVRSession createSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator) throws Exception {
 		return new RuralictSession(sessionId, userNumber, ivrNumber, circle, operator);
