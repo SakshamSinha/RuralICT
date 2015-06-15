@@ -39,7 +39,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	@Override
 	public List<OrderItem> findAll(Sort sort);
 
-	//@PreAuthorize("hasRole('MEMBER'+#orderItem.order.organization.abbreviation)")
+	@PreAuthorize("hasRole('MEMBER'+#orderItem.order.organization.abbreviation)")
 	@Override
 	public <S extends OrderItem> S save(@Param("orderItem") S item);
 

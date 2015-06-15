@@ -19,58 +19,6 @@ public class VoiceMessageRestController {
 	@Autowired
 	VoiceMessageService voiceMessageService;
 	
-	@Autowired
-	OrderService orderService;
-	
-	@RequestMapping(value="/save/{messageId}", method=RequestMethod.GET)
-	@Transactional
-	public boolean save(@PathVariable int messageId) {
-		try {
-			Message currentVoiceMessage = voiceMessageService.getMessage((Integer)messageId);
-			Order currentOrder = currentVoiceMessage.getOrder();
-			
-			orderService.saveOrder(currentOrder);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-	
-	@RequestMapping(value="/process/{messageId}", method=RequestMethod.GET)
-	@Transactional
-	public boolean process(@PathVariable int messageId) {
-		try {
-			Message currentVoiceMessage = voiceMessageService.getMessage((Integer)messageId);
-			Order currentOrder = currentVoiceMessage.getOrder();
-			
-			orderService.processOrder(currentOrder);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-	
-	
-	@RequestMapping(value="/reject/{messageId}", method=RequestMethod.GET)
-	@Transactional
-	public boolean reject(@PathVariable int messageId) {
-		try {
-			Message currentVoiceMessage = voiceMessageService.getMessage((Integer)messageId);
-			Order currentOrder = currentVoiceMessage.getOrder();
-			
-			orderService.rejectOrder(currentOrder);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-	
 	@RequestMapping(value="/updateComment/{messageId}/{comment}", method=RequestMethod.GET)
 	@Transactional
 	public boolean updateComment(@PathVariable int messageId, @PathVariable String comment) {
