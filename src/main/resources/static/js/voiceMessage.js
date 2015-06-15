@@ -6,7 +6,7 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 	
 	/* Clears orderItem queue */
 	$scope.clearQueue = function(){
-		console.log("here");
+		
 		$scope.orderItemList = [];
 	}
 	
@@ -84,11 +84,11 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 
 	/* Remove already stored order Item from the database */ 
 	$scope.removeOrderItem = function(orderItemId){
-		console.log("orderItemId");
+		
 		$scope.product = RemoveOrderItem.get({id: orderItemId},function(){
-			console.log("orderItemId1");
+			
 			$scope.product.$update({id:orderItemId},function(){
-				console.log("orderItemId1");
+				
 			});
 		});
 		
@@ -150,9 +150,9 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 	$scope.saveOrder = function(orderId) {
 		$scope.order = UpdateOrder.get({id:orderId},function(){
 			$scope.order.status = "saved";
-			console.log($scope.order);
+			
 			$scope.order.$update({id:orderId},function(){
-				console.log("Edit done");
+				
 			});
 		});
 	};
@@ -161,9 +161,9 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 	$scope.processOrder = function(orderId) {
 		$scope.order = UpdateOrder.get({id:orderId},function(){
 			$scope.order.status = "processed";
-			console.log($scope.order);
+			
 			$scope.order.$update({id:orderId},function(){
-				console.log("Edit done");
+				
 			});
 		});
 	};
@@ -172,21 +172,21 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 	$scope.rejectOrder = function(orderId) {
 		$scope.order = UpdateOrder.get({id:orderId},function(){
 			$scope.order.status = "rejected";
-			console.log($scope.order);
+			
 			$scope.order.$update({id:orderId},function(){
-				console.log("Edit done");
+				
 			});
 		});
 	};
 	
 	/* It would have been great if this function worked. */
 	$scope.updateVoiceMessageComment = function(messageId, comment) {
-		console.log(messageId);
+		
 		$scope.message = UpdateMessage.query({id:messageId},function(message){
 			$scope.message.comments = comment;
-			console.log(message);
+			
 			$scope.message.$update({id:messageId},function(){
-				console.log("Edit done");
+				
 			});
 		});
 		

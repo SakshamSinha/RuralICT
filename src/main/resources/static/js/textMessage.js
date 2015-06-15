@@ -80,9 +80,9 @@ website.controller("TextMessageCtrl", function($window, $scope, $route, RemoveOr
 	$scope.acceptOrder = function(orderId) {
 		$scope.order = UpdateOrder.get({id:orderId},function(){
 			$scope.order.status = "accepted";
-			console.log($scope.order);
+			
 			$scope.order.$update({id:orderId},function(){
-				console.log("Edit done");
+				
 			});
 		});
 	};
@@ -91,17 +91,17 @@ website.controller("TextMessageCtrl", function($window, $scope, $route, RemoveOr
 	$scope.rejectOrder = function(orderId) {
 		$scope.order = UpdateOrder.get({id:orderId},function(){
 			$scope.order.status = "rejected";
-			console.log($scope.order);
+			
 			$scope.order.$update({id:orderId},function(){
-				console.log("Edit done");
+				
 			});
 		});
 	};
 	
 	/* update the comment. */
 	$scope.updateTextComment = function(messageId, comment) {
-		alert(comment);
-		UpdateTextMessageComment.get({"id":messageId, "comment":comment}, function(e){console.log(e);});
+		
+		UpdateTextMessageComment.get({"id":messageId, "comment":comment}, function(e){});
 	};
 	
 	//TODO Eliminating this function doing hard refresh
