@@ -1,11 +1,18 @@
 <div ng-controller="ProductsCtrl">
+<script id="thymeJS" th:inline="javascript">
+/*<![CDATA[*/
+	
+/*]]>*/
+</script>
 <div class="row-fluid">
   <div class="page-header">
     <h1>Product List <small>Edit items</small></h1>
-    <h2 th:text="${organization.name}">YOyo</h2>
+    <h2 th:attr="ng-init='products =' + ${products}">
+    <span>{{organization}}</span>
+    </h2>
   </div>
   <div class="row-fluid">
-    <button class="btn btn-success" id = "add_new_product" data-toggle="modal" data-title="Add new product" data-target="#add-product-modal">
+    <button class= "btn btn-success" id = "add-product" data-toggle="modal" data-title="Add new product" data-target="#add-product-modal">
     <i class="icon-white icon-plus-sign"></i> Add new product</button>
     <br>
     <br>
@@ -15,31 +22,32 @@
   <div class="table-responsive">
     <table id="producttable" class="table table-bordred table-striped">
       <thead>
-        <th><input type="checkbox" id="checkall" /></th>
+        <!--<th><input type="checkbox" id="checkall" /></th>-->
         <th>Product Name</th>
         <th>Price</th>
       </thead>
       <tbody>
+      
         <tr id="list" th:each="product : ${products}">
-          <td><input type="checkbox" class="checkthis" /></td>
+          <!--<td><input type="checkbox" class="checkthis" /></td>-->
           <td th:attr= "id='productName' + ${product.productId}" th:text="${product.name}">Cabbage</td>
           <td th:text="${product.unitRate}">50</td>
           <td>
             <p data-placement="top" data-toggle="tooltip" title="Edit">
-              <button  id="btn-edit" class="open-edit-modal btn btn-primary btn-xs" th:attr="productid=${product.productId}" data-title="Edit" data-toggle="modal" data-target="#edit-product-modal" >
+              <button  id="btn-edit" class="open-edit-modal btn btn-primary btn-xs" th:attr="productId=${product.productId},productName=${product.name}" data-title="Edit"  data-toggle="modal" data-target="#edit-product-modal">
               <i class="icon-white icon-pencil"></i> Edit</button>
             </p>
           </td>
           <td>
             <p data-placement="top" data-toggle="tooltip" title="Delete">
-              <button  id="btn-delete" class="btn btn-danger btn-xs" th:attr="productid=${product.productId}" data-title="Delete" data-target="#delete-product-modal" >
+              <button  id="btn-delete" class="btn btn-danger btn-xs" th:attr="productid=${product.productId}" data-title="Delete" data-toggle="modal" data-target="#delete-product-modal" >
               <i class="icon-white icon-trash"></i> Delete</button>
             </p>
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="clearfix"></div>
+    <!--<div class="clearfix"></div>
     <ul class="pagination pull-left">
     	<li ng-class="{disabled: page.number === 0}">
         	<a ng-show="page.number !== 0" ng-href="#{{basePath}}?page=0&size={{page.size}}&sort={{sort}}">&laquo;</a>

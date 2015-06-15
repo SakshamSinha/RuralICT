@@ -16,7 +16,7 @@ website.factory("ProductDelete",function($resource){
 	    update: {method: "DELETE",params: {id: '@id'}}
 	});
 });
-
+/*
 website.filter('pages', function () {
   return function (input, currentPage, totalPages, range) {
     currentPage = parseInt(currentPage);
@@ -33,12 +33,12 @@ website.filter('pages', function () {
     return input;
   };
 });
+*/
 
 website.controller("ProductsCtrl",function($scope, $http, $route, $location, ProductCreate, ProductEdit, ProductDelete) {
 		
-		
+		var id;
 		$scope.saveProduct = function(data){
-			alert("reached here");
 			$scope.product = new ProductCreate();
 			$scope.product.name = data.name;
 			$scope.product.unitRate = data.unitRate;
@@ -48,12 +48,12 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 			});
 		}
 		
-		$scope.editProduct = function(data){
-			$scope.id = data.productId;
+		$scope.editProduct = function(value){
 			console.log($scope.id);
 			$scope.product = ProductEdit.get({id:$scope.id},function(){
-				$scope.product.unitRate = data.unitRate;
+				$scope.product.unitRate = value;
 				console.log($scope.product.unitRate);
+				console.log("Record to be updated fetched");
 				$scope.product.$update({id:$scope.id},function(){
 					console.log("Edit done");
 				});
@@ -61,22 +61,27 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 		}
 		
 		$scope.deleteProduct = function(data){
-			$scope.id = data.productId;
-			console.log($scope.id);
 			$scope.product = ProductDelete.get({id:$scope.id},function(){
-				console.log("Record to be deleted fetched");
+				
 				$scope.product.$update({id:$scope.id},function(){
 					console.log("Record actually deleted");
 				});
 			});
 			
 		}
+		
+		$scope.setId = function(productId){
+			$scope.id=productId; 
+			console.log($scope.id);
+			//console.log($event.target.nodeName);
+		}
+		/*
 		var search = $location.search();
 		var page = search.page||0;
-		var size = search.size||20;
-		var sort = search.sort||'type,desc';
+		var size = search.size||2;
+		var sort = search.sort||'name,desc';
 		 
-		$http({method: 'GET', url: '/productPages?page=' + page + '&size=' + size + '&sort=' + sort})
+		/*$http({method: 'GET', url: '/productPages?page=' + page + '&size=' + size + '&sort=' + sort})
 		     .success(function(data) {
 		    	 console.log("Reaching HTTP success portion here!!")
 		        $scope.widgets = data.content;
@@ -138,6 +143,8 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 
 $("#page-content").ready(function(){
 	
+	
+	/*
 	$('button').each(function() {
   	  $.each(this.attributes, function() {
   	    // this.attributes is not a plain object, but an array
@@ -147,6 +154,7 @@ $("#page-content").ready(function(){
   	    }
   	  });
   	});
+  	*/
 	//'<button class="btn btn-danger btn-xs" id='+ id+ 'data-title="Delete" data-toggle="modal" data-target="#delete-product-modal" >'
 });
 
@@ -186,43 +194,44 @@ $("#page-content").on("click", "#add-new-product", function(e) {
     $('#new-product-type-input').val("");
     $('#new-price-input').val("");
 });
+
+
 //deleting a product entry
 $("#page-content").on("click", "#btn-delete", function(e) {  
     e.preventDefault();
     //$('#delete-product-modal').modal('toggle');
-    data={};
-    data.productId = $(this).attr("productid");
-    console.log(data.productId);
+    productId = $(this).attr("productid");
+	console.log(productId);
+	angular.element(this).scope().setId(productId);
     //alert($(this).attr("productid"));
-    $("#page-content").on("click","#delete-product",function(e){
-    		//e.preventDefault();
-    		angular.element($('#delete-product')).scope().deleteProduct(data);
-    		$("#delete-product-modal").modal('toggle');
-    		//present.parent().parent().parent().remove();		
-    });
+    
     
     /*var uniqueId = this.id;
     console.log(this.id);
     $('.list').remove();*/
 });
-   
+
+$("#page-content").on("click","#delete-product",function(e){
+	//e.preventDefault();
+	angular.element(this).scope().deleteProduct();
+	$("#delete-product-modal").modal('toggle');
+	//present.parent().parent().parent().remove();		
+});
+
 //Dynamic modal for edit
 $("#page-content").on("click", "#btn-edit", function () {
-	var data={};
-	data.productId = $(this).attr("productid");
-	console.log(data.productId);
-	$("#page-content").on("click","#update-product",function(e){
-		//e.preventDefault();
-		data.unitRate = $.trim($('#update-price-input').val());
-		angular.element($('#update-product')).scope().editProduct(data);
-		$("#edit-product-modal").modal('toggle');
-		$('#update-price-input').val("");
-	});
 	
+	productId = $(this).attr("productId");
+	console.log(productId);
+	productName = $(this).attr("productName");
+	console.log(productName);
+	angular.element(this).scope().setId(productId);
+	$(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
+	$(".modal-body #update-product-input").html(productName);
 	/*
     var productName = $(this).data('product');
     $(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
-    $(".modal-body #update-product-input").html(productName);
+    
     
     var price = $(this).data('price');
     var priceUpdate = $(this).data('price');
@@ -237,3 +246,12 @@ $("#page-content").on("click", "#btn-edit", function () {
     */
 
 });
+
+$("#page-content").on("click","#update-product",function(e){
+	//e.preventDefault();
+	value = $.trim($('#update-price-input').val());
+	angular.element(this).scope().editProduct(value);
+	$("#edit-product-modal").modal('toggle');
+	$('#update-price-input').val("");
+});
+
