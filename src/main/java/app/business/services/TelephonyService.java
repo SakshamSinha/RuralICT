@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.business.services.message.MessageService;
+import app.business.services.message.TextMessageService;
+import app.business.services.message.VoiceMessageService;
 import app.entities.Group;
 import app.entities.InboundCall;
+import app.entities.Order;
 import app.entities.User;
 import app.entities.Voice;
 import app.entities.broadcast.Broadcast;
@@ -22,33 +25,80 @@ public class TelephonyService {
 	MessageService messageService;
 	
 	@Autowired
+	VoiceMessageService voiceMessageService;
+	
+	@Autowired
+	TextMessageService textMessageService;
+	
+	@Autowired
 	VoiceService voiceService;
+
+	@Autowired
+	OrderService orderService;
 	
 	@Autowired
 	UserPhoneNumberService userPhoneNumberService;
 	
 
-	void addVoiceMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, String url, InboundCall inboundCall){
+	public void addVoiceMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, String url, InboundCall inboundCall){
 		Voice voice=new Voice(url,false);
-		voiceService.addVoice(voice);
+		voice = voiceService.addVoice(voice);
+		
 		VoiceMessage voiceMessage=new VoiceMessage(user, broadcast, group, mode, type, response, null, voice, inboundCall);
-		messageService.addMessage(voiceMessage);
+		
+		if(type.equals("order")) {
+			Order order = new Order();
+			order.setStatus("new");
+			order.setOrganization(group.getOrganization());
+			order = orderService.addOrder(order);
+			voiceMessage.setOrder(order);
+		}
+		
+		voiceMessageService.addMessage(voiceMessage);
 	}
 	
-	void addVoiceMessage(String userPhoneNumber, Broadcast broadcast, Group group, String mode, String type, boolean response, String url, InboundCall inboundCall){
+	public void addVoiceMessage(String userPhoneNumber, Broadcast broadcast, Group group, String mode, String type, boolean response, String url, InboundCall inboundCall){
 		Voice voice=new Voice(url,false);
-		voiceService.addVoice(voice);
+		voice = voiceService.addVoice(voice);
+		
 		VoiceMessage voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, group, mode, type, response, null, voice, inboundCall);
-		messageService.addMessage(voiceMessage);
+		
+		if(type.equals("order")) {
+			Order order = new Order();
+			order.setStatus("new");
+			order.setOrganization(group.getOrganization());
+			order = orderService.addOrder(order);
+			voiceMessage.setOrder(order);
+		}
+		
+		voiceMessageService.addMessage(voiceMessage);
 	}
 	
-	void addTextMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response,String textContent, Timestamp textTime){
+	public void addTextMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response,String textContent, Timestamp textTime){
 		TextMessage textMessage=new TextMessage(user, broadcast, group, mode, type, response, null, textContent, textTime);
-		messageService.addMessage(textMessage);
+		
+		if(type.equals("order")) {
+			Order order = new Order();
+			order.setStatus("new");
+			order.setOrganization(group.getOrganization());
+			order = orderService.addOrder(order);
+			textMessage.setOrder(order);
+		}
+		
+		textMessageService.addMessage(textMessage);
 	}
 	
-	void addBinaryMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, Timestamp time){
+	public void addBinaryMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, Timestamp time){
 		BinaryMessage binaryMessage=new BinaryMessage(user, broadcast, time, group, mode, type, response, null);
+		
+		if(type.equals("order")) {
+			Order order = new Order();
+			order.setStatus("new");
+			order.setOrganization(group.getOrganization());
+			order = orderService.addOrder(order);
+			binaryMessage.setOrder(order);
+		}
+		
 		messageService.addMessage(binaryMessage);
 	}
 }
