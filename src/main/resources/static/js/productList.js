@@ -16,28 +16,11 @@ website.factory("ProductDelete",function($resource){
 	    update: {method: "DELETE",params: {id: '@id'}}
 	});
 });
-/*
-website.filter('pages', function () {
-  return function (input, currentPage, totalPages, range) {
-    currentPage = parseInt(currentPage);
-    totalPages = parseInt(totalPages);
-    range = parseInt(range);
-
-    var minPage = (currentPage - range < 0) ? 0 : (currentPage - range > (totalPages - (range * 2))) ? totalPages - (range * 2) : currentPage - range;
-    var maxPage = (currentPage + range > totalPages) ? totalPages : (currentPage + range < range * 2) ? range * 2 : currentPage + range;
-
-    for(var i=minPage; i<maxPage; i++) {
-      input.push(i);
-    }
-
-    return input;
-  };
-});
-*/
 
 website.controller("ProductsCtrl",function($scope, $http, $route, $location, ProductCreate, ProductEdit, ProductDelete) {
 		
 		var id;
+		//function to save product
 		$scope.saveProduct = function(data){
 			$scope.product = new ProductCreate();
 			$scope.product.name = data.name;
@@ -47,7 +30,7 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 				console.log("Done done");
 			});
 		}
-		
+		//function to edit product
 		$scope.editProduct = function(value){
 			console.log($scope.id);
 			$scope.product = ProductEdit.get({id:$scope.id},function(){
@@ -59,7 +42,7 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 				});
 			});
 		}
-		
+		//function to delete product
 		$scope.deleteProduct = function(data){
 			$scope.product = ProductDelete.get({id:$scope.id},function(){
 				
@@ -69,93 +52,12 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 			});
 			
 		}
-		
+		//function to set id attribute
 		$scope.setId = function(productId){
 			$scope.id=productId; 
 			console.log($scope.id);
-			//console.log($event.target.nodeName);
-		}
-		/*
-		var search = $location.search();
-		var page = search.page||0;
-		var size = search.size||2;
-		var sort = search.sort||'name,desc';
-		 
-		/*$http({method: 'GET', url: '/productPages?page=' + page + '&size=' + size + '&sort=' + sort})
-		     .success(function(data) {
-		    	 console.log("Reaching HTTP success portion here!!")
-		        $scope.widgets = data.content;
-		        $scope.page = data.page;
-		        $scope.sort = sort;
-		 
-		        angular.forEach(data.links, function(value) {
-		          if(value.rel === 'next') {
-		            $scope.nextPageLink = value.href;
-		          }
-		 
-		          if(value.rel === 'prev') {
-		            $scope.prevPageLink = value.href;
-		          }
-		        });
-		      })
-		      .error(function(error) {
-		    	  console.log("Reaching HTTP failure portion here!!")
-		        $scope.widgetsError = error;
-		});
-		/*
-		$scope.saveProduct = function(data) {
-		alert("reached here");
-		var product = new Product(data);
-		//var product = data;
-		
-		product.$save(function(product) {
 			
-			var new_row = $('<tr>\
-			      <td><input type="checkbox" class="checkthis"/></td>\
-			      <td>'+product.name+'</td>\
-			      <td>'+product.unitRate+'</td>\
-			      <td>\
-			        <p data-placement="top" data-toggle="tooltip" title="Edit">\
-			          <button class="open-edit-modal btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit">\
-			          <i class="icon-white icon-pencil"></i> Edit</button>\
-			        </p>\
-			      </td>\
-			      <td>\
-			        <p data-placement="top" data-toggle="tooltip" title="Delete">\
-			          <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">\
-			          <i class="icon-white icon-trash"></i> Delete</button>\
-			        </p>\
-			      </td>\
-			    </tr>');
-
-		    new_row.appendTo($('#producttable > tbody'));
-		    console.log("This has come till here atleast")
-		    $scope.productName = product.name;
-			$("#product-add-success-modal").modal('toggle');
-		}, function(error) {
-			$scope.failure = error.data;
-			$("#product-add-failed-modal").modal('toggle');
-		});
-	}
-	*/
-
-});
-
-$("#page-content").ready(function(){
-	
-	
-	/*
-	$('button').each(function() {
-  	  $.each(this.attributes, function() {
-  	    // this.attributes is not a plain object, but an array
-  	    // of attribute nodes, which contain both the name and value
-  	    if(this.specified) {
-  	      console.log(this.name, this.value);
-  	    }
-  	  });
-  	});
-  	*/
-	//'<button class="btn btn-danger btn-xs" id='+ id+ 'data-title="Delete" data-toggle="modal" data-target="#delete-product-modal" >'
+		}
 });
 
 $("#page-content").on("click", "#producttable #checkall", function () {
@@ -170,12 +72,7 @@ $("#page-content").on("click", "#producttable #checkall", function () {
     }
 });
 
-/*$("#page-content").on("click","#btnYesDelete",function(){
-	$("#delete-product-modal").modal('toggle');	
-});
-*/
-
-//adding new product
+//add new product on clicking the add button
 $("#page-content").on("click", "#add-new-product", function(e) {
     e.preventDefault();
     var product = $.trim($('#new-product-input').val());
@@ -195,30 +92,22 @@ $("#page-content").on("click", "#add-new-product", function(e) {
     $('#new-price-input').val("");
 });
 
-
-//deleting a product entry
+//capture the id of product on clicking the delete button
 $("#page-content").on("click", "#btn-delete", function(e) {  
     e.preventDefault();
-    //$('#delete-product-modal').modal('toggle');
     productId = $(this).attr("productid");
 	console.log(productId);
 	angular.element(this).scope().setId(productId);
-    //alert($(this).attr("productid"));
-    
-    
-    /*var uniqueId = this.id;
-    console.log(this.id);
-    $('.list').remove();*/
 });
 
+//delete a product entry on clicking the 'yes' delete button
 $("#page-content").on("click","#delete-product",function(e){
-	//e.preventDefault();
 	angular.element(this).scope().deleteProduct();
 	$("#delete-product-modal").modal('toggle');
-	//present.parent().parent().parent().remove();		
+	
 });
 
-//Dynamic modal for edit
+//capture the id of product on clicking the edit button
 $("#page-content").on("click", "#btn-edit", function () {
 	
 	productId = $(this).attr("productId");
@@ -228,27 +117,10 @@ $("#page-content").on("click", "#btn-edit", function () {
 	angular.element(this).scope().setId(productId);
 	$(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
 	$(".modal-body #update-product-input").html(productName);
-	/*
-    var productName = $(this).data('product');
-    $(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
-    
-    
-    var price = $(this).data('price');
-    var priceUpdate = $(this).data('price');
-    $(".modal-body #update-price-input").val(price);
-    
-  //updating a product entry
-    $('#update').click(function(e){
-    	e.preventDefault();
-    	var cost = $("#update-price-input").val();
-    	document.getElementById("price0").innerHTML = cost;
-    });
-    */
 
 });
-
+//update the product on clicking the update button in edit modal
 $("#page-content").on("click","#update-product",function(e){
-	//e.preventDefault();
 	value = $.trim($('#update-price-input').val());
 	angular.element(this).scope().editProduct(value);
 	$("#edit-product-modal").modal('toggle');

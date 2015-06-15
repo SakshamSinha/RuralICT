@@ -20,6 +20,7 @@ website.factory("PresetQuantityDelete",function($resource){
 website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $location, PresetQuantityCreate, PresetQuantityEdit, PresetQuantityDelete) {
 		
 		var id;
+		//function to save the preset quantity 
 		$scope.savePresetQuantity = function(data){
 			$scope.presetQuantity = new PresetQuantityCreate();
 			console.log("new product has been created");
@@ -30,7 +31,7 @@ website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $locat
 				console.log("Done done");
 			});
 		}
-		
+		//function to edit the preset quantity
 		$scope.editPresetQuantity = function(value){
 			
 			$scope.presetQuantity = PresetQuantityEdit.get({id:$scope.id},function(){
@@ -43,7 +44,7 @@ website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $locat
 				});
 			});
 		}
-		
+		//function to delete the preset quantity 
 		$scope.deletePresetQuantity = function(){
 			$scope.presetQuantity = PresetQuantityDelete.get({id:$scope.id},function(){
 				
@@ -53,7 +54,7 @@ website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $locat
 			});
 			
 		}
-		
+		//function to set the preset quantity id
 		$scope.setId = function(presetQuantityId){
 			$scope.id=presetQuantityId; 
 			console.log($scope.id);
@@ -74,9 +75,8 @@ $("#page-content").on("click", "#producttable #checkall", function () {
     }
 });
 
-//adding new product
+//adding new product on pressing the 'Add new product' button
 $("#page-content").on("click", "#add-new-quantity", function(e) {
-    //e.preventDefault();
 	console.log("Reaching here!!")
     var quantity = $.trim($('#new-quantity-input').val());
     var productType = $('#new-presetqty-product-type-input').val();
@@ -97,7 +97,7 @@ $("#page-content").on("click", "#add-new-quantity", function(e) {
 });
 
 
-//deleting a product entry
+//capturing the preset quantity id on pressing the delete button
 $("#page-content").on("click", "#btn-qty-delete", function(e) {  
     e.preventDefault();
     presetQuantityId = $(this).attr("presetQuantityId");
@@ -106,12 +106,13 @@ $("#page-content").on("click", "#btn-qty-delete", function(e) {
 
 });
 
+//deleting a quantity entry on pressing the 'yes' delete button
 $("#page-content").on("click","#delete-qty",function(e){
 	angular.element(this).scope().deletePresetQuantity();
 	$("#delete-qty-modal").modal('toggle');		
 });
 
-//Dynamic modal for edit
+//capture the id on clicking the edit button
 $("#page-content").on("click", "#btn-qty-edit", function () {
 	presetQuantityId = $(this).attr("presetQuantityId");
 	console.log(presetQuantityId);
@@ -122,12 +123,12 @@ $("#page-content").on("click", "#btn-qty-edit", function () {
 	$(".modal-body #update-quantity-input").html(presetQuantityType);
 	
 });
-
+//update quantity on clicking the update button
 $("#page-content").on("click","#update-qty",function(e){
 	e.preventDefault();
 	value = $.trim($('.controls #update-quantity-input').val());
 	console.log($('.controls #update-quantity-input').val());
 	angular.element(this).scope().editPresetQuantity(value);
 	$("#edit-qty-modal").modal('toggle');
-	$('#update-quantity-input').val("");
+	$('.controls #update-quantity-input').val("");
 });
