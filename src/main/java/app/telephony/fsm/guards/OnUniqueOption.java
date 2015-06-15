@@ -1,16 +1,10 @@
 package app.telephony.fsm.guards;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
-import in.ac.iitb.ivrs.telephony.base.events.GotDTMFEvent;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
-import app.business.services.UserService;
 import app.business.services.springcontext.SpringContextBridge;
-import app.telephony.RuralictSession;
-import app.telephony.fsm.RuralictStateMachine;
-
 import com.continuent.tungsten.commons.patterns.fsm.Event;
-import com.continuent.tungsten.commons.patterns.fsm.EventTypeGuard;
 import com.continuent.tungsten.commons.patterns.fsm.Guard;
 import com.continuent.tungsten.commons.patterns.fsm.State;
 
@@ -30,11 +24,8 @@ public class OnUniqueOption implements Guard<IVRSession,Object> {
 	@Override
 	public boolean accept(Event<Object> event, IVRSession session, State<?> state) {
 
-		int a=0;
 		String opts;
-		System.out.println("inside");
-
-		OrganizationService organisationService = SpringContextBridge.services().getOrganizationService();
+	    OrganizationService organisationService = SpringContextBridge.services().getOrganizationService();
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		if(optionsFor.equalsIgnoreCase("language"))
 		{

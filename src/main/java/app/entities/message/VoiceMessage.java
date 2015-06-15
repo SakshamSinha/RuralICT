@@ -28,7 +28,9 @@ public class VoiceMessage extends Message {
 	@JoinColumn(name="voice_inbound_call_id")
 	private InboundCall inboundCall;
 
-	
+	public VoiceMessage() {
+		
+	}
 
 	public VoiceMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, Order order,
 			Voice voice, InboundCall inboundCall) {

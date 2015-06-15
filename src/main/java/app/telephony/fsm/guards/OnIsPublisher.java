@@ -1,7 +1,5 @@
 package app.telephony.fsm.guards;
 
-import javax.swing.Spring;
-
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
@@ -10,7 +8,6 @@ import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Organization;
 import app.entities.UserPhoneNumber;
 import app.telephony.RuralictSession;
-
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Guard;
 import com.continuent.tungsten.commons.patterns.fsm.State;

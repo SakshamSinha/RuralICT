@@ -1,27 +1,14 @@
 package app.telephony.fsm.guards;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.Spring;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.GotDTMFEvent;
-import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
 import app.business.services.OrganizationService;
-import app.business.services.UserPhoneNumberService;
-import app.business.services.UserService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Group;
-import app.entities.GroupMembership;
-import app.telephony.RuralictSession;
-
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.EventTypeGuard;
-import com.continuent.tungsten.commons.patterns.fsm.Guard;
 import com.continuent.tungsten.commons.patterns.fsm.State;
 
 public class OnGroupIDExist extends EventTypeGuard<IVRSession> {

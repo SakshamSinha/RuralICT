@@ -1,6 +1,7 @@
 package app.telephony.fsm;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+
 import in.ac.iitb.ivrs.telephony.base.fsm.EventGuard;
 import in.ac.iitb.ivrs.telephony.base.fsm.IVRStateTransitionMap;
 import in.ac.iitb.ivrs.telephony.base.fsm.guards.OnGotDTMFKey;
@@ -59,8 +60,8 @@ import com.continuent.tungsten.commons.patterns.fsm.StateMachine;
 import com.continuent.tungsten.commons.patterns.fsm.StateTransitionMap;
 
 public class RuralictStateMachine extends StateMachine<IVRSession>{
-	
-	
+
+
 	/**
 	 * The transition map that holds the rules for the state machine. Each state machine object is instantiated with
 	 * this map.
@@ -69,7 +70,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 
 	public static HashMap<String,String> tempLanguageMap;
 	public static HashMap<String,String> tempResponseMap;
-	
+
 	static {
 		try {
 			transitionMap = buildTransitionMap();
@@ -80,7 +81,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 
 	public RuralictStateMachine(IVRSession entity) {
 		super(transitionMap, entity);
-		
+
 	}
 
 	/**
@@ -90,14 +91,14 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 	 */
 	static StateTransitionMap<IVRSession> buildTransitionMap() throws FiniteStateException {
 		IVRStateTransitionMap map = new IVRStateTransitionMap();
-		
-		
+
+
 		/* INITIALIZING RUDIMENTARY VARIABLES */
 		tempLanguageMap = new HashMap<String, String>();
 		tempLanguageMap.put("1", "mr");
 		tempLanguageMap.put("2", "hi");
 		tempLanguageMap.put("3", "en");
-		
+
 
 		tempResponseMap = new HashMap<String, String>();
 		tempResponseMap.put("1", "Order");
@@ -136,7 +137,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Action<IVRSession> playResponseIsYesAction = new PlayResponeIsYesAction();
 		Action<IVRSession> playUnRegisterMessageAction = new PlayUnRegisterMessageAction();	
 		Action<IVRSession> playRecordedBroadcastMessageAction = new PlayRecordedBroadcastMessageAction();
-	
+
 		/* ACTIONS FOR PUBLISHER CALL FLOW */
 
 		// asking user for action
@@ -149,14 +150,14 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Action<IVRSession> doRecordMessageAction = new DoRecordMessageAction();
 		Action<IVRSession> doStoreBroadcastMessageAction = new DoStoreBroadcastMessageAction();
 		Action<IVRSession> doReceivedBroadcastMessageAction = new DoReceivedBroadcastMessageAction();
-		
+
 		// playing a message to the user
 		Action<IVRSession> playMessageDiscardedAction = new PlayMessageDiscardedAction();
 		Action<IVRSession> playGroupSelectedAction = new PlayGroupSelectedAction();
 		Action<IVRSession> playInvalidGroupAction = new PlayInvalidGroupAction();
 		Action<IVRSession> playGroupIDsAction = new PlayGroupIDsAction();
 		Action<IVRSession> playRecordedMessageAction = new PlayRecordedMessageAction();
-		
+
 		/* STATES */
 
 		// start state
@@ -170,13 +171,13 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 
 		// parent state for the entire call flow
 		State<IVRSession> parentCallFlow = map.addActiveState("ParentCallFlow", null, null);
-		
+
 		// parent states for the respective call flows
 		State<IVRSession> userCallFlow = map.addActiveState("UserCallFlow", parentCallFlow, null);
 		State<IVRSession> publisherCallFlow = map.addActiveState("PublisherCallFlow", parentCallFlow, null);
-        State<IVRSession> UnRegisterCallFlow = map.addActiveState("UnRegisterCallFlow", parentCallFlow, null);
+		State<IVRSession> UnRegisterCallFlow = map.addActiveState("UnRegisterCallFlow", parentCallFlow, null);
 
-        
+
 		//states for user call flow
 		State<IVRSession> userStart = map.addActiveState("UserStart", userCallFlow, playWelcomeMessageAction);
 		State<IVRSession> languageMenu = map.addActiveState("LanguageMenu", userCallFlow, askForLanguageAction);
@@ -188,15 +189,15 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		State<IVRSession> confirmFeedbackMessage = map.addActiveState("ConfirmFeedbackMessage", userCallFlow, askConfirmFeedbackAction);
 		State<IVRSession> recordOrder = map.addActiveState("RecordOrder", userCallFlow, playOrderRecordAction);
 		State<IVRSession> enterOrderID = map.addActiveState("EnterOrderID", userCallFlow, askOrderIDAction);
-        State<IVRSession> responseMenu = map.addActiveState("ResponseMenu",userCallFlow,askForResponseAction);
+		State<IVRSession> responseMenu = map.addActiveState("ResponseMenu",userCallFlow,askForResponseAction);
 		State<IVRSession> customerExit = map.addActiveState("CustomerExit",userCallFlow,playThankYouMessageAction);
 		State<IVRSession> unRegisterUser= map.addActiveState("UnRegisterUser",UnRegisterCallFlow,playUnRegisterMessageAction);
 		State<IVRSession> dummyStateForResponse = map.addActiveState("DummyStateForResponse", userCallFlow, null);
 		State<IVRSession> stateForResponse = map.addActiveState("StateForResponse", userCallFlow, null);
 		State<IVRSession> dummyStateForOrder = map.addActiveState("DummyStateForOrder", userCallFlow, null);
 		State<IVRSession> replayRecord = map.addActiveState("ReplayRecord", userCallFlow, playRecordedMessageAction);
-		
-		
+
+
 		//states for publisher call flow
 
 		State<IVRSession> recordBroadcast = map.addActiveState("RecordBroadcast", publisherCallFlow, doRecordMessageAction);
@@ -206,9 +207,9 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		State<IVRSession> playGroupIDs = map.addActiveState("PlayGroupIDs", publisherCallFlow, playGroupIDsAction);
 		State<IVRSession> enterGroupID = map.addActiveState("EnterGroupID", publisherCallFlow, askEnterGroupIDAction);
 		State<IVRSession> publisherExit = map.addActiveState("PublisherExit", publisherCallFlow, playThankYouMessageAction);
-        State<IVRSession> replayRecordedBroadcast = map.addActiveState("ReplayRecordedBroadcast", publisherCallFlow, playRecordedBroadcastMessageAction);
-		
-        /* CUSTOM GUARD CONDITIONS */
+		State<IVRSession> replayRecordedBroadcast = map.addActiveState("ReplayRecordedBroadcast", publisherCallFlow, playRecordedBroadcastMessageAction);
+
+		/* CUSTOM GUARD CONDITIONS */
 
 		Guard<IVRSession, Object> onGotDTMFKeyNot1nor2 = new OnGotDTMFKey(new String[] {"1", "2"}, false);
 		Guard<IVRSession, Object> onGotDTMFKey1 = new OnGotDTMFKey(new String[] {"1"}, true);
@@ -224,51 +225,51 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Guard<IVRSession, Object> onDTMFOrderIDNotExist = new OnOrderIDExist(false);
 		Guard<IVRSession, Object> onIsPublisher = new OnIsPublisher(true);
 		Guard<IVRSession, Object> onIsUser = new OnIsPublisher(false);
-	
+
 		Guard<IVRSession, Object> onGotDTMFOrder = new OnResponseType("Order");
 		Guard<IVRSession, Object> onGotDTMFFeedback = new OnResponseType("Feedback");
 		Guard<IVRSession, Object> onGotDTMFResponse = new OnResponseType("Response");
 		Guard<IVRSession, Object> onIsUnRegisteredUser = new OnIsUnRegisteredUser(true);
-		
+
 		Guard<IVRSession, Object> onUniqueLanguage = new OnUniqueOption("language", "", true);
 		Guard<IVRSession, Object> onNotUniqueLanguage = new OnUniqueOption("language", "", false);
 		Guard<IVRSession, Object> onUniqueResponseFeedback = new OnUniqueOption("response", "Feedback", true);
 		Guard<IVRSession, Object> onUniqueResponseOrder = new OnUniqueOption("response", "Order", true);
 		Guard<IVRSession, Object> onUniqueResponseResponse = new OnUniqueOption("response", "Response", true);
 		Guard<IVRSession, Object> onNotUniqueResponse = new OnUniqueOption("response", "", false);
-		
+
 		Guard<IVRSession, Object> onCancellationDisabled = new OnUniqueOption("orderMenu", "", true);
 		Guard<IVRSession, Object> onCancellationEnabled = new OnUniqueOption("orderMenu", "", false);
-	
+
 		/* TRANSITIONS */
 
 		// transitions from start
 		map.allowTransition(start, EventGuard.onNewCall, checkCallerRole, null);
-		
+
 		// transitions from checkCallerRole
 		map.allowTransition(checkCallerRole, onIsPublisher , recordBroadcast, null);
 		map.allowTransition(checkCallerRole, onIsUser , userStart, null);
 		map.allowTransition(checkCallerRole, onIsUnRegisteredUser, unRegisterUser, null);
-	
+
 		// transitions from main menu
 		map.allowTransition(userStart, onUniqueLanguage, stateForResponse, null);
 		map.allowTransition(userStart, onNotUniqueLanguage,languageMenu, null);
-		
+
 		map.allowTransition(stateForResponse, EventGuard.proceed, languageAndOtherMenu, null);
 		map.allowTransition(languageAndOtherMenu,onGotDTMFKey1, languageMenu, null);
 		map.allowTransition(languageAndOtherMenu, onGotDTMFKey9, dummyStateForResponse, null);
-		
+
 		// transitions from dummyStateForResponse
 		map.allowTransition(dummyStateForResponse, onUniqueResponseOrder, dummyStateForOrder, null);
 		map.allowTransition(dummyStateForResponse, onUniqueResponseFeedback, recordFeedback, null);
 		map.allowTransition(dummyStateForResponse, onUniqueResponseResponse, responseMenu, null);
 		map.allowTransition(dummyStateForResponse, onNotUniqueResponse, responseType, null);
-		
+
 		// transitions from dummyStateForOrder
 		map.allowTransition(dummyStateForOrder, onCancellationDisabled, recordOrder, null);
 		map.allowTransition(dummyStateForOrder, onCancellationEnabled, orderMenu, null);
-		
-		
+
+
 		// transitions from unregisteredUser
 		map.allowTransition(unRegisterUser,EventGuard.proceed ,customerExit, null);
 
@@ -277,75 +278,75 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(responseType, onGotDTMFFeedback,recordFeedback, null);
 		map.allowTransition(responseType, onGotDTMFResponse,responseMenu,null);
 		map.allowTransition(responseType, onGotDTMFKeyNot1nor2nor3,responseType, doInvalidInputAction);
-		
-		
+
+
 		// transition from recordfeedback
 		map.allowTransition(recordFeedback, EventGuard.onRecord ,replayRecord, doAskPlayFeedbackMessagesAction);
 		map.allowTransition(replayRecord, EventGuard.proceed, confirmFeedbackMessage, null);
-		
+
 		// transitions from confirm record
 		map.allowTransition(confirmFeedbackMessage, onGotDTMFKey1, customerExit, doStoreFeedbackMessageAction);
 		map.allowTransition(confirmFeedbackMessage, onGotDTMFKey2, recordFeedback, null);
 		map.allowTransition(confirmFeedbackMessage, onGotDTMFKeyNot1nor2, responseMenu, null);
-		
+
 		// transitions from langugaeMenu(Hindi , English , Marathi)
 		map.allowTransition(languageMenu, onLanguageSelect, dummyStateForResponse, null);
 		map.allowTransition(languageMenu, onGotDTMFKeyNot1nor2nor3, languageMenu, doInvalidInputAction);
 		map.allowTransition(languageMenu, onGotDTMFKeyEmpty, languageMenu, doInvalidInputAction);
-		
-				    
-	    // transitions from responseMenu(Yes or No)
-	    map.allowTransition(responseMenu, onGotDTMFKey1,customerExit ,playResponseIsYesAction);
-	    map.allowTransition(responseMenu,onGotDTMFKey2, customerExit, playResponseIsNoAction);
-	    map.allowTransition(responseMenu,onGotDTMFKeyNot1nor2 ,responseMenu,null);
-	    
-	    // transitions from orderMenu
-	    map.allowTransition(orderMenu, onGotDTMFKey1, recordOrder, null);
-	    map.allowTransition(orderMenu, onGotDTMFKey2, enterOrderID, null);
-	   
-	    // transition from enterOrderID
-	    map.allowTransition(enterOrderID,onDTMFOrderIDExist,customerExit, playOrderCancelAction);
-	    map.allowTransition(enterOrderID, onDTMFOrderIDNotExist, enterOrderID, playInvalidOrderAction);
-	 
-	    // transitions from recordOrder
-	    map.allowTransition(recordOrder, EventGuard.onRecord, customerExit, doStoreOrderMessageAction);
-	    
-	    // transitions from call flow
-	 	map.allowTransition(parentCallFlow, EventGuard.onDisconnect, end, null);
-				
+
+
+		// transitions from responseMenu(Yes or No)
+		map.allowTransition(responseMenu, onGotDTMFKey1,customerExit ,playResponseIsYesAction);
+		map.allowTransition(responseMenu,onGotDTMFKey2, customerExit, playResponseIsNoAction);
+		map.allowTransition(responseMenu,onGotDTMFKeyNot1nor2 ,responseMenu,null);
+
+		// transitions from orderMenu
+		map.allowTransition(orderMenu, onGotDTMFKey1, recordOrder, null);
+		map.allowTransition(orderMenu, onGotDTMFKey2, enterOrderID, null);
+
+		// transition from enterOrderID
+		map.allowTransition(enterOrderID,onDTMFOrderIDExist,customerExit, playOrderCancelAction);
+		map.allowTransition(enterOrderID, onDTMFOrderIDNotExist, enterOrderID, playInvalidOrderAction);
+
+		// transitions from recordOrder
+		map.allowTransition(recordOrder, EventGuard.onRecord, customerExit, doStoreOrderMessageAction);
+
+		// transitions from call flow
+		map.allowTransition(parentCallFlow, EventGuard.onDisconnect, end, null);
+
 		// transitions from main menu
 		map.allowTransition(recordBroadcast, EventGuard.onRecord ,replayRecordedBroadcast, doReceivedBroadcastMessageAction);
 		map.allowTransition(replayRecordedBroadcast, EventGuard.proceed, broadcastMedium, null);
-		
+
 		// transitions from broadcastMedium
 		map.allowTransition(broadcastMedium, onGotDTMFKey2, confirmPCMessage, null);
 		map.allowTransition(broadcastMedium, onGotDTMFKey1, choosePhoneGroup, null);
 		map.allowTransition(broadcastMedium, onGotDTMFKeyNot1nor2, broadcastMedium, doInvalidInputAction);
-		
+
 		// transitions from confirmPCMessage
 		map.allowTransition(confirmPCMessage, onGotDTMFKey1, publisherExit, doStoreBroadcastMessageAction);
 		map.allowTransition(confirmPCMessage, onGotDTMFKey2, recordBroadcast, playMessageDiscardedAction);
 		map.allowTransition(confirmPCMessage, onGotDTMFKeyNot1nor2, confirmPCMessage,doInvalidInputAction);
-		
+
 		// transitions from choosePhoneGroup
-	    map.allowTransition(choosePhoneGroup, onGotDTMFKey1, enterGroupID, null);
-	    map.allowTransition(choosePhoneGroup, onGotDTMFKey2, playGroupIDs, null);
-	    map.allowTransition(choosePhoneGroup, onGotDTMFKeyNot1nor2, choosePhoneGroup, playGroupIDsAction);
-	    
-	    // transitions from playGroupIDs
-	    map.allowTransition(playGroupIDs, EventGuard.proceed, enterGroupID, null);
-	    
-	    // transitions from enterGroupID
-	    map.allowTransition(enterGroupID, onDTMFGroupIDExist, publisherExit, playGroupSelectedAction);
-	    map.allowTransition(enterGroupID, onDTMFGroupIDNotExist, choosePhoneGroup, playInvalidGroupAction);
-        
-	    // transitions from publisherExit
-	    map.allowTransition(publisherExit, EventGuard.proceed, end, null);
-	    
-	    // transitions from call flow
-	 	map.allowTransition(parentCallFlow, EventGuard.onDisconnect, end, null);
-	 		
-	    
+		map.allowTransition(choosePhoneGroup, onGotDTMFKey1, enterGroupID, null);
+		map.allowTransition(choosePhoneGroup, onGotDTMFKey2, playGroupIDs, null);
+		map.allowTransition(choosePhoneGroup, onGotDTMFKeyNot1nor2, choosePhoneGroup, playGroupIDsAction);
+
+		// transitions from playGroupIDs
+		map.allowTransition(playGroupIDs, EventGuard.proceed, enterGroupID, null);
+
+		// transitions from enterGroupID
+		map.allowTransition(enterGroupID, onDTMFGroupIDExist, publisherExit, playGroupSelectedAction);
+		map.allowTransition(enterGroupID, onDTMFGroupIDNotExist, choosePhoneGroup, playInvalidGroupAction);
+
+		// transitions from publisherExit
+		map.allowTransition(publisherExit, EventGuard.proceed, end, null);
+
+		// transitions from call flow
+		map.allowTransition(parentCallFlow, EventGuard.onDisconnect, end, null);
+
+
 		/* Build this map */
 		map.build();
 		return map;

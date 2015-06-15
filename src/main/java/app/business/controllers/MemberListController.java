@@ -27,10 +27,10 @@ import app.entities.broadcast.Broadcast;
 @RequestMapping("/web/{org}")
 public class MemberListController {
 
-	@Autowired
+	
 	GroupRepository groupRepository;
 
-	@Autowired
+	
 	UserPhoneNumberRepository userPhoneNumberRepository;
 
 
