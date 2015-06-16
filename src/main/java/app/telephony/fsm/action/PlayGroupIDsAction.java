@@ -24,7 +24,6 @@ public class PlayGroupIDsAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/theGroupIDsAre.wav");
 		GroupMembershipService groupMembershipService = SpringContextBridge.services().getGroupMembershipService();
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 		UserPhoneNumberService userPhoneNumberService=SpringContextBridge.services().getUserPhoneNumberService();
@@ -45,6 +44,7 @@ public class PlayGroupIDsAction implements Action<IVRSession> {
 		}
 
 		for(String k:groups.keySet()){
+			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/theGroupIDsAre.wav");
 			response.addPlayText(k, Configs.Telephony.TTS_SPEED);				// Group ID
 			response.addPlayText(groups.get(k), Configs.Telephony.TTS_SPEED);   // Group Name
 

@@ -93,9 +93,7 @@ public class OutboundCallHandlerController implements IVRSessionFactory{
 					
 		try {
 			String userNumber="9892275485";   //testing purpose
-					/* request.getParameter("userNumber");
-			System.out.println("userNumber="+userNumber);*/
-			//String ivrNumber = request.getParameter("organisationIVRNumber");
+					/* TODO */
 			String ivrNumber = "912030157457";
 			response.getOutputStream().println(IVRUtils.makeOutboundCall(userNumber, ivrNumber, Configs.Telephony.OUTBOUND_APP_URL));
 			

@@ -41,11 +41,11 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 
 				if(l.equalsIgnoreCase("en"))
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+l+".wav"); //language
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
-
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+l+".wav"); //language
+					
 				}
 				else
 				{

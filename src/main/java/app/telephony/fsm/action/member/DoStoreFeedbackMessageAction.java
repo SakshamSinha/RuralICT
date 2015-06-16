@@ -10,11 +10,14 @@ import app.entities.Voice;
 import app.entities.broadcast.Broadcast;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
+import app.telephony.config.Configs;
+
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
 import com.continuent.tungsten.commons.patterns.fsm.TransitionFailureException;
 import com.continuent.tungsten.commons.patterns.fsm.TransitionRollbackException;
+import com.ozonetel.kookoo.Response;
 
 public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 
@@ -42,15 +45,13 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		voice.setUrl(messageURL);
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		if(isOutboundCall){
-			
+
 			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group, mode , type , false ,feedbackUrl,null);
 		}
 		else{
 
 			telephonyService.addVoiceMessage(session.getUserNumber(),null , group, mode , type , false ,feedbackUrl, inboundCall);
 		}
-
-
 
 	}
 

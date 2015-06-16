@@ -18,8 +18,7 @@ public class AskForLanguageAndOtherAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR+"/changeLanguage_"+session.getLanguage()+".wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR+"/languageExit_"+session.getLanguage()+".wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR+"/changeLanguageAndExit_"+session.getLanguage()+".wav");
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

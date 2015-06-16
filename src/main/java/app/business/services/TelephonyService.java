@@ -60,7 +60,7 @@ public class TelephonyService {
 	public void addVoiceMessage(String userPhoneNumber, Broadcast broadcast, Group group, String mode, String type, boolean response, String url, InboundCall inboundCall){
 		Voice voice=new Voice(url,false);
 		voice = voiceService.addVoice(voice);
-		
+		System.out.println("-------------------------------"+userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser() +""+broadcast +" "+ group+""+ mode+""+ type +""+response+""+ voice+""+ inboundCall);
 		VoiceMessage voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, group, mode, type, response, null, voice, inboundCall);
 		
 		if(type.equals("order")) {

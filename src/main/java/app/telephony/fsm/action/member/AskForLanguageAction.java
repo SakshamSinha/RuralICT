@@ -3,6 +3,8 @@ package app.telephony.fsm.action.member;
 import java.util.Arrays;
 
 
+import java.util.Set;
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.telephony.config.Configs;
 import app.telephony.fsm.RuralictStateMachine;
@@ -24,9 +26,15 @@ public class AskForLanguageAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
 		String langs = "123"; //organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
-		int i=1;
+		int i=1,j=0;
 		String[] responses = new String[RuralictStateMachine.tempLanguageMap.size()];
-		Object[] responseKeys = RuralictStateMachine.tempLanguageMap.keySet().toArray();
+		String[] responseKeys=new String[RuralictStateMachine.tempLanguageMap.size()];
+		
+		for(Object object:RuralictStateMachine.tempLanguageMap.keySet().toArray()){
+			responseKeys[j]=(String)object;
+			j++;
+		}
+		
 		Arrays.sort(responseKeys);
 		for(Object k:responseKeys){
 			if(langs.contains((String)k)){
@@ -34,10 +42,11 @@ public class AskForLanguageAction implements Action<IVRSession> {
 
 				if(language.equalsIgnoreCase("en"))
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+language+".wav"); //language
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+language+".wav"); //language
+					
 				}
 				else
 				{

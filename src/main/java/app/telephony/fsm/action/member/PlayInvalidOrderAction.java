@@ -17,7 +17,7 @@ public class PlayInvalidOrderAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidOrderEnterAgain_"+session.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidOrderId_"+session.getLanguage()+".wav");
 				
 	}
 

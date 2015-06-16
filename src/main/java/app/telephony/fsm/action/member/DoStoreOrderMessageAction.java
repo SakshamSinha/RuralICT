@@ -1,7 +1,5 @@
 package app.telephony.fsm.action.member;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.RecordEvent;
 import app.business.services.GroupService;
@@ -50,11 +48,11 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 
 		if(isOutboundCall){
 
-			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast, group, mode , type , false ,url,null);
+			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast, group, mode , type , false ,url, inboundCall);
 		}
 		else{
 
-			telephonyService.addVoiceMessage(session.getUserNumber(),null , group, mode , type , false ,url, inboundCall);
+			telephonyService.addVoiceMessage(session.getUserNumber(), null , group, mode , type , false ,url, inboundCall);
 		}
 
 	}
