@@ -26,26 +26,26 @@ public class PlayResponeIsYesAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 		RuralictSession ruralictSession = (RuralictSession) session;
 		String mode = "web";
-        String type ="response";
+		String type ="response";
 		InboundCall inboundCall = ruralictSession.getCall();
 		String groupID = session.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		GroupService groupService = SpringContextBridge.services().getGroupService();
 		Group group = groupService.getGroup(groupId);
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
-        Broadcast broadcast = new VoiceBroadcast();
+		Broadcast broadcast = new VoiceBroadcast();
 		broadcast.setBroadcastId(ruralictSession.getBroadcastID());
 		if(ruralictSession.isOutbound()){
-			
+
 			telephonyService.addBinaryMessage(session.getUserNumber(),broadcast, group, mode , type , true , inboundCall.getTime());
 		}
 		else{
-			
+
 			telephonyService.addBinaryMessage(session.getUserNumber(),null,group, mode, type, true,inboundCall.getTime());
-	    }
+		}
 
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes_"+session.getLanguage()+".wav");
-				
+
 	}
 
 

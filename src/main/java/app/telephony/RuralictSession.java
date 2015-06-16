@@ -1,21 +1,14 @@
 package app.telephony;
 
 import java.sql.Timestamp;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.RecordEvent;
 
 import com.continuent.tungsten.commons.patterns.fsm.*;
-
-import app.business.services.GroupService;
 import app.business.services.OrganizationService;
-import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
-import app.business.services.VoiceService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.InboundCall;
-import app.entities.Organization;
 import app.entities.Voice;
 import app.telephony.fsm.*;
 
@@ -25,6 +18,8 @@ public class RuralictSession extends IVRSession {
 	 * The persistence object associated with this session.
 	 */
 	InboundCall call;
+
+	UserService userService;
 	/**
 	 * The last recorded message in this session, if any.
 	 */
@@ -88,10 +83,6 @@ public class RuralictSession extends IVRSession {
 	public void setVoiceMessage(Voice voiceMessage) {
 		this.voiceMessage = voiceMessage;
 	}
-
-
-	UserService userService;
-
 
 	public OrganizationService getOrganizationService() {
 		return organizationService;

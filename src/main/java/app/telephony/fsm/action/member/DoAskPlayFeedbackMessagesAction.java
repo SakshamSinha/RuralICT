@@ -16,14 +16,13 @@ public class DoAskPlayFeedbackMessagesAction implements Action<IVRSession> {
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
-		
+
 		RecordEvent recordEvent = (RecordEvent) event;
 		RuralictSession ruralictSession = (RuralictSession) session;
 		Voice recordedMessage = new Voice(recordEvent.getFileURL(),false);
-        recordedMessage.setUrl(recordEvent.getFileURL());
-        ruralictSession.setVoiceMessage(recordedMessage);
-        ruralictSession.setRecordEvent(recordEvent);
-		
- 	}
+		recordedMessage.setUrl(recordEvent.getFileURL());
+		ruralictSession.setVoiceMessage(recordedMessage);
+		ruralictSession.setRecordEvent(recordEvent);
 
+	}
 }

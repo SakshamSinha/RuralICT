@@ -26,27 +26,27 @@ public class AskForLanguageAction implements Action<IVRSession> {
 		String langs = "123"; //organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
 		int i=1;
 		String[] responses = new String[RuralictStateMachine.tempLanguageMap.size()];
-		Object[] keys = RuralictStateMachine.tempLanguageMap.keySet().toArray();
-		Arrays.sort(keys);
-		for(Object k:keys){
+		Object[] responseKeys = RuralictStateMachine.tempLanguageMap.keySet().toArray();
+		Arrays.sort(responseKeys);
+		for(Object k:responseKeys){
 			if(langs.contains((String)k)){
-				String l = RuralictStateMachine.tempLanguageMap.get(k);
+				String language = RuralictStateMachine.tempLanguageMap.get(k);
 
-				if(l.equalsIgnoreCase("en"))
+				if(language.equalsIgnoreCase("en"))
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+l+".wav"); //language
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+language+".wav"); //language
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
 				}
 				else
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+l+".wav"); //language
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+language+".wav"); //language
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
 				}
-				responses[i-1]=l;
+				responses[i-1]=language;
 				i++;
 			}
 		}

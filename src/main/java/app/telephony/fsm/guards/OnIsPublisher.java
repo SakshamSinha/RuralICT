@@ -22,7 +22,6 @@ public class OnIsPublisher implements Guard<IVRSession,Object>{
 		this.allow=allow;
 	}
 
-
 	@Override
 	public boolean accept(Event<Object> event, IVRSession session, State<?> state) {
 
@@ -52,8 +51,4 @@ public class OnIsPublisher implements Guard<IVRSession,Object>{
 			return (allow==false);
 		}
 	}
-
-
-
-
 }

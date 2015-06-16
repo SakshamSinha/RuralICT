@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 
+
+
+import app.business.services.UserPhoneNumberService;
+import app.business.services.springcontext.SpringContextBridge;
 import app.data.repositories.GroupRepository;
 import app.data.repositories.UserPhoneNumberRepository;
 import app.entities.Group;
@@ -34,11 +38,11 @@ public class MemberListController {
 	UserPhoneNumberRepository userPhoneNumberRepository;
 
 
-	static private class UserRow {
+	static private class UserViewService {
 		private User user;
 		private UserPhoneNumber phone;
 
-		public UserRow(User user, UserPhoneNumber primaryPhoneNo ) {
+		public UserViewService(User user, UserPhoneNumber primaryPhoneNo ) {
 			this.user = user;
 			this.phone = primaryPhoneNo;
 
@@ -66,12 +70,14 @@ public class MemberListController {
 	public String memberList(@PathVariable String org, @PathVariable int groupId, Model model) {
 
 		Group group = groupRepository.findOne(groupId);
-		List<UserRow> rows = new ArrayList<UserRow>();
+		List<UserViewService> rows = new ArrayList<UserViewService>();
 		List<GroupMembership> groupMemberShipList = group.getGroupMemberships();
 		for(GroupMembership memberShip : groupMemberShipList)
 		{
-			UserPhoneNumber users = userPhoneNumberRepository.findByUserAndPrimaryTrue(memberShip.getUser());
-			UserRow row = new UserRow(memberShip.getUser(), users);
+	        
+			UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
+			UserPhoneNumber users = userPhoneNumberService.getUserPrimaryPhoneNumber(memberShip.getUser());
+			UserViewService row = new UserViewService(memberShip.getUser(), users);
 			rows.add(row);
 
 		}

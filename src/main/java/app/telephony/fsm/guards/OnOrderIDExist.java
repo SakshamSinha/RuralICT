@@ -25,8 +25,6 @@ import com.continuent.tungsten.commons.patterns.fsm.State;
 
 public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 
-
-	@Autowired
 	OrderService orderService;
 
 	boolean allow;
@@ -64,13 +62,13 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 						&&  userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getUserId() == 
 						orderService.getOrder(orderID).getMessage().getUser().getUserId() )
 				{
-					return (true==allow);
+					return (allow==true);
 				}				
 			}
-			return (false==allow);
+			return (allow==false);
 		}
 
-		return (false==allow);
+		return (allow==false);
 	}
 
 }

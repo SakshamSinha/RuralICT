@@ -33,12 +33,12 @@ public class PlayGroupIDsAction implements Action<IVRSession> {
 				userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), 
 				organizationService.getOrganizationByIVRS(session.getIvrNumber()));
 
-		if(groupMemberships.size()==0){
+		if(groupMemberships.isEmpty()){
 			response.addPlayText("You are currently not added to any groups", Configs.Telephony.TTS_SPEED);
 		}
 
 		for(GroupMembership groupMemberShip : groupMemberships){
-			String groupId = groupMemberShip.getGroup().getGroupId()+"";
+			String groupId =Integer.toString(groupMemberShip.getGroup().getGroupId());
 			String groupName = groupMemberShip.getGroup().getName();
 			groups.put(groupId, groupName);
 

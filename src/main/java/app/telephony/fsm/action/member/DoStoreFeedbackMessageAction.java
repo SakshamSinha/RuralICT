@@ -1,6 +1,5 @@
 package app.telephony.fsm.action.member;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.business.services.GroupService;
 import app.business.services.TelephonyService;
@@ -19,10 +18,7 @@ import com.continuent.tungsten.commons.patterns.fsm.TransitionRollbackException;
 
 public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 
-
-	@Autowired
 	Voice voice;
-
 
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
@@ -37,21 +33,21 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		int groupId = Integer.parseInt(groupID);
 		Group group = groupService.getGroup(groupId);
 		broadcast.setBroadcastId(ruralictSession.getBroadcastID());
-		Voice voiceMessage = new Voice();
+		Voice voice = new Voice();
 		boolean isOutboundCall = ruralictSession.isOutbound();
 		inboundCall.setDuration(ruralictSession.getRecordEvent().getDuration());
 		String mode = "web";
 		String type ="feedback";
-		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
-		voiceMessage.setUrl(messageURL);
+		String feedbackUrl = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
+		voice.setUrl(messageURL);
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		if(isOutboundCall){
 			
-			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group, mode , type , false ,url,null);
+			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group, mode , type , false ,feedbackUrl,null);
 		}
 		else{
 
-			telephonyService.addVoiceMessage(session.getUserNumber(),null , group, mode , type , false ,url, inboundCall);
+			telephonyService.addVoiceMessage(session.getUserNumber(),null , group, mode , type , false ,feedbackUrl, inboundCall);
 		}
 
 

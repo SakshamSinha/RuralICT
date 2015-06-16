@@ -40,13 +40,13 @@ public class OnGroupIDExist extends EventTypeGuard<IVRSession> {
 			Group group = groupService.getGroup(groupID);
 			if(group!=null){
 				if(group.getOrganization()==orgService.getOrganizationByIVRS(session.getIvrNumber())){
-					return (true==allow);
+					return (allow==true);
 				}
 			}
-			return (false==allow);
+			return (allow==false);
 		}
 
-		return (false==allow);
+		return (allow==false);
 	}
 
 }
