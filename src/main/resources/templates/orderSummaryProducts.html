@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+	table {
+	    width:100%;
+	}
+	table, th, td {
+	    border: 1px solid black;
+	    border-collapse: collapse;
+	}
+	th, td {
+	    padding: 5px;
+	    text-align: left;
+	}
+	table#t01 tr:nth-child(even) {
+	    background-color: #eee;
+	}
+	table#t01 tr:nth-child(odd) {
+	   background-color:#fff;
+	}
+	table#t01 th	{
+	    background-color: black;
+	    color: white;
+	}
+</style>
+</head>
+<body>
+  <div ng-controller="OrderSummaryProductsController">
+  <form class="simple-form">
+    <h2>Order Summary(Product wise)</h2><p hidden id="orgAbbrevation" th:text="${orgAbbrevation}">text</p>
+    </br></br></br>
+    Product Name: <select placeholder="Choose product" id="prod_name" ng-model="name">
+    	<option th:each="product : ${products}" th:value="${product.name}">
+    		<p th:text="${product.name}">text</p>
+    	</option>
+  	</select>
+  	From: <input type="date" id="fromDate" name="From" ng-model="fromDate" placeholder="yyyy-mm-dd">
+  	To:<input type="date" id="toDate" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
+    <input type="submit" id="submitProducts" value="Submit" />
+  </form>
+  <h2>{{name}}</h2>
+  <table style="width:30%" id="t01">
+    <tr>
+    <th>Unit Rate</th>
+    <th>Quantity</th>
+	</tr>
+  	<tr ng-repeat="x in orderSumProducts._embedded.orderItems">
+  		<td class="unitRate" width="50%">{{x.unitRate}}</td>
+  		<td class="quantity" width="50%">{{x.quantity}}</td>
+  	</tr>
+  	<tr>
+  		<td width="50%">
+  			Total 
+  		</td>
+  		<td id="totalProducts">
+  		0
+  		</td>
+  	</tr>
+  </table>  
+</div>
+</body>
+</html>
