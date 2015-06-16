@@ -1,10 +1,9 @@
 package app.business.services;
 
-import java.sql.Timestamp;
 
+import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import app.business.services.message.MessageService;
 import app.business.services.message.TextMessageService;
 import app.business.services.message.VoiceMessageService;
@@ -60,7 +59,6 @@ public class TelephonyService {
 	public void addVoiceMessage(String userPhoneNumber, Broadcast broadcast, Group group, String mode, String type, boolean response, String url, InboundCall inboundCall){
 		Voice voice=new Voice(url,false);
 		voice = voiceService.addVoice(voice);
-		System.out.println("-------------------------------"+userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser() +""+broadcast +" "+ group+""+ mode+""+ type +""+response+""+ voice+""+ inboundCall);
 		VoiceMessage voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, group, mode, type, response, null, voice, inboundCall);
 		
 		if(type.equals("order")) {

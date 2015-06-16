@@ -46,7 +46,7 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		if(isOutboundCall){
 
-			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group, mode , type , false ,feedbackUrl,null);
+			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group, mode , type , false ,feedbackUrl,inboundCall);
 		}
 		else{
 

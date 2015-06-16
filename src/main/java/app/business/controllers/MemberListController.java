@@ -2,21 +2,12 @@ package app.business.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
-
-
-
-
 import app.business.services.UserPhoneNumberService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.data.repositories.GroupRepository;
@@ -25,18 +16,14 @@ import app.entities.Group;
 import app.entities.GroupMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
-import app.entities.broadcast.Broadcast;
 
 @Controller
 @RequestMapping("/web/{org}")
 public class MemberListController {
 
-	
 	GroupRepository groupRepository;
 
-	
 	UserPhoneNumberRepository userPhoneNumberRepository;
-
 
 	static private class UserViewService {
 		private User user;
