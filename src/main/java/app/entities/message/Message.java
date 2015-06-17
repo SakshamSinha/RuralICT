@@ -18,12 +18,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import app.entities.Group;
 import app.entities.Order;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * The persistent class for the message database table.
@@ -80,9 +81,7 @@ public abstract class Message implements Serializable {
 	public Message() {
 	}
 	
-	public Message(User user, Broadcast broadcast, Timestamp time, Group group, String mode, String format, String type,
-
-			boolean response, Order order) {
+	public Message(User user, Broadcast broadcast, Timestamp time, Group group, String mode, String format, String type,boolean response, Order order) {
 
 		this.user = user;
 		this.broadcast = broadcast;
