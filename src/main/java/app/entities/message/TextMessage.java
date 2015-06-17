@@ -6,8 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+=======
+import app.entities.Group;
+>>>>>>> f5475c82924bfb9e2e4cb69e5c519ca13a0b054a
 import app.entities.Order;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
@@ -24,10 +28,10 @@ public class TextMessage extends Message {
 	public TextMessage() {
 	}
 
-	public TextMessage(User user, Broadcast broadcast, String mode, String type, boolean response, Order order,
+	public TextMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, Order order,
 			String textContent, Timestamp textTime) {
 
-		super(user, broadcast, textTime, mode, "text", type, response, order);
+		super(user, broadcast, textTime, group, mode, "text", type, response, order);
 		this.textContent = textContent;
 	}
 

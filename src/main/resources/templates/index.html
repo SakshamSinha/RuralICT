@@ -8,7 +8,7 @@
 <meta name="description" content="Rural IVRS Web application." />
 <meta name="author" content="IIT Bombay" />
 
-<link th:href="@{/static/css/bootstrap.css}" rel="stylesheet" />
+<link th:href="@{/static/css/bootstrap.css}" rel="stylesheet" /> 
 <link th:href="@{/static/css/bootstrap-responsive.css}" rel="stylesheet" />
 <link th:href="@{/static/css/loading-bar.css}" rel="stylesheet" />
 <link th:href="@{/static/css/site.css}" rel="stylesheet" />
@@ -50,9 +50,9 @@
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Order Summary<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Product wise</a></li>
+								<li><a href="#/orderSummaryProducts">Product wise</a></li>
 								<li class="divider"></li>
-								<li><a href="#">Group wise</a></li>
+								<li><a href="#/orderSummaryGroups">Group wise</a></li>
 							</ul></li>
 						<li><a href="#/users">Manage Users</a></li>
 						<li><a href="#/settings">Settings</a></li>
@@ -179,8 +179,11 @@
 	<script th:src="@{/static/js/libs/angular-route.js}"></script>
 	<script th:src="@{/static/js/libs/angular-resource.js}"></script>
 	<script th:src="@{/static/js/libs/loading-bar.min.js}"></script>
+	<script th:src="@{/static/js/libs/angular.min.js}"></script>	
 	<script th:src="@{/static/js/controllers.js}"></script>
 	<script th:src="@{/static/js/productList.js}"></script>
+	<script th:src="@{/static/js/orderSummaryProducts.js}"></script>
+	<script th:src="@{/static/js/orderSummaryGroups.js}"></script>
 	<script th:src="@{/static/js/groupOps.js}"></script>
 	<script th:src="@{/static/js/users.js}"></script>
 	<script th:src="@{/static/js/settings.js}"></script>

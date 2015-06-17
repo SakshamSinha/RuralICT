@@ -141,6 +141,10 @@ public class Organization implements Serializable {
 	@OneToMany(mappedBy="organization")
 	private List<WelcomeMessage> welcomeMessages;
 
+	//bi-directional many-to-one association to LatestBroadcastableVoice
+	@OneToMany(mappedBy="organization")
+	private List<LatestBroadcastableVoice> latestBroadcastableVoices;
+
 	public Organization() {
 	}
 
@@ -544,6 +548,28 @@ public class Organization implements Serializable {
 		welcomeMessage.setOrganization(null);
 
 		return welcomeMessage;
+	}
+
+	public List<LatestBroadcastableVoice> getLatestBroadcastableVoices() {
+		return this.latestBroadcastableVoices;
+	}
+
+	public void setLatestBroadcastableVoices(List<LatestBroadcastableVoice> latestBroadcastableVoices) {
+		this.latestBroadcastableVoices = latestBroadcastableVoices;
+	}
+
+	public LatestBroadcastableVoice addLatestBroadcastableVoice(LatestBroadcastableVoice latestBroadcastableVoice) {
+		getLatestBroadcastableVoices().add(latestBroadcastableVoice);
+		latestBroadcastableVoice.setOrganization(this);
+
+		return latestBroadcastableVoice;
+	}
+
+	public LatestBroadcastableVoice removeLatestBroadcastableVoice(LatestBroadcastableVoice latestBroadcastableVoice) {
+		getLatestBroadcastableVoices().remove(latestBroadcastableVoice);
+		latestBroadcastableVoice.setOrganization(null);
+
+		return latestBroadcastableVoice;
 	}
 
 }

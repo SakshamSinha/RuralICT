@@ -1,10 +1,12 @@
 package app.business.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.data.repositories.GroupRepository;
 import app.data.repositories.OrganizationRepository;
 import app.entities.Group;
 import app.entities.Organization;
@@ -16,6 +18,9 @@ public class OrganizationService {
 	@Autowired
 	OrganizationRepository organizationRepository;
 	
+	@Autowired
+	GroupRepository groupRepository;
+	
 	public Organization getOrganizationByAbbreviation(String org)
 	{
 		return organizationRepository.findByAbbreviation(org);
@@ -26,7 +31,7 @@ public class OrganizationService {
 	}
 	
 	public List<Group> getOrganizationGroupList(Organization organization){
-		return organization.getGroups();
+		return (new ArrayList<Group>(organization.getGroups()));
 	}
 	
 	public void addOrganization(Organization organization){
@@ -59,6 +64,10 @@ public class OrganizationService {
 	
 	public Organization getOrganizationByIVRS(String ivrNumber){
 		return organizationRepository.findByIvrNumber(ivrNumber);
+	}
+	
+	public Group getParentGroup(Organization organization){
+		return groupRepository.findByOrganizationAndParentGroup(organization, null);
 	}
 	
 }

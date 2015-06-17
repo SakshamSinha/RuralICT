@@ -14,8 +14,8 @@ public class VoiceService {
 	@Autowired
 	VoiceRepository voiceRepository;
 	
-	public void addVoice(Voice voice){
-		voiceRepository.save(voice);
+	public Voice addVoice(Voice voice){
+		return voiceRepository.save(voice);
 	}
 	
 	public void removeVoice(Voice voice){

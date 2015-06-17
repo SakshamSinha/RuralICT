@@ -80,9 +80,14 @@ public abstract class Message implements Serializable {
 
 	public Message() {
 	}
+<<<<<<< HEAD
     
 	
 	public Message(User user, Broadcast broadcast, Timestamp time, String mode, String format, String type,
+=======
+
+	public Message(User user, Broadcast broadcast, Timestamp time, Group group, String mode, String format, String type,
+>>>>>>> f5475c82924bfb9e2e4cb69e5c519ca13a0b054a
 			boolean response, Order order) {
 
 		this.user = user;
@@ -93,6 +98,7 @@ public abstract class Message implements Serializable {
 		this.type = type;
 		this.response = response;
 		this.order = order;
+		this.group = group;
 	}
 
 	public int getMessageId() {
