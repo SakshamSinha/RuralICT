@@ -18,6 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import app.entities.Group;
 import app.entities.Order;
@@ -33,6 +34,8 @@ import app.entities.broadcast.Broadcast;
 @Table(name="message")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="format", discriminatorType=DiscriminatorType.STRING)
+@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include=JsonTypeInfo.As.PROPERTY, property="format")
+
 public abstract class Message implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -77,7 +80,8 @@ public abstract class Message implements Serializable {
 
 	public Message() {
 	}
-
+    
+	
 	public Message(User user, Broadcast broadcast, Timestamp time, String mode, String format, String type,
 			boolean response, Order order) {
 
@@ -95,6 +99,7 @@ public abstract class Message implements Serializable {
 		return this.messageId;
 	}
 
+	
 	public void setMessageId(int messageId) {
 		this.messageId = messageId;
 	}
@@ -103,6 +108,7 @@ public abstract class Message implements Serializable {
 		return this.time;
 	}
 
+	
 	public void setTime(Timestamp time) {
 		this.time = time;
 	}
@@ -111,6 +117,7 @@ public abstract class Message implements Serializable {
 		return this.comments;
 	}
 
+	
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
@@ -119,6 +126,7 @@ public abstract class Message implements Serializable {
 		return this.format;
 	}
 
+	
 	public void setFormat(String format) {
 		this.format = format;
 	}
@@ -127,6 +135,7 @@ public abstract class Message implements Serializable {
 		return this.mode;
 	}
 
+	
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
@@ -135,6 +144,7 @@ public abstract class Message implements Serializable {
 		return this.response;
 	}
 
+	
 	public void setResponse(boolean response) {
 		this.response = response;
 	}
@@ -143,6 +153,7 @@ public abstract class Message implements Serializable {
 		return this.type;
 	}
 
+	
 	public void setType(String type) {
 		this.type = type;
 	}
@@ -151,6 +162,7 @@ public abstract class Message implements Serializable {
 		return this.user;
 	}
 
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -159,6 +171,7 @@ public abstract class Message implements Serializable {
 		return this.broadcast;
 	}
 
+	
 	public void setBroadcast(Broadcast broadcast) {
 		this.broadcast = broadcast;
 	}
@@ -167,6 +180,7 @@ public abstract class Message implements Serializable {
 		return this.group;
 	}
 
+	
 	public void setGroup(Group group) {
 		this.group = group;
 	}
