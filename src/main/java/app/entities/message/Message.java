@@ -25,6 +25,7 @@ import app.entities.User;
 import app.entities.broadcast.Broadcast;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 /**
  * The persistent class for the message database table.
