@@ -33,6 +33,7 @@ public class DownloadDaemon extends Thread {
 				System.out.println("Download Daemon Activated at " + (new Date()));
 				try {
 					VoiceService voiceService = SpringContextBridge.services().getVoiceService();
+					
 					List<Voice> undownloadedVoiceFiles = new ArrayList<Voice>(voiceService.getUndownloadedVoiceList());
 					
 					for(Voice voiceFile : undownloadedVoiceFiles) {

@@ -44,10 +44,12 @@
 					th:attr="src='\'voiceMessage/'+ inbox+'/'+ ${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="voice-message-response-saved" class="tab-pane">
-				<i>voice-message-response-saved</i>
+				<ng-include
+					th:attr="src='\'voiceMessage/'+ saved+'/'+ ${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="voice-message-response-processed" class="tab-pane">
-				<i>voice-message-response-processed</i>
+				<ng-include
+					th:attr="src='\'voiceMessage/'+ processed+'/'+ ${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="voice-message-response-feedback" class="tab-pane">
 				<ng-include
@@ -123,27 +125,36 @@
 		<div class="tab-content">
 			<div id="text-message-response-inbox" class="tab-pane">
 				<ng-include
-					th:attr="src='\'textInboxMessage/'+${group.groupId}+'\''"></ng-include>
+					th:attr="src='\'textMessage/'+inbox+'/'+${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="text-message-response-accepted" class="tab-pane">
+
 				<ng-include
 					th:attr="src='\'textAcceptRejectMessage/'+Accept+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="text-message-response-rejected" class="tab-pane">
 				<ng-include
 					th:attr="src='\'textAcceptRejectMessage/'+Reject+'/' +${group.groupId}+'\''"></ng-include>
+
+				 <ng-include
+					th:attr="src='\'textMessage/'+accepted+'/' +${group.groupId}+'\''"></ng-include> 
+			</div>
+			<div id="text-message-response-rejected" class="tab-pane">
+				 <ng-include
+					th:attr="src='\'textMessage/'+rejected+'/' +${group.groupId}+'\''"></ng-include> 
+
 			</div>
 			<div id="text-message-response-response-binary" class="tab-pane">
 				<ng-include
-					th:attr="src='\'textMessage/'+ Response+'/' +${group.groupId}+'\''"></ng-include>
+					th:attr="src='\'textMessage/'+ response+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="text-message-response-feedback" class="tab-pane">
 				<ng-include
-					th:attr="src='\'textMessage/'+ Feedback+'/' +${group.groupId}+'\''"></ng-include>
+					th:attr="src='\'textMessage/'+ feedback+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="text-message-response-default-message" class="tab-pane">
 				<ng-include
-					th:attr="src='\'textMessage/'+ Default+'/' +${group.groupId}+'\''"></ng-include>
+					th:attr="src='\'textMessage/'+ default+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 		</div>
 	</div>

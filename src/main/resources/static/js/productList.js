@@ -86,7 +86,7 @@ $("#page-content").on("click", ".open-edit-modal", function () {
     var priceUpdate = $(this).data('price');
     $(".modal-body #update-price-input").val(price);
     
-  //updating a product entry
+    //updating a product entry
     $('#update').click(function(e){
     	e.preventDefault();
     	var cost = $("#update-price-input").val();

@@ -41,11 +41,11 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		if(isOutboundCall){
 
-			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group, mode , type , false ,feedbackUrl,inboundCall);
+			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group.getOrganization(),group, mode , type , false ,feedbackUrl,inboundCall.getTime(),inboundCall.getDuration());
 		}
 		else{
 
-			telephonyService.addVoiceMessage(session.getUserNumber(),null , group, mode , type , false ,feedbackUrl, inboundCall);
+			telephonyService.addVoiceMessage(session.getUserNumber(), null ,group.getOrganization(), group, mode , type , false ,feedbackUrl, inboundCall.getTime(),inboundCall.getDuration());
 		}
 
 	}

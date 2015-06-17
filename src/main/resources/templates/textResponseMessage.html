@@ -1,0 +1,22 @@
+<ul class="nav nav-tabs top-tab-bar" id="response_tabs">
+	<!--top level tabs-->
+	<li><a href="#textyes" data-toggle="tab">Yes</a></li>
+	<li><a href="#textno" data-toggle="tab">No</a></li>
+	<li><a href="#textall" data-toggle="tab">All</a></li>
+</ul>
+
+<div class="tab-content">
+	<div id="textyes" class="tab-pane">
+		<ng-include
+			th:attr="src='\'textMessage/response/positive/'+${group.groupId}+'\''"></ng-include>
+	</div>
+	<div id="textno" class="tab-pane">
+		<ng-include
+			th:attr="src='\'textMessage/response/negative/'+${group.groupId}+'\''"></ng-include>
+	</div>
+	<div id="textall" class="tab-pane">
+		<ng-include
+			th:attr="src='\'textMessage/response/all/'+${group.groupId}+'\''"></ng-include>
+	</div>
+</div>
+	</div>

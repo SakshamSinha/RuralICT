@@ -20,9 +20,9 @@ public class RootController {
 
 	@Autowired
 	UserService userService;
-	
+		
 	@RequestMapping("/")
-	public String contextRoot() {	
+	public String contextRoot() {
 		return "redirect:/web";
 	}
 	

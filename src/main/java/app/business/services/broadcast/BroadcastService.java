@@ -45,7 +45,8 @@ public class BroadcastService {
 	public Broadcast getTopBroadcast(User user, Organization organization, String format) {
 
 		List<Group> groupList = new ArrayList<Group>();
-		for(GroupMembership groupMembership: user.getGroupMemberships()) {
+		List<GroupMembership> groupMembershipList = new ArrayList<GroupMembership>(user.getGroupMemberships());
+		for(GroupMembership groupMembership: groupMembershipList) {
 			groupList.add(groupMembership.getGroup());
 		}
 		

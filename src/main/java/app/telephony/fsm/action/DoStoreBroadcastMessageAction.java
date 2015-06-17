@@ -31,7 +31,7 @@ public class DoStoreBroadcastMessageAction implements Action<IVRSession> {
 		voice.setUrl(url);
 		inboundCall.setDuration(ruralictSession.getRecordEvent().getDuration());
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
-		telephonyService.addVoiceMessage(session.getUserNumber(),null,null, mode , type , false ,url, inboundCall);
+		
 
 
 

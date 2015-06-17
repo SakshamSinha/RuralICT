@@ -1,7 +1,6 @@
 package app.business.services.message;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -23,14 +22,14 @@ public class MessageService {
 	 */
 
 	public List<Message> getPositiveResponseList(Group group, String format) {
-		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, true, "response",format);
+		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, true, "response", format);
 	}
 
 	/*
 	 * Returns messages with 'No' Response for a group  
 	 */
 	public List<Message> getNegativeResponseList(Group group, String format) {
-		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, false, "response",format);
+		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, false, "response", format);
 	}
 
 	/*
@@ -75,6 +74,12 @@ public class MessageService {
 		return messageRepository.findOne(messageId);
 	}
 
+
+	public Message updateMessageComment(String comment, Message message){
+		message.setComments(comment);
+		return messageRepository.save(message);
+	}
+
 	/*
 	 * Returns all messages for a group 
 	 */
@@ -94,5 +99,9 @@ public class MessageService {
 	 */
 	public List<Message> getMessageListByOrderStatus(Group group, String format, String status){
 		return messageRepository.findByGroupAndFormatAndOrder_Status(group, format, status, new Sort(Direction.DESC, "time"));
+	}
+
+	public List<Message> getRejectedTextMessageList(Group group) {
+		return getMessageListByOrderStatus(group, "text", "rejected");
 	}
 }

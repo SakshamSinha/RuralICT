@@ -45,11 +45,11 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 
 		if(isOutboundCall){
 
-			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast, group, mode , type , false ,url, inboundCall);
+			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast, group.getOrganization(),group, mode , type , false ,url, inboundCall.getTime(),inboundCall.getDuration());
 		}
 		else{
 
-			telephonyService.addVoiceMessage(session.getUserNumber(), null , group, mode , type , false ,url, inboundCall);
+			telephonyService.addVoiceMessage(session.getUserNumber(), null ,group.getOrganization(), group, mode , type , false ,url, inboundCall.getTime(),inboundCall.getDuration());
 		}
 
 	}
