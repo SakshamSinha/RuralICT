@@ -1,5 +1,5 @@
 website.factory("Product", function($resource) {
-	return $resource("/api/products/:id");
+	return $resource("/app/api/products/:id");
 });
 
 website.controller("ProductsCtrl", function($scope, $route, Product) {
@@ -78,10 +78,7 @@ $("#page-content").on("click", "#add-new-product", function(e) {
 
 //Dynamic modal for edit
 $("#page-content").on("click", ".open-edit-modal", function () {
-	var id = $(this).val();
-	console.log(id);
-    var productName = $("#productName"+id).text();
-    console.log($(this).parent().parent().parent().children("#productName"+id));
+    var productName = $(this).data('product');
     $(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
     $(".modal-body #update-product-input").html(productName);
     
@@ -89,7 +86,7 @@ $("#page-content").on("click", ".open-edit-modal", function () {
     var priceUpdate = $(this).data('price');
     $(".modal-body #update-price-input").val(price);
     
-  //updating a product entry
+    //updating a product entry
     $('#update').click(function(e){
     	e.preventDefault();
     	var cost = $("#update-price-input").val();
