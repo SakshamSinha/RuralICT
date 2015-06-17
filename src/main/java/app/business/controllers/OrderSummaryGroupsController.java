@@ -35,4 +35,4 @@ public class OrderSummaryGroupsController {
 		model.addAttribute("orgAbbrevation", org);
 		return "orderSummaryGroups";
 	}
-	}
+}

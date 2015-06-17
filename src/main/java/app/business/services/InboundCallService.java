@@ -25,8 +25,12 @@ public class InboundCallService {
 		return null;
 	}
 	
-	public void addInboundCall(InboundCall inboundCall){
-		inboundCallRepository.save(inboundCall);
+	public InboundCall addInboundCall(InboundCall inboundCall){
+		return inboundCallRepository.save(inboundCall);
+	}
+	
+	public InboundCall getInboundCall(int inboundCallId){
+		return inboundCallRepository.findOne(inboundCallId);
 	}
 	
 	public void removeInboundCall(InboundCall inboundCall){
