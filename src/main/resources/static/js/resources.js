@@ -1,16 +1,16 @@
 /* Resources for OrderItems */
 website.factory("AddOrderItem",['$resource',function($resource){
-	 return $resource("/api/orderItems/:id", null, {
-		 save: {
-			 method: "POST"
+	return $resource("/api/orderItems/:id", null, {
+		save: {
+			method: "POST"
 		}
-	 });
+	});
 }]);
 
 website.factory("RemoveOrderItem",function($resource){
 	return $resource("/api/orderItems/:id",{id:'@id'},{
 		query: { method: "GET", isArray: false },
-	    update: {method: "DELETE",params: {id: '@id'}}
+		update: {method: "DELETE",params: {id: '@id'}}
 	});
 });
 
@@ -26,7 +26,7 @@ website.factory("GetOrderItemsByOrder", function($resource) {
 website.factory("UpdateOrder", function($resource) {
 	return $resource("/api/orders/:id", {id: '@id'}, {
 		query: { method: "GET", isArray: false },
-	    update: {method: "PATCH",params: {id: '@id'}}
+		update: {method: "PATCH",params: {id: '@id'}}
 	});
 });
 
@@ -34,7 +34,7 @@ website.factory("UpdateOrder", function($resource) {
 website.factory("UpdateMessage", function($resource) {
 	return $resource("/api/messages/:id", {id: '@id'}, {
 		query: { method: "GET", isArray: false },
-	    update: {method: "PATCH",params: {id: '@id'}}
+		update: {method: "PATCH",params: {id: '@id'}}
 	});
 });
 
@@ -56,9 +56,9 @@ website.factory("UpdateVoiceMessageComment", function($resource) {
 
 /* Resources for Groups */
 website.factory("AddGroup",['$resource',function($resource){
-	 return $resource("/api/groups/:id", null, {
-		 save: {
-			 method: "POST"
+	return $resource("/api/groups/:id", null, {
+		save: {
+			method: "POST"
 		}
-	 });
+	});
 }]);

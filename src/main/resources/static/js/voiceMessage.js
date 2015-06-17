@@ -29,54 +29,53 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 	
 	/* Required in saved message tab to display previously added order items */
 	$scope.getOrderItemsByOrder = function(orderId){
-		 GetOrderItemsByOrder.get({orderId: orderId}, function(orderItems){
+		GetOrderItemsByOrder.get({orderId: orderId}, function(orderItems){
 			 
-			 /* Used directly in view to fill the product table */
-			 $scope.orderItems = [];
+			/* Used directly in view to fill the product table */
+			$scope.orderItems = [];
 			 
-			 /* Since product name is in different relation, separate request has to be sent to collect product names */
-			 var productList = [];
+			/* Since product name is in different relation, separate request has to be sent to collect product names */
+			var productList = [];
 			 
-			 var items = orderItems["_embedded"]["orderItems"];
+			var items = orderItems["_embedded"]["orderItems"];
 			 
-			 for(var i=0;i<items.length;i++){
+			for(var i=0;i<items.length;i++){
 				 
-				 /* Build new resource locally */
-				 var Product = $resource(items[i]["_links"]["product"]["href"], {}, {
+				/* Build new resource locally */
+				var Product = $resource(items[i]["_links"]["product"]["href"], {}, {
 						update: {
 							method: 'GET'
 						}
-				 });
+				});
 				 
-				 /* This scope variable is kind of a flag to determine if all the requests are made */
-				 $scope.countOfCalls = 0;
+				/* This scope variable is kind of a flag to determine if all the requests are made */
+				$scope.countOfCalls = 0;
 				 
-				 /* Send request for each product name */ 
-				 Product.get({}, function(product){
-					 $scope.countOfCalls++;
-					 productList.push(product.name);
+				/* Send request for each product name */ 
+				Product.get({}, function(product){
+					$scope.countOfCalls++;
+					productList.push(product.name);
 					 
-					 /* Only if all requests are responded */
-					 /* This approach makes the process little slow but could not find better way */
-					 // TODO Better Approach
-					 if($scope.countOfCalls==items.length){
-						 for(var j=0;j<items.length;j++){
+					/* Only if all requests are responded */
+					/* This approach makes the process little slow but could not find better way */
+					// TODO Better Approach
+					if($scope.countOfCalls==items.length){
+						for(var j=0;j<items.length;j++){
 							 
-							 /*
-							  * Again very weird but seemingly only possible way 
-							  * to get object key faster is to extract key from the url 
-							  */
-							 // TODO Better Approach
-							 var urlChunks = items[j]["_links"]["self"]["href"].split("/");
-							 items[j].id = urlChunks[urlChunks.length-1];
+							/*
+							 * Again very weird but seemingly only possible way 
+							 * to get object key faster is to extract key from the url 
+							 */
+							// TODO Better Approach
+							var urlChunks = items[j]["_links"]["self"]["href"].split("/");
+							items[j].id = urlChunks[urlChunks.length-1];
 							 
-							 items[j].product = productList[j];
+							items[j].product = productList[j];
 							 
-							 $scope.orderItems.push(items[j]);
-						} 
-						 
+							$scope.orderItems.push(items[j]);
+						}	 
 					 }
-				 });
+				});
 		 	}
 			 
 		 });
@@ -90,8 +89,7 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 			$scope.product.$update({id:orderItemId},function(){
 				
 			});
-		});
-		
+		});		
 	};
 	
 	/* Adding order item to queue */
@@ -162,8 +160,7 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 		$scope.order = UpdateOrder.get({id:orderId},function(){
 			$scope.order.status = "processed";
 			
-			$scope.order.$update({id:orderId},function(){
-				
+			$scope.order.$update({id:orderId},function(){		
 			});
 		});
 	};
@@ -185,11 +182,9 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 		$scope.message = UpdateMessage.query({id:messageId},function(message){
 			$scope.message.comments = comment;
 			
-			$scope.message.$update({id:messageId},function(){
-				
+			$scope.message.$update({id:messageId},function()			
 			});
-		});
-		
+		});		
 	};
 	
 	/* update the comment. This is very lame way to do this thing. But since above method doesnt work, no other alternative */
@@ -218,16 +213,16 @@ $("#page-content").on("click", ".view-inbox-voice-message", function () {
 	var voiceMessageURL = $("#inboxVoiceMessageURL"+id).val();
 	
 	/* Dump them into modal */
-    $("#inboxVoiceTime").html(voiceMessageTime);
-    $("#inboxVoiceOrderId").val(voiceMessageOrderId);
-    $("#inboxVoiceName").html(voiceMessageName);
-    $("#inboxVoiceComment").val(voiceMessageComment);
+	$("#inboxVoiceTime").html(voiceMessageTime);
+	$("#inboxVoiceOrderId").val(voiceMessageOrderId);
+	$("#inboxVoiceName").html(voiceMessageName);
+	$("#inboxVoiceComment").val(voiceMessageComment);
     
-    /* Special Processing for audio */
-    loadAudio("inboxVoiceURL", voiceMessageURL);
+	/* Special Processing for audio */
+	loadAudio("inboxVoiceURL", voiceMessageURL);
     
-    $("#save-inbox-voice-order").val(id);
-    $("#confirm-reject-inbox-voice-order").val(id);
+	$("#save-inbox-voice-order").val(id);
+	$("#confirm-reject-inbox-voice-order").val(id);
 });
 
 /* Function to add new orderItem to queue */
@@ -250,15 +245,15 @@ $("#page-content").on("click", "#add-inbox-voice-order-items", function () {
 	
 	/* Create and add new row element for user */
 	var new_row = $('\
-			<div id="row'+ count +'" class="fluid-row">\
-				<div class="span3"></div>\
-				<div class="span3">'+ productName +'</div>\
-				<div class="span3">'+ productQuantity +'</div>\
-				<div class="span2">'+ productUnitRate +'</div>\
-				<div class="span1">\
-					<button class="close remove-inbox-voice-order-item" value="'+ count +'"><i class="icon-remove" aria-hidden="true"></i></button>\
-				</div>\
+		<div id="row'+ count +'" class="fluid-row">\
+			<div class="span3"></div>\
+			<div class="span3">'+ productName +'</div>\
+			<div class="span3">'+ productQuantity +'</div>\
+			<div class="span2">'+ productUnitRate +'</div>\
+			<div class="span1">\
+				<button class="close remove-inbox-voice-order-item" value="'+ count +'"><i class="icon-remove" aria-hidden="true"></i></button>\
 			</div>\
+		</div>\
 	');
 	new_row.appendTo($('#inboxVoiceOrderItems'));
 	
@@ -293,8 +288,7 @@ $("#page-content").on("click", ".remove-inbox-voice-order-item", function () {
 	$("#row"+id).remove();
 	
 	/* Remove order item from the queue */
-	angular.element($("#add-inbox-voice-order-items")).scope().removeOrderItemFromQueue(id);
-	
+	angular.element($("#add-inbox-voice-order-items")).scope().removeOrderItemFromQueue(id);	
 });
 
 /* Save the order */
@@ -304,23 +298,22 @@ $("#page-content").on("click", "#save-inbox-voice-order", function(e) {
     
 	/* Get required values from modal */
 	var comment = $.trim($("#inboxVoiceComment").val());
-    var id = $(this).val();
-    var orderId = $.trim($("#inboxVoiceOrderId").val());
+	var id = $(this).val();
+	var orderId = $.trim($("#inboxVoiceOrderId").val());
     
-    angular.element($('#save-inbox-voice-order')).scope().addOrderItems();
-    angular.element($('#save-inbox-voice-order')).scope().saveOrder(orderId);
-    angular.element($('#save-inbox-voice-order')).scope().updateVoiceComment(id,comment);
-    $('#view-inbox-voice-message-modal').modal('toggle');
+	angular.element($('#save-inbox-voice-order')).scope().addOrderItems();
+	angular.element($('#save-inbox-voice-order')).scope().saveOrder(orderId);
+	angular.element($('#save-inbox-voice-order')).scope().updateVoiceComment(id,comment);
+	$('#view-inbox-voice-message-modal').modal('toggle');
     
-    // Workaround for time being
-    angular.element($('#save-inbox-voice-order')).scope().reload();
-    
+	// Workaround for time being
+	angular.element($('#save-inbox-voice-order')).scope().reload();  
 });
 
 /* Open the modal to reject the order */
 $("#page-content").on("click", "#confirm-reject-inbox-voice-order", function () {
 	var id = $(this).val();
-    $("#reject-inbox-voice-order").val(id);
+	$("#reject-inbox-voice-order").val(id);
 });
 
 /* Reject the order */
@@ -329,16 +322,16 @@ $("#page-content").on("click", "#reject-inbox-voice-order", function(e) {
 	e.preventDefault();
 	
 	/* Get required values from modal */
-    var id = $.trim($(this).val());
-    var orderId = $.trim($("#inboxVoiceOrderId").val());
+	var id = $.trim($(this).val());
+	var orderId = $.trim($("#inboxVoiceOrderId").val());
     
-    /* Send request to reject message */
-    angular.element($('#reject-inbox-voice-order')).scope().rejectOrder(orderId);
+	/* Send request to reject message */
+	angular.element($('#reject-inbox-voice-order')).scope().rejectOrder(orderId);
 
-    $('#view-inbox-voice-message-modal').modal('toggle');
-    $('#reject-inbox-voice-order-modal').modal('toggle');
+	$('#view-inbox-voice-message-modal').modal('toggle');
+	$('#reject-inbox-voice-order-modal').modal('toggle');
     
-    angular.element($('#reject-inbox-voice-order')).scope().reload();
+	angular.element($('#reject-inbox-voice-order')).scope().reload();
 });
 
 /* Remove orderItem from queue */
@@ -377,17 +370,17 @@ $("#page-content").on("click", ".view-saved-voice-message-modal", function () {
 	var voiceMessageOrderId = $("#savedVoiceMessageOrderId"+id).val();
 	
 	/* Dump them into modal */
-    $("#savedVoiceTime").html(voiceMessageTime);
-    $("#savedVoiceName").html(voiceMessageName);
-    $("#savedVoiceComment").html(voiceMessageComment);
-    $("#savedVoiceOrderId").val(voiceMessageOrderId);
+	$("#savedVoiceTime").html(voiceMessageTime);
+	$("#savedVoiceName").html(voiceMessageName);
+	$("#savedVoiceComment").html(voiceMessageComment);
+	$("#savedVoiceOrderId").val(voiceMessageOrderId);
     
-    /* Special Processing for audio */
-    loadAudio("savedVoiceURL", voiceMessageURL);
+	/* Special Processing for audio */
+	loadAudio("savedVoiceURL", voiceMessageURL);
     
-    angular.element($('#process-saved-voice-order')).scope().getOrderItemsByOrder(voiceMessageOrderId);
+	angular.element($('#process-saved-voice-order')).scope().getOrderItemsByOrder(voiceMessageOrderId);
     
-    $("#process-saved-voice-order").val(id);
+	$("#process-saved-voice-order").val(id);
 });
 
 $("#page-content").on('change','#savedVoiceProductQuantity',function(e){
@@ -421,16 +414,16 @@ $("#page-content").on("click", "#add-saved-voice-order-items", function () {
 	
 	/* Create and add new row element for user */
 	var new_row = $('\
-			<div id="row'+ count +'" class="fluid-row">\
-				<div class="span3"></div>\
-				<div class="span3">'+ productName +'</div>\
-				<div class="span3">'+ productQuantity +'</div>\
-				<div class="span2">'+ productUnitRate +'</div>\
-				<div class="span1">\
-					<button class="close remove-saved-voice-order-item" value="'+ count +'"><i class="icon-remove" aria-hidden="true"></i></button>\
-				</div>\
-				<input id="savedVoiceHidden'+count+'" type="hidden" value="unsaved">\
-			</div>');
+		<div id="row'+ count +'" class="fluid-row">\
+			<div class="span3"></div>\
+			<div class="span3">'+ productName +'</div>\
+			<div class="span3">'+ productQuantity +'</div>\
+			<div class="span2">'+ productUnitRate +'</div>\
+			<div class="span1">\
+				<button class="close remove-saved-voice-order-item" value="'+ count +'"><i class="icon-remove" aria-hidden="true"></i></button>\
+			</div>\
+			<input id="savedVoiceHidden'+count+'" type="hidden" value="unsaved">\
+		</div>');
 	new_row.appendTo($('#savedVoiceOrderItems'));
 	
 	/* Create order item element and push it in the queue */
@@ -467,15 +460,15 @@ $("#page-content").on("click", ".remove-saved-voice-order-item", function () {
 $("#page-content").on("click", "#process-saved-voice-order", function(e) {
     
 	e.preventDefault();
-    var id = $(this).val();
-    var orderId = $.trim($("#savedVoiceOrderId").val());
+	var id = $(this).val();
+	var orderId = $.trim($("#savedVoiceOrderId").val());
     
-    angular.element($('#process-saved-voice-order')).scope().addOrderItems();
-    angular.element($('#process-saved-voice-order')).scope().processOrder(orderId);
+	angular.element($('#process-saved-voice-order')).scope().addOrderItems();
+	angular.element($('#process-saved-voice-order')).scope().processOrder(orderId);
     
-    $('#view-saved-voice-message-modal').modal('toggle');
+	$('#view-saved-voice-message-modal').modal('toggle');
     
-    angular.element($('#process-saved-voice-order')).scope().reload();
+	angular.element($('#process-saved-voice-order')).scope().reload();
 });
 
 $("#page-content").on("hide", ".view-saved-voice-message-modal", function (e) {
@@ -489,7 +482,7 @@ $("#page-content").on("click", ".saved-voice-modal-close", function (e) {
 	e.preventDefault();
 	document.getElementById("savedVoiceOrderItems").innerHTML = "";
 	angular.element($("#add-saved-voice-order-items")).scope().clearQueue();
-	//$('#view-inbox-voice-message-modal').modal('toggle');
+	$('#view-inbox-voice-message-modal').modal('toggle');
 });
 
 
@@ -521,5 +514,3 @@ $("#page-content").on("click", ".responseVoiceMessageSaveButton", function (e) {
 	
 	alert("Comment has been updated");
 });
-
-
