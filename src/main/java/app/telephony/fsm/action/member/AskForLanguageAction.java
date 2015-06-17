@@ -20,7 +20,9 @@ public class AskForLanguageAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		String langs = "123"; //organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
+		String langs = "123"; 
+		//TODO
+		//organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
 		int i=1,j=0;
 		String[] responses = new String[RuralictStateMachine.tempLanguageMap.size()];
 		String[] responseKeys=new String[RuralictStateMachine.tempLanguageMap.size()];

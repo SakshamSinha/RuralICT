@@ -91,8 +91,7 @@ public class BroadcastRepositoryTest {
 			groupList.add(groupMembership.getGroup());
 		}
 		
-	//	List<Broadcast> list = broadcastRepository.findTopByGroupInAndOrganization(groupList, organizationRepository.findOne(1), (new Sort(Sort.Direction.DESC, "broadcastedTime")));
-		List<Broadcast> list = (List<Broadcast>) broadcastRepository.findTopByGroupInAndOrganization(groupList, organizationRepository.findOne(1), (new Sort(Sort.Direction.DESC, "broadcastedTime")));
+		Broadcast list = broadcastRepository.findTopByGroupInAndOrganizationAndFormat(groupList, organizationRepository.findOne(1), "voice", (new Sort(Sort.Direction.DESC, "broadcastedTime")));
 		assertThat(list.size(),is(1));
 		assertThat(list,contains(
 				 has(

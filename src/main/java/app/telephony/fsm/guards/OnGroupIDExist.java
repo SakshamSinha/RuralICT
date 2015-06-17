@@ -22,7 +22,7 @@ public class OnGroupIDExist extends EventTypeGuard<IVRSession> {
 		this.allow=allow;
 	}
 
-	/*	 returns true if:
+	/**	 returns true if:
 	 1. groupId exists and allow=true
 	 2. groupId doesn't exist and allow=false
 	 returns false in all other cases */	

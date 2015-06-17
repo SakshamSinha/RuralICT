@@ -12,7 +12,7 @@ public class OnResponseType extends EventTypeGuard<IVRSession> {
 	String responseType;
 
 	public OnResponseType(String reponseType) {
-		// TODO Auto-generated constructor stub
+		
 		super(GotDTMFEvent.class);
 		this.responseType = reponseType;
 	}

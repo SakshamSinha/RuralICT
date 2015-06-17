@@ -18,11 +18,11 @@ import app.entities.broadcast.Broadcast;
 @Controller
 @RequestMapping("/web/{org}")
 public class BroadcastVoiceController {
-	
-	
+
+
 	@Autowired
 	GroupRepository groupRepository;
-	
+
 	@RequestMapping(value="/broadcastVoiceMessages/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
@@ -30,7 +30,7 @@ public class BroadcastVoiceController {
 
 		Group group = groupRepository.findOne(groupId);
 		List<Broadcast> broadcastList = group.getBroadcasts();
-		
+
 		for(Broadcast broadcast: broadcastList){
 			if(broadcast.getFormat().equalsIgnoreCase("voice") )
 			{
@@ -38,7 +38,7 @@ public class BroadcastVoiceController {
 			}
 		}
 
- 	return "broadcastVoice";
+		return "broadcastVoice";
 	}
 
 }
