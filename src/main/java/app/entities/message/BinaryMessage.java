@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import app.entities.Group;
@@ -26,9 +25,4 @@ public class BinaryMessage extends Message {
 			Order order) {
 		super(user, broadcast, time, group, mode, "binary", type, response, order);
 	}
-
-	
-	
-
-
 }

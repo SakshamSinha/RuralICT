@@ -14,7 +14,6 @@ import app.entities.User;
 import app.entities.Voice;
 import app.entities.broadcast.Broadcast;
 
-
 @Entity
 @DiscriminatorValue("voice")
 @JsonTypeName("voice")
@@ -56,9 +55,4 @@ public class VoiceMessage extends Message {
 	public void setInboundCall(InboundCall inboundCall) {
 		this.inboundCall = inboundCall;
 	}
-
-	
-	
-
-
 }

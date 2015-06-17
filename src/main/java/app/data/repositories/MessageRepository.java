@@ -57,4 +57,3 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	public List<Message> findByGroupAndResponseAndTypeAndFormat(Group group, boolean response,String type, String format);
 	public List<Message> findByGroup(Group group);
 }
-

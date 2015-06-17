@@ -25,7 +25,6 @@ import app.entities.Order;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
 
-
 /**
  * The persistent class for the message database table.
  * 
