@@ -5,12 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-=======
 import app.entities.Group;
->>>>>>> f5475c82924bfb9e2e4cb69e5c519ca13a0b054a
 import app.entities.InboundCall;
 import app.entities.Order;
 import app.entities.User;
