@@ -6,9 +6,7 @@ website.config(['$routeProvider', '$provide', '$httpProvider', 'cfpLoadingBarPro
 
 	$routeProvider
 		.when('/home', {templateUrl: 'homePage', title: "Home"})
-		.when('/initial', {templateUrl: 'initial', title: "to give a chance"})
 		.when('/products', {templateUrl: 'productsPage', title: "Products"})
-		//.when('/products2',{templateUrl:'productsPage2',title:"Updated Products"})
 		.when('/productquantity', {templateUrl: 'productQuantityPage', title: "Product Quantity"})
 		.when('/users', {templateUrl: 'usersPage', title: "Users"})
 		.when('/settings', {templateUrl: 'settingsPage', title: "Settings"})
