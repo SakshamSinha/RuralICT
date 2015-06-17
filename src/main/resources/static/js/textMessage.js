@@ -39,6 +39,8 @@ website.controller("TextMessageCtrl", function($window, $scope, $route, RemoveOr
 			}
 		}
 	};
+	
+	// FIXME Code commented for future utilization
 	/*$scope.saveOrderItem = function(data) {
 		var orderItem = new OrderItem(data);
 		console.log(orderItem);

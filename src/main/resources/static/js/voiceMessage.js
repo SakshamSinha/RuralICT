@@ -106,7 +106,7 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 		}
 	};
 	
-	/* Code commented for future utilization */
+	// FIXME Code commented for future utilization
 	/*$scope.saveOrderItem = function(data) {
 		var orderItem = new OrderItem(data);
 		console.log(orderItem);
