@@ -32,19 +32,19 @@ public class OnUniqueOption implements Guard<IVRSession,Object> {
 			String userLang=userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getCallLocale();
 			opts = organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
 			if(userLang.equalsIgnoreCase("")){
-				return (allow==false);
+				return (!allow);
 			}
 			session.setLanguage(userLang);
-			return (allow==true);
+			return (allow);
 		}
 		else if(optionsFor.equalsIgnoreCase("orderMenu")){
 			if(organisationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableOrderCancellation()){
-				return (allow==false);
+				return (!allow);
 			}
-			return (allow==true);
+			return (allow);
 		}
 
-		return (allow==false);
+		return (!allow);
 	}
 
 }

@@ -37,18 +37,17 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 	}
 
 
-	// returns true if:
-	// 1. groupId exists and allow=true
-	// 2. groupId doesn't exist and allow=false
-	// returns false in all other cases	
+	/*	 returns true if:
+	 1. groupId exists and allow=true
+	 2. groupId doesn't exist and allow=false
+	 returns false in all other cases*/	
 	@Override
 	public boolean accept(Event<Object>event, IVRSession session, State<?> state) {
-		
-		
+
+
 		OrganizationService orgService = SpringContextBridge.services().getOrganizationService();
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
-		
-		
+
 		if (super.accept(event, session, state)) {
 			GotDTMFEvent ev = (GotDTMFEvent) event;
 			String input = ev.getInput().split("#")[0];
@@ -56,19 +55,20 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 			orderService = new OrderService();
 			OrderService orderService = SpringContextBridge.services().getOrderService();
 			Order order=orderService.getOrder(orderID);
+			boolean isOrderAccepted =order.getStatus().equalsIgnoreCase("reject") || order.getStatus().equalsIgnoreCase("processed");
+			boolean isUserIdExistForOrderID = userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getUserId() == 
+					orderService.getOrder(orderID).getMessage().getUser().getUserId();
+			boolean checkOrganization = order.getOrganization() == orgService.getOrganizationByIVRS(session.getIvrNumber());
 			if(order!=null){
-				if(!(order.getStatus().equalsIgnoreCase("reject") || order.getStatus().equalsIgnoreCase("processed"))
-						&& order.getOrganization() == orgService.getOrganizationByIVRS(session.getIvrNumber())
-						&&  userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getUserId() == 
-						orderService.getOrder(orderID).getMessage().getUser().getUserId() )
+				if(!(isOrderAccepted) && checkOrganization &&  isUserIdExistForOrderID)
 				{
-					return (allow==true);
+					return (allow);
 				}				
 			}
-			return (allow==false);
+			return (!allow);
 		}
 
-		return (allow==false);
+		return (!allow);
 	}
 
 }

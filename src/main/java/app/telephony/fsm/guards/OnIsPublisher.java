@@ -34,21 +34,22 @@ public class OnIsPublisher implements Guard<IVRSession,Object>{
 		Organization organization = orgService.getOrganizationByIVRS(orgNumber);
 		RuralictSession ruralictSession = (RuralictSession) session;
 		if(userPhoneNumber == null){
-			return (allow==false);
+			return (!allow);
 		}
 		else {
 
 			String userRole= userService.getUserRole(userPhoneNumber.getUser(), organization);
 			if(ruralictSession.isOutbound()){
-				return (allow==false);
+				return (!allow);
 			}
 
 			if(userRole.contains("Publisher")){
-				return (allow==true);
+				
+				return (allow);
 
 			}
-
-			return (allow==false);
+          
+			return (!allow);
 		}
 	}
 }

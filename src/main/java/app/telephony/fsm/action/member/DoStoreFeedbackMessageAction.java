@@ -21,8 +21,6 @@ import com.ozonetel.kookoo.Response;
 
 public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 
-	Voice voice;
-
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {

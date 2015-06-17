@@ -18,10 +18,6 @@ public class BinaryMessage extends Message {
 	public BinaryMessage() {
 	}
 
-	/*public BinaryMessage(User user, Broadcast broadcast,Group group, Timestamp time, String mode, String type, boolean response,
-			Order order) {
-		super(user, broadcast, group,time, mode, "binary", type, response, order);*/
-
 	public BinaryMessage(User user, Broadcast broadcast, Timestamp time, Group group, String mode, String type, boolean response,
 			Order order) {
 		super(user, broadcast, time, group, mode, "binary", type, response, order);

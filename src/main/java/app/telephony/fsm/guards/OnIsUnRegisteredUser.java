@@ -28,10 +28,10 @@ public class OnIsUnRegisteredUser implements Guard<IVRSession, Object> {
 		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(userNumber);
 		if(userPhoneNumber == null){
 
-			return (allow==true);
+			return (allow);
 		}
 
-		return (allow==false);
+		return (!allow);
 	}
 
 }

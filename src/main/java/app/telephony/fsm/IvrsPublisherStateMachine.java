@@ -16,8 +16,8 @@ import in.ac.iitb.ivrs.telephony.base.fsm.IVRStateTransitionMap;
 import in.ac.iitb.ivrs.telephony.base.fsm.guards.OnGotDTMFKey;
 
 public class IvrsPublisherStateMachine extends StateMachine<IVRSession>{
-	
-	
+
+
 	/**
 	 * The transition map that holds the rules for the state machine. Each state machine object is instantiated with
 	 * this map.
@@ -35,7 +35,7 @@ public class IvrsPublisherStateMachine extends StateMachine<IVRSession>{
 	public IvrsPublisherStateMachine(StateTransitionMap<IVRSession> map,
 			IVRSession entity) {
 		super(map, entity);
-	
+
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class IvrsPublisherStateMachine extends StateMachine<IVRSession>{
 		Action<IVRSession> playInvalidGroupAction = new PlayInvalidGroupAction();
 		Action<IVRSession> playGroupIDsAction = new PlayGroupIDsAction();
 		Action<IVRSession> playThankYouMessageAction = new PlayThankYouMessageAction();
-		
+
 		/* STATES */
 
 		// start state
@@ -102,7 +102,7 @@ public class IvrsPublisherStateMachine extends StateMachine<IVRSession>{
 		Guard<IVRSession, Object> onDTMFGroupIDNotExist = new OnGotDTMFKey(
 				new String[] {"54"} //TODO: service that returns string
 				, false); 			   //array containing group IDs
-		
+
 		/* TRANSITIONS */
 
 		// transitions from start
@@ -115,31 +115,31 @@ public class IvrsPublisherStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(broadcastMedium, onGotDTMFKey2, confirmPCMessage, null);
 		map.allowTransition(broadcastMedium, onGotDTMFKey1, choosePhoneGroup, null);
 		map.allowTransition(broadcastMedium, onGotDTMFKeyNot1nor2, broadcastMedium, doInvalidInputAction);
-		
+
 		// transitions from confirmPCMessage
 		map.allowTransition(confirmPCMessage, onGotDTMFKey1, publisherExit, doStoreBroadcastMessageAction);
 		map.allowTransition(confirmPCMessage, onGotDTMFKey2, recordBroadcast, playMessageDiscardedAction);
 		map.allowTransition(confirmPCMessage, onGotDTMFKeyNot1nor2, confirmPCMessage,doInvalidInputAction);
-		
+
 		// transitions from choosePhoneGroup
-	    map.allowTransition(choosePhoneGroup, onGotDTMFKey1, playGroupIDs, null);
-	    map.allowTransition(choosePhoneGroup, onGotDTMFKey2, enterGroupID, null);
-	    map.allowTransition(choosePhoneGroup, onGotDTMFKeyNot1nor2, choosePhoneGroup, playGroupIDsAction);
-	    
-	    // transitions from playGroupIDs
-	    map.allowTransition(playGroupIDs, EventGuard.proceed, enterGroupID, null);
-	    
-	    // transitions from enterGroupID
-	    map.allowTransition(enterGroupID, onDTMFGroupIDExist, publisherExit, playGroupSelectedAction);
-	    map.allowTransition(enterGroupID, onDTMFGroupIDNotExist, choosePhoneGroup, playInvalidGroupAction);
-        
-	    // transitions from publisherExit
-	    map.allowTransition(publisherExit, EventGuard.proceed, end, null);
-	    
-	    // transitions from call flow
-	 	map.allowTransition(callFlow, EventGuard.onDisconnect, end, null);
-	 		
-	    
+		map.allowTransition(choosePhoneGroup, onGotDTMFKey1, playGroupIDs, null);
+		map.allowTransition(choosePhoneGroup, onGotDTMFKey2, enterGroupID, null);
+		map.allowTransition(choosePhoneGroup, onGotDTMFKeyNot1nor2, choosePhoneGroup, playGroupIDsAction);
+
+		// transitions from playGroupIDs
+		map.allowTransition(playGroupIDs, EventGuard.proceed, enterGroupID, null);
+
+		// transitions from enterGroupID
+		map.allowTransition(enterGroupID, onDTMFGroupIDExist, publisherExit, playGroupSelectedAction);
+		map.allowTransition(enterGroupID, onDTMFGroupIDNotExist, choosePhoneGroup, playInvalidGroupAction);
+
+		// transitions from publisherExit
+		map.allowTransition(publisherExit, EventGuard.proceed, end, null);
+
+		// transitions from call flow
+		map.allowTransition(callFlow, EventGuard.onDisconnect, end, null);
+
+
 		/* Build this map */
 		map.build();
 		return map;

@@ -3,10 +3,8 @@ package app.telephony;
 import java.sql.Timestamp;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.RecordEvent;
-
 import com.continuent.tungsten.commons.patterns.fsm.*;
 import app.business.services.OrganizationService;
-import app.business.services.UserService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.InboundCall;
 import app.entities.Voice;
@@ -19,7 +17,6 @@ public class RuralictSession extends IVRSession {
 	 */
 	InboundCall call;
 
-	UserService userService;
 	/**
 	 * The last recorded message in this session, if any.
 	 */
@@ -90,15 +87,6 @@ public class RuralictSession extends IVRSession {
 
 	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
-	}
-
-
-	public UserService getUserService() {
-		return userService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
 	}
 
 	public boolean isOutbound() {

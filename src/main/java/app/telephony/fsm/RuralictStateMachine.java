@@ -247,10 +247,10 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(start, EventGuard.onNewCall, checkCallerRole, null);
 
 		// transitions from checkCallerRole
+		map.allowTransition(checkCallerRole, onIsUnRegisteredUser, unRegisterUser, null);
 		map.allowTransition(checkCallerRole, onIsPublisher , recordBroadcast, null);
 		map.allowTransition(checkCallerRole, onIsUser , userStart, null);
-		map.allowTransition(checkCallerRole, onIsUnRegisteredUser, unRegisterUser, null);
-
+	
 		// transitions from main menu
 		map.allowTransition(userStart, onUniqueLanguage, stateForResponse, null);
 		map.allowTransition(userStart, onNotUniqueLanguage,languageMenu, null);

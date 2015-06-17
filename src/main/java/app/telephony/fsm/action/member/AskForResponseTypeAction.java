@@ -3,6 +3,7 @@ package app.telephony.fsm.action.member;
 import java.util.Arrays;
 
 
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
@@ -30,29 +31,34 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 		responses[0] = ruralictSession.isOrderAllowed();
 		responses[1] = ruralictSession.isFeedbackAllowed();
 		responses[2] = ruralictSession.isResponseAllowed();
-		int i=1;
+		int i=1,j=0;
 		String[] newResponses = new String[RuralictStateMachine.tempResponseMap.size()];
-		Object[] keys = RuralictStateMachine.tempResponseMap.keySet().toArray();
-		Arrays.sort(keys);
-		for(Object k:keys){
+        String[] responseTypeKeys=new String[RuralictStateMachine.tempResponseMap.size()];
+		
+		for(Object object:RuralictStateMachine.tempResponseMap.keySet().toArray()){
+			responseTypeKeys[j]=(String)object;
+			j++;
+		}
+		Arrays.sort(responseTypeKeys);
+		for(Object k:responseTypeKeys){
 			if(responses[Integer.parseInt((String)k)-1]){
 				String responseType = RuralictStateMachine.tempResponseMap.get(k);
-				String l = session.getLanguage();
+				String language = session.getLanguage();
 
-				if(l.equalsIgnoreCase("en"))
+				if(language.equalsIgnoreCase("en"))
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+l+".wav"); //language
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+language+".wav"); //language
 					
 				}
 				else
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+l+".wav"); //language
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+l+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+l+".wav"); // 'i'
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+l+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+language+".wav"); //language
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
 				}
 
 				newResponses[i-1]=responseType;

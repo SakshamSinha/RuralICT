@@ -22,11 +22,10 @@ public class OnGroupIDExist extends EventTypeGuard<IVRSession> {
 		this.allow=allow;
 	}
 
-
-	// returns true if:
-	// 1. groupId exists and allow=true
-	// 2. groupId doesn't exist and allow=false
-	// returns false in all other cases	
+	/*	 returns true if:
+	 1. groupId exists and allow=true
+	 2. groupId doesn't exist and allow=false
+	 returns false in all other cases */	
 	@Override
 	public boolean accept(Event<Object>event, IVRSession session, State<?> state) {
 
@@ -40,13 +39,13 @@ public class OnGroupIDExist extends EventTypeGuard<IVRSession> {
 			Group group = groupService.getGroup(groupID);
 			if(group!=null){
 				if(group.getOrganization()==orgService.getOrganizationByIVRS(session.getIvrNumber())){
-					return (allow==true);
+					return (allow);
 				}
 			}
-			return (allow==false);
+			return (!allow);
 		}
 
-		return (allow==false);
+		return (!allow);
 	}
 
 }
