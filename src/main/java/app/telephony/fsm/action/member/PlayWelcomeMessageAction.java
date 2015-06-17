@@ -32,7 +32,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		VoiceBroadcast broadcast;
 		broadcast = (VoiceBroadcast) broadcastService.getTopBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), organizationService.getOrganizationByIVRS(session.getIvrNumber()), "voice");
 		Voice v = broadcast.getVoice();
-		session.setGroupID(broadcast.getGroup().getGroupId()+"");
+
 
 		if(isOutbound){
 
@@ -41,6 +41,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			ruralictSession.setFeedbackAllowed(broadcast.getAskFeedback());
 			ruralictSession.setResponseAllowed(broadcast.getAskResponse());
 			ruralictSession.setBroadcastID(broadcast.getBroadcastId());
+			session.setGroupID(broadcast.getGroup().getGroupId()+"");
 
 		}
 		else{
@@ -53,6 +54,9 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 
 			if(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableBroadcasts()){
 				response.addPlayAudio(v.getUrl());
+			}
+			else{
+				session.setGroupID(((Integer)organizationService.getParentGroup(organizationService.getOrganizationByIVRS(session.getIvrNumber())).getGroupId()).toString());
 			}
 
 		}

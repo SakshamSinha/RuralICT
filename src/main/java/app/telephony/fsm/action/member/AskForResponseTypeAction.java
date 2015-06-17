@@ -35,8 +35,8 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 		String[] newResponses = new String[RuralictStateMachine.tempResponseMap.size()];
         String[] responseTypeKeys=new String[RuralictStateMachine.tempResponseMap.size()];
 		
-		for(Object object:RuralictStateMachine.tempResponseMap.keySet().toArray()){
-			responseTypeKeys[j]=(String)object;
+		for(String key:(String[])RuralictStateMachine.tempResponseMap.keySet().toArray()){
+			responseTypeKeys[j]=key;
 			j++;
 		}
 		Arrays.sort(responseTypeKeys);

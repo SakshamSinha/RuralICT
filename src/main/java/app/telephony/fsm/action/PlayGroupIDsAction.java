@@ -28,7 +28,7 @@ public class PlayGroupIDsAction implements Action<IVRSession> {
 		GroupMembershipService groupMembershipService = SpringContextBridge.services().getGroupMembershipService();
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 		UserPhoneNumberService userPhoneNumberService=SpringContextBridge.services().getUserPhoneNumberService();
-		HashMap<String,String> groups = new HashMap<String, String>();
+		HashMap<Integer,String> groups = new HashMap<Integer, String>();
 		List<GroupMembership>  groupMemberships = groupMembershipService.getGroupsByUserAndOrganizationSorted(
 				userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), 
 				organizationService.getOrganizationByIVRS(session.getIvrNumber()));
@@ -38,15 +38,16 @@ public class PlayGroupIDsAction implements Action<IVRSession> {
 		}
 
 		for(GroupMembership groupMemberShip : groupMemberships){
-			String groupId =Integer.toString(groupMemberShip.getGroup().getGroupId());
+			
+			Integer groupId =groupMemberShip.getGroup().getGroupId();
 			String groupName = groupMemberShip.getGroup().getName();
 			groups.put(groupId, groupName);
 
 		}
 
-		for(String k:groups.keySet()){
+		for(Integer k:groups.keySet()){
 			
-			response.addPlayText(k, Configs.Telephony.TTS_SPEED);				// Group ID
+			response.addPlayText(k.toString(), Configs.Telephony.TTS_SPEED);	// Group ID
 			response.addPlayText(groups.get(k), Configs.Telephony.TTS_SPEED);   // Group Name
 
 		}

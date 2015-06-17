@@ -93,7 +93,6 @@ public class MessageService {
 	 * Returns messages of a given order status for a group 
 	 */
 	public List<Message> getMessageListByOrderStatus(Group group, String format, String status){
-		//return messageRepository.findByGroupAndFormatAndOrder_StatusOrderByTime(group, format, status);
 		return messageRepository.findByGroupAndFormatAndOrder_Status(group, format, status, new Sort(Direction.DESC, "time"));
 	}
 }

@@ -1,14 +1,9 @@
 package app.telephony.fsm.action.member;
 
 import java.util.Arrays;
-
-
-import java.util.Set;
-
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.telephony.config.Configs;
 import app.telephony.fsm.RuralictStateMachine;
-
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -30,8 +25,8 @@ public class AskForLanguageAction implements Action<IVRSession> {
 		String[] responses = new String[RuralictStateMachine.tempLanguageMap.size()];
 		String[] responseKeys=new String[RuralictStateMachine.tempLanguageMap.size()];
 		
-		for(Object object:RuralictStateMachine.tempLanguageMap.keySet().toArray()){
-			responseKeys[j]=(String)object;
+		for(String key:(String[])RuralictStateMachine.tempLanguageMap.keySet().toArray()){
+			responseKeys[j]=key;
 			j++;
 		}
 		

@@ -30,9 +30,6 @@ public class RuralictSession extends IVRSession {
 	RecordEvent recordEvent;
 
 
-	OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
-
-
 	/**
 	 * @param groupService 
 	 * @throws InstantiationException 
@@ -43,6 +40,7 @@ public class RuralictSession extends IVRSession {
 			throws FiniteStateException, InstantiationException {
 
 		super(sessionId, userNumber, ivrNumber, circle, operator, RuralictStateMachine.class);
+		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 
 		call = new InboundCall();
 		call.setTime(new Timestamp(getStartTime().getTime()));
@@ -79,14 +77,6 @@ public class RuralictSession extends IVRSession {
 
 	public void setVoiceMessage(Voice voiceMessage) {
 		this.voiceMessage = voiceMessage;
-	}
-
-	public OrganizationService getOrganizationService() {
-		return organizationService;
-	}
-
-	public void setOrganizationService(OrganizationService organizationService) {
-		this.organizationService = organizationService;
 	}
 
 	public boolean isOutbound() {
