@@ -1,5 +1,6 @@
 package app.business.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class OrganizationService {
 	}
 	
 	public List<Group> getOrganizationGroupList(Organization organization){
-		return organization.getGroups();
+		return (new ArrayList<Group>(organization.getGroups()));
 	}
 	
 	public void addOrganization(Organization organization){
