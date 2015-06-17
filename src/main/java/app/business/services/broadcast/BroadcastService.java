@@ -15,6 +15,7 @@ import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
+import app.entities.broadcast.VoiceBroadcast;
 
 @Service
 public class BroadcastService {
@@ -38,14 +39,21 @@ public class BroadcastService {
 		broadcastRepository.delete(broadcast);
 	}
 	
+
+
 	@Transactional
 	public Broadcast getTopBroadcast(User user, Organization organization, String format) {
+
 		List<Group> groupList = new ArrayList<Group>();
-		for(GroupMembership groupMembership: user.getGroupMemberships()) {
+		List<GroupMembership> groupMembershipList = new ArrayList<GroupMembership>(user.getGroupMemberships());
+		for(GroupMembership groupMembership: groupMembershipList) {
 			groupList.add(groupMembership.getGroup());
 		}
 		
+
+		
 		return broadcastRepository.findTopByGroupInAndOrganizationAndFormat(groupList, organization, format , (new Sort(Sort.Direction.DESC, "broadcastedTime")));
+
 	}
 	
 	

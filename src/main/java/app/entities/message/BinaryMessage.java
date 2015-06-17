@@ -24,5 +24,6 @@ public class BinaryMessage extends Message {
 	public BinaryMessage(User user, Broadcast broadcast, Timestamp time, Group group, String mode, String type, boolean response,
 			Order order) {
 		super(user, broadcast, time, group, mode, "binary", type, response, order);
+
 	}
 }

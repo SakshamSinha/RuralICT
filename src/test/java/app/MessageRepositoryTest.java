@@ -101,7 +101,7 @@ public class MessageRepositoryTest {
 	@Rollback
 	public void getMessageListByGroupAndFormatAndOrder_StatusTest(){
 		Group group = groupRepository.findOne(2);
-		List<Message> messages = messageRepository.findByGroupAndFormatAndOrder_Status(group,"text","Accept");
+		List<Message> messages = messageRepository.findByGroupAndFormatAndOrder_Status(group,"text","Accept", null);
 		assertThat(messages.size(),is(1));
 		assertThat(messages,contains(
 				has(

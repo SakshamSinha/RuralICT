@@ -25,6 +25,7 @@ public class TextMessage extends Message {
 	public TextMessage() {
 	}
 
+
 	public TextMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, Order order,
 			String textContent, Timestamp textTime) {
 

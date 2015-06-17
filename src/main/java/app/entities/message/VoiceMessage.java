@@ -31,6 +31,7 @@ public class VoiceMessage extends Message {
 	private InboundCall inboundCall;
 
 	public VoiceMessage() {
+		
 	}
 
 	public VoiceMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, Order order,

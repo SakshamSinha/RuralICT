@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Organization;
 import app.entities.WelcomeMessage;
 
 public interface WelcomeMessageRepository extends JpaRepository<WelcomeMessage, Integer> {
@@ -45,5 +46,7 @@ public interface WelcomeMessageRepository extends JpaRepository<WelcomeMessage, 
 	/*
 	 * Search functions
 	 */
-
+	public WelcomeMessage findByOrganizationAndLocale(Organization organization, String Locale);
+	
+	public List<WelcomeMessage> findByOrganization(Organization organization);
 }

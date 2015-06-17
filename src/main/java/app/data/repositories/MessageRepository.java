@@ -37,11 +37,6 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 
 	@PreAuthorize("hasRole('ADMIN'+#message.group.organization.abbreviation)")
 	@Override
-	public <S extends Message> S save(@Param("message") S message);
-    
-
-	@PreAuthorize("hasRole('ADMIN'+#message.group.organization.abbreviation)")
-	@Override
 	public void delete(@Param("message") Message message);
 
 	/*

@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Organization;
 import app.entities.PresetQuantity;
 
 public interface PresetQuantityRepository extends JpaRepository<PresetQuantity, Integer> {
@@ -45,5 +46,5 @@ public interface PresetQuantityRepository extends JpaRepository<PresetQuantity, 
 	/*
 	 * Search functions
 	 */
-
+	public List<PresetQuantity> findByOrganization(Organization organization);
 }

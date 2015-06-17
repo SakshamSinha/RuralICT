@@ -111,7 +111,7 @@ public class Order implements Serializable {
 		return this.message;
 	}
 
-	public void setMessages(Message message) {
+	public void setMessage(Message message) {
 		this.message = message;
 	}
 
