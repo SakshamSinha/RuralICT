@@ -60,9 +60,9 @@
 }
 
 .table-settings-system table{
-  border-spacing: 7px 5px;
-  border-collapse: separate;
-  background-color: rgba(253, 253, 253, 0);
+    border-spacing: 7px 5px;
+    border-collapse: separate;
+    background-color: rgba(253, 253, 253, 0);
 }
 
 .top-tab-bar > .active > a,
