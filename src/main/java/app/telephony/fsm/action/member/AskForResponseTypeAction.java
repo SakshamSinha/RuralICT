@@ -33,7 +33,7 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 		responses[2] = ruralictSession.isResponseAllowed();
 		int i=1,j=0;
 		String[] newResponses = new String[RuralictStateMachine.tempResponseMap.size()];
-        String[] responseTypeKeys=new String[RuralictStateMachine.tempResponseMap.size()];
+		String[] responseTypeKeys=new String[RuralictStateMachine.tempResponseMap.size()];
 		
 		for(String key:RuralictStateMachine.tempResponseMap.keySet()){
 			responseTypeKeys[j]=key;
