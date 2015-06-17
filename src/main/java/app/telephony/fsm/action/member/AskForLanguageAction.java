@@ -20,51 +20,45 @@ public class AskForLanguageAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		String langs = "123"; 
-		//TODO
-		//organisationService.getOrganizationByIVRS(session.getIvrNumber()).getDefaultCallLocale();
+		
 		int i=1,j=0;
 		String[] responses = new String[RuralictStateMachine.tempLanguageMap.size()];
 		String[] responseKeys=new String[RuralictStateMachine.tempLanguageMap.size()];
 		
-		for(String key:(String[])RuralictStateMachine.tempLanguageMap.keySet().toArray()){
+		for(String key:RuralictStateMachine.tempLanguageMap.keySet()){
 			responseKeys[j]=key;
 			j++;
 		}
 		
 		Arrays.sort(responseKeys);
-		for(Object k:responseKeys){
-			if(langs.contains((String)k)){
-				String language = RuralictStateMachine.tempLanguageMap.get(k);
-
-				if(language.equalsIgnoreCase("en"))
-				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+language+".wav"); //language
-					
-				}
-				else
-				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+language+".wav"); //language
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
-				}
-				responses[i-1]=language;
-				i++;
+		for(String k:responseKeys){
+			
+			String language = RuralictStateMachine.tempLanguageMap.get(k);
+			if(language.equalsIgnoreCase("en"))
+			{
+				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
+				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
+				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
+				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+language+".wav"); //language	
 			}
+			else
+			{
+				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+language+".wav"); //language
+				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
+				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
+				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
+			}
+			responses[i-1]=language;
+			i++;
 		}
 		RuralictStateMachine.tempLanguageMap.clear();
 		for(i=0;i<responses.length;i++){
-			RuralictStateMachine.tempLanguageMap.put((i+1)+"", responses[i]);
+			RuralictStateMachine.tempLanguageMap.put(((Integer)(i+1)).toString(), responses[i]);
 		}
 
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);
 	}
-
-
+	
 }
