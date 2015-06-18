@@ -17,11 +17,11 @@ public class LatestBroadcastableVoiceService {
 	@Autowired
 	LatestBroadcastableVoiceRepository latestBroadcastableVoiceRepository;
 	
-	public LatestBroadcastableVoice getLatestBroadcastableVoiceList(Organization organization){
+	public LatestBroadcastableVoice getLatestBroadcastableVoice(Organization organization){
 		return latestBroadcastableVoiceRepository.findTopByOrganizationOrderByTimeDesc(organization);
 	}
 	
-	public LatestBroadcastableVoice getLatestBroadcastableVoiceListByGroup(Group group){
+	public LatestBroadcastableVoice getLatestBroadcastableVoiceByGroup(Group group){
 		return latestBroadcastableVoiceRepository.findByGroup(group);
 	}
 	
