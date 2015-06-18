@@ -11,6 +11,7 @@ import app.business.services.BroadcastScheduleService;
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
 import app.business.services.InboundCallService;
+import app.business.services.LatestBroadcastableVoiceService;
 import app.business.services.OrderService;
 import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;
@@ -95,6 +96,9 @@ public class SpringContextBridge implements SpringContextBridgedServices, Applic
 
 	@Autowired
 	private TelephonyService telephonyService;
+	
+	@Autowired
+	private LatestBroadcastableVoiceService latestBroadcastableVoiceService;
 	
 	@Override
 	public void setApplicationContext(ApplicationContext appContext) throws BeansException {
@@ -211,5 +215,10 @@ public class SpringContextBridge implements SpringContextBridgedServices, Applic
 	@Override
 	public TelephonyService getTelephonyService() {
 		return telephonyService;
+	}
+	
+	@Override
+	public LatestBroadcastableVoiceService getLatestBroadcastableVoiceService() {
+		return latestBroadcastableVoiceService;
 	}
 }
