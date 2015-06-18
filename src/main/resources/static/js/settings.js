@@ -82,9 +82,6 @@ website.controller("SettingsCtrl", function($scope, $routeParams, Organization, 
         $scope.incomingCheckBoxOptions.order = organization.inboundCallAskOrder;
         $scope.incomingCheckBoxOptions.feedback = organization.inboundCallAskFeedback;
         $scope.incomingCheckBoxOptions.response = organization.inboundCallAskResponse;
-        
-        console.log("value=" + organization.inboundCallAskOrder);
-        console.log("value1=" + $scope.incomingCheckBoxOptions.order);
 
     });
     
