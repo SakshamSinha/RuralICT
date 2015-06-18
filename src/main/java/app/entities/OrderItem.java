@@ -2,7 +2,14 @@ package app.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 
 /**
@@ -19,7 +26,7 @@ public class OrderItem implements Serializable {
 	@Column(name="order_item_id")
 	private int orderItemId;
 
-	private int quantity;
+	private float quantity;
 
 	@Column(name="unit_rate")
 	private float unitRate;
@@ -52,11 +59,11 @@ public class OrderItem implements Serializable {
 		this.orderItemId = orderItemId;
 	}
 
-	public int getQuantity() {
+	public float getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(float quantity) {
 		this.quantity = quantity;
 	}
 
