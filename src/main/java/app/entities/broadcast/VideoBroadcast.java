@@ -3,12 +3,15 @@ package app.entities.broadcast;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import app.entities.Group;
 import app.entities.Organization;
 import app.entities.User;
 
 @Entity
 @DiscriminatorValue("video")
+@JsonTypeName("video")
 public class VideoBroadcast extends Broadcast {
 	private static final long serialVersionUID = 1L;
 
