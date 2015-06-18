@@ -18,7 +18,6 @@ public interface BroadcastDefaultSettingRepository extends JpaRepository<Broadca
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.organization.abbreviation)")
 	@Override
 	public BroadcastDefaultSetting findOne(Integer id);
 
