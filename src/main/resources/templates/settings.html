@@ -113,7 +113,7 @@
 
                         </table>
                         <div class="form-actions">
-                            <input type="submit" class="btn btn-success" value="Save Details" /> <a class="btn" href="#/settings">Cancel</a>
+                            <input type="submit" class="btn btn-success" value="Save Details" />
                         </div>
                     </div>
                 </div>
@@ -122,68 +122,46 @@
                         <table>
 
                             <tr>
-                                <b>OUTGOING CALL SETTINGS</b>
+                                <b>OUTGOING CALL SETTINGS :</b>
                             </tr>
                             <tr>
-                                <td>Language&nbsp;(भाषा):
-                                    <br>
-                                    <input type="checkbox" name="language" id="language" value="4" />Hindi&nbsp;(हिन्दी)
-                                    <br>
-                                    <input type="checkbox" name="language" id="language" value="5" checked />Marathi&nbsp;(मराठी)
-                                    <br>
-                                    <input type="checkbox" name="language" id="language" value="6" />English&nbsp;(अंग्रेजी)
-                                    <br>
-
-                                </td>
-                                <td></td>
                                 <td>Response&nbsp;(प्रतिक्रिया):
                                     <br>
-                                    <input type="checkbox" name="response1" value="1" checked='checked' />SemiStructured&nbsp;(Order/आदेश)
+                                    <input type="checkbox" ng-model=outgoingCheckBoxOptions.order name="response1" />SemiStructured&nbsp;(Order/आदेश)
                                     <br>
-                                    <input type="checkbox" name="response1" value="2" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
+                                    <input type="checkbox" ng-model=outgoingCheckBoxOptions.feedback name="response1" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
                                     <br>
-                                    <input type="checkbox" name="response1" value="3" />Structured&nbsp;(Response/प्रतिक्रिया)
+                                    <input type="checkbox" ng-model=outgoingCheckBoxOptions.response name="response1" />Structured&nbsp;(Response/प्रतिक्रिया)
                                     <br>
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="form-actions">
-                        <input type="submit" class="btn btn-success" value="Save Details" /> <a class="btn" href="#/settings">Cancel</a>
+                        <input type="submit" ng-click="updateOutgoingCallOpt()" class="btn btn-success" value="Save Details" />
                     </div>
                 </div>
                 <div id="inbound-call-settings" class="tab-pane">
                     <div class="table-settings-system">
                         <table>
                             <tr>
-                                <b>INCOMING CALL SETTINGS</b>
+                                <b>INCOMING CALL SETTINGS :</b>
                             </tr>
                             <tr>
-                                <td>Language Incoming&nbsp;(भाषा):
-                                    <br>
-                                    <input type="checkbox" name="languagein" id="language" value="4" />Hindi&nbsp;(हिन्दी)
-                                    <br>
-                                    <input type="checkbox" name="languagein" id="language" value="5" checked='checked' />Marathi&nbsp;(मराठी)
-                                    <br>
-                                    <input type="checkbox" name="languagein" id="language" value="6" />English&nbsp;(अंग्रेजी)
-                                    <br>
-                                    <input type="hidden" name="filePresent" id="filePresent" value="">
-                                </td>
-                                <td></td>
                                 <td>Response Incoming&nbsp;(प्रतिक्रिया):
                                     <br>
-                                    <input type="checkbox" name="responsein" value="1" checked='checked' />SemiStructured&nbsp;(Order/आदेश)
+                                    <input type="checkbox" ng-model=incomingCheckBoxOptions.order name="responsein" />SemiStructured&nbsp;(Order/आदेश)
                                     <br>
-                                    <input type="checkbox" name="responsein" value="2" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
+                                    <input type="checkbox" ng-model=incomingCheckBoxOptions.feedback name="responsein" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
                                     <br>
-                                    <input type="checkbox" name="responsein" value="3" />Structured&nbsp;(Response/प्रतिक्रिया)
+                                    <input type="checkbox" ng-model=incomingCheckBoxOptions.response name="responsein" />Structured&nbsp;(Response/प्रतिक्रिया)
                                     <br>
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <div class="form-actions">
-                        <input type="submit" class="btn btn-success" value="Save Details" /> <a class="btn" href="#/settings">Cancel</a>
+                        <input type="submit" ng-click="updateIncomingCallOpt()" class="btn btn-success" value="Save Details" /> 
                     </div>
                 </div>
                 <div id="voice-call-settings" class="tab-pane">
@@ -247,7 +225,7 @@
 
                         </table>
                         <div class="form-actions">
-                            <input type="submit" class="btn btn-success" ng-click="updateVoiceCallOpt()"  value="Save Details" /> <a class="btn" href="#/settings">Cancel</a>
+                            <input type="submit" class="btn btn-success" ng-click="updateVoiceCallOpt()"  value="Save Details" />
                         </div>
                     </div>
                 </div>
@@ -310,7 +288,7 @@
                            </tr>
                         </table>
                         <div class="form-actions">
-                            <input type="submit" class="btn btn-success" ng-click="updateDashboardOpt()" id="save-btn-voice-dashboard" value="Save Details" /> <a class="btn" href="#/settings">Cancel</a>
+                            <input type="submit" class="btn btn-success" ng-click="updateDashboardOpt()" id="save-btn-voice-dashboard" value="Save Details"/>
                         </div>
                     </div>
                 </div>

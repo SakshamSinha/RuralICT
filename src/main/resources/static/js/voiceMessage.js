@@ -182,7 +182,7 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 		$scope.message = UpdateMessage.query({id:messageId},function(message){
 			$scope.message.comments = comment;
 			
-			$scope.message.$update({id:messageId},function()			
+			$scope.message.$update({id:messageId},function(){			
 			});
 		});		
 	};
