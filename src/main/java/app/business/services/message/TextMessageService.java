@@ -26,20 +26,14 @@ public class TextMessageService extends MessageService {
 	 * Returns inbox text messages for a group  
 	 */
 	public List<Message> getInboxTextMessageList(Group group) {
+		System.out.println(getMessageListByOrderStatus(group, "text", "new"));
 		return getMessageListByOrderStatus(group, "text", "new");
 	}
 	
 	/*
 	 * Returns accepted voice messages for a group  
 	 */
-	public List<Message> getAcceptedVoiceMessageList(Group group) {
+	public List<Message> getAcceptedTextMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "text", "accepted");
-	}
-	
-	/*
-	 * Returns rejected voice messages for a group  
-	 */
-	public List<Message> getRejectedVoiceMessageList(Group group) {
-		return getMessageListByOrderStatus(group, "text", "rejected");
 	}
 }

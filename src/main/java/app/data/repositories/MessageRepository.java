@@ -37,11 +37,6 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 
 	@PreAuthorize("hasRole('ADMIN'+#message.group.organization.abbreviation)")
 	@Override
-	public <S extends Message> S save(@Param("message") S message);
-    
-
-	@PreAuthorize("hasRole('ADMIN'+#message.group.organization.abbreviation)")
-	@Override
 	public void delete(@Param("message") Message message);
 
 	/*
@@ -56,4 +51,5 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	public List<Message> findByGroupAndFormatAndOrder_Status(Group group,String format,String status,Sort sort);
 	public List<Message> findByGroupAndResponseAndTypeAndFormat(Group group, boolean response,String type, String format);
 	public List<Message> findByGroup(Group group);
+	
 }

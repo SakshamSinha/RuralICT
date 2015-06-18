@@ -1,6 +1,7 @@
 package app.business.services;
 
 import java.security.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,15 @@ public class OrderItemService {
 	@Autowired
 	OrderItemRepository orderItemRepository;
 	
-	public List<OrderItem> getOrderItemsByOrganisationProductName(Organization organization, String name, Timestamp from, Timestamp to){
-		return orderItemRepository.findByOrder_OrganizationAndProduct_NameAndOrder_Message_TimeBetween(organization, name, from, to);
+	public List<OrderItem> getOrderItemsByOrganisationProductName(String org, String name, Date from, Date to){
+		return orderItemRepository.findByOrder_Organization_AbbreviationAndProduct_NameAndOrder_Message_TimeBetween(org, name, from, to);
 	}
 	
-	public List<OrderItem> getOrderItemsByOrganisationGroupName(Organization organization, String name, Timestamp from, Timestamp to){
-		return orderItemRepository.findByOrder_OrganizationAndOrder_Message_Group_NameAndOrder_Message_TimeBetween(organization, name, from, to);
+	public List<OrderItem> getOrderItemsByOrganisationGroupName(String org, String name, Date from, Date to){
+		return orderItemRepository.findByOrder_Organization_AbbreviationAndOrder_Message_Group_NameAndOrder_Message_TimeBetween(org, name, from, to);
+	}
+	
+	public OrderItem addOrderItem(OrderItem orderItem) {
+		return orderItemRepository.save(orderItem);
 	}
 }

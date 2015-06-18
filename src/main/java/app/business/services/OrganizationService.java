@@ -1,5 +1,6 @@
 package app.business.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import app.data.repositories.GroupRepository;
 import app.data.repositories.OrganizationRepository;
+import app.data.repositories.WelcomeMessageRepository;
 import app.entities.Group;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
+import app.entities.WelcomeMessage;
 
 @Service
 public class OrganizationService {
@@ -19,6 +22,9 @@ public class OrganizationService {
 	
 	@Autowired
 	GroupRepository groupRepository;
+	
+	@Autowired
+	WelcomeMessageRepository welcomeMessageRepository;
 	
 	public Organization getOrganizationByAbbreviation(String org)
 	{
@@ -30,7 +36,7 @@ public class OrganizationService {
 	}
 	
 	public List<Group> getOrganizationGroupList(Organization organization){
-		return organization.getGroups();
+		return (new ArrayList<Group>(organization.getGroups()));
 	}
 	
 	public void addOrganization(Organization organization){
@@ -67,6 +73,14 @@ public class OrganizationService {
 	
 	public Group getParentGroup(Organization organization){
 		return groupRepository.findByOrganizationAndParentGroup(organization, null);
+	}
+	
+	public List<WelcomeMessage> getWelcomeMessageListByOrganization(Organization organization){
+		return welcomeMessageRepository.findByOrganization(organization);
+	}
+	
+	public WelcomeMessage getWelcomeMessageByOrganization(Organization organization, String locale){
+		return welcomeMessageRepository.findByOrganizationAndLocale(organization, locale);
 	}
 	
 }

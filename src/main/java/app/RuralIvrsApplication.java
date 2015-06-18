@@ -29,7 +29,7 @@ public class RuralIvrsApplication {
 	}
 	
 	@Bean
-	public Filter OpenSessionInViewFilter() {
+	public Filter OpenEntityManagerInViewFilter() {
 	   OpenEntityManagerInViewFilter filter = new OpenEntityManagerInViewFilter();
 	   return filter;
 	}

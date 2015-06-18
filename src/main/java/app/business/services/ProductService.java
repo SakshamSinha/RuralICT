@@ -3,19 +3,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import app.data.repositories.ProductRepository;
 import app.entities.Organization;
 import app.entities.Product;
 import app.entities.ProductType;
-import app.data.repositories.ProductRepository;
 
 @Service
 public class ProductService {
 	
 	@Autowired
 	ProductRepository productRepository;
+	
 	public List<ProductType> getProductTypeList(Organization organization){
 		return organization.getProductTypes(); 
 	}

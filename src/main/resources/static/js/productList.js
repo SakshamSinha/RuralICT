@@ -145,3 +145,4 @@ $("#page-content").on("click","#update-product",function(e){
 	$("#edit-product-modal").modal('toggle');
 	$('#update-price-input').val("");
 });
+
