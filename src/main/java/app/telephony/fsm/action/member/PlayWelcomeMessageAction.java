@@ -9,6 +9,8 @@ import app.entities.Voice;
 import app.entities.WelcomeMessage;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
+import app.telephony.config.Configs;
+
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -35,7 +37,13 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		Voice v = broadcast.getVoice();
 
 		String userLang=userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getCallLocale();
-		session.setLanguage(userLang);
+
+		if(userLang!=null && !userLang.equalsIgnoreCase("")){
+			session.setLanguage(userLang);
+		}
+		else{
+			session.setLanguage(null);
+		}
 
 		if(isOutbound){
 

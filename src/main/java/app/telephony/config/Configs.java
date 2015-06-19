@@ -49,11 +49,11 @@ public class Configs extends IVRConfigs {
 		/**
 		 * The seconds of silence before which an ongoing recording is accepted.
 		 */
-		public static final int RECORDING_SILENCE = 3;
+		public static final int RECORDING_SILENCE = 5;
 		/**
 		 * The maximum duration of a recording in seconds.
 		 */
-		public static final int MAX_RECORDING_DURATION = 5 * 60;
+		public static final int MAX_RECORDING_DURATION = 10 * 60;
 		/**
 		 * Maximum number of invalid tries before disconnection.
 		 */
