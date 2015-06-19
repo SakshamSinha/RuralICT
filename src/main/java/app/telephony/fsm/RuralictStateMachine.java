@@ -135,7 +135,6 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 
 		// actions that do something with the system
 		Action<IVRSession> doAskPlayFeedbackMessagesAction = new DoAskPlayFeedbackMessagesAction();
-		//Action<IVRSession> doRecordOrderMessageAction = new DoRecordOrderMessageAction();
 		Action<IVRSession> doStoreOrderMessageAction = new DoStoreOrderMessageAction();
 		Action<IVRSession> doStoreFeedbackMessageAction = new DoStoreFeedbackMessageAction();
 		Action<IVRSession> doDisconnectAction = new DoDisconnectAction();
@@ -198,7 +197,6 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		State<IVRSession> languageMenu = map.addActiveState("LanguageMenu", userCallFlow, askForLanguageAction);
 		State<IVRSession> languageAndOtherMenu = map.addActiveState("languageAndOtherMenu", userCallFlow, askForLanguageAndOtherAction);
 		State<IVRSession> responseType = map.addActiveState("ResponseType", userCallFlow, askForResponseTypeAction);
-		//State<IVRSession> recordFeedback = map.addActiveState("RecordFeedback", userCallFlow,doAskPlayFeedbackMessagesAction);
 		State<IVRSession> recordFeedback = map.addActiveState("RecordFeedback", userCallFlow,playFeedbackRecordAction);
 		State<IVRSession> orderMenu = map.addActiveState("OrderMenu", userCallFlow, askForOrderMenuAction);
 		State<IVRSession> confirmFeedbackMessage = map.addActiveState("ConfirmFeedbackMessage", userCallFlow, askConfirmFeedbackAction);
@@ -210,8 +208,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		State<IVRSession> dummyStateForResponse = map.addActiveState("DummyStateForResponse", userCallFlow, null);
 		State<IVRSession> dummyStateForOrder = map.addActiveState("DummyStateForOrder", userCallFlow, null);
 		State<IVRSession> replayRecord = map.addActiveState("ReplayRecord", userCallFlow, playRecordedMessageAction);
-		//StateForInvalidInput dummyStateForInvalidInput = new StateForInvalidInput(map.addActiveState("StateForResponse", userCallFlow, null));
-		
+				
 
 		//states for publisher call flow
 
@@ -297,8 +294,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(responseType, onGotDTMFOrder,dummyStateForOrder, null);
 		map.allowTransition(responseType, onGotDTMFFeedback,recordFeedback, null);
 		map.allowTransition(responseType, onGotDTMFResponse,responseMenu,null);
-		map.invalidInputTransition(responseType, onGotDTMFKeyNot1nor2nor3,
-				map.addActiveState("InvalidInputResponseType", userCallFlow, null));
+	
 	
 		// transition from recordfeedback
 		map.allowTransition(recordFeedback, EventGuard.onRecord ,replayRecord, doAskPlayFeedbackMessagesAction);
