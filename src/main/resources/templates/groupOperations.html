@@ -18,15 +18,6 @@
 
 <!--top level tab content-->
 <div class="tab-content">
-	<!--broadcast tab menu-->
-	<div id="broadcast" class="tab-pane">
-		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
-			<li><a href="#broadcast-voice-message" data-toggle="tab">Voice
-					Message</a></li>
-			<li><a href="#broadcast-text-message" data-toggle="tab">Text
-					Message</a></li>
-		</ul>
-	</div>
 	<!--Voice message response tab menu-->
 	<div id="voice-message-response" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="all_tabs">
@@ -77,30 +68,28 @@
 				<ng-include
 					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include>
 			</div>
-			<div id="broadcast-text-message" class="tab-pane">
+			<div ng-controller="textBroadcastCtrl" id="broadcast-text-message" class="tab-pane">
 				<form class="form-horizontal">
 					<fieldset>
 						<div class="control-group">
 							<label class="control-label" for="name">Message to be
 								sent</label>
 							<div class="controls">
-								<textarea name="message" rows="5" cols="30" id="sms-message"
-									onkeyup="countChar(this)" required></textarea>
+								<textarea name="message" ng-model="textContent" rows="5" cols="30" id="sms-message"></textarea>
 							</div>
 						</div>
 
 						<div class="control">Message Response</div>
 						<div class="control-group">
-							<br> <input type="radio" id="radio1" name="value"
-								value="order">Order <br> <input type="radio"
-								id="radio2" name="value" value="feedback">Feedback <br>
-							<input type="radio" name="value" id="radio3" value="response">Response
-							<br> <input type="radio" name="value" id="radio4"
-								value="noresponse">No Response <br>
+							<br> 
+							<input type="radio" ng-model="radioValues" id=radio1 name="value" value=0>Order<br> 
+							<input type="radio" id="radio2" ng-model="radioValues" name="value" value=1>Feedback <br>
+							<input type="radio" name="value" ng-model="radioValues" id="radio3" value=2>Response<br> 
+							<input type="radio" name="value" ng-model="radioValues" id="radio4" value=3>No Response<br>
 						</div>
 
 						<div class="form-actions">
-							<input type="submit" class="btn btn-success" value="Save Deatils" />
+							<input type="submit" ng-click=saveTextBroadcastBtn() class="btn btn-success" value="Save Details" />
 						</div>
 					</fieldset>
 				</form>
