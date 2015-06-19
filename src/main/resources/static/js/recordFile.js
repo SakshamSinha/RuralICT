@@ -35,8 +35,6 @@ RecordFile.prototype.createDownloadLink = function() {
 	recorder && recorder.exportWAV(function(blob) {
 		var url = URL.createObjectURL(blob);
 		var hf = document.getElementById(urlTagName);
-		console.log(this.urlTagName);
-		console.log(hf);
 		hf.href = url;
 		hf.download = new Date().toISOString() + '.wav';
 		hf.innerHTML = hf.download;
