@@ -92,7 +92,7 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <input type="file" name="welcome_message" id="welcome_message">
+                                    <input type="file" name="myFile" file-model="myFile" id="welcome_message">
                                 </td>
                             </tr>
 
@@ -113,7 +113,7 @@
 
                         </table>
                         <div class="form-actions">
-                            <input type="submit" class="btn btn-success" value="Save Details" />
+                            <input type="submit" class="btn btn-success" ng-click="uploadFile()" value="Save Details" />
                         </div>
                     </div>
                 </div>

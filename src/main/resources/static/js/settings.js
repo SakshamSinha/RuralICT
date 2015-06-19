@@ -35,7 +35,23 @@ website.factory("OutboundCall", function($resource) {
     });
 });
 
-website.controller("SettingsCtrl", function($scope, $routeParams, Organization, OutboundCall) {
+website.directive('fileModel', ['$parse',function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
+
+website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organization, OutboundCall) {
 
     // get the current organization id
     var orgid = document.getElementById("settings-page").getAttribute("orgid");
@@ -176,6 +192,23 @@ website.controller("SettingsCtrl", function($scope, $routeParams, Organization, 
             }, function() {});
         });
     };
+    
+    $scope.uploadFile = function(){
+        var formData=new FormData();
+        formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
+        $http({
+            method: 'POST',
+            url: '/web/iitb/upload', // The URL to Post.
+            headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
+            data: formData,
+            transformRequest: function(data, headersGetterFunction) {
+                return data;
+            }
+        }).success(function(data, status) {  
+        })
+        .error(function(data, status) {
+        });
+    }
     
     
     
