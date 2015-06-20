@@ -42,9 +42,4 @@ public class UploadController {
 			return -1;
 		}
 	}
-	
-	@RequestMapping(value="/upload", method=RequestMethod.GET)
-	public String uploadFile(Model model) {
-		return "form";
-	}
 }
