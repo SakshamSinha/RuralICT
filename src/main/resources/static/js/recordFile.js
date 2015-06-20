@@ -69,7 +69,7 @@ RecordFile.prototype.init = function(){
 	    }
 	    
 	    navigator.getUserMedia({audio: true}, this.startUserMedia, function(e) {
-	      __log('No live audio input: ' + e);
+	      __log('No live audio input: ' + e.toString());
 	    });
 };
 
