@@ -57,7 +57,6 @@ dependencies {
 	compile files("libs/jave-1.0.2.jar")
 	compile files("libs/tungsten-fsm-0.5.0.jar")
 	compile files('libs/IVRBase.jar')
-	compile files('libs/json-simple-1.1.1.jar')
 	compile("mysql:mysql-connector-java")
 	compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity3")
 	compile("net.sourceforge.nekohtml:nekohtml:1.9.21")

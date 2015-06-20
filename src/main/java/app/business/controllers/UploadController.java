@@ -17,6 +17,7 @@ import app.entities.Voice;
 import app.util.Utils;
 
 @Controller
+@RequestMapping("web/{org}")
 public class UploadController {
 	
 	@Autowired
