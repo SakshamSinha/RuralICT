@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import app.entities.Group;
 import app.entities.InboundCall;
 import app.entities.Order;
@@ -12,9 +14,9 @@ import app.entities.User;
 import app.entities.Voice;
 import app.entities.broadcast.Broadcast;
 
-
 @Entity
 @DiscriminatorValue("voice")
+@JsonTypeName("voice")
 public class VoiceMessage extends Message {
 	private static final long serialVersionUID = 1L;
 
@@ -54,5 +56,4 @@ public class VoiceMessage extends Message {
 	public void setInboundCall(InboundCall inboundCall) {
 		this.inboundCall = inboundCall;
 	}
-
 }

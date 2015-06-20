@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import app.entities.Group;
 import app.entities.Order;
 import app.entities.User;
@@ -13,6 +15,7 @@ import app.entities.broadcast.Broadcast;
 
 @Entity
 @DiscriminatorValue("text")
+@JsonTypeName("text")
 public class TextMessage extends Message {
 	private static final long serialVersionUID = 1L;
 
@@ -37,5 +40,4 @@ public class TextMessage extends Message {
 	public void setTextContent(String textContent) {
 		this.textContent = textContent;
 	}
-
 }
