@@ -20,6 +20,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
 import app.entities.Group;
@@ -36,6 +38,7 @@ import app.entities.message.Message;
 @Table(name="broadcast")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="format", discriminatorType=DiscriminatorType.STRING)
+@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include=JsonTypeInfo.As.PROPERTY, property="format")
 public abstract class Broadcast implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -1,15 +1,26 @@
 package app.business.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import app.business.services.BroadcastRecipientService;
+import app.business.services.broadcast.BroadcastService;
+import app.business.services.broadcast.VoiceBroadcastService;
+import app.business.services.springcontext.SpringContextBridge;
+import app.entities.BroadcastRecipient;
+import app.entities.Organization;
+import app.entities.broadcast.Broadcast;
+import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
@@ -90,12 +101,31 @@ public class OutboundCallHandlerController implements IVRSessionFactory{
 	{
 		
 		printParameterMap(request.getParameterMap());
-					
+		
+		//ALternet solution for broadcast 
+		
+		/*Integer broadcastID = Integer.parseInt(request.getParameter("broadcastID"));
+		
+		BroadcastService broadcastService = SpringContextBridge.services().getVoiceBroadcastService();
+		
+		Broadcast broadcast = broadcastService.getBroadcast(broadcastID);
+		List<BroadcastRecipient> recipients = broadcast.getBroadcastRecipients();*/
+		
 		try {
-			String userNumber="9892275485";   //testing purpose
+			String userNumber="9892275485";   
 					/* TODO */
+		/*	Organization organization = broadcast.getOrganization();
+			String ivrNumber = organization.getIvrNumber();*/
 			String ivrNumber = "912030157457";
-			response.getOutputStream().println(IVRUtils.makeOutboundCall(userNumber, ivrNumber, Configs.Telephony.OUTBOUND_APP_URL));
+			
+			//SpringContextBridge.services().getOrganizationService();
+			/*
+			 * 
+			for(BroadcastRecipient recipient:recipients){
+				userNumber = recipient.getUser().getUserPhoneNumbers().get(0).getPhoneNumber();*/
+				response.getOutputStream().println(IVRUtils.makeOutboundCall(userNumber, ivrNumber, Configs.Telephony.OUTBOUND_APP_URL));
+			//}
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

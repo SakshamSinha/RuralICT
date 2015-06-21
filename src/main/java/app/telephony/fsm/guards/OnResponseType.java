@@ -25,7 +25,7 @@ public class OnResponseType extends EventTypeGuard<IVRSession> {
 			String input = ev.getInput();
 			String value = RuralictStateMachine.tempResponseMap.get(input);
 
-			if(value.equalsIgnoreCase(responseType)){
+			if(value!=null && value.equalsIgnoreCase(responseType)){
 				return true;
 			}
 			return false;
