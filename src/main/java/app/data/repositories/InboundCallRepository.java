@@ -37,10 +37,6 @@ public interface InboundCallRepository extends JpaRepository<InboundCall, Intege
 
 	@PreAuthorize("hasRole('ADMIN'+#call.organization.abbreviation)")
 	@Override
-	public <S extends InboundCall> S save(@Param("call") S call);
-
-	@PreAuthorize("hasRole('ADMIN'+#call.organization.abbreviation)")
-	@Override
 	public void delete(@Param("call") InboundCall call);
 
 	/*

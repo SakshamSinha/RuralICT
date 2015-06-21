@@ -25,16 +25,11 @@ public class DoStoreBroadcastMessageAction implements Action<IVRSession> {
 		Voice voice = new Voice();
 		RuralictSession ruralictSession = (RuralictSession) session;
 		InboundCall inboundCall = ruralictSession.getCall();
-		String mode = "web";
-		String type ="voice";
 		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		voice.setUrl(url);
 		inboundCall.setDuration(ruralictSession.getRecordEvent().getDuration());
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		
-
-
-
 	}
 
 }
