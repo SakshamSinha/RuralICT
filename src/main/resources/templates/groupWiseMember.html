@@ -1,47 +1,218 @@
-<div class="row-fluid">
-	<div th:if="${groupWiseMemberShip != null }">
-		<table class="table table-striped table-bordered table-condensed"
-			id="usertable">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>E-mail</th>
-					<th>Phone</th>
-					<th>Address</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="list-users"
-					th:each="groupMemberShip, iterationStatus : ${groupWiseMemberShip} ">
-					<td th:text="${iterationStatus.count}">1</td>
-
-					<td th:text="${groupMemberShip.user.name}">Member Name</td>
-					<td th:text="${groupMemberShip.user.email}">Member EmailId</td>
-					<td th:text="${groupMemberShip.phone.phoneNumber}">Member
-						PhoneNumber</td>
-					<td th:text="${groupMemberShip.user.address}">Member address</td>
-
-
-				</tr>
-			</tbody>
-		</table>
+<div ng-controller="UserCtrl">
+	<div class="row-fluid" style="padding-bottom:100px;">
+		<div th:if="${userViews != null }">
+			<div class="row-fluid">
+				<button class="btn btn-success" id = "add_new_user" data-toggle="modal" data-title="Add new user" data-target="#add-new-group-user-modal">
+	    			<i class="icon-white icon-plus-sign"></i> Add new user
+	    		</button>
+	    		<br>
+	    		<br>
+			</div>
+			<table class="table table-striped table-bordered table-condensed"
+				id="usertable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>E-mail</th>
+						<th>Phone</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="list-users"
+						th:each="userView, iterationStatus : ${userViews} ">
+						<td th:text="${iterationStatus.count}">1</td>
+						<td th:text="${userView.user.name}">Member Name</td>
+						<td th:text="${userView.user.email}">Member EmailId</td>
+						<td th:text="${userView.phone.phoneNumber}">Member PhoneNumber</td>
+						<td>
+	          				<div class="btn-group">
+	            				<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
+	            				<ul class="dropdown-menu">
+								  <li><a href="#" th:attr="data-value=${userView.user.userId}" class="add-group-user-to-new-group" data-toggle="modal" data-title="Add new user" data-target="#add-group-user-to-new-group-modal"><i class="icon-plus-sign"></i> Add to Group</a></li>
+					              <li><a href="#" th:attr="data-value=${userView.user.userId}"  class="add-group-user-phone-number" data-toggle="modal" data-title="Add new user" data-target="#add-group-user-phone-number-modal"><i class="icon-plus-sign"></i> Add Number</a></li>
+					              <!-- <li><a href="#" th:attr="data-value=${userView.user.userId}"  class="remove-group-user-from-group" data-toggle="modal" data-title="Add new user" data-target="remove-group-user-from-group-modal"><i class="icon-remove"></i> Remove from Group</a></li> -->
+					              <li><a href="#" th:attr="data-value=${userView.user.userId}"  class="remove-group-user" data-toggle="modal" data-title="Add new user" data-target="#delete-group-user-modal"><i class="icon-trash"></i> Delete</a></li>
+	           					</ul>
+	       					</div>
+	       				</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+		<div th:if="${userViews == null}">
+			<B>No member in this group</B>
+		</div>
+		<!-- <div class="pagination">
+			<ul>
+				<li><a href="#">Prev</a></li>
+				<li class="active"><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">Next</a></li>
+			</ul>
+		</div> -->
 	</div>
-
-	<div th:if="${groupWiseMemberShip == null}">
-		<B>No member in this group</B>
+	
+	<!-- /.modal-content -->
+	<!-- /.modal-dialog -->
+	<div class="modal fade" id="add-new-group-user-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingAddUser" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">
+					<i class="icon-remove"></i>
+				</button>
+				<h4 class="modal-title custom_align" id="HeadingUser">Add New User</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="newGroupUserName">Name: </label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="newGroupUserName"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="newGroupUserPrimaryPhoneNumber">Phone Number:</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="newGroupUserPrimaryPhoneNumber"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="newGroupUserAddress">Address:</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="newGroupUserAddress"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="newGroupUserEmail">Email:</label>
+						<div class="controls">
+							<input type="email" class="input-xlarge" id="newGroupUserEmail"/>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer ">
+			<button type="button" class="btn btn-success" id="add-new-group-user">
+				<i class="icon-white icon-ok"></i> Add
+			</button>
+			<button type="button" class="btn btn-default" id="cancel-new-group"
+				data-dismiss="modal">
+				<i class="icon-white icon-remove"></i> Cancel
+			</button>
+		</div>
 	</div>
-	<!-- <div class="pagination">
-		<ul>
-			<li><a href="#">Prev</a></li>
-			<li class="active"><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">Next</a></li>
-		</ul>
-	</div> -->
+	
+	<div class="modal fade" id="delete-group-user-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove" aria-hidden="true"></i></button>
+		    <h4 class="modal-title custom_align" id="HeadingEdit">Delete User</h4>
+		  </div>
+		  <div class="modal-body">
+		    <div class="fluid-row text-center">
+			   	Do you want to delete user? This action cannot be undone.
+		    </div>
+		    <hr>
+		  </div>
+		</div>
+		<div class="modal-footer ">
+		  <button type="button" id="delete-group-user" class="btn btn-warning"><i class="icon-white icon-trash"></i>  Delete</button>
+		  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="add-group-user-to-new-group-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove" aria-hidden="true"></i></button>
+		    <h4 class="modal-title custom_align" id="HeadingEdit">Add To Group</h4>
+		  </div>
+		  <div class="modal-body">
+		    <div class="fluid-row">
+			   	<form>
+			   		<div class="control-group">
+			  			<div class="fluid-row">
+				    		<form class="form-horizontal">
+						      <fieldset>
+							  	<div class="control-group">
+							      	<label class="control-label">Select Group: </label>
+								  	<div class="controls">
+								    	<select class="span10" id="groupForGroupMember">
+				    						<option th:each="group : ${organization.groups}" th:value="${group.groupId}" th:text="${group.name}">Group</option>
+				    					</select>
+								  	</div>
+							    </div>
+							 </fieldset>
+							</form>
+				  		</div>
+			  		</div>
+			   	</form>
+		    </div>
+		    <hr>
+		  </div>
+		</div>
+		<div class="modal-footer ">
+		  <button type="button" id="add-group-user-to-new-group" class="btn btn-warning"><i class="icon-white icon-plus-sign"></i>  Add</button>
+		  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="add-group-user-phone-number-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove" aria-hidden="true"></i></button>
+		    <h4 class="modal-title custom_align" id="HeadingEdit">Add To Group</h4>
+		  </div>
+		  <div class="modal-body">
+		    <div class="fluid-row">
+			   	<form>
+			   		<div class="control-group">
+			  			<div class="fluid-row">
+				    		<form class="form-horizontal">
+						      <fieldset>
+							  	<div class="control-group">
+							      	<label class="control-label">Add Phone Number: </label>
+								  	<div class="controls">
+								    	<input type="text" id="groupUserNewPhoneNumber">
+								  	</div>
+							    </div>
+							 </fieldset>
+							</form>
+				  		</div>
+			  		</div>
+			   	</form>
+		    </div>
+		    <hr>
+		  </div>
+		</div>
+		<div class="modal-footer ">
+		  <button type="button" id="add-group-user-phone-number" class="btn btn-warning"><i class="icon-white icon-plus-sign"></i>  Add</button>
+		  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="remove-group-user-from-group-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove" aria-hidden="true"></i></button>
+		    <h4 class="modal-title custom_align" id="HeadingEdit">Remove User From Group</h4>
+		  </div>
+		  <div class="modal-body">
+		    <div class="fluid-row text-center">
+			   	Do you want to remove user from this group?
+		    </div>
+		    <hr>
+		  </div>
+		</div>
+		<div class="modal-footer ">
+		  <button type="button" id="remove-group-user-from-group" class="btn btn-warning"><i class="icon-white icon-trash"></i>  Remove</button>
+		  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
+		</div>
+	</div>
 </div>
-
-<!-- /.modal-content -->
-<!-- /.modal-dialog -->
