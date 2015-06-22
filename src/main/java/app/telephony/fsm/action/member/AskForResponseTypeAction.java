@@ -1,9 +1,6 @@
 package app.telephony.fsm.action.member;
 
 import java.util.Arrays;
-
-
-
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
@@ -34,13 +31,13 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 		int i=1,j=0;
 		String[] newResponses = new String[RuralictStateMachine.tempResponseMap.size()];
 		String[] responseTypeKeys=new String[RuralictStateMachine.tempResponseMap.size()];
-		
+				
 		for(String key:RuralictStateMachine.tempResponseMap.keySet()){
 			responseTypeKeys[j]=key;
 			j++;
 		}
 		Arrays.sort(responseTypeKeys);
-		for(Object k:responseTypeKeys){
+		for(String k:responseTypeKeys){
 			if(responses[Integer.parseInt((String)k)-1]){
 				String responseType = RuralictStateMachine.tempResponseMap.get(k);
 				String language = session.getLanguage();

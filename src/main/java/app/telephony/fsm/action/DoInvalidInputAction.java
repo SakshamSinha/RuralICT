@@ -5,6 +5,7 @@ import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
+import com.continuent.tungsten.commons.patterns.fsm.State;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
 import com.continuent.tungsten.commons.patterns.fsm.TransitionFailureException;
 import com.continuent.tungsten.commons.patterns.fsm.TransitionRollbackException;
@@ -18,7 +19,7 @@ public class DoInvalidInputAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		if(session.getLanguage()!=null)
-			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput"+session.getLanguage()+".wav");
+			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput_"+session.getLanguage()+".wav");
 		else
 			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput"+".wav");
 		
