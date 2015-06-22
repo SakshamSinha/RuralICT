@@ -142,19 +142,19 @@
         </div>
         
         <div class="modal fade" id="group-add-failed-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddFailed" aria-hidden="true">
-<div class="modal-dialog">
+  <div class="modal-dialog">
     <div class="modal-content">
-        <div class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
         <h4 class="modal-title custom_align" id="HeadingAddFailed">Failed to add group</h4>
-        </div>
-        <div class="modal-body">
+      </div>
+      <div class="modal-body">
         <b>Technical details:</b><br/>
         <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>{{failure}}</div>
-    </div>
-    <div class="modal-footer ">
+      </div>
+      <div class="modal-footer ">
         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> OK</button>
-    </div>
+      </div>
     </div>
     <!-- /.modal-content --> 
   </div>
@@ -189,9 +189,7 @@
     <script th:src="@{/static/js/libs/angular-resource.js}"></script>
     <script th:src="@{/static/js/libs/loading-bar.min.js}"></script>
     <script th:src="@{/static/js/libs/angular.min.js}"></script>
-    <script th:src="@{/static/js/libs/recorder.js}"></script>
     <script th:src="@{/static/js/utility.js}"></script>
-    <script th:src="@{/static/js/recordFile.js}"></script>
     <script th:src="@{/static/js/controllers.js}"></script>
     <script th:src="@{/static/js/resources.js}"></script>
     <script th:src="@{/static/js/textMessage.js}"></script>
@@ -202,7 +200,7 @@
     <script th:src="@{/static/js/groupOps.js}"></script>
     <script th:src="@{/static/js/users.js}"></script>
     <script th:src="@{/static/js/settings.js}"></script>
-    <script th:src="@{/static/js/textBroadcast.js}"></script>
+    <script th:src="@{/static/js/broadcastText.js}"></script>
         
 </body>
 </html>
