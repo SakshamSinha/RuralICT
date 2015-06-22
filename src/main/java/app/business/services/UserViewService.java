@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import app.entities.Group;
+import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
@@ -31,6 +33,9 @@ public class UserViewService {
 	
 	@Autowired
 	OrganizationService organizationService;
+	
+	@Autowired
+	GroupService groupService;
 	
 	/*
 	 * A Row class declared to return data to controller in nicer format
@@ -84,6 +89,28 @@ public class UserViewService {
 			role = userService.getUserRole(user,organization);
 			
 			UserView row = new UserView(organizationMembership.getUser(), phoneNumber , role );
+			rows.add(row);
+		}
+		
+		
+		return rows;
+	}
+	
+	public List<UserView> getUserViewListByGroup(int groupId){
+		
+		Group group = groupService.getGroup(groupId);
+		String role=null;
+		
+		List<GroupMembership> membershipList = group.getGroupMemberships();
+		
+		List<UserView> rows = new ArrayList<UserView>();
+		
+		for (GroupMembership groupMembership : membershipList) {
+			User user = groupMembership.getUser();
+			UserPhoneNumber phoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+			role = userService.getUserRole(user,group.getOrganization());
+			
+			UserView row = new UserView(groupMembership.getUser(), phoneNumber , role );
 			rows.add(row);
 		}
 		

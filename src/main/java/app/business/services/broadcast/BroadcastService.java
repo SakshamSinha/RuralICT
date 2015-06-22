@@ -39,9 +39,9 @@ public class BroadcastService {
 		broadcastRepository.delete(broadcast);
 	}
 	
-	public void getBroadcast(int broadcastId) {
+	public Broadcast getBroadcast(int broadcastId) {
 		
-		broadcastRepository.findOne(broadcastId);
+		return broadcastRepository.findOne(broadcastId);
 	}
 	
 	@Transactional

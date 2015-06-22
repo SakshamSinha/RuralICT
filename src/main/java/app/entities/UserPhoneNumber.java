@@ -21,6 +21,7 @@ public class UserPhoneNumber implements Serializable {
 	private String phoneNumber;
 
 	@Type(type="org.hibernate.type.NumericBooleanType")
+	@Column(name="is_primary")
 	private boolean primary;
 
 	//bi-directional many-to-one association to User

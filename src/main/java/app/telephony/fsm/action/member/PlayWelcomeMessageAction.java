@@ -6,9 +6,11 @@ import app.business.services.UserPhoneNumberService;
 import app.business.services.broadcast.BroadcastService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Voice;
+import app.entities.WelcomeMessage;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
+
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -25,6 +27,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 		RuralictSession ruralictSession = (RuralictSession) session;
 		boolean isOutbound = ruralictSession.isOutbound();
+		WelcomeMessage welcomeMessage;
 
 		BroadcastService broadcastService= SpringContextBridge.services().getVoiceBroadcastService();
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
@@ -33,6 +36,14 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		broadcast = (VoiceBroadcast) broadcastService.getTopBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), organizationService.getOrganizationByIVRS(session.getIvrNumber()), "voice");
 		Voice v = broadcast.getVoice();
 
+		String userLang=userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getCallLocale();
+
+		if(userLang!=null && !userLang.equalsIgnoreCase("")){
+			session.setLanguage(userLang);
+		}
+		else{
+			session.setLanguage(null);
+		}
 
 		if(isOutbound){
 
@@ -50,8 +61,14 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			ruralictSession.setFeedbackAllowed(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskFeedback());
 			ruralictSession.setResponseAllowed(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskResponse());
 
-			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/welcomeMessage.wav");
+			if(session.getLanguage()==null){
 
+				welcomeMessage = organizationService.getWelcomeMessageByOrganization(organizationService.getOrganizationByIVRS(session.getIvrNumber()), "en");
+			}
+			else{
+				welcomeMessage = organizationService.getWelcomeMessageByOrganization(organizationService.getOrganizationByIVRS(session.getIvrNumber()), session.getLanguage());
+			}
+			response.addPlayAudio(welcomeMessage.getVoice().getUrl());
 			if(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableBroadcasts()){
 				response.addPlayAudio(v.getUrl());
 			}
