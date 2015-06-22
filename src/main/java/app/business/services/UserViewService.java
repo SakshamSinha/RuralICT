@@ -117,7 +117,7 @@ public class UserViewService {
 		
 		return rows;
 	}
-
+	
 	@Transactional
 	public void addUserView(UserView userView) {
 

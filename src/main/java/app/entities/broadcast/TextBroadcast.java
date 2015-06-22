@@ -4,12 +4,15 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import app.entities.Group;
 import app.entities.Organization;
 import app.entities.User;
 
 @Entity
 @DiscriminatorValue("text")
+@JsonTypeName("text")
 public class TextBroadcast extends Broadcast {
 	private static final long serialVersionUID = 1L;
 

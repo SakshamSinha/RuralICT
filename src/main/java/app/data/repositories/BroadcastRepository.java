@@ -28,7 +28,6 @@ public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
 	@Override
 	public List<Broadcast> findAll();
 
-	@PostFilter("hasRole('ADMIN_OR_PUBLISHER'+filterObject.organization.abbreviation)")
 	@Override
 	public Page<Broadcast> findAll(Pageable pageable);
 

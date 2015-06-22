@@ -24,12 +24,13 @@ public interface OrganizationRepository extends JpaRepository<Organization, Inte
 	@Override
 	public void delete(@Param("org") Organization org);
 	
+	@Override
+	public Organization findOne(Integer id);
 	
 	/*
 	 * Search functions
 	 */
-
-	public Organization findOne(Integer id);
+	
 
 
 	public Organization findByAbbreviation(@Param("abbreviation") String abbreviation);

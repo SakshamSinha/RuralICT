@@ -24,8 +24,7 @@ import app.data.repositories.UserRepository;
 import app.entities.User;
 import app.security.AuthenticatedUser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 /**
  * Utilities for this application.
  */
@@ -193,7 +192,7 @@ public class Utils {
 			return fileName;
 		}
 		else {
-			System.out.println("No file to download. Server replied HTTP code: " + responseCode + responseMessage);
+			System.out.println("No file to download. Server replied HTTP code: " + responseCode);
 			
 		}
 		httpConn.disconnect();

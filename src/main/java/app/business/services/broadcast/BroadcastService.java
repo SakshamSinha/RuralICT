@@ -39,8 +39,11 @@ public class BroadcastService {
 		broadcastRepository.delete(broadcast);
 	}
 	
-
-
+	public Broadcast getBroadcast(int broadcastId) {
+		
+		return broadcastRepository.findOne(broadcastId);
+	}
+	
 	@Transactional
 	public Broadcast getTopBroadcast(User user, Organization organization, String format) {
 
