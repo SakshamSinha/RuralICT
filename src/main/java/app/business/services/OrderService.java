@@ -82,6 +82,13 @@ public class OrderService {
 		
 		return orderRepository.save(order);
 	}
+	
+	public void cancelOrder(Order order) {
+		
+		order.setStatus("cancelled");
+		orderRepository.save(order);
+	}
+	
 
 	public void removeOrder(Order order) {
 	
