@@ -39,7 +39,7 @@ public class SettingsController {
 		return "settings";
 	}
 	
-	@RequestMapping(value="/upload", method=RequestMethod.POST)
+	@RequestMapping(value="/upload/welcomeMessage", method=RequestMethod.POST)
 	@ResponseBody
     public void handleFileUpload(HttpServletRequest request){
 		MultipartHttpServletRequest mRequest;

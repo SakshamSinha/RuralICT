@@ -198,7 +198,7 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organizat
         formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
         $http({
             method: 'POST',
-            url: '/web/iitb/upload', // The URL to Post.
+            url: '/web/iitb/upload/welcomeMessage', // The URL to Post.
             headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
             data: formData,
             transformRequest: function(data, headersGetterFunction) {
