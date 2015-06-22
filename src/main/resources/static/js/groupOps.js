@@ -27,7 +27,7 @@ $("#add-new-group").click(function() {
     console.log(name);
     var data ={};
     data.name=name;
-    data.organization = "organization/" + $("#organization").attr("data-orgId");
+    data.organization = "organization/" + $("#organizationId").val();
     data.parentGroup = parentGroup;
     angular.element($('#add-new-group')).scope().addGroup(data);
     
@@ -36,3 +36,6 @@ $("#add-new-group").click(function() {
     $('#new-group-name-input').val("");
 	
 });
+
+
+
