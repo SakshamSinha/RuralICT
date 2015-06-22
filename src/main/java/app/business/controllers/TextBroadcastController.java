@@ -46,10 +46,10 @@ import app.entities.broadcast.TextBroadcast;
 public class TextBroadcastController {
 	
 	@Autowired
-    BroadcastRecipientService broadcastRecipientService;
+	BroadcastRecipientService broadcastRecipientService;
 	
 	@Autowired
-    BroadcastService broadcastService;
+	BroadcastService broadcastService;
 	
 	@Autowired
 	UserService userService;
@@ -82,7 +82,7 @@ public class TextBroadcastController {
 		
 		model.addAttribute("users",users);
 		model.addAttribute("publisher",user);
-	    model.addAttribute("group", group);
+		model.addAttribute("group", group);
 		model.addAttribute("organization", organization);
 		
 		return "textBroadcast";
@@ -92,51 +92,51 @@ public class TextBroadcastController {
 	@ResponseBody
 	@Transactional
 	public void createBroadcast(@RequestBody Map<String,String> body) {
-	    
+		
 		// Get the required variables from the Broadcast JSON object passed through Angular JS
 		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organization")));
-	    Group group = groupService.getGroup(Integer.parseInt(body.get("group")));
-	    User publisher = userService.getUser(Integer.parseInt(body.get("publisher")));
-	    String mode = body.get("mode");
-	    boolean askOrder = Boolean.parseBoolean(body.get("askOrder"));
-	    boolean askFeedback = Boolean.parseBoolean(body.get("askFeedback"));
-	    boolean askResponse = Boolean.parseBoolean(body.get("askResponse"));
-	    boolean appOnly = Boolean.parseBoolean(body.get("appOnly"));
-	    String textContent = body.get("textContent");
-	    
-	    
-	    // Create a new Text Broadcast and add it to the database
-	    TextBroadcast broadcast = new TextBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, textContent);
-	    broadcastService.addBroadcast(broadcast);
-	     
-	    // Get the Broadcast Recipients
-	    String userIdString = body.get("userIds");
-	    String[] userIdList = userIdString.split(",");
-	    
-	    // Parse the string containing User Id of the Recipients and send SMS to them
-	    for(int i=0 ; i<userIdList.length;i++)
-	    {	
-	    	System.out.println(userIdList[i]);
-	    	User user = userService.getUser(Integer.parseInt(userIdList[i]));
-	    	BroadcastRecipient recipientUser = new BroadcastRecipient(broadcast, user);
-	    	broadcastRecipientService.addBroadcastRecipient(recipientUser);
-	    	UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
-	    	
-	    	// Call the SendSMS function from IVRUtils
-	    	try {
+		Group group = groupService.getGroup(Integer.parseInt(body.get("group")));
+		User publisher = userService.getUser(Integer.parseInt(body.get("publisher")));
+		String mode = body.get("mode");
+		boolean askOrder = Boolean.parseBoolean(body.get("askOrder"));
+		boolean askFeedback = Boolean.parseBoolean(body.get("askFeedback"));
+		boolean askResponse = Boolean.parseBoolean(body.get("askResponse"));
+		boolean appOnly = Boolean.parseBoolean(body.get("appOnly"));
+		String textContent = body.get("textContent");
+		
+		
+		// Create a new Text Broadcast and add it to the database
+		TextBroadcast broadcast = new TextBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, textContent);
+		broadcastService.addBroadcast(broadcast);
+		 
+		// Get the Broadcast Recipients
+		String userIdString = body.get("userIds");
+		String[] userIdList = userIdString.split(",");
+		
+		// Parse the string containing User Id of the Recipients and send SMS to them
+		for(int i=0 ; i<userIdList.length;i++)
+		{	
+			System.out.println(userIdList[i]);
+			User user = userService.getUser(Integer.parseInt(userIdList[i]));
+			BroadcastRecipient recipientUser = new BroadcastRecipient(broadcast, user);
+			broadcastRecipientService.addBroadcastRecipient(recipientUser);
+			UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+			
+			// Call the SendSMS function from IVRUtils
+			try {
 				IVRUtils.sendSMS(userPhoneNumber.getPhoneNumber(),textContent);
 			} 
-	    	catch (Exception e) {
+			catch (Exception e) {
 				e.printStackTrace();
 			}
-	    }
-	    
-	    // Get the current Timestamp
-	    java.util.Date date = new java.util.Date();
-	    java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());  
-	     
-	    // Set the Timestamp in the broadcast table after sending SMS to all the recipients
-	    broadcastService.setBroadcastTime(timestamp, broadcast);
-	    
+		}
+		
+		// Get the current Timestamp
+		java.util.Date date = new java.util.Date();
+		java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());  
+		 
+		// Set the Timestamp in the broadcast table after sending SMS to all the recipients
+		broadcastService.setBroadcastTime(timestamp, broadcast);
+		
 	}
 }

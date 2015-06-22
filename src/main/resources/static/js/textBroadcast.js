@@ -1,32 +1,32 @@
 /* Javascript file for the Text Broadcast View Controller */
  
 website.factory("TextBroadcast", function($resource) {
-    return $resource("/api/textBroadcasts/:id");
+	return $resource("/api/textBroadcasts/:id");
 });
 
 website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, TextBroadcast, OutboundCall) {
 
-    // Get the required variables from thymeleaf attributes
-    var orgid = document.getElementById("broadcast-text-ids").getAttribute("organizationid");
-    var abbr = document.getElementById("broadcast-text-ids").getAttribute("organizationabbr");
-    var groupid = document.getElementById("broadcast-text-ids").getAttribute("groupid");
-    var publisherid = document.getElementById("broadcast-text-ids").getAttribute("publisherid");
-    
-    // Initialize the values for radio-buttons
+	// Get the required variables from thymeleaf attributes
+	var orgid = document.getElementById("broadcast-text-ids").getAttribute("organizationid");
+	var abbr = document.getElementById("broadcast-text-ids").getAttribute("organizationabbr");
+	var groupid = document.getElementById("broadcast-text-ids").getAttribute("groupid");
+	var publisherid = document.getElementById("broadcast-text-ids").getAttribute("publisherid");
+	
+	// Initialize the values for radio-buttons
 	$scope.radioOptions = [false,false,false,false];
 	
 	// Function called when 'Send SMS' button is clicked
-    $scope.saveTextBroadcastBtn = function() {
-        
-    	// Set the currently selected value in radio button as true
-    	var currentValue =  $scope.radioValues;
-    	$scope.radioOptions[currentValue]=true;
-    	
-    	// Create TextBroadcast object
-        $scope.broadcast = new TextBroadcast();
-       
-        // Set the required attributes
-        $scope.broadcast.organization = orgid;
+	$scope.saveTextBroadcastBtn = function() {
+		
+		// Set the currently selected value in radio button as true
+		var currentValue =  $scope.radioValues;
+		$scope.radioOptions[currentValue]=true;
+		
+		// Create TextBroadcast object
+		$scope.broadcast = new TextBroadcast();
+	   
+		// Set the required attributes
+		$scope.broadcast.organization = orgid;
 		$scope.broadcast.group = groupid;
 		$scope.broadcast.publisher = publisherid;
 		$scope.broadcast.mode = "web";
@@ -46,7 +46,7 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 		});
 		
 		$scope.broadcast.userIds = userIds;
-        
+		
 		// Create a new textbroadcast object by sending 'POST' request to controller
 		$http.post('/web/'+ abbr +'/textBroadcast/create/' + groupid, $scope.broadcast)
 		.success(function(data,status,header,config){
@@ -61,6 +61,6 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 		})
 		
 		$scope.radioOptions[currentValue]=false;
-        
-    };
+		
+	};
 });

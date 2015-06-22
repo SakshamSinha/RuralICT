@@ -15,154 +15,154 @@
 <link th:href="@{/static/css/ruralivrs.css}" rel="stylesheet" />
 </head>
 <body>
-	<div class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a id="organization" class="brand" href="#/home"
-					th:text="${organization.name}"
-					th:attr="data-orgId=${organization.organizationId}">Organization
-					Name</a>
-				<div class="btn-group pull-right">
-					<a class="btn" href="#"><i class="icon-user"></i> <span
-						sec:authentication="name">Admin</span></a> <a
-						class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <span
-						class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Profile</a></li>
-						<li class="divider"></li>
-						<li><a th:href="@{/logout}">Logout</a></li>
-					</ul>
-				</div>
-				<div class="nav-collapse">
-					<ul class="nav">
-						<li><a href="#/home">Home</a></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown">Product Details<b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#/products">Product List</a></li>
-								<li class="divider"></li>
-								<li><a href="#/productquantity">Product Quantity</a></li>
-							</ul></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown">Order Summary<b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#/orderSummaryProducts">Product wise</a></li>
-								<li class="divider"></li>
-								<li><a href="#/orderSummaryGroups">Group wise</a></li>
-							</ul></li>
-						<li><a href="#/users">Manage Users</a></li>
-						<li><a href="#/settings">Settings</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="btn btn-navbar" data-toggle="collapse"
+                    data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span>
+                </a> <a id="organization" class="brand" href="#/home"
+                    th:text="${organization.name}"
+                    th:attr="data-orgId=${organization.organizationId}">Organization
+                    Name</a>
+                <div class="btn-group pull-right">
+                    <a class="btn" href="#"><i class="icon-user"></i> <span
+                        sec:authentication="name">Admin</span></a> <a
+                        class="btn dropdown-toggle" data-toggle="dropdown" href="#"> <span
+                        class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a th:href="@{/logout}">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li><a href="#/home">Home</a></li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle"
+                            data-toggle="dropdown">Product Details<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#/products">Product List</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#/productquantity">Product Quantity</a></li>
+                            </ul></li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle"
+                            data-toggle="dropdown">Order Summary<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#/orderSummaryProducts">Product wise</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#/orderSummaryGroups">Group wise</a></li>
+                            </ul></li>
+                        <li><a href="#/users">Manage Users</a></li>
+                        <li><a href="#/settings">Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span3">
-				<div class="row-fluid">
-					<div class="span6">
-						<label class="receiver">IVRS number</label> <label class="contact"
-							th:text="${organization.ivrNumber}">020 30157370</label>
-					</div>
-					<div class="span6">
-						<label class="receiver">SMS number</label> <label class="contact">0
-							9227507512</label>
-					</div>
-				</div>
-				<div class="well sidebar-nav">
-					<ng-include src="'groupsList'"></ng-include>
-				</div>
-			</div>
-			<div class="span9" id="page-content">
-				<div ng-view>
-					<!-- EVERYTHING GOES HERE -->
-				</div>
-			</div>
-		</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <label class="receiver">IVRS number</label> <label class="contact"
+                            th:text="${organization.ivrNumber}">020 30157370</label>
+                    </div>
+                    <div class="span6">
+                        <label class="receiver">SMS number</label> <label class="contact">0
+                            9227507512</label>
+                    </div>
+                </div>
+                <div class="well sidebar-nav">
+                    <ng-include src="'groupsList'"></ng-include>
+                </div>
+            </div>
+            <div class="span9" id="page-content">
+                <div ng-view>
+                    <!-- EVERYTHING GOES HERE -->
+                </div>
+            </div>
+        </div>
 
-		<hr>
+        <hr>
 
-		<footer class="well"> &copy; Indian Institute of Technology,
-			Bombay </footer>
+        <footer class="well"> &copy; Indian Institute of Technology,
+            Bombay </footer>
 
-	</div>
+    </div>
 
 
 
 <div ng-controller="GroupsCtrl">
-	<div class="modal fade" id="add-new-group-modal" tabindex="-1"
-		role="dialog" aria-labelledby="HeadingAddUser" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
-					<i class="icon-remove"></i>
-				</button>
-				<h4 class="modal-title custom_align" id="HeadingUser">Add New
-					Group</h4>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal">
-					<div class="control-group">
-						<label class="control-label" for="new-group-name-input">Group
-							Name</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="new-group-name-input"
-								placeholder="Aundh" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="new-group-name-input">Group
-							Parent Group</label>
-						<div class="controls">
-							<select class="input-xlarge" id="new-group-parent-group-input">
-								<option th:each="group : ${organization.groups}" th:value="${group.groupId}" th:text="${group.name}">Quantity</option>
-							</select>
-						</div>
-					</div>
-				</form>
-			</div>
-			
-			</div>
-			<div class="modal-footer ">
-				<button type="button" class="btn btn-success" id="add-new-group">
-					<i class="icon-white icon-ok"></i> Add
-				</button>
-				<button type="button" class="btn btn-default" id="cancel-new-group"
-					data-dismiss="modal">
-					<i class="icon-white icon-remove"></i> Cancel
-				</button>
-			</div>
-		</div>
-		
-		<div class="modal fade" id="group-add-failed-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddFailed" aria-hidden="true">
-  <div class="modal-dialog">
+    <div class="modal fade" id="add-new-group-modal" tabindex="-1"
+        role="dialog" aria-labelledby="HeadingAddUser" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">
+                    <i class="icon-remove"></i>
+                </button>
+                <h4 class="modal-title custom_align" id="HeadingUser">Add New
+                    Group</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="new-group-name-input">Group
+                            Name</label>
+                        <div class="controls">
+                            <input type="text" class="input-xlarge" id="new-group-name-input"
+                                placeholder="Aundh" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="new-group-name-input">Group
+                            Parent Group</label>
+                        <div class="controls">
+                            <select class="input-xlarge" id="new-group-parent-group-input">
+                                <option th:each="group : ${organization.groups}" th:value="${group.groupId}" th:text="${group.name}">Quantity</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success" id="add-new-group">
+                    <i class="icon-white icon-ok"></i> Add
+                </button>
+                <button type="button" class="btn btn-default" id="cancel-new-group"
+                    data-dismiss="modal">
+                    <i class="icon-white icon-remove"></i> Cancel
+                </button>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="group-add-failed-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddFailed" aria-hidden="true">
+<div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+        <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
         <h4 class="modal-title custom_align" id="HeadingAddFailed">Failed to add group</h4>
-      </div>
-      <div class="modal-body">
-	    <b>Technical details:</b><br/>
+        </div>
+        <div class="modal-body">
+        <b>Technical details:</b><br/>
         <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>{{failure}}</div>
-      </div>
-      <div class="modal-footer ">
+    </div>
+    <div class="modal-footer ">
         <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> OK</button>
-      </div>
+    </div>
     </div>
     <!-- /.modal-content --> 
   </div>
   <!-- /.modal-dialog --> 
 </div>
-		
-		
-		<div class="modal fade" id="group-add-success-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddSuccess" aria-hidden="true">
+        
+        
+        <div class="modal fade" id="group-add-success-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddSuccess" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -180,29 +180,29 @@
   </div>
   <!-- /.modal-dialog --> 
 </div>
-	</div>
+    </div>
 
-	<script th:src="@{/static/js/libs/jquery.js}"></script>
-	<script th:src="@{/static/js/libs/bootstrap.min.js}"></script>
-	<script th:src="@{/static/js/libs/angular.js}"></script>
-	<script th:src="@{/static/js/libs/angular-route.js}"></script>
-	<script th:src="@{/static/js/libs/angular-resource.js}"></script>
-	<script th:src="@{/static/js/libs/loading-bar.min.js}"></script>
-	<script th:src="@{/static/js/libs/angular.min.js}"></script>
-	<script th:src="@{/static/js/libs/recorder.js}"></script>
-	<script th:src="@{/static/js/utility.js}"></script>
-	<script th:src="@{/static/js/recordFile.js}"></script>
-	<script th:src="@{/static/js/controllers.js}"></script>
-	<script th:src="@{/static/js/resources.js}"></script>
-	<script th:src="@{/static/js/textMessage.js}"></script>
-	<script th:src="@{/static/js/voiceMessage.js}"></script>
-	<script th:src="@{/static/js/productList.js}"></script>
-	<script th:src="@{/static/js/orderSummaryProducts.js}"></script>
-	<script th:src="@{/static/js/orderSummaryGroups.js}"></script>
-	<script th:src="@{/static/js/groupOps.js}"></script>
-	<script th:src="@{/static/js/users.js}"></script>
-	<script th:src="@{/static/js/settings.js}"></script>
-	<script th:src="@{/static/js/textBroadcast.js}"></script>
-		
+    <script th:src="@{/static/js/libs/jquery.js}"></script>
+    <script th:src="@{/static/js/libs/bootstrap.min.js}"></script>
+    <script th:src="@{/static/js/libs/angular.js}"></script>
+    <script th:src="@{/static/js/libs/angular-route.js}"></script>
+    <script th:src="@{/static/js/libs/angular-resource.js}"></script>
+    <script th:src="@{/static/js/libs/loading-bar.min.js}"></script>
+    <script th:src="@{/static/js/libs/angular.min.js}"></script>
+    <script th:src="@{/static/js/libs/recorder.js}"></script>
+    <script th:src="@{/static/js/utility.js}"></script>
+    <script th:src="@{/static/js/recordFile.js}"></script>
+    <script th:src="@{/static/js/controllers.js}"></script>
+    <script th:src="@{/static/js/resources.js}"></script>
+    <script th:src="@{/static/js/textMessage.js}"></script>
+    <script th:src="@{/static/js/voiceMessage.js}"></script>
+    <script th:src="@{/static/js/productList.js}"></script>
+    <script th:src="@{/static/js/orderSummaryProducts.js}"></script>
+    <script th:src="@{/static/js/orderSummaryGroups.js}"></script>
+    <script th:src="@{/static/js/groupOps.js}"></script>
+    <script th:src="@{/static/js/users.js}"></script>
+    <script th:src="@{/static/js/settings.js}"></script>
+    <script th:src="@{/static/js/textBroadcast.js}"></script>
+        
 </body>
 </html>
