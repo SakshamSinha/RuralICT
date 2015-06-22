@@ -28,8 +28,7 @@ public interface OrganizationRepository extends JpaRepository<Organization, Inte
 	/*
 	 * Search functions
 	 */
-	@PostAuthorize("hasRole('ADMIN'+returnObject.productType.organization.abbreviation)")
-	@Override
+
 	public Organization findOne(Integer id);
 
 

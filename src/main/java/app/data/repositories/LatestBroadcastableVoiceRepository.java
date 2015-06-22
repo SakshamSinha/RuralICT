@@ -47,11 +47,11 @@ public interface LatestBroadcastableVoiceRepository extends JpaRepository<Latest
 	/**
 	 * Use this when looking up the latest broadcastable voice for a group.
 	 */
-	public LatestBroadcastableVoice findByGroup(Group group);
+	public LatestBroadcastableVoice findByGroupAndOrganization(Group group,Organization organization);
 
 	/**
 	 * Use this when looking up the latest broadcastable voice that may not belong to a group.
 	 */
-	public LatestBroadcastableVoice findTopByOrganizationOrderByTimeDesc(Organization organization);
+	public LatestBroadcastableVoice findTopByOrganizationAndGroupOrderByTimeDesc(Organization organization, Group group);
 
 }

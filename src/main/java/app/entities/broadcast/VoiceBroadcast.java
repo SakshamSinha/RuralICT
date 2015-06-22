@@ -34,7 +34,7 @@ public class VoiceBroadcast extends Broadcast {
 	public VoiceBroadcast(Organization organization, Group group, User user, String mode, boolean askFeedback,
 			boolean askOrder, boolean askResponse, boolean appOnly, Voice voice, boolean voiceBroadcastDraft) {
 
-		super(organization, group, user, "text", mode, askFeedback, askOrder, askResponse, appOnly);
+		super(organization, group, user, "voice", mode, askFeedback, askOrder, askResponse, appOnly);
 		this.voice = voice;
 		this.voiceBroadcastDraft = voiceBroadcastDraft;
 	}

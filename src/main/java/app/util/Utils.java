@@ -1,5 +1,11 @@
 package app.util;
 
+import it.sauronsoftware.jave.AudioAttributes;
+import it.sauronsoftware.jave.DefaultFFMPEGLocator;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.EncodingAttributes;
+
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,15 +18,36 @@ import java.net.Proxy;
 import java.net.URL;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.multipart.MultipartFile;
 
 import app.data.repositories.UserRepository;
 import app.entities.User;
 import app.security.AuthenticatedUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  * Utilities for this application.
  */
 public class Utils {
+	
+	/**
+	 * Variable to store working path of voice files
+	 */
+	private final static String VOICE_DIR = "./Downloads/voices/";
+	
+	private final static String WEBSITE_ADDRESS = "http://ruralict.cse.iitb.ac.in/";
+	//private final static String WEBSITE_ADDRESS = "localhost:8080/";
+
+	
+	public static String getVoiceDir() {
+		return VOICE_DIR;
+	}
+	
+	public static String getVoiceDirURL() {
+		String directory = VOICE_DIR.substring(2);
+		return WEBSITE_ADDRESS + directory;
+	}
 
 	/**
 	 * Returns the UserDetails object set during authentication for the currently logged in user. No database lookup is
@@ -40,9 +67,63 @@ public class Utils {
 		return userRepository.findOne(getSecurityPrincipal().getUserId());
 	}
 	
+	public static File saveFile(String fileName, String directory, MultipartFile file) {
+		if (!file.isEmpty()) {
+			try {
+				byte[] bytes = file.getBytes();
+ 
+				// Creating the directory to store file
+				File dir = new File(directory);
+				if (!dir.exists())
+					dir.mkdirs();
+
+				// Create the file on server
+				File temp = new File(dir.getAbsolutePath() + File.separator + fileName);
+				System.out.println(temp);
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(temp));
+				stream.write(bytes);
+				stream.close();
+				
+				return temp;
+			} catch(Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		else {
+			System.out.println("File is Empty!");
+			return null;
+		}
+	}
+	
+	public static File convertToKookooFormat(File source, File destination) {
+		
+		int bitRate = 128;
+		int samplingRate = 8000;
+		int channels = 1;
+		
+		try {
+			AudioAttributes audio = new AudioAttributes();
+			audio.setBitRate(new Integer(bitRate));
+			audio.setChannels(new Integer(channels));
+			audio.setSamplingRate(new Integer(samplingRate));
+			
+			EncodingAttributes attrs = new EncodingAttributes();
+			attrs.setAudioAttributes(audio);
+			attrs.setFormat("wav");
+			
+			Encoder encoder = new Encoder(new DefaultFFMPEGLocator());
+			encoder.encode(source, destination, attrs);
+			return destination;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	} 
+	
 	public static String downloadFile(String fileURL, String saveDir) throws IOException {
 		
-		/*
+		/**
 		 * Proxy settings for network 
 		 */
 		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.cse.iitb.ac.in", 80));
@@ -58,6 +139,7 @@ public class Utils {
 		HttpURLConnection httpConn = (HttpURLConnection) url.openConnection(proxy);
 		
 		int responseCode = httpConn.getResponseCode();
+		String responseMessage = httpConn.getHeaderFields().toString();
 		String location = httpConn.getHeaderField("Location");
 		
 		// always check HTTP response code first
@@ -111,7 +193,7 @@ public class Utils {
 			return fileName;
 		}
 		else {
-			System.out.println("No file to download. Server replied HTTP code: " + responseCode);
+			System.out.println("No file to download. Server replied HTTP code: " + responseCode + responseMessage);
 			
 		}
 		httpConn.disconnect();

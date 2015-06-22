@@ -26,7 +26,7 @@ import app.security.AuthenticatedUser;
 
 @Configuration
 @EnableWebMvcSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=false)
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 
 	@Bean

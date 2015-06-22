@@ -33,6 +33,7 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 			$scope.product.name = data.name;
 			$scope.product.unitRate = data.unitRate;
 		    $scope.product.productType = data.productType;
+		    console.log($scope.product.productType);
 			ProductCreate.save($scope.product,function(){
 				console.log("Done done");
 			});
