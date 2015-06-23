@@ -3,9 +3,7 @@ package app.business.controllers;
 import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import app.business.services.BroadcastRecipientService;
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
+import app.business.services.LatestBroadcastableVoiceService;
 import app.business.services.OrganizationService;
 import app.business.services.UserService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
-import app.data.repositories.LatestBroadcastableVoiceRepository;
 import app.entities.BroadcastRecipient;
 import app.entities.Group;
 import app.entities.GroupMembership;
@@ -36,7 +34,6 @@ import app.entities.Organization;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
 import app.entities.Voice;
-import app.entities.broadcast.Broadcast;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.config.Configs;
 
@@ -60,7 +57,7 @@ public class BroadcastVoiceController {
 	@Autowired
 	BroadcastRecipientService broadcastRecipientService;
 	@Autowired
-	LatestBroadcastableVoiceRepository latestBroadcastableVoiceRepository; 
+	LatestBroadcastableVoiceService latestBroadcastableVoiceService; 
 
 	@RequestMapping(value="/broadcastVoiceMessages/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
@@ -71,12 +68,11 @@ public class BroadcastVoiceController {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		User publisher = userService.getCurrentUser();
 		
-		//Ask what to do when user is not a publisher do we prevent it on UI side.
-		String role = userService.getUserRole(publisher, organization);
+		
 		List<GroupMembership> groupMembershipList = groupMembershipService.getGroupMembershipListByGroup(group);
 		
-		//TODO change repository to service
-		LatestBroadcastableVoice broadcast = latestBroadcastableVoiceRepository.findTopByOrganizationAndGroupOrderByTimeDesc(organization, group);
+		//called latest broadcastable voice according to time
+		LatestBroadcastableVoice broadcast = latestBroadcastableVoiceService.getLatestBroadcastableVoiceByTime(organization, group);
 		model.addAttribute("broadcast", broadcast);
 		
 		List<User> users = new ArrayList<User>();
@@ -88,6 +84,9 @@ public class BroadcastVoiceController {
 		model.addAttribute("organization",organization);
 		model.addAttribute("group",group);
 		model.addAttribute("publisher",publisher);
+		
+		//TODO Ask what to do when user is not a publisher do we prevent it on UI side.
+		String role = userService.getUserRole(publisher, organization);
 		model.addAttribute("role", role);
 		
 		return "broadcastVoice";
@@ -159,7 +158,7 @@ public class BroadcastVoiceController {
 	    
 	    Timestamp timestamp = Timestamp.valueOf(broadcastedTime);
   
-        LatestBroadcastableVoice latestBroadcastableVoice =  latestBroadcastableVoiceRepository.findByGroupAndOrganization(group, organization);
+        LatestBroadcastableVoice latestBroadcastableVoice = latestBroadcastableVoiceService.getLatestBroadcastableVoiceByOrganizationAndGroup(organization, group);
         if (latestBroadcastableVoice.equals(null))
         {
         	latestBroadcastableVoice = new LatestBroadcastableVoice(organization, group, timestamp, voice);
@@ -169,7 +168,7 @@ public class BroadcastVoiceController {
         	latestBroadcastableVoice.setTime(timestamp);
         	latestBroadcastableVoice.setVoice(voice);
         }
-        latestBroadcastableVoiceRepository.save(latestBroadcastableVoice);
+        latestBroadcastableVoiceService.addLatestBroadcastableVoice(latestBroadcastableVoice);
     
 	    
 	}
