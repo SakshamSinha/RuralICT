@@ -128,11 +128,11 @@ $("#page-content").on("click","#place-broadcast-call",function(e){
 	data.format = "voice";
 	//setting the voice id if the voice is present in group
 	data.voiceId = $('#latest-voice').attr("voiceid");
-	console.log("voiceid received"+data.voiceId);
+	console.log("voiceid received "+data.voiceId);
 	//ask about these fields
 	data.voiceBroadcastDraft = 0;
 	data.textContent = null;
-	angular.element($('#broadcast-voice-ids')).scope().saveBroadcast(data);
+	
 	var userIds = '';
 	$("#user-list input:checked").each(function(){
 		userIds = userIds + this.value + ',';
@@ -140,5 +140,6 @@ $("#page-content").on("click","#place-broadcast-call",function(e){
 	
 	data.userIds = userIds;
 	console.log(userIds);
+	angular.element($('#broadcast-voice-ids')).scope().saveBroadcast(data);
 	
 });

@@ -44,6 +44,7 @@ public class BroadcastService {
 		return broadcastRepository.findOne(broadcastId);
 	}
 	
+	//TODO this function is not doing the right thing it is sorting according to the "broadcastedtime" instead sorting should be done from the broadcast schedule table
 	@Transactional
 	public Broadcast getTopBroadcast(User user, Organization organization, String format) {
 

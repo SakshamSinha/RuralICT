@@ -9,10 +9,10 @@
             <tr> 
             		<div class="row-fluid">	
             				<div th:if="${broadcast==null}">
-                    			<h4>No recording for <span th:text="${group.name}">Newgroup</span> till now.</h4>
+                    			<h4>No recording for <span th:text="${organization.name}">Organization</span> till now.</h4>
                     		</div>
                     		<div th:unless="${broadcast==null}">
-                    			<h4 id = "voice" th:attr="voiceid=${broadcast.voice.voiceId}">Latest Recorded Audio</h4>
+                    			<h4 id = "latest-voice" th:attr="voiceid=${broadcast.voice.voiceId}">Latest Recorded Audio</h4>
                     			<audio th:src="${broadcast.voice.url}" controls style="text-align:center;">
                     			</audio>
                     		</div>

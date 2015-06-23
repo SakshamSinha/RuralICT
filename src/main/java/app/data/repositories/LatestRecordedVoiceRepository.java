@@ -12,46 +12,41 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.Group;
-import app.entities.LatestBroadcastableVoice;
+import app.entities.LatestRecordedVoice;
 import app.entities.Organization;
 
-public interface LatestBroadcastableVoiceRepository extends JpaRepository<LatestBroadcastableVoice, Integer> {
+public interface LatestRecordedVoiceRepository extends JpaRepository<LatestRecordedVoice, Integer> {
 	/*
 	 * Default functions
 	 */
 
 	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.abbreviation)")
 	@Override
-	public LatestBroadcastableVoice findOne(Integer id);
+	public LatestRecordedVoice findOne(Integer id);
 
 	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
-	public List<LatestBroadcastableVoice> findAll();
+	public List<LatestRecordedVoice> findAll();
 
 	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
-	public Page<LatestBroadcastableVoice> findAll(Pageable pageable);
+	public Page<LatestRecordedVoice> findAll(Pageable pageable);
 
 	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
-	public List<LatestBroadcastableVoice> findAll(Sort sort);
+	public List<LatestRecordedVoice> findAll(Sort sort);
 
 	@PreAuthorize("hasRole('ADMIN'+#latestVoice.organization.abbreviation)")
 	@Override
-	public void delete(@Param("latestVoice") LatestBroadcastableVoice latestVoice);
+	public void delete(@Param("latestVoice") LatestRecordedVoice latestVoice);
 
 	/*
 	 * Search functions
 	 */
 
 	/**
-	 * Use this when looking up the latest broadcastable voice for a group.
+	 * Use this when looking up the latest recorded voice for an organization.
 	 */
-	public LatestBroadcastableVoice findByOrganizationAndGroup(Organization organization,Group group);
-
-	/**
-	 * Use this when looking up the latest broadcastable voice that may not belong to a group.
-	 */
-	public LatestBroadcastableVoice findTopByOrganizationAndGroupOrderByTimeDesc(Organization organization, Group group);
+	public LatestRecordedVoice findByOrganization(Organization organization);
 
 }

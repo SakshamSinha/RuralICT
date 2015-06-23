@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import app.business.services.BroadcastRecipientService;
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
-import app.business.services.LatestBroadcastableVoiceService;
+import app.business.services.LatestRecordedVoiceService;
 import app.business.services.OrganizationService;
 import app.business.services.UserService;
 import app.business.services.VoiceService;
@@ -29,7 +29,7 @@ import app.business.services.broadcast.BroadcastService;
 import app.entities.BroadcastRecipient;
 import app.entities.Group;
 import app.entities.GroupMembership;
-import app.entities.LatestBroadcastableVoice;
+import app.entities.LatestRecordedVoice;
 import app.entities.Organization;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
@@ -57,7 +57,7 @@ public class BroadcastVoiceController {
 	@Autowired
 	BroadcastRecipientService broadcastRecipientService;
 	@Autowired
-	LatestBroadcastableVoiceService latestBroadcastableVoiceService; 
+	LatestRecordedVoiceService latestRecordedVoiceService; 
 
 	@RequestMapping(value="/broadcastVoiceMessages/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
@@ -71,8 +71,8 @@ public class BroadcastVoiceController {
 		
 		List<GroupMembership> groupMembershipList = groupMembershipService.getGroupMembershipListByGroup(group);
 		
-		//called latest broadcastable voice according to time
-		LatestBroadcastableVoice broadcast = latestBroadcastableVoiceService.getLatestBroadcastableVoiceByTime(organization, group);
+		//called latest recorded voice according to time
+		LatestRecordedVoice broadcast = latestRecordedVoiceService.getLatestRecordedVoiceByOrganization(organization);
 		model.addAttribute("broadcast", broadcast);
 		
 		List<User> users = new ArrayList<User>();
@@ -136,8 +136,9 @@ public class BroadcastVoiceController {
 			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
 			for(UserPhoneNumber no:phoneNumbers)
 			{
-				System.out.println("User:"+no.getPhoneNumber());
-				if(IVRUtils.makeOutboundCall(no.getPhoneNumber(), Configs.Telephony.IVR_NUMBER, voiceUrl));
+				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
+				System.out.println(phoneNumber);
+				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, voiceUrl));
 				{
 					break;
 				}
@@ -147,28 +148,29 @@ public class BroadcastVoiceController {
 	}
 	
 	@RequestMapping(value = "/latestBroadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@ResponseBody
-	public void latestBroadcastableLogs(@RequestBody Map<String,String> body) {
+	public void latestRecordedLogs(@RequestBody Map<String,String> body) {
 	    System.out.println("We have received the latest body"+body);
 	    Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
 	    Group group = groupService.getGroup(Integer.parseInt(body.get("groupId")));
 	    Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
 	  
-	    String broadcastedTime = body.get("broadcastedTime");
+	    String recordedTime = body.get("broadcastedTime");
 	    
-	    Timestamp timestamp = Timestamp.valueOf(broadcastedTime);
+	    Timestamp timestamp = Timestamp.valueOf(recordedTime);
   
-        LatestBroadcastableVoice latestBroadcastableVoice = latestBroadcastableVoiceService.getLatestBroadcastableVoiceByOrganizationAndGroup(organization, group);
-        if (latestBroadcastableVoice.equals(null))
+        LatestRecordedVoice latestRecordedVoice = latestRecordedVoiceService.getLatestRecordedVoiceByOrganization(organization);
+        if (latestRecordedVoice.equals(null))
         {
-        	latestBroadcastableVoice = new LatestBroadcastableVoice(organization, group, timestamp, voice);
+        	latestRecordedVoice = new LatestRecordedVoice(organization, timestamp, voice);
         }
         else
         {
-        	latestBroadcastableVoice.setTime(timestamp);
-        	latestBroadcastableVoice.setVoice(voice);
+        	latestRecordedVoice.setTime(timestamp);
+        	latestRecordedVoice.setVoice(voice);
         }
-        latestBroadcastableVoiceService.addLatestBroadcastableVoice(latestBroadcastableVoice);
+        latestRecordedVoiceService.addLatestRecordedVoice(latestRecordedVoice);
     
 	    
 	}

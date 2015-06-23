@@ -46,7 +46,7 @@ public class UploadController {
 		Voice voice = new Voice(url, true);
 		voiceService.addVoice(voice);
 		int voiceId = voice.getVoiceId();
-		//voiceId returned so that LatestBroadcastableVoice Table is updated using this field.
+		//voiceId returned so that LatestRecordedVoice Table is updated using this field.
 		return voiceId;
 	    
 	}
