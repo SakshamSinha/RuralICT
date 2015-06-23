@@ -45,19 +45,13 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 				if(language.equalsIgnoreCase("en"))
 				{
 					
-				    /*response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+language+".wav"); //language
-*/					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+responseType+"_"+language+".wav"); //For
+				 	response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+responseType+"_"+language+".wav"); //For
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+(i)+"_"+language+".wav"); //Press
 				}
 				else
 				{
-
-					//response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+responseType+"_"+language+".wav"); //language
+			
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+responseType+"_"+language+".wav"); //For
-					//response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+(i)+"_"+language+".wav"); //Press
 				}
 
