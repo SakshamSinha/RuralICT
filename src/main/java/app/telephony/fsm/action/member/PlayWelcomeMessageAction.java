@@ -77,7 +77,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			}
 
 		}
-		session.setPublisher(false);
+		ruralictSession.setPublisher(false);
 
 	}
 

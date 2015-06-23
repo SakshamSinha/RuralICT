@@ -1,6 +1,7 @@
 package app.telephony.fsm.action;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
@@ -18,8 +19,10 @@ public class DoInvalidInputAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		if(session.getLanguage()!=null)
-			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput_"+session.getLanguage()+".wav");
+		RuralictSession ruralictSession = (RuralictSession) session;
+		session.addInvalidTry();
+		if(ruralictSession.getLanguage()!=null)
+			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput_"+ruralictSession.getLanguage()+".wav");
 		else
 			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput"+".wav");
 		

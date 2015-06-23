@@ -16,11 +16,7 @@ import com.continuent.tungsten.commons.patterns.fsm.State;
 
 public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 
-	OrderService orderService;
-
 	boolean allow;
-
-	ArrayList<String> groupsID;
 
 	public OnOrderIDExist(boolean allow) {
 		super(GotDTMFEvent.class);
@@ -35,31 +31,32 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 	@Override
 	public boolean accept(Event<Object>event, IVRSession session, State<?> state) {
 
-
-		OrganizationService orgService = SpringContextBridge.services().getOrganizationService();
-		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
-
 		if (super.accept(event, session, state)) {
+		
 			GotDTMFEvent ev = (GotDTMFEvent) event;
 			String input = ev.getInput().split("#")[0];
 			int orderID = Integer.parseInt(input);
-			orderService = new OrderService();
 			OrderService orderService = SpringContextBridge.services().getOrderService();
+			OrganizationService orgService = SpringContextBridge.services().getOrganizationService();
+			UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 			Order order=orderService.getOrder(orderID);
 			boolean isOrderAccepted =order.getStatus().equalsIgnoreCase("reject") || order.getStatus().equalsIgnoreCase("processed");
-			boolean isUserIdExistForOrderID = userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getUserId() == 
-					orderService.getOrder(orderID).getMessage().getUser().getUserId();
+			boolean isUserIdExistForOrderID = (userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getUserId()) == (orderService.getOrder(orderID).getMessage().getUser().getUserId());
 			boolean checkOrganization = order.getOrganization() == orgService.getOrganizationByIVRS(session.getIvrNumber());
-			if(order!=null){
+			if(orderService.getOrder(orderID).getMessage().equals(null)){
+				return (!allow);
+			}
+			else if(order!=null){
 				if(!(isOrderAccepted) && checkOrganization &&  isUserIdExistForOrderID)
 				{
+					orderService.cancelOrder(order);
 					return (allow);
 				}				
 			}
 			return (!allow);
 		}
 
-		return (!allow);
+		return (false);
 	}
 
 }

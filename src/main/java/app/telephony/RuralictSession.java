@@ -22,10 +22,12 @@ public class RuralictSession extends IVRSession {
 	 */
 	
 	Voice voiceMessage ;
+	
 	boolean isOutbound=false;
 	boolean orderAllowed=false;
 	boolean feedbackAllowed=false;
 	boolean responseAllowed=false;
+	boolean isPublisher;
 	int broadcastID;
 	RecordEvent recordEvent;
 
@@ -124,6 +126,14 @@ public class RuralictSession extends IVRSession {
 
 	public void setRecordEvent(RecordEvent recordEvent) {
 		this.recordEvent = recordEvent;
-	}	
+	}
+	
+	public boolean isPublisher() {
+		return isPublisher;
+	}
+
+	public void setPublisher(boolean isPublisher) {
+		this.isPublisher = isPublisher;
+	}
 }
 

@@ -1,8 +1,12 @@
 package app.business.services;
 
+import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
+
 import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import app.business.services.message.MessageService;
 import app.business.services.message.BinaryMessageService;
 import app.business.services.message.TextMessageService;
@@ -77,6 +81,13 @@ public class TelephonyService {
 			order.setOrganization(group.getOrganization());
 			order = orderService.addOrder(order);
 			voiceMessage.setOrder(order);
+			String message = "Your Order ID is " + order.getOrderId();
+			try {
+				IVRUtils.sendSMS(userPhoneNumber,message);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 
 		voiceMessageService.addMessage(voiceMessage);
