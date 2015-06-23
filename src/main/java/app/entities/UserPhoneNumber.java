@@ -20,6 +20,7 @@ public class UserPhoneNumber implements Serializable {
 	@Column(name="phone_number")
 	private String phoneNumber;
 
+
 	@Column(name="is_primary")
 	private boolean primary;
 
