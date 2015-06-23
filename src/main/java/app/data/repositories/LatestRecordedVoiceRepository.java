@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import app.entities.Group;
 import app.entities.LatestRecordedVoice;
 import app.entities.Organization;
+import app.entities.Product;
 
 public interface LatestRecordedVoiceRepository extends JpaRepository<LatestRecordedVoice, Integer> {
 	/*
@@ -39,6 +40,10 @@ public interface LatestRecordedVoiceRepository extends JpaRepository<LatestRecor
 	@PreAuthorize("hasRole('ADMIN'+#latestVoice.organization.abbreviation)")
 	@Override
 	public void delete(@Param("latestVoice") LatestRecordedVoice latestVoice);
+	
+	@PreAuthorize("hasRole('ADMIN'+#latestVoice.organization.abbreviation)")
+	@Override
+	public <S extends LatestRecordedVoice> S save(@Param("latestVoice") S latestVoice);
 
 	/*
 	 * Search functions

@@ -4,15 +4,6 @@ website.factory("BroadcastCreate",function($resource){
 	});
 });
 
-/*
-website.factory("BroadcastCreate",['$resource',function($resource){
-	return $resource("/api/broadcasts/:id", null, {
-		save: {
-			method: "POST"
-		}
-	});
-}]);
-*/
 website.directive('fileModel', ['$parse',function ($parse) {
     return {
         restrict: 'A',
@@ -63,7 +54,9 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
         })
         .success(function(data, status) {
         	$scope.latestBroadcastableVoiceIds.voiceId = data;
+        	console.log(data);
         	$scope.latestBroadcastableVoiceIds.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        	console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
         	$http.post('/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
     		.success(function(data,status,header,config){
     			//TODO Eliminating this function doing hard refresh

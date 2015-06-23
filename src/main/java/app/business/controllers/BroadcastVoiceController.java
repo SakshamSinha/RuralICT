@@ -148,10 +148,9 @@ public class BroadcastVoiceController {
 	}
 	
 	@RequestMapping(value = "/latestBroadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
-	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@ResponseBody
 	public void latestRecordedLogs(@RequestBody Map<String,String> body) {
-	    System.out.println("We have received the latest body"+body);
+	    System.out.println("We have received the latest body from uploader in Angular "+body);
 	    Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
 	    Group group = groupService.getGroup(Integer.parseInt(body.get("groupId")));
 	    Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
@@ -159,7 +158,7 @@ public class BroadcastVoiceController {
 	    String recordedTime = body.get("broadcastedTime");
 	    
 	    Timestamp timestamp = Timestamp.valueOf(recordedTime);
-  
+	    
         LatestRecordedVoice latestRecordedVoice = latestRecordedVoiceService.getLatestRecordedVoiceByOrganization(organization);
         if (latestRecordedVoice.equals(null))
         {
@@ -170,7 +169,9 @@ public class BroadcastVoiceController {
         	latestRecordedVoice.setTime(timestamp);
         	latestRecordedVoice.setVoice(voice);
         }
+        System.out.println("Latest recorded Voice about to be added here. Reached till here.");
         latestRecordedVoiceService.addLatestRecordedVoice(latestRecordedVoice);
+        System.out.println("Latest recorded Voice had to be added here. Reached till here.");
     
 	    
 	}
