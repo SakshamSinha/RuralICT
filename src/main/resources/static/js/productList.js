@@ -33,18 +33,13 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 			$scope.product.name = data.name;
 			$scope.product.unitRate = data.unitRate;
 		    $scope.product.productType = data.productType;
-		    console.log($scope.product.productType);
 			ProductCreate.save($scope.product,function(){
-				console.log("Done done");
 			});
 		}
 		//function to edit product
 		$scope.editProduct = function(value){
-			console.log($scope.id);
 			$scope.product = ProductEdit.get({id:$scope.id},function(){
 				$scope.product.unitRate = value;
-				console.log($scope.product.unitRate);
-				console.log("Record to be updated fetched");
 				$scope.product.$update({id:$scope.id},function(){
 				});
 			});
@@ -96,7 +91,6 @@ $("#page-content").on("click", "#add-new-product", function(e) {
     data.name = product;
     data.unitRate = price;
     data.productType = productType;
-    console.log("Add product has been called");
     angular.element($('#add-new-product')).scope().saveProduct(data);
     
     $('#add-product-modal').modal('toggle');
@@ -110,7 +104,6 @@ $("#page-content").on("click", "#add-new-product", function(e) {
 $("#page-content").on("click", "#btn-delete", function(e) {  
     e.preventDefault();
     productId = $(this).attr("productid");
-	console.log(productId);
 	angular.element(this).scope().setId(productId);
 	angular.element(this).scope().getList();
 });
@@ -126,9 +119,7 @@ $("#page-content").on("click","#delete-product",function(e){
 $("#page-content").on("click", "#btn-edit", function () {
 	
 	productId = $(this).attr("productId");
-	console.log(productId);
 	productName = $(this).attr("productName");
-	console.log(productName);
 	angular.element(this).scope().setId(productId);
 	$(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
 	$(".modal-body #update-product-input").html(productName);

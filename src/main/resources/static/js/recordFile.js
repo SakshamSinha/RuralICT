@@ -17,7 +17,6 @@ RecordFile.prototype.startUserMedia = function(stream){
 	__log(this.audio_context);
 	var input = audio_context.createMediaStreamSource(stream);
 	__log('Media stream created.');
-	console.log(input);
 	recorder = new Recorder(input);
 	__log('Recorder initialised.');
 };

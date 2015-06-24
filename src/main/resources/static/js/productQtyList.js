@@ -23,7 +23,6 @@ website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $locat
 		//function to save the preset quantity 
 		$scope.savePresetQuantity = function(data){
 			$scope.presetQuantity = new PresetQuantityCreate();
-			console.log("new product has been created");
 			$scope.presetQuantity.quantity = data.quantity;
 			$scope.presetQuantity.productType = data.productType;
 			$scope.presetQuantity.organization = data.organization;
@@ -36,11 +35,7 @@ website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $locat
 			
 			$scope.presetQuantity = PresetQuantityEdit.get({id:$scope.id},function(){
 				$scope.presetQuantity.quantity = value;
-				console.log($scope.presetQuantity.quantity);
-				console.log("Record to be updated fetched");
-				console.log($scope.id);
 				$scope.presetQuantity.$update({id:$scope.id},function(){
-					console.log("Edit done");
 				});
 			});
 		}
@@ -49,7 +44,6 @@ website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $locat
 			$scope.presetQuantity = PresetQuantityDelete.get({id:$scope.id},function(){
 				
 				$scope.presetQuantity.$update({id:$scope.id},function(){
-					console.log("Record actually deleted");
 				});
 			});
 			
@@ -57,7 +51,6 @@ website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $locat
 		//function to set the preset quantity id
 		$scope.setId = function(presetQuantityId){
 			$scope.id=presetQuantityId; 
-			console.log($scope.id);
 		}
 	
 });
@@ -77,18 +70,14 @@ $("#page-content").on("click", "#producttable #checkall", function () {
 
 //adding new product on pressing the 'Add new product' button
 $("#page-content").on("click", "#add-new-quantity", function(e) {
-	console.log("Reaching here!!")
     var quantity = $.trim($('#new-quantity-input').val());
     var productType = $('#new-presetqty-product-type-input').val();
     var organizationId= $('#product-quantity').attr('organizationId');
     var organization = "organizations/"+organizationId;
-    console.log(organization);
-    console.log(productType);
     var data = {};
     data.name = quantity;
     data.productType = productType;
     data.organization = organization;
-    console.log("Add product has been called");
     angular.element($('#add-new-quantity')).scope().savePresetQuantity(data);
 
     $('#add-qty-modal').modal('toggle');
@@ -101,7 +90,6 @@ $("#page-content").on("click", "#add-new-quantity", function(e) {
 $("#page-content").on("click", "#btn-qty-delete", function(e) {  
     e.preventDefault();
     presetQuantityId = $(this).attr("presetQuantityId");
-	console.log(presetQuantityId);
 	angular.element(this).scope().setId(presetQuantityId);
 
 });
@@ -115,9 +103,7 @@ $("#page-content").on("click","#delete-qty",function(e){
 //capture the id on clicking the edit button
 $("#page-content").on("click", "#btn-qty-edit", function () {
 	presetQuantityId = $(this).attr("presetQuantityId");
-	console.log(presetQuantityId);
 	presetQuantityType = $(this).attr("presetQuantityType");
-	console.log(presetQuantityType);
 	angular.element(this).scope().setId(presetQuantityId);
 	$(".modal-header #HeadingEdit").html("Edit "+presetQuantityType+"preset quantity");
 	$(".modal-body #update-quantity-input").html(presetQuantityType);
@@ -127,7 +113,6 @@ $("#page-content").on("click", "#btn-qty-edit", function () {
 $("#page-content").on("click","#update-qty",function(e){
 	e.preventDefault();
 	value = $.trim($('.controls #update-quantity-input').val());
-	console.log($('.controls #update-quantity-input').val());
 	angular.element(this).scope().editPresetQuantity(value);
 	$("#edit-qty-modal").modal('toggle');
 	$('.controls #update-quantity-input').val("");

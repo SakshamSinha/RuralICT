@@ -24,10 +24,8 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 	//function to save product
 	$scope.saveBroadcast = function(data){
 		$scope.broadcast = data;
-		console.log($scope.broadcast.abbr);
 		$http.post('/web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
 		.success(function(data,status,header,config){
-			console.log(data);
 		})
 		.error(function(data,status,header,config){
 			
@@ -88,9 +86,7 @@ $("#page-content").on("click","#place-broadcast-call",function(e){
 	data.askFeedback=0;
 	data.askResponse=0;
 	broadcastVoiceIds = $("#broadcast-voice-ids");
-	//console.log();
 	data.abbr=broadcastVoiceIds.attr("org");
-	console.log(data.abbr);
 	data.organizationId = broadcastVoiceIds.attr("organizationid");
 	data.groupId = broadcastVoiceIds.attr("groupid");
 	data.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
@@ -102,12 +98,10 @@ $("#page-content").on("click","#place-broadcast-call",function(e){
 	}
 	if($("#feedback-check").is(":checked"))
 	{
-		//console.log($("#feedback-check").val());
 		data.askFeedback=1;
 	}
 	if($("#response-check").is(":checked"))
 	{
-		//console.log($("#response-check").val());
 		data.askResponse=1;
 	}
 	//look for the time it which is broadcasted.
@@ -116,7 +110,6 @@ $("#page-content").on("click","#place-broadcast-call",function(e){
 	data.format = "voice";
 	//setting the voice id if the voice is present in group
 	data.voiceId = $('#latest-voice').attr("voiceid");
-	console.log("voiceid received "+data.voiceId);
 	//ask about these fields
 	data.voiceBroadcastDraft = 0;
 	data.textContent = null;
@@ -127,7 +120,6 @@ $("#page-content").on("click","#place-broadcast-call",function(e){
 	});
 	
 	data.userIds = userIds;
-	console.log(userIds);
 	angular.element($('#broadcast-voice-ids')).scope().saveBroadcast(data);
 	
 });
