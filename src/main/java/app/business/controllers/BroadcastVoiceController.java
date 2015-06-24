@@ -96,44 +96,44 @@ public class BroadcastVoiceController {
 	@RequestMapping(value = "/broadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
 	@ResponseBody
 	public void logs(@RequestBody Map<String,String> body) {
-	    System.out.println("We have received the body"+body);
-	    Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
-	    Group group = groupService.getGroup(Integer.parseInt(body.get("groupId")));
-	    User publisher = userService.getUser(Integer.parseInt(body.get("publisherId")));
-	    String mode = body.get("mode");
-	    //Converting string to integer and converting to boolean
-	    boolean askOrder = (Integer.parseInt(body.get("askOrder")) !=0);
-	    boolean askFeedback = (Integer.parseInt(body.get("askFeedback")) !=0);;
-	    boolean askResponse = (Integer.parseInt(body.get("askResponse")) !=0);
-	    
-	    String broadcastedTime = body.get("broadcastedTime");
-	    System.out.println(broadcastedTime);
-	    
-	    boolean appOnly = (Integer.parseInt(body.get("appOnly")) !=0);
-	    Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
-	    String voiceUrl = voice.getUrl();
-	    boolean voiceBroadcastDraft = (Integer.parseInt(body.get("voiceBroadcastDraft")) !=0);
-	     
-	    VoiceBroadcast broadcast = new VoiceBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, voice, voiceBroadcastDraft);
-	    broadcastService.addBroadcast(broadcast);
-	    
-	    String userIdString = body.get("userIds");
-	    String[] userIdList = userIdString.split(",");
-	    List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
-	    for(int i=0 ; i<userIdList.length;i++)
-	    {	
-	    	User user = userService.getUser(Integer.parseInt(userIdList[i]));
-	    	BroadcastRecipient broadcastRecipient = new BroadcastRecipient(broadcast, user);
-	    	broadcastRecipients.add(broadcastRecipient);
-	    	broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
-	    }
-	    
-	    //TODO have to shift this function to thread. Also have to ask where is the Broadcast object mentioned here.
-	    for(BroadcastRecipient recipient: broadcastRecipients)
+		System.out.println("We have received the body"+body);
+		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
+		Group group = groupService.getGroup(Integer.parseInt(body.get("groupId")));
+		User publisher = userService.getUser(Integer.parseInt(body.get("publisherId")));
+		String mode = body.get("mode");
+		//Converting string to integer and converting to boolean
+		boolean askOrder = (Integer.parseInt(body.get("askOrder")) !=0);
+		boolean askFeedback = (Integer.parseInt(body.get("askFeedback")) !=0);;
+		boolean askResponse = (Integer.parseInt(body.get("askResponse")) !=0);
+		
+		String broadcastedTime = body.get("broadcastedTime");
+		System.out.println(broadcastedTime);
+		
+		boolean appOnly = (Integer.parseInt(body.get("appOnly")) !=0);
+		Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
+		String voiceUrl = voice.getUrl();
+		boolean voiceBroadcastDraft = (Integer.parseInt(body.get("voiceBroadcastDraft")) !=0);
+		 
+		VoiceBroadcast broadcast = new VoiceBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, voice, voiceBroadcastDraft);
+		broadcastService.addBroadcast(broadcast);
+		
+		String userIdString = body.get("userIds");
+		String[] userIdList = userIdString.split(",");
+		List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
+		for(int i=0 ; i<userIdList.length;i++)
+		{	
+			User user = userService.getUser(Integer.parseInt(userIdList[i]));
+			BroadcastRecipient broadcastRecipient = new BroadcastRecipient(broadcast, user);
+			broadcastRecipients.add(broadcastRecipient);
+			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
+		}
+		
+		//TODO have to shift this function to thread. Also have to ask where is the Broadcast object mentioned here.
+		for(BroadcastRecipient recipient: broadcastRecipients)
 		{
-			User user=recipient.getUser();
-			System.out.println("User:"+user.getName());
-			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
+		User user=recipient.getUser();
+		System.out.println("User:"+user.getName());
+		List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
 			for(UserPhoneNumber no:phoneNumbers)
 			{
 				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
