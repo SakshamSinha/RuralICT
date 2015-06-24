@@ -39,7 +39,7 @@ public class DownloadDaemon extends Thread {
 					for(Voice voiceFile : undownloadedVoiceFiles) {
 						try {
 							System.out.println("Downloading file at " + voiceFile.getUrl());
-							String fileName = Utils.downloadFile(voiceFile.getUrl(), "./voices/");
+							String fileName = Utils.downloadFile(voiceFile.getUrl(), Utils.getVoiceDir());
 							
 							if(fileName != null) {
 								System.out.println("Voice File at " + voiceFile.getUrl() + " downloaded to http://www.ruralict.cse.iitb.ac.in/voices/" +fileName);
