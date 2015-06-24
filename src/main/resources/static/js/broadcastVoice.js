@@ -35,30 +35,30 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		
 	$scope.uploadFile = function(ids){
 		$scope.latestBroadcastableVoiceIds =ids;
-        var formData=new FormData();
-        formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
-        $http({
-            method: 'POST',
-            url: '/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
-            headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
-            data: formData,
-            transformRequest: function(data, headersGetterFunction) {
-                return data;
-            }
-        })
-        .success(function(data, status) {
-        	$scope.latestBroadcastableVoiceIds.voiceId = data;
-        	$scope.latestBroadcastableVoiceIds.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        	console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
-        	$http.post('/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
-    		.success(function(data,status,header,config){
-    			//TODO Eliminating this function doing hard refresh
-    			setTimeout($window.location.reload.bind(window.location),2000);
-    		})
-        })
-        .error(function(data, status) {
-        });
-    }
+		var formData=new FormData();
+		formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
+		$http({
+			method: 'POST',
+			url: '/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
+			headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
+			data: formData,
+			transformRequest: function(data, headersGetterFunction) {
+			return data;
+			}
+		})
+		.success(function(data, status) {
+			$scope.latestBroadcastableVoiceIds.voiceId = data;
+			$scope.latestBroadcastableVoiceIds.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+			console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
+			$http.post('/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
+				.success(function(data,status,header,config){
+					//TODO Eliminating this function doing hard refresh
+					setTimeout($window.location.reload.bind(window.location),2000);
+					})
+				})
+		.error(function(data, status) {
+		});
+	}
 	
 	//TODO Eliminating this function doing hard refresh
 	$scope.reload = function(){
@@ -113,12 +113,10 @@ $("#page-content").on("click","#place-broadcast-call",function(e){
 	//ask about these fields
 	data.voiceBroadcastDraft = 0;
 	data.textContent = null;
-	
 	var userIds = '';
 	$("#user-list input:checked").each(function(){
 		userIds = userIds + this.value + ',';
 	});
-	
 	data.userIds = userIds;
 	angular.element($('#broadcast-voice-ids')).scope().saveBroadcast(data);
 	

@@ -70,28 +70,26 @@ $("#page-content").on("click", "#producttable #checkall", function () {
 
 //adding new product on pressing the 'Add new product' button
 $("#page-content").on("click", "#add-new-quantity", function(e) {
-    var quantity = $.trim($('#new-quantity-input').val());
-    var productType = $('#new-presetqty-product-type-input').val();
-    var organizationId= $('#product-quantity').attr('organizationId');
-    var organization = "organizations/"+organizationId;
-    var data = {};
-    data.name = quantity;
-    data.productType = productType;
-    data.organization = organization;
-    angular.element($('#add-new-quantity')).scope().savePresetQuantity(data);
-
-    $('#add-qty-modal').modal('toggle');
+	var quantity = $.trim($('#new-quantity-input').val());
+	var productType = $('#new-presetqty-product-type-input').val();
+	var organizationId= $('#product-quantity').attr('organizationId');
+	var organization = "organizations/"+organizationId;
+	var data = {};
+	data.name = quantity;
+	data.productType = productType;
+	data.organization = organization;
+	angular.element($('#add-new-quantity')).scope().savePresetQuantity(data);
+	$('#add-qty-modal').modal('toggle');
 	$('#new-quantity-input').val("");
-    $('#new-presetqty-product-type-input').val("");
+	$('#new-presetqty-product-type-input').val("");
 });
 
 
 //capturing the preset quantity id on pressing the delete button
 $("#page-content").on("click", "#btn-qty-delete", function(e) {  
-    e.preventDefault();
-    presetQuantityId = $(this).attr("presetQuantityId");
+	e.preventDefault();
+	presetQuantityId = $(this).attr("presetQuantityId");
 	angular.element(this).scope().setId(presetQuantityId);
-
 });
 
 //deleting a quantity entry on pressing the 'yes' delete button
