@@ -57,7 +57,8 @@ public class BroadcastVoiceController {
 	@Autowired
 	BroadcastRecipientService broadcastRecipientService;
 	@Autowired
-	LatestRecordedVoiceService latestRecordedVoiceService; 
+	LatestRecordedVoiceService latestRecordedVoiceService;
+	public static final String OUTBOUND_APP_URL = "http://ruralict.cse.iitb.ac.in/RuralIvrs/BroadcastCallHandler";
 
 	@RequestMapping(value="/broadcastVoiceMessages/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
@@ -136,7 +137,7 @@ public class BroadcastVoiceController {
 			for(UserPhoneNumber no:phoneNumbers)
 			{
 				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
-				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, voiceUrl));
+				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, OUTBOUND_APP_URL));
 				{
 					break;
 				}
@@ -150,7 +151,6 @@ public class BroadcastVoiceController {
 	public void latestRecordedLogs(@RequestBody Map<String,String> body) {
 	    System.out.println("We have received the latest body from uploader in Angular "+body);
 	    Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
-	    Group group = groupService.getGroup(Integer.parseInt(body.get("groupId")));
 	    Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
 	    String recordedTime = body.get("broadcastedTime");
 	    Timestamp timestamp = Timestamp.valueOf(recordedTime);
