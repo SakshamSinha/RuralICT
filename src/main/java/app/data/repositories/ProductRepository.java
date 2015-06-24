@@ -18,7 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	 * Default functions
 	 */
 
-	//@PostAuthorize("hasRole('ADMIN'+returnObject.productType.organization.abbreviation)")
+	@PostAuthorize("hasRole('ADMIN'+returnObject.productType.organization.abbreviation)")
 	@Override
 	public Product findOne(Integer id);
 

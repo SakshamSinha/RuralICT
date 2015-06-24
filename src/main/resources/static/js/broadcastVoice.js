@@ -10,7 +10,6 @@ website.directive('fileModel', ['$parse',function ($parse) {
         link: function(scope, element, attrs) {
             var model = $parse(attrs.fileModel);
             var modelSetter = model.assign;
-            
             element.bind('change', function(){
                 scope.$apply(function(){
                     modelSetter(scope, element[0].files[0]);
@@ -29,9 +28,6 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		$http.post('/web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
 		.success(function(data,status,header,config){
 			console.log(data);
-			console.log(status);
-			console.log(header);
-			console.log(config);
 		})
 		.error(function(data,status,header,config){
 			
@@ -45,7 +41,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
         formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
         $http({
             method: 'POST',
-            url: '/upload', // The URL to Post.
+            url: '/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
             headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
             data: formData,
             transformRequest: function(data, headersGetterFunction) {
@@ -54,7 +50,6 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
         })
         .success(function(data, status) {
         	$scope.latestBroadcastableVoiceIds.voiceId = data;
-        	console.log(data);
         	$scope.latestBroadcastableVoiceIds.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
         	console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
         	$http.post('/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)

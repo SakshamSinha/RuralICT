@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 @Configuration
-@EnableSpringDataWebSupport
 public class WebConfigSupport extends WebMvcConfigurationSupport{
 
 	@Bean

@@ -28,7 +28,7 @@ website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $locat
 		    $scope.presetQuantity.productType = data.productType;
 		    $scope.presetQuantity.organization = data.organization;
 		    PresetQuantityCreate.save($scope.presetQuantity,function(){
-				console.log("Done done");
+				
 			});
 		}
 		//function to edit the preset quantity

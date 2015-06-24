@@ -33,7 +33,8 @@ public class LatestRecordedVoice implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="organization_id")
 	private Organization organization;
-
+	
+	@Column(name="recorded_time")
 	private Timestamp recordedTime;
 
 	//bi-directional many-to-one association to Group

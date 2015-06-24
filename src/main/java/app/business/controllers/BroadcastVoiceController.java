@@ -121,7 +121,6 @@ public class BroadcastVoiceController {
 	    List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
 	    for(int i=0 ; i<userIdList.length;i++)
 	    {	
-	    	System.out.println(userIdList[i]);
 	    	User user = userService.getUser(Integer.parseInt(userIdList[i]));
 	    	BroadcastRecipient broadcastRecipient = new BroadcastRecipient(broadcast, user);
 	    	broadcastRecipients.add(broadcastRecipient);
@@ -137,7 +136,6 @@ public class BroadcastVoiceController {
 			for(UserPhoneNumber no:phoneNumbers)
 			{
 				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
-				System.out.println(phoneNumber);
 				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, voiceUrl));
 				{
 					break;
@@ -154,26 +152,10 @@ public class BroadcastVoiceController {
 	    Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
 	    Group group = groupService.getGroup(Integer.parseInt(body.get("groupId")));
 	    Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
-	  
 	    String recordedTime = body.get("broadcastedTime");
-	    
 	    Timestamp timestamp = Timestamp.valueOf(recordedTime);
 	    
-        LatestRecordedVoice latestRecordedVoice = latestRecordedVoiceService.getLatestRecordedVoiceByOrganization(organization);
-        if (latestRecordedVoice.equals(null))
-        {
-        	latestRecordedVoice = new LatestRecordedVoice(organization, timestamp, voice);
-        }
-        else
-        {
-        	latestRecordedVoice.setTime(timestamp);
-        	latestRecordedVoice.setVoice(voice);
-        }
-        System.out.println("Latest recorded Voice about to be added here. Reached till here.");
-        latestRecordedVoiceService.addLatestRecordedVoice(latestRecordedVoice);
-        System.out.println("Latest recorded Voice had to be added here. Reached till here.");
-    
-	    
+	    latestRecordedVoiceService.updateLatestRecordedVoice(organization, timestamp, voice);
 	}
 
 
