@@ -40,6 +40,7 @@ public class UploadController {
 		File temp = Utils.saveFile("temp.wav", Utils.getVoiceDir(), mFile);
 		File serverFile = new File(Utils.getVoiceDir() +File.separator+ fileName);
 		serverFile = Utils.convertToKookooFormat(temp, serverFile);
+		
 		String url = Utils.getVoiceDirURL() + fileName;
 		
 		Voice voice = new Voice(url, true);

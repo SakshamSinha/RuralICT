@@ -1,5 +1,6 @@
 
 <div class="row-fluid" ng-controller="BroadcastVoiceCtrl">
+	<!--TODO Change ids such as voiceid to data-voiceid as the former is not supported in a lot of browsers   -->
     <div id="broadcast-voice-ids" th:attr="org=${organization.abbreviation},organizationid=${organization.organizationId},groupid=${group.groupId},publisherid=${publisher.userId}"></div>
     <table class="table table-striped table-bordered table-condensed" id="usertable">
         <tbody>
@@ -13,7 +14,7 @@
                     		</div>
                     		<div th:unless="${broadcast==null}">
                     			<h4 id = "latest-voice" th:attr="voiceid=${broadcast.voice.voiceId}">Latest Recorded Audio</h4>
-                    			<audio th:src="${broadcast.voice.url}" controls style="text-align:center;">
+                    			<audio th:attr="src=${broadcast.voice.url}" controls style="text-align:center;">
                     			</audio>
                     		</div>
                     </div>
