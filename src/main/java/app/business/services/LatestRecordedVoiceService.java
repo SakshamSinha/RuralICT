@@ -33,17 +33,17 @@ public class LatestRecordedVoiceService {
 	}
 	
 	public void updateLatestRecordedVoice(Organization organization,Timestamp timestamp, Voice voice) {
-		 LatestRecordedVoice latestRecordedVoice = getLatestRecordedVoiceByOrganization(organization);
-		    if (latestRecordedVoice.equals(null))
-		    {
-		    	latestRecordedVoice = new LatestRecordedVoice(organization, timestamp, voice);
-		    }
-		    else
-		    {
-		    	latestRecordedVoice.setTime(timestamp);
-		    	latestRecordedVoice.setVoice(voice);
-		    }
-		    addLatestRecordedVoice(latestRecordedVoice);
+		LatestRecordedVoice latestRecordedVoice = getLatestRecordedVoiceByOrganization(organization);
+		if (latestRecordedVoice.equals(null))
+		{
+			latestRecordedVoice = new LatestRecordedVoice(organization, timestamp, voice);
+		}
+		else
+		{
+			latestRecordedVoice.setTime(timestamp);
+			latestRecordedVoice.setVoice(voice);
+		}
+		addLatestRecordedVoice(latestRecordedVoice);
 	}
 	
 
