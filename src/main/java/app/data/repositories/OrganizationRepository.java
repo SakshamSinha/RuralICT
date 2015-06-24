@@ -30,8 +30,11 @@ public interface OrganizationRepository extends JpaRepository<Organization, Inte
 	/*
 	 * Search functions
 	 */
+
 	public Organization findByAbbreviation(@Param("abbreviation") String abbreviation);
+	
 	public List<Organization> findAllByOrderByNameAsc();
+	
 	public Organization findByIvrNumber(@Param("ivr_number") String ivrNumber);
 	
 }

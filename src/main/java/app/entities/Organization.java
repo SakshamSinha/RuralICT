@@ -141,9 +141,9 @@ public class Organization implements Serializable {
 	@OneToMany(mappedBy="organization")
 	private List<WelcomeMessage> welcomeMessages;
 
-	//bi-directional many-to-one association to LatestBroadcastableVoice
+	//bi-directional many-to-one association to LatestRecordedVoice
 	@OneToMany(mappedBy="organization")
-	private List<LatestBroadcastableVoice> latestBroadcastableVoices;
+	private List<LatestRecordedVoice> latestRecordedVoices;
 
 	public Organization() {
 	}
@@ -550,26 +550,26 @@ public class Organization implements Serializable {
 		return welcomeMessage;
 	}
 
-	public List<LatestBroadcastableVoice> getLatestBroadcastableVoices() {
-		return this.latestBroadcastableVoices;
+	public List<LatestRecordedVoice> getLatestRecordedVoices() {
+		return this.latestRecordedVoices;
 	}
 
-	public void setLatestBroadcastableVoices(List<LatestBroadcastableVoice> latestBroadcastableVoices) {
-		this.latestBroadcastableVoices = latestBroadcastableVoices;
+	public void setLatestRecordedVoices(List<LatestRecordedVoice> latestRecordedVoices) {
+		this.latestRecordedVoices = latestRecordedVoices;
 	}
 
-	public LatestBroadcastableVoice addLatestBroadcastableVoice(LatestBroadcastableVoice latestBroadcastableVoice) {
-		getLatestBroadcastableVoices().add(latestBroadcastableVoice);
-		latestBroadcastableVoice.setOrganization(this);
+	public LatestRecordedVoice addLatestRecordedVoice(LatestRecordedVoice latestRecordedVoice) {
+		getLatestRecordedVoices().add(latestRecordedVoice);
+		latestRecordedVoice.setOrganization(this);
 
-		return latestBroadcastableVoice;
+		return latestRecordedVoice;
 	}
 
-	public LatestBroadcastableVoice removeLatestBroadcastableVoice(LatestBroadcastableVoice latestBroadcastableVoice) {
-		getLatestBroadcastableVoices().remove(latestBroadcastableVoice);
-		latestBroadcastableVoice.setOrganization(null);
+	public LatestRecordedVoice removeLatestRecordedVoice(LatestRecordedVoice latestRecordedVoice) {
+		getLatestRecordedVoices().remove(latestRecordedVoice);
+		latestRecordedVoice.setOrganization(null);
 
-		return latestBroadcastableVoice;
+		return latestRecordedVoice;
 	}
 
 }

@@ -18,48 +18,45 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="latest_broadcastable_voice")
-public class LatestBroadcastableVoice implements Serializable {
+@Table(name="latest_recorded_voice")
+public class LatestRecordedVoice implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="latest_broadcastable_voice_id")
-	private int latestBroadcastableVoiceId;
+	@Column(name="latest_recorded_voice_id")
+	private int latestRecordedVoiceId;
 
 	//bi-directional many-to-one association to Organization
+	//NOTE: Although here for one organization we have one to many mapping to latest recorded voice.
+	//But actually we update our table to have only the latest recorded voice.
 	@ManyToOne
 	@JoinColumn(name="organization_id")
 	private Organization organization;
-
-	//bi-directional many-to-one association to Group
-	@ManyToOne
-	@JoinColumn(name="group_id")
-	private Group group;
-
-	private Timestamp time;
+	
+	@Column(name="recorded_time")
+	private Timestamp recordedTime;
 
 	//bi-directional many-to-one association to Group
 	@ManyToOne
 	@JoinColumn(name="voice_id")
 	private Voice voice;
 
-	public LatestBroadcastableVoice() {
+	public LatestRecordedVoice() {
 	}
 
-	public LatestBroadcastableVoice(Organization organization, Group group, Timestamp time, Voice voice) {
+	public LatestRecordedVoice(Organization organization, Timestamp recordedTime, Voice voice) {
 		this.organization = organization;
-		this.group = group;
-		this.time = time;
+		this.recordedTime = recordedTime;
 		this.voice = voice;
 	}
 
-	public int getLatestBroadcastableVoiceId() {
-		return latestBroadcastableVoiceId;
+	public int getLatestRecordedVoiceId() {
+		return latestRecordedVoiceId;
 	}
 
-	public void setLatestBroadcastableVoiceId(int latestBroadcastableVoiceId) {
-		this.latestBroadcastableVoiceId = latestBroadcastableVoiceId;
+	public void setLatestRecordedVoiceId(int latestRecordedVoiceId) {
+		this.latestRecordedVoiceId = latestRecordedVoiceId;
 	}
 
 	public Organization getOrganization() {
@@ -70,20 +67,12 @@ public class LatestBroadcastableVoice implements Serializable {
 		this.organization = organization;
 	}
 
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group group) {
-		this.group = group;
-	}
-
 	public Timestamp getTime() {
-		return time;
+		return recordedTime;
 	}
 
-	public void setTime(Timestamp time) {
-		this.time = time;
+	public void setTime(Timestamp recordedTime) {
+		this.recordedTime = recordedTime;
 	}
 
 	public Voice getVoice() {
