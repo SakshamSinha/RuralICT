@@ -149,13 +149,13 @@ public class BroadcastVoiceController {
 	@RequestMapping(value = "/latestBroadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
 	@ResponseBody
 	public void latestRecordedLogs(@RequestBody Map<String,String> body) {
-	    System.out.println("We have received the latest body from uploader in Angular "+body);
-	    Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
-	    Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
-	    String recordedTime = body.get("broadcastedTime");
-	    Timestamp timestamp = Timestamp.valueOf(recordedTime);
-	    
-	    latestRecordedVoiceService.updateLatestRecordedVoice(organization, timestamp, voice);
+		System.out.println("We have received the latest body from uploader in Angular "+body);
+		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
+		Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
+		String recordedTime = body.get("broadcastedTime");
+		Timestamp timestamp = Timestamp.valueOf(recordedTime);
+		
+		latestRecordedVoiceService.updateLatestRecordedVoice(organization, timestamp, voice);
 	}
 
 
