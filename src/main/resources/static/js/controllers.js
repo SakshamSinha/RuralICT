@@ -1,6 +1,6 @@
 'use strict';
 
-var website = angular.module('ruralIvrs', ['ngRoute', 'ngResource', 'angular-loading-bar'])
+var website = angular.module('ruralIvrs', ['ngRoute', 'ngResource', 'angular-loading-bar']);
 
 website.config(['$routeProvider', '$provide', '$httpProvider', 'cfpLoadingBarProvider', function($routeProvider, $provide, $httpProvider, cfpLoadingBarProvider) {
 
@@ -14,7 +14,7 @@ website.config(['$routeProvider', '$provide', '$httpProvider', 'cfpLoadingBarPro
 		.when('/settings', {templateUrl: 'settingsPage', title: "Settings"})
 		.when('/group/:groupId', {templateUrl: function(params){ return 'groupPage/' + params.groupId; }, title: "Group Operations"})
 		.otherwise({redirectTo: '/home'});
-
+    
 	$provide.factory('myHttpInterceptor', function($q) {
 		return {
 			'response': function(response) {

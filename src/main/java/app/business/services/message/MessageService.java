@@ -1,6 +1,7 @@
 package app.business.services.message;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -20,7 +21,6 @@ public class MessageService {
 	/*
 	 * Returns messages with 'Yes' Response for a group  
 	 */
-
 	public List<Message> getPositiveResponseList(Group group, String format) {
 		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, true, "response", format);
 	}
@@ -73,7 +73,6 @@ public class MessageService {
 	public Message getMessage(int messageId){
 		return messageRepository.findOne(messageId);
 	}
-
 
 	public Message updateMessageComment(String comment, Message message){
 		message.setComments(comment);

@@ -44,6 +44,7 @@ public class BroadcastService {
 		return broadcastRepository.findOne(broadcastId);
 	}
 	
+	//This function is to give top broadcast for already broadcasted voices.
 	@Transactional
 	public Broadcast getTopBroadcast(User user, Organization organization, String format) {
 

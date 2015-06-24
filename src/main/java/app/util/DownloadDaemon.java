@@ -38,9 +38,8 @@ public class DownloadDaemon extends Thread {
 					
 					for(Voice voiceFile : undownloadedVoiceFiles) {
 						try {
-							System.out.println("Downloading file at " + voiceFile.getVoiceId());
 							System.out.println("Downloading file at " + voiceFile.getUrl());
-							String fileName = Utils.downloadFile(voiceFile.getUrl(), Utils.getVoiceDirURL());
+							String fileName = Utils.downloadFile(voiceFile.getUrl(), Utils.getVoiceDir());
 							
 							if(fileName != null) {
 								System.out.println("Voice File at " + voiceFile.getUrl() + " downloaded to http://www.ruralict.cse.iitb.ac.in/voices/" +fileName);
@@ -51,6 +50,7 @@ public class DownloadDaemon extends Thread {
 						}
 						catch(MalformedURLException e) {
 							System.out.println("File could not be downloaded because of error in URL: (" + e.getLocalizedMessage()+")");
+							e.printStackTrace();
 						}
 					}
 				}
@@ -70,6 +70,4 @@ public class DownloadDaemon extends Thread {
 	Long getSleepDuration() {
 		return this.sleepDuration;
 	}
-	
-		
 }
