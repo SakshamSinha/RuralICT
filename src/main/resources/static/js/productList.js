@@ -46,7 +46,6 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 				console.log($scope.product.unitRate);
 				console.log("Record to be updated fetched");
 				$scope.product.$update({id:$scope.id},function(){
-					console.log("Edit done");
 				});
 			});
 		}
@@ -54,7 +53,6 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 		$scope.deleteProduct = function(data){
 			$scope.product = ProductDelete.get({id:$scope.id},function(){				
 				$scope.product.$update({id:$scope.id},function(){
-					console.log("Record actually deleted");
 				});
 			});
 			
@@ -62,13 +60,11 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 		//function to set id attribute
 		$scope.setId = function(productId){
 			$scope.id=productId; 
-			console.log($scope.id);
-			
 		}
 		//function to fetch list of products
 		$scope.getList = function(){
 			$scope.products = ProductCreate.query(function() {
-			    console.log($scope.products);
+			    
 			  }); 
 		}
 });

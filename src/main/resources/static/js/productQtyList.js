@@ -25,9 +25,9 @@ website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $locat
 			$scope.presetQuantity = new PresetQuantityCreate();
 			console.log("new product has been created");
 			$scope.presetQuantity.quantity = data.quantity;
-		    $scope.presetQuantity.productType = data.productType;
-		    $scope.presetQuantity.organization = data.organization;
-		    PresetQuantityCreate.save($scope.presetQuantity,function(){
+			$scope.presetQuantity.productType = data.productType;
+			$scope.presetQuantity.organization = data.organization;
+			PresetQuantityCreate.save($scope.presetQuantity,function(){
 				
 			});
 		}
