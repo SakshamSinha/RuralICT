@@ -30,11 +30,11 @@ public class UploadController {
 	@RequestMapping(value="/web/{org}/upload", method=RequestMethod.POST)
 	public @ResponseBody int handleFileUpload(HttpServletRequest request){
 		MultipartHttpServletRequest mRequest;
-	    mRequest = (MultipartHttpServletRequest) request;
-	    
-	    Iterator<String> itr = mRequest.getFileNames();
-	    
-	    //only one iteration i.e itr.next() as it has only one file
+		mRequest = (MultipartHttpServletRequest) request;
+		
+		Iterator<String> itr = mRequest.getFileNames();
+		
+		//only one iteration i.e itr.next() as it has only one file
 		MultipartFile mFile = mRequest.getFile(itr.next());
 		String fileName = mFile.getOriginalFilename();
 		File temp = Utils.saveFile("temp.wav", Utils.getVoiceDir(), mFile);
