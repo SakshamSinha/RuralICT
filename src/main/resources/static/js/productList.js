@@ -83,21 +83,19 @@ $("#page-content").on("click", "#producttable #checkall", function () {
 
 //add new product on clicking the add button
 $("#page-content").on("click", "#add-new-product", function(e) {
-    e.preventDefault();
-    var product = $.trim($('#new-product-input').val());
-    var price = $.trim($('#new-price-input').val());
-    var productType = $('#new-product-type-input').val();
-    var data = {};
-    data.name = product;
-    data.unitRate = price;
-    data.productType = productType;
-    angular.element($('#add-new-product')).scope().saveProduct(data);
-    
-    $('#add-product-modal').modal('toggle');
-
+	e.preventDefault();
+	var product = $.trim($('#new-product-input').val());
+	var price = $.trim($('#new-price-input').val());
+	var productType = $('#new-product-type-input').val();
+	var data = {};
+	data.name = product;
+	data.unitRate = price;
+	data.productType = productType;
+	angular.element($('#add-new-product')).scope().saveProduct(data);
+	$('#add-product-modal').modal('toggle');
 	$('#new-product-input').val("");
-    $('#new-product-type-input').val("");
-    $('#new-price-input').val("");
+	$('#new-product-type-input').val("");
+	$('#new-price-input').val("");
 });
 
 //capture the id of product on clicking the delete button
