@@ -21,4 +21,8 @@ public class WelcomeMessageService {
 	public Voice getVoice(WelcomeMessage welcomeMessage){
 		return welcomeMessage.getVoice();
 	}
+	
+	public WelcomeMessage addWelcomeMessage(WelcomeMessage welcomeMessage){
+		return welcomeMessageRepository.save(welcomeMessage);
+	}
 }

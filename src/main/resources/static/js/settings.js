@@ -35,8 +35,6 @@ website.factory("OutboundCall", function($resource) {
 	});
 });
 
-
-
 website.directive('fileModel', ['$parse',function ($parse) {
 	return {
 		restrict: 'A',
@@ -53,12 +51,22 @@ website.directive('fileModel', ['$parse',function ($parse) {
 	};
 }]);
 
+function changeAudioSource(url){
+	audioControl = $('#welcome-message-audio');
+	audioDownload = $('#download-message-audio');
+	audioControl.attr("src", url);
+    audioControl.load();
+    audioDownload.attr("href", url);
+}
+
 website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organization, OutboundCall) {
 
 	// get the current organization id
 	var orgid = document.getElementById("settings-page").getAttribute("orgid");
 	var outboundcallid = document.getElementById("settings-page").getAttribute("orgid");
 
+	$scope.languageUrl  = [];
+	
 	$scope.selectOptions = [{
 		name: 'Disable(बंद करना)',
 		value: '0'
@@ -92,6 +100,9 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organizat
 			"feedback" : false,
 			"response" : false
 	};    
+	
+	
+	
 
 	var organization = Organization.get({
 		id: orgid
@@ -115,6 +126,9 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organizat
 		$scope.incomingCheckBoxOptions.order = organization.inboundCallAskOrder;
 		$scope.incomingCheckBoxOptions.feedback = organization.inboundCallAskFeedback;
 		$scope.incomingCheckBoxOptions.response = organization.inboundCallAskResponse;
+		
+		// 'select' element from welcome message settings
+		$scope.WelcomeMessageLanguageSelect = '0';  // set default option in select as "English"
 
 	});
 	
@@ -129,6 +143,34 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organizat
 
 	});
 	
+	// Get the initial url for the audio files from the Backend
+	var postData = new FormData();
+	postData.append("orgid", orgid);
+
+	$http({
+		method: 'POST',
+		url: '/web/iitb/getwelcomeMessageUrl', // The URL to Post.
+		headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
+		data: postData,
+		transformRequest: function(data, headersGetterFunction) {
+			return data;
+		}
+	}).success(function(data, status) {
+		console.log("Initial voice url data from the backend is :" + data);
+		console.log("English message url: " + data[0]);
+	    // set the url as recieved from the backend
+		$scope.englishMessageurl = data[0];
+		$scope.marathiMessageurl = data[1];
+		$scope.hindiMessageurl = data[2];
+		
+		$scope.languageUrl.push($scope.englishMessageurl);
+		$scope.languageUrl.push($scope.marathiMessageurl);
+		$scope.languageUrl.push($scope.hindiMessageurl);
+		 
+		// set initial values for the audio control and dowload link 
+		changeAudioSource($scope.languageUrl[0]);
+		}).error(function(data, status) {
+	});
 	
 
 	// click function for 'save details' button in voice dashboard settings
@@ -218,7 +260,8 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organizat
 		
 		// We use formData to pass various attributes to the spring controller method
 		var formData=new FormData();
-		formData.append("file", $scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
+		//console.log("Myfile: " + $scope.myFile.files[0]);
+		formData.append("file", $scope.myFile); // can be accessed in Spring Controller using request.getPart()
 		formData.append("locale", $scope.languageOptions[localeIndex].locale);
 		formData.append("orgid", orgid);
 		
@@ -230,12 +273,47 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organizat
 			transformRequest: function(data, headersGetterFunction) {
 				return data;
 			}
-		}).success(function(data, status) {  
+		}).success(function(data, status) {
+			console.log("Returned data from the backend is :" + data + " its type: " + typeof data);
+			if (data === "-1")
+				{
+				  console.log("Entered if-else statement of -1");
+				  alert("The File you have uploaded is not wav audio file");
+				}
+			else
+				{
+				console.log("successfully changed the attribute");
+				$scope.languageUrl[localeIndex] = data;
+				changeAudioSource($scope.languageUrl[localeIndex]);
+				}
 		})
 		.error(function(data, status) {
 		});
 	}
+});
+
+
+// Jquery Specific Code
+$("#page-content").on("change","#select-welcome-message-language",function(e){
 	
-	
-	
+	  // Get the scope of the angular controller so that we can access required variables from it
+	  myScope = angular.element('#settings-page').scope();
+	  console.log("myScope" + myScope.languageUrl[0]);
+	  
+	  // Depending on value of select element, update the audio player and download link
+	  	  if(this.value === '1')
+		  {
+	  		  console.log("marathi is selected");
+	  		  changeAudioSource(myScope.languageUrl[1]);
+		  }
+	  	  else if (this.value === '2')
+		  {
+	  		  console.log("Hindi is selected");
+	  		  changeAudioSource(myScope.languageUrl[2]);
+		  }
+	  	  else if(this.value === '0')
+	  	  {
+	  		  console.log("English is selected");
+	  		  changeAudioSource(myScope.languageUrl[0]);
+	  	 }
 });

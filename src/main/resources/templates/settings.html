@@ -85,7 +85,7 @@
 					<div class="table-settings-system">
 						<table style="border-spacing: 40px 10px;">
 							<tr>
-								<td><b>Welcome Message&nbsp;(स्वागत संदेश) :</b>
+								<td align='right'><b> Select Language :</b>
 								</td>
 								
 								<td>
@@ -95,24 +95,25 @@
 							</tr>
 
 							<tr>
-								<td></td>
+								<td align='right'> Current Welcome Message :</td>
 								<td>
-									<input type="file" name="myFile" file-model="myFile" id="welcome_message">
-								</td>
-							</tr>
-
-							<tr>
-								<td></td>
-								<td>
-									<audio controls>
-										<source src="http://ruralivrs.cse.iitb.ac.in/Downloads/AFC/audio-upload/Welcome_message2015-02-20-01:34:16.wav" type="audio/wav"></source>
+									<audio id='welcome-message-audio' controls>
+										<source  src="http://ruralict.cse.iitb.ac.in/Downloads/voice/welcomeMessage_en.wav" type="audio/wav"></source>
 									</audio>
 								</td>
 							</tr>
 
 							<tr>
-								<td></td>
-								<td><a href="http://ruralivrs.cse.iitb.ac.in/Downloads/AFC/audio-upload/Welcome_message2015-02-20-01:34:16.wav" download>Download&nbsp;(डाउनलोड)</a>
+								<td align='right'> Download Current Message File :</td>
+								<td><a id='download-message-audio' href="http://ruralict.cse.iitb.ac.in/Downloads/voice/welcomeMessage_en.wav" download>Download&nbsp;(डाउनलोड)</a>
+								</td>
+								
+							</tr>
+
+							<tr>
+								<td align='right'> Upload New Welcome Message File :</td>
+								<td>
+									<input type="file" name="myFile" file-model="myFile" id="welcome_message">
 								</td>
 							</tr>
 
@@ -130,7 +131,8 @@
 								<b>OUTGOING CALL SETTINGS :</b>
 							</tr>
 							<tr>
-								<td>Response&nbsp;(प्रतिक्रिया):
+								<td><b>Call Flow : </b>
+									<br>
 									<br>
 									<input type="checkbox" ng-model=outgoingCheckBoxOptions.order name="response1" />SemiStructured&nbsp;(Order/आदेश)
 									<br>
@@ -153,7 +155,8 @@
 								<b>INCOMING CALL SETTINGS :</b>
 							</tr>
 							<tr>
-								<td>Response Incoming&nbsp;(प्रतिक्रिया):
+								<td> <b>Call Flow : </b>
+									<br>
 									<br>
 									<input type="checkbox" ng-model=incomingCheckBoxOptions.order name="responsein" />SemiStructured&nbsp;(Order/आदेश)
 									<br>

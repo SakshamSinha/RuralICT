@@ -4,13 +4,20 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +34,7 @@ import app.business.services.WelcomeMessageService;
 import app.entities.Organization;
 import app.entities.Voice;
 import app.entities.WelcomeMessage;
+import app.util.Utils;
 
 @Controller
 @RequestMapping("/web/{org}")
@@ -49,9 +57,31 @@ public class SettingsController {
 		return "settings";
 	}
 	
-	@RequestMapping(value="/upload/welcomeMessage", method=RequestMethod.POST)
-	@ResponseBody
-	public void handleFileUpload(HttpServletRequest request){
+	@RequestMapping(value="/getwelcomeMessageUrl", method=RequestMethod.POST)
+	@Transactional
+	public @ResponseBody List<String> getVoiceObject(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+	
+		
+		// Get Parameters passed from AngularJS using FormData
+		int organizationid = Integer.parseInt(request.getParameter("orgid"));
+		System.out.println("organization id is: " + organizationid);
+		Organization organization = organizationService.getOrganizationById(organizationid);
+		
+		WelcomeMessage englishMessage = welcomeMessageService.getbyOrganizationAndLocale(organization,"en");
+		WelcomeMessage marathiMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, "mr");
+		WelcomeMessage hindiMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, "hi");
+		
+		List<String> voices = new ArrayList<String>();
+		voices.add(englishMessage.getVoice().getUrl());
+		voices.add(marathiMessage.getVoice().getUrl());
+		voices.add(hindiMessage.getVoice().getUrl());
+		
+		return voices;
+		}
+	
+	@RequestMapping(value="/upload/welcomeMessage", method=RequestMethod.POST, produces = "text/plain")
+	@Transactional
+	public @ResponseBody String handleFileUpload(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		
 		// Convert for getting the files
 		MultipartHttpServletRequest mRequest;
@@ -62,61 +92,77 @@ public class SettingsController {
 		System.out.println("organization id is: " + organizationid);
 		Organization organization = organizationService.getOrganizationById(organizationid);
 		
+		// Get the uploaded file and its name
+		Iterator<String> itr = mRequest.getFileNames();
+        MultipartFile uploadedAudioFile = mRequest.getFile(itr.next());
+        
+        
+        if(!uploadedAudioFile.getContentType().equals("audio/wav"))
+        {
+        	// Take some action in the frontend Part
+        	// like an alert box saying please upload wav file
+        	return "-1";
+        }
+        
+        String fileName = uploadedAudioFile.getOriginalFilename();
+ 		
+		//MultipartFile uploadFile = mRequest.getFile(request.getPart("file"));
+		System.out.println("MultiPart file name = " + fileName);
+		
 		String locale = request.getParameter("locale");
 		System.out.println("locale is: " + locale);
 		
 		// Create Required Entity Objects
 		WelcomeMessage welcomeMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, locale);
 		
-		Voice voice = welcomeMessageService.getVoice(welcomeMessage);
+		File currentAudioFile = new File(welcomeMessage.getVoice().getUrl());
+		String currentAudioFileName = currentAudioFile.getName();
+		
+		System.out.println("Current Audio File Name: " + currentAudioFileName);
 		
 		System.out.println("Got the Voice Object");
 		System.out.println("Now Uploading the File");
 		
-		// Upload the file to the given location
-		Iterator<String> itr = mRequest.getFileNames();
-		while (itr.hasNext()) {
-			//org.springframework.web.multipart.MultipartFile
-			MultipartFile mFile = mRequest.getFile(itr.next());
-			String fileName = mFile.getOriginalFilename();
-			System.out.println("*****"+ fileName);
-			String workingDir = System.getProperty("user.dir");
-			System.out.println("Current working directory : " + workingDir + "/"+ fileName);
-			 
-			String filePath = workingDir + "/" + fileName;
-			//To copy the file to a specific location in machine.
-			File file = new File(filePath);
-			try {
-				FileCopyUtils.copy(mFile.getBytes(), file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} //This will copy the file to the specific location.
-			
-			//Update the Voice Table
-			System.out.println("File was successfully uploaded.");
-			System.out.println("Now, updating the Voice Table");
-			
-			// Set the url of the uploaded file in voice table
-			voice.setUrl(filePath);
-			
-			// Finally, Update the voice object in the database
-			voiceService.addVoice(voice);
-			
-			System.out.println("Voice ID is "+voice.getVoiceId());
-			System.out.println("Voice URL is " + voice.getUrl());
-			
-			System.out.println("File URL was updated Successfully in the database");
-			
-			/*
-			 * TODO: What if the organzation does not have entries in the voice table and Welcome Message Table
-			 *  We will have to create them first
-			 */
-			
+		System.out.println("Content Type: " + uploadedAudioFile.getContentType());
+		
+		// Save as Temporary File and Convert to Kuckoo Format
+		File temp = Utils.saveFile("temp.wav", Utils.getVoiceDir(), uploadedAudioFile);
+		
+		// Change the 'serverFile' variable to path on the server when application is deployed on server
+		File serverFile = new File(Utils.getVoiceDir() + File.separator + fileName);
+		serverFile = Utils.convertToKookooFormat(temp, serverFile);
+		
+		// The below code will actually copy the uploaded file to specific location on the server
+		//FileCopyUtils.copy(uploadedAudioFile.getBytes(), serverFile);
+		
+		// Get the current Working Directory and the full Filepath
+		String serverFilePath = "http://ruralict.cse.iitb.ac.in/Downloads/voice/" + fileName;
+
+		// Check if the newly uploaded file is same as the previous File
+		if(currentAudioFileName == fileName)
+		{
+			System.out.println("You Uploaded the same File");
+		}
+	
+		//Update the Voice Table
+		System.out.println("File was successfully uploaded.");
+		
+		System.out.println("Now, updating the Voice Table");
+		
+		// Create a new Voice Object
+		Voice voice = new Voice(serverFilePath, true);
+		
+		// Add the voice object in the database
+		voiceService.addVoice(voice);
+	
+		System.out.println("Now, Updating Welcome Message Table");
+		
+		// Update the Welcome Message
+		welcomeMessage.setVoice(voice);
+		welcomeMessageService.addWelcomeMessage(welcomeMessage);
+		
+		System.out.println("Welcome Message was successfully Uploaded and Updated.");
+		return voice.getUrl();
 			
 		}
 	}
-	
-	
-
-}
