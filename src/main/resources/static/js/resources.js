@@ -202,7 +202,7 @@ website.factory("UpdateOrganization", function($resource) {
 });
 
 /* Resources for Outbound Call */
-website.factory("UpadateOutboundCall", function($resource) {
+website.factory("UpadateBroadcastDefaultSettings", function($resource) {
     return $resource("/api/broadcastDefaultSettings/:id", {id: '@id'}, {
     	query: {
     		method: "GET",

@@ -1,7 +1,7 @@
 /**
  *  Javascript file for the Settings Controller
  */
-website.controller("SettingsCtrl", function($scope, $routeParams, UpdateOrganization, OutboundCall) {
+website.controller("SettingsCtrl", function($scope, $routeParams, UpdateOrganization, UpadateBroadcastDefaultSettings) {
 
     // get the current organization id
     var orgid = document.getElementById("settings-page").getAttribute("orgid");
@@ -26,7 +26,7 @@ website.controller("SettingsCtrl", function($scope, $routeParams, UpdateOrganiza
     		"response" : false
     };    
 
-    var organization = Organization.get({
+    var organization = UpdateOrganization.get({
         id: orgid
     }, function() {
 
@@ -51,7 +51,7 @@ website.controller("SettingsCtrl", function($scope, $routeParams, UpdateOrganiza
 
     });
     
-    var outboundcall = OutboundCall.get({
+    var outboundcall = UpadateBroadcastDefaultSettings.get({
         id: outboundcallid
     }, function() {
     	
@@ -67,7 +67,7 @@ website.controller("SettingsCtrl", function($scope, $routeParams, UpdateOrganiza
     // click function for 'save details' button in voice dashboard settings
     $scope.updateDashboardOpt = function() {
 
-        $scope.organization = Organization.get({
+        $scope.organization = UpdateOrganization.get({
             id: orgid
         }, function() {
 
@@ -87,7 +87,7 @@ website.controller("SettingsCtrl", function($scope, $routeParams, UpdateOrganiza
 
     $scope.updateVoiceCallOpt = function() {
 
-        $scope.organization = Organization.get({
+        $scope.organization = UpdateOrganization.get({
             id: orgid
         }, function() {
 
@@ -108,7 +108,7 @@ website.controller("SettingsCtrl", function($scope, $routeParams, UpdateOrganiza
     // click function for 'save details' button in incoming call settings
     $scope.updateIncomingCallOpt = function() {
 
-        $scope.organization = Organization.get({
+        $scope.organization = UpdateOrganization.get({
             id: orgid
         }, function() {
 
@@ -127,7 +127,7 @@ website.controller("SettingsCtrl", function($scope, $routeParams, UpdateOrganiza
     // click function for 'save details' button in outgoing call settings
     $scope.updateOutgoingCallOpt = function() {
 
-        $scope.outboundcall = OutboundCall.get({
+        $scope.outboundcall = UpadateBroadcastDefaultSettings.get({
             id: orgid
         }, function() {
 
@@ -142,7 +142,4 @@ website.controller("SettingsCtrl", function($scope, $routeParams, UpdateOrganiza
             }, function() {});
         });
     };
-    
-    
-    
 });
