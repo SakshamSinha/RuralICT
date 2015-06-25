@@ -41,11 +41,6 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 			  }); 
 		}
 });
-/*
-$("#page-content").ready(function(){
-	angular.element(this).scope().getList();
-	
-});*/
 
 $("#page-content").on("click", "#producttable #checkall", function () {
 	if ($("#producttable #checkall").is(':checked')) {
@@ -106,4 +101,3 @@ $("#page-content").on("click","#update-product",function(e){
 	$("#edit-product-modal").modal('toggle');
 	$('#update-price-input').val("");
 });
-

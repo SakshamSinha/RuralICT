@@ -1,41 +1,7 @@
 /**
  *  Javascript file for the Settings Controller
  */
-website.factory("Organization", function($resource) {
-    return $resource("/api/organizations/:id", {
-        id: '@id'
-    }, {
-        query: {
-            method: "GET",
-            isArray: false
-        },
-        update: {
-            method: "PATCH",
-            params: {
-                id: '@id'
-            }
-        }
-    });
-});
-
-website.factory("OutboundCall", function($resource) {
-    return $resource("/api/broadcastDefaultSettings/:id", {
-        id: '@id'
-    }, {
-        query: {
-            method: "GET",
-            isArray: false
-        },
-        update: {
-            method: "PATCH",
-            params: {
-                id: '@id'
-            }
-        }
-    });
-});
-
-website.controller("SettingsCtrl", function($scope, $routeParams, Organization, OutboundCall) {
+website.controller("SettingsCtrl", function($scope, $routeParams, UpdateOrganization, OutboundCall) {
 
     // get the current organization id
     var orgid = document.getElementById("settings-page").getAttribute("orgid");

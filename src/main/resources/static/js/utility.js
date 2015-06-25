@@ -1,3 +1,8 @@
+var API_ADDR = "/ruralict";
+
+//Uncomment this for localhost	
+//var API_ADDR = ""
+	
 /* Function to dyanamically load audio */
 function loadAudio(audioTagName, voiceURL){
 	var audio = document.getElementById(audioTagName);
