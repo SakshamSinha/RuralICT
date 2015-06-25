@@ -2,6 +2,11 @@
 <div class="row-fluid" ng-controller="BroadcastVoiceCtrl">
 	<!--TODO Change ids such as voiceid to data-voiceid as the former is not supported in a lot of browsers   -->
     <div id="broadcast-voice-ids" th:attr="org=${organization.abbreviation},organizationid=${organization.organizationId},groupid=${group.groupId},publisherid=${publisher.userId}"></div>
+    <!-- Two script tags instead of one since if src attribute is used in script tag the text content is ignored. -->
+    <script src="recordFile.js"></script>
+    <script>
+    	recordFile.init();
+    </script>
     <table class="table table-striped table-bordered table-condensed" id="usertable">
         <tbody>
             <!-- 			<tr class="list-users" th:each="broadcast : ${broadcast} "> -->

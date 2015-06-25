@@ -74,4 +74,3 @@ RecordFile.prototype.init = function(){
 };
 
 var recordFile = new RecordFile("recordButton", "stopButton", "audio", "audioDownload");
-recordFile.init();

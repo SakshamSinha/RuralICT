@@ -42,7 +42,7 @@ public class UploadController {
 		serverFile = Utils.convertToKookooFormat(temp, serverFile);
 		
 		String url = Utils.getVoiceDirURL() + fileName;
-		
+		System.out.println(url);
 		Voice voice = new Voice(url, true);
 		voiceService.addVoice(voice);
 		int voiceId = voice.getVoiceId();

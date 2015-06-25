@@ -44,7 +44,8 @@ public class Utils {
 	}
 	
 	public static String getVoiceDirURL() {
-		String directory = VOICE_DIR.substring(21);
+		//the substring method is to remove the "./" part of VOICE_DIR. There can be a better way using regex.
+		String directory = VOICE_DIR.substring(2);
 		return WEBSITE_ADDRESS + directory;
 	}
 
