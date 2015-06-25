@@ -25,6 +25,7 @@ import app.data.repositories.UserRepository;
 import app.entities.User;
 import app.security.AuthenticatedUser;
 
+
 /**
  * Utilities for this application.
  */
@@ -35,14 +36,17 @@ public class Utils {
 	 */
 	private final static String VOICE_DIR = "./voices/";
 	
-	private final static String WEBSITE_ADDRESS = "http://ruralict.cse.iitb.ac.in";
+	private final static String WEBSITE_ADDRESS = "http://ruralict.cse.iitb.ac.in/";
+	//private final static String WEBSITE_ADDRESS = "http://localhost:8080/";
+
 	
 	public static String getVoiceDir() {
 		return VOICE_DIR;
 	}
 	
 	public static String getVoiceDirURL() {
-		return WEBSITE_ADDRESS + VOICE_DIR.split("./")[1];
+		String directory = VOICE_DIR.substring(21);
+		return WEBSITE_ADDRESS + directory;
 	}
 
 	/**
@@ -135,6 +139,7 @@ public class Utils {
 		HttpURLConnection httpConn = (HttpURLConnection) url.openConnection(proxy);
 		
 		int responseCode = httpConn.getResponseCode();
+		String responseMessage = httpConn.getHeaderFields().toString();
 		String location = httpConn.getHeaderField("Location");
 		
 		// always check HTTP response code first

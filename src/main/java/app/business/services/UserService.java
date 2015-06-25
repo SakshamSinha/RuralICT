@@ -90,9 +90,9 @@ public class UserService {
 	/*
 	 * add a user to database
 	 */
-	public void addUser(User user) {
+	public User addUser(User user) {
 			
-		userRepository.save(user);		
+		return userRepository.save(user);		
 	}
 		
 	/*

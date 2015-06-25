@@ -34,8 +34,9 @@ public class ProductQuantityController {
 		for (ProductType productType : productTypes) {
 			presetQuantity.addAll(productType.getPresetQuantities());
 		}
+		model.addAttribute("organization",organization);
 		model.addAttribute("productTypes", productTypes);
-		model.addAttribute("products", presetQuantity);
+		model.addAttribute("presetQuantities", presetQuantity);
 		//No change in model here yet
 		return "productQuantityList";
 	}

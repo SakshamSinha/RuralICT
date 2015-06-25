@@ -1,96 +1,134 @@
-website.factory("Product", function($resource) {
-	return $resource("/app/api/products/:id");
+website.factory("ProductCreate",function($resource){
+	return $resource("/api/products",{
+		query: {method: "GET", isArray: false}
+	});
 });
 
-website.controller("ProductsCtrl", function($scope, $route, Product) {
-
-	$scope.saveProduct = function(data) {
-		var product = new Product(data);
-		product.$save(function(product) {
-
-			var new_row = $('<tr>\
-			      <td><input type="checkbox" class="checkthis"/></td>\
-			      <td>'+product.name+'</td>\
-			      <td>'+product.unitRate+'</td>\
-			      <td>\
-			        <p data-placement="top" data-toggle="tooltip" title="Edit">\
-			          <button class="open-edit-modal btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit">\
-			          <i class="icon-white icon-pencil"></i> Edit</button>\
-			        </p>\
-			      </td>\
-			      <td>\
-			        <p data-placement="top" data-toggle="tooltip" title="Delete">\
-			          <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">\
-			          <i class="icon-white icon-trash"></i> Delete</button>\
-			        </p>\
-			      </td>\
-			    </tr>');
-
-		    new_row.appendTo($('#producttable > tbody'));
-
-		    $scope.productName = product.name;
-			$("#product-add-success-modal").modal('toggle');
-		}, function(error) {
-			$scope.failure = error.data;
-			$("#product-add-failed-modal").modal('toggle');
-		});
-	}
-
+website.factory("ProductEdit",function($resource){	
+	return $resource("/api/products/:id", {id: '@id'}, {
+		query: { method: "GET", isArray: false },
+	    update: {method: "PATCH",params: {id: '@id'}}
+	});
 });
+
+website.factory("ProductDelete",function($resource){
+	return $resource("/api/products/:id",{id:'@id'},{
+		query: { method: "GET", isArray: false },
+	    update: {method: "DELETE",params: {id: '@id'}}
+	});
+});
+
+website.factory("ProductListGet",function($resource){
+	return $resorce("/api/products",{
+		query: {method: "GET", isArray: true}
+	});
+});
+
+website.controller("ProductsCtrl",function($scope, $http, $route, $location, ProductCreate, ProductEdit, ProductDelete) {
+		
+		var id;
+		//function to save product
+		$scope.saveProduct = function(data){
+			$scope.product = new ProductCreate();
+			$scope.product.name = data.name;
+			$scope.product.unitRate = data.unitRate;
+		    $scope.product.productType = data.productType;
+			ProductCreate.save($scope.product,function(){
+			},function(error){
+				if (error.status == "409")
+					alert("Product already added. Add a different product");
+			});
+		}
+		//function to edit product
+		$scope.editProduct = function(value){
+			$scope.product = ProductEdit.get({id:$scope.id},function(){
+				$scope.product.unitRate = value;
+				$scope.product.$update({id:$scope.id},function(){
+				});
+			});
+		}
+		//function to delete product
+		$scope.deleteProduct = function(data){
+			$scope.product = ProductDelete.get({id:$scope.id},function(){				
+				$scope.product.$update({id:$scope.id},function(){
+				});
+			});
+			
+		}
+		//function to set id attribute
+		$scope.setId = function(productId){
+			$scope.id=productId; 
+		}
+		//function to fetch list of products
+		$scope.getList = function(){
+			$scope.products = ProductCreate.query(function() {
+			    
+			  }); 
+		}
+});
+/*
+$("#page-content").ready(function(){
+	angular.element(this).scope().getList();
+	
+});*/
 
 $("#page-content").on("click", "#producttable #checkall", function () {
-    if ($("#producttable #checkall").is(':checked')) {
-        $("#producttable input[type=checkbox]").each(function () {
-            $(this).prop("checked", true);
-        });
-    } else {
-        $("#producttable input[type=checkbox]").each(function () {
-            $(this).prop("checked", false);
-        });
-    }
+	if ($("#producttable #checkall").is(':checked')) {
+	    $("#producttable input[type=checkbox]").each(function () {
+	        $(this).prop("checked", true);
+	    });
+	} else {
+	    $("#producttable input[type=checkbox]").each(function () {
+	        $(this).prop("checked", false);
+	    });
+	}
 });
 
-//deleting a product entry
-$("#page-content").on("click", "#btnYesDelete", function(e) {  
-    e.preventDefault();
-    $(this).parent('tr').remove();
-});
-   
-//adding new product
+//add new product on clicking the add button
 $("#page-content").on("click", "#add-new-product", function(e) {
-    e.preventDefault();
-    var product = $.trim($('#new-product-input').val());
-    var price = $.trim($('#new-price-input').val());
-    var productType = $('#new-product-type-input').val();
-    var data = {};
-    data.name = product;
-    data.unitRate = price;
-    data.productType = productType;
-
-    angular.element($('#add-new-product')).scope().saveProduct(data);
-
-    $('#add-product-modal').modal('toggle');
-
+	e.preventDefault();
+	var product = $.trim($('#new-product-input').val());
+	var price = $.trim($('#new-price-input').val());
+	var productType = $('#new-product-type-input').val();
+	var data = {};
+	data.name = product;
+	data.unitRate = price;
+	data.productType = productType;
+	angular.element($('#add-new-product')).scope().saveProduct(data);
+	$('#add-product-modal').modal('toggle');
 	$('#new-product-input').val("");
-    $('#new-product-type-input').val("");
-    $('#new-price-input').val("");
+	$('#new-product-type-input').val("");
+	$('#new-price-input').val("");
 });
 
-//Dynamic modal for edit
-$("#page-content").on("click", ".open-edit-modal", function () {
-    var productName = $(this).data('product');
-    $(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
-    $(".modal-body #update-product-input").html(productName);
-    
-    var price = $(this).data('price');
-    var priceUpdate = $(this).data('price');
-    $(".modal-body #update-price-input").val(price);
-    
-    //updating a product entry
-    $('#update').click(function(e){
-    	e.preventDefault();
-    	var cost = $("#update-price-input").val();
-    	document.getElementById("price0").innerHTML = cost;
-    });
-
+//capture the id of product on clicking the delete button
+$("#page-content").on("click", "#btn-delete", function(e) {  
+	e.preventDefault();
+	productId = $(this).attr("productid");
+	angular.element(this).scope().setId(productId);
+	angular.element(this).scope().getList();
 });
+
+//delete a product entry on clicking the 'yes' delete button
+$("#page-content").on("click","#delete-product",function(e){
+	angular.element(this).scope().deleteProduct();
+	$("#delete-product-modal").modal('toggle');
+});
+
+//capture the id of product on clicking the edit button
+$("#page-content").on("click", "#btn-edit", function () {
+	productId = $(this).attr("productId");
+	productName = $(this).attr("productName");
+	angular.element(this).scope().setId(productId);
+	$(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
+	$(".modal-body #update-product-input").html(productName);
+});
+
+//update the product on clicking the update button in edit modal
+$("#page-content").on("click","#update-product",function(e){
+	value = $.trim($('#update-price-input').val());
+	angular.element(this).scope().editProduct(value);
+	$("#edit-product-modal").modal('toggle');
+	$('#update-price-input').val("");
+});
+

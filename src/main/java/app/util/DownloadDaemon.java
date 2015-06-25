@@ -1,5 +1,6 @@
 package app.util;
 
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,20 +38,25 @@ public class DownloadDaemon extends Thread {
 					List<Voice> undownloadedVoiceFiles = new ArrayList<Voice>(voiceService.getUndownloadedVoiceList());
 					
 					for(Voice voiceFile : undownloadedVoiceFiles) {
-						
-						System.out.println("Downloading file at " + voiceFile.getUrl());
-						String fileName = Utils.downloadFile(voiceFile.getUrl(), "./voices/");
-						
-						if(fileName != null) {
-							System.out.println("Voice File at " + voiceFile.getUrl() + " downloaded to http://www.ruralict.cse.iitb.ac.in/voices/" +fileName);
-							voiceFile.setUrl("http://www.ruralict.cse.iitb.ac.in/voices/" +fileName);
-							//voiceFile.setIsDownloaded(true);
-							//voiceService.addVoice(voiceFile);
+						try {
+							System.out.println("Downloading file at " + voiceFile.getUrl());
+							String fileName = Utils.downloadFile(voiceFile.getUrl(), Utils.getVoiceDir());
+							
+							if(fileName != null) {
+								System.out.println("Voice File at " + voiceFile.getUrl() + " downloaded to http://www.ruralict.cse.iitb.ac.in/voices/" +fileName);
+								voiceFile.setUrl("http://www.ruralict.cse.iitb.ac.in/voices/" +fileName);
+								//voiceFile.setIsDownloaded(true);
+								//voiceService.addVoice(voiceFile);
+							}
+						}
+						catch(MalformedURLException e) {
+							System.out.println("File could not be downloaded because of error in URL: (" + e.getLocalizedMessage()+")");
+							e.printStackTrace();
+						}
+						catch(FileNotFoundException e) {
+							System.out.println("File could not be downloaded because of error in URL: (" + e.getLocalizedMessage()+")");
 						}
 					}
-				}
-				catch(MalformedURLException e) {
-					System.out.println("File could not be downloaded because of error in URL: (" + e.getLocalizedMessage()+")");
 				}
 				catch(Exception e) {
 					System.out.println("Error while downloading file.");
@@ -68,6 +74,4 @@ public class DownloadDaemon extends Thread {
 	Long getSleepDuration() {
 		return this.sleepDuration;
 	}
-	
-		
 }

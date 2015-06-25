@@ -37,7 +37,7 @@ RecordFile.prototype.createDownloadLink = function() {
 		var hf = document.getElementById(urlTagName);
 		hf.href = url;
 		hf.download = new Date().toISOString() + '.wav';
-		hf.innerHTML = hf.download;
+		//hf.innerHTML = hf.download;
 		loadAudio(audioTagName, url)
 	});
 };

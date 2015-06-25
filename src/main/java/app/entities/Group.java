@@ -63,10 +63,6 @@ public class Group implements Serializable {
 	@OneToMany(mappedBy="group")
 	private List<GroupMembership> groupMemberships;
 
-	//bi-directional many-to-one association to LatestBroadcastableVoice
-	@OneToMany(mappedBy="group")
-	private List<LatestBroadcastableVoice> latestBroadcastableVoices;
-
 	public Group() {
 	}
 
@@ -214,28 +210,6 @@ public class Group implements Serializable {
 		getGroupMemberships().remove(groupMembership);
 		groupMembership.setGroup(null);
 		return groupMembership;
-	}
-
-	public List<LatestBroadcastableVoice> getLatestBroadcastableVoices() {
-		return this.latestBroadcastableVoices;
-	}
-
-	public void setLatestBroadcastableVoices(List<LatestBroadcastableVoice> latestBroadcastableVoices) {
-		this.latestBroadcastableVoices = latestBroadcastableVoices;
-	}
-
-	public LatestBroadcastableVoice addLatestBroadcastableVoice(LatestBroadcastableVoice latestBroadcastableVoice) {
-		getLatestBroadcastableVoices().add(latestBroadcastableVoice);
-		latestBroadcastableVoice.setGroup(this);
-
-		return latestBroadcastableVoice;
-	}
-
-	public LatestBroadcastableVoice removeLatestBroadcastableVoice(LatestBroadcastableVoice latestBroadcastableVoice) {
-		getLatestBroadcastableVoices().remove(latestBroadcastableVoice);
-		latestBroadcastableVoice.setGroup(null);
-
-		return latestBroadcastableVoice;
 	}
 
 }
