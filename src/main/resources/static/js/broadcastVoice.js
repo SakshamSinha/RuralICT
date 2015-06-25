@@ -52,6 +52,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 			console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
 			$http.post('/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
 				.success(function(data,status,header,config){
+					alert("Audio successfully uploaded");
 					//TODO Eliminating this function doing hard refresh
 					setTimeout($window.location.reload.bind(window.location),2000);
 					})
