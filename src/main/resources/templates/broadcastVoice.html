@@ -1,115 +1,205 @@
 
-<div class="row-fluid">
-
-	<table class="table table-striped table-bordered table-condensed"
-		id="usertable">
-
-		<tbody>
-			<tr class="list-users" th:each="broadcast : ${broadcast} ">
-			<tr>Last Broadcast Message:
-			</tr>
-			<tr>
-				<br>
-				<audio controls>
-					<source th:attr="src=${broadcast.voice.url}" type="audio/wav"></source>
-					<p>Your browser does not support this audio format.</p>
-				</audio>
-				</br>
-
-			</tr>
-			<tr>
-				<br>
-				<button class="btn btn-success" id="broadcast" data-toggle="modal"
-					data-title="Broadcast" data-target="#broadcast-modal"
-					align="center">Broadcast</button>
-			</tr>
-			</br>
-
-
-		</tbody>
-	</table>
-
-	<div class="modal fade" id="broadcast-modal" tabindex="-1"
-		role="dialog" aria-labelledby="HeadingAddUser" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
+<div class="row-fluid" ng-controller="BroadcastVoiceCtrl">
+	<!--TODO Change ids such as voiceid to data-voiceid as the former is not supported in a lot of browsers   -->
+    <div id="broadcast-voice-ids" th:attr="org=${organization.abbreviation},organizationid=${organization.organizationId},groupid=${group.groupId},publisherid=${publisher.userId}"></div>
+    <table class="table table-striped table-bordered table-condensed" id="usertable">
+        <tbody>
+            <!-- 			<tr class="list-users" th:each="broadcast : ${broadcast} "> -->
+            <!-- 			<tr>Last Broadcast Message: -->
+            <!-- 			</tr> -->
+            <tr> 
+            		<div class="row-fluid">	
+            				<div th:if="${broadcast==null}">
+                    			<h4>No recording for <span th:text="${organization.name}">Organization</span> till now.</h4>
+                    		</div>
+                    		<div th:unless="${broadcast==null}">
+                    			<h4 id = "latest-voice" th:attr="voiceid=${broadcast.voice.voiceId}">Latest Recorded Audio</h4>
+                    			<audio th:attr="src=${broadcast.voice.url}" controls style="text-align:center;">
+                    			</audio>
+                    		</div>
+                    </div>
+            </tr>
+            <br></br>
+            <tr>	
+            		<div class="row-fluid">
+            			<div class="span6">
+                    		<button class="btn btn-success" id="voice-record" data-toggle="modal" data-title="Record" data-target="#record-modal" align="center">Record</button>
+                    	</div>
+                    	<div class="span6">
+                    	<!-- TODO have to change styling of this button -->
+                    		<input type="file" name="myFile" file-model="myFile" id="welcome_message">
+                    	</div>
+                    </div>
+             </tr>
+             <br></br>
+             <tr>
+             		<div class="row-fluid">
+                    	<div class="span6">
+                    		<input type="submit" class="btn btn-success" id="voice-upload"  value="Upload Audio" />
+                    	</div>
+                    	<div class="span6">
+            				<button class="btn btn-success" id="voice-broadcast" data-toggle="modal" data-title="Broadcast" data-target="#broadcast-modal" align="center">Broadcast</button>
+            			</div>
+                    </div>
+  			 </tr>
+  			<br></br>
+        </tbody>
+        <br></br>
+    </table>
+    <div class="modal fade" id="record-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    	<div class="modal-dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <i class="icon-remove"></i>
+                </button>
+                <h4 class="modal-title custom_align" id="heading-record">Record</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                	<audio id="audio" controls></audio>
+                	<br></br>
+                	<br></br>
+                	<div class="row-fluid">
+                		<div class="span4">
+                			<button class="btn btn-success" id="recordButton" onclick="recordFile.startRecording();">record</button>
+                		</div>
+                		<div class="span4">
+  							<button class="btn btn-failure" id="stopButton" onclick="recordFile.stopRecording();" disabled>stop</button>
+  						</div>
+  						<div class="span4">
+  							<a class="btn btn-info" role="button" id="audioDownload" href="#">Download</a>
+  						</div>
+  					</div>
+            	</form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="broadcast-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingAddUser" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">
-					<i class="icon-remove"></i>
-				</button>
-				<h4 class="modal-title custom_align" id="HeadingUser">Broadcast</h4>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal">
-					<table>
-						<tr>
-							<td><b><i>Menu For Language:</i></b> <br> <label>
-									<input type="checkbox" ng-model="checkboxModel.value1"
-									value="4">Hindi
-							</label> <label><input type="checkbox"
-									ng-model="checkboxModel.value1" value="5">English </label> <label><input
-									type="checkbox" ng-model="checkboxModel.value1" value="6">Marathi
-							</label></td>
-
-							<td><b><i>Response Type:</i></b> <br> <label><input
-									type="checkbox" ng-model="checkboxModel.value1" value="1"
-									name="order">SemiStructured(Order) </label> <label><input
-									type="checkbox" ng-model="checkboxModel.value1" name="feedback"
-									value="2" />Unstructured(Feedback)</label> <label><input
-									type="checkbox" name="response" value="3"
-									ng-model="checkboxModel.value1" />Structured(Response)</label></td>
-						</tr>
-						</tabel>
-						</div>
-						<tr>
-
-							<td><br> When you want to broadcast the call</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="tr" name="now" id="now"
-								value="newCall" checked />Now</td>
-							<td><input type="checkbox" class="tr" name="scheduled"
-								id="scheduled" value="scheduled" onclick="scheduledTimes();" />Scheduled
-								Times</td>
-						</tr>
-						<tr>
-							<td><div id="scheduledTimes"></div></td>
-						</tr>
-						<td>How many BackUp Call do you want: <br> <br> <select
-							name="backup_calls" id="backup_calls" onchange="dropDowns1();">
-								<option value="0">0 backupcall</option>
-								<option value="1">1 backupcall</option>
-								<option value="2">2 backupcall</option>
-								<option value="3">3 backupcall</option>
-								<option value="4">4 backupcall</option>
-								<option value="5">5 backupcall</option>
-						</select>
-							<div id="myDiv"></div>
-						</td>
-						<tr>
-							<td><input type="hidden" name="filePresent" id="filePresent"
-								value="" /> <input type="hidden" name="fileName" id="fileName"
-								value="" /> <input type="hidden" name="group_id" id="group_id">
-								<input type="hidden" name="tempflag" id="tempflag"
-								value="mrequest" /> <input type="hidden" name="req_type"
-								id="req_type" value="broadcast" /></td>
-						<tr>
-							<td><br>
-								<button type="button" class="btn btn-success"
-									id="place-broadcast-call">
-									<i class="icon-white icon-ok"></i>Place Call
-								</button></td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
-
-
-
-
-	</div>
-
-
-	<!-- /.modal-content -->
-	<!-- /.modal-dialog -->
+                    <i class="icon-remove"></i>
+                </button>
+                <h4 class="modal-title custom_align" id="HeadingUser">Broadcast</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                	<div class="row-fluid">
+                	<div class="span6">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <b>
+                                        <i>Response Type:</i>
+                                    </b>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label>
+                                        <input id="order-check" type="checkbox" name="order" value="1" />Order
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>
+                                        <input id="feedback-check" type="checkbox" name="feedback" value="2" />Feedback
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>
+                                        <input id="response-check"type="checkbox" name="response" value="3"/>Response
+                                    </label>
+                                </tr>
+                            </tbody>
+                    </table>
+                    </div>
+                    <div class="span6">
+                    <table>
+                            <thead>
+                                <th></th>
+                                <th>
+                                    <p>
+                                        <b>
+                                            <i>Users:</i>
+                                        </b>
+                                    </p>
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr id="user-list" th:each="user : ${users}">
+                                    <td>
+                                        <input type="checkbox" class="checkthis" th:value="${user.userId}" />
+                                    </td>
+                                    <td>
+                                        <label th:text ="${user.name}">Ankit</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    </table>
+                    </div>
+                    </div>
+                    <table>
+                            <tr>
+                                <td>
+                                    <br> When you want to broadcast the call
+                                </td>
+                             </tr>
+                             <tr>
+                                    <td>
+                                        <input type="checkbox" class="tr" name="now" id="now" value="newCall" checked />Now
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="tr" name="scheduled" id="scheduled" value="scheduled" onclick="scheduledTimes();" />Scheduled Times
+                                    </td>
+                             </tr>
+                             <tr>
+                                    <td>
+                                        <div id="scheduledTimes"></div>
+                                    </td>
+                             </tr>
+                             <tr>
+                                	<td>
+											How many BackUp Call do you want: 
+                                            <select	name="backup_calls" id="backup_calls" onchange="dropDowns1();">
+                                                <option value="0">0 backupcall</option>
+                                                <option value="1">1 backupcall</option>
+                                                <option value="2">2 backupcall</option>
+                                                <option value="3">3 backupcall</option>
+                                                <option value="4">4 backupcall</option>
+                                                <option value="5">5 backupcall</option>
+                                            </select>
+                                            <div id="myDiv"></div>
+                                	</td>
+                             </tr>
+                             <tr>
+                                    <td>
+                                                <input type="hidden" name="filePresent" id="filePresent" value="" />
+                                                <input type="hidden" name="fileName" id="fileName" value="" />
+                                                <input type="hidden" name="group_id" id="group_id">
+                                                <input type="hidden" name="tempflag" id="tempflag" value="mrequest" />
+                                                 <input type="hidden" name="req_type" id="req_type" value="broadcast" />
+                                    </td>
+                             </tr>
+                             <tr>
+                          	           <td>
+                             				<button type="button" class="btn btn-success" id="place-broadcast-call" align="center">
+                                             	<i class="icon-white icon-ok"></i>Place Call
+                                            </button>
+                                       </td>
+                             </tr>
+                	</table>
+            	  </form>
+        	 </div>
+    	 </div>
+   	</div>
+   </div>
+                        <!-- /.modal-content -->
+                        <!-- /.modal-dialog -->

@@ -62,3 +62,61 @@ website.factory("AddGroup",['$resource',function($resource){
 		}
 	});
 }]);
+
+website.factory("UpdateGroup", function($resource) {
+	return $resource("/api/groups/:id", {id: '@id'}, {
+		query: { method: "GET", isArray: false },
+		update: {method: "PATCH",params: {id: '@id'}}
+	});
+});
+
+/* Resources for Users */
+website.factory("AddUser",['$resource',function($resource){
+	return $resource("/api/users/:id", null, {
+		save: {
+			method: "POST"
+		}
+	});
+}]);
+
+website.factory("GetUser",function($resource){
+	return $resource("/api/users/:id",{id:'@id'},{
+		query: { method: "GET", isArray: false },
+	});
+});
+
+
+/* Resources for UserPhoneNumbers */
+website.factory("AddUserPhoneNumber",['$resource',function($resource){
+	return $resource("/api/userPhoneNumbers/:id", null, {
+		save: {
+			method: "POST"
+		}
+	});
+}]);
+
+/* Resources for UserView */
+website.factory("AddUserView",['$resource',function($resource){
+	return $resource("/api/userViews/add/:groupId", {groupId: "@groupId", userView: "@userView"}, {
+		save: {
+			method: "POST"
+		}
+	});
+}]);
+
+website.factory("RemoveUserView",function($resource){
+	return $resource("/api/userViews/delete/:id",{id:'@id'},{
+		update: {
+			method: "DELETE",params: {id: '@id'}
+		}
+	});
+});
+
+/* Resources for GroupMembership */
+website.factory("AddGroupMembership",['$resource',function($resource){
+	return $resource("/api/groupMemberships/:id", null, {
+		save: {
+			method: "POST"
+		}
+	});
+}]);

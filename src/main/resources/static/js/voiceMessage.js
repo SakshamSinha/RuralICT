@@ -69,7 +69,8 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 							// TODO Better Approach
 							var urlChunks = items[j]["_links"]["self"]["href"].split("/");
 							items[j].id = urlChunks[urlChunks.length-1];
-							 
+							
+							items[j].quantity = parseFloat(items[j].quantity);
 							items[j].product = productList[j];
 							 
 							$scope.orderItems.push(items[j]);
@@ -171,7 +172,6 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 			$scope.order.status = "rejected";
 			
 			$scope.order.$update({id:orderId},function(){
-				
 			});
 		});
 	};
@@ -195,7 +195,8 @@ website.controller("VoiceMessageCtrl", function($window, $resource, $scope, $rou
 	/* Need to find out way to reload page without refresh. Work halted since message repository gives errors */
 	//TODO Eliminating this function doing hard refresh
 	$scope.reload = function(){
-		setTimeout($window.location.reload,2000);
+		
+		setTimeout(window.location.reload.bind(window.location),2000);
 	}
 });
 
@@ -261,7 +262,7 @@ $("#page-content").on("click", "#add-inbox-voice-order-items", function () {
 	var data={};
 	data.id = count;
 	data.product = 'products/'+ productId;
-	data.quantity = parseInt(productQuantity);
+	data.quantity = productQuantity;
 	data.order = 'orders/' + orderId;
 	data.unitRate = productUnitRate;
 	
@@ -327,11 +328,13 @@ $("#page-content").on("click", "#reject-inbox-voice-order", function(e) {
     
 	/* Send request to reject message */
 	angular.element($('#reject-inbox-voice-order')).scope().rejectOrder(orderId);
-
+	
 	$('#view-inbox-voice-message-modal').modal('toggle');
 	$('#reject-inbox-voice-order-modal').modal('toggle');
-    
+	
 	angular.element($('#reject-inbox-voice-order')).scope().reload();
+    
+	
 });
 
 /* Remove orderItem from queue */
@@ -482,7 +485,7 @@ $("#page-content").on("click", ".saved-voice-modal-close", function (e) {
 	e.preventDefault();
 	document.getElementById("savedVoiceOrderItems").innerHTML = "";
 	angular.element($("#add-saved-voice-order-items")).scope().clearQueue();
-	$('#view-inbox-voice-message-modal').modal('toggle');
+	//$('#view-inbox-voice-message-modal').modal('toggle');
 });
 
 

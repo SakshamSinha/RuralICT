@@ -29,9 +29,9 @@ public class BroadcastService {
 		broadcastRepository.save(broadcast);
 	}
 	
-	public void addBroadcast(Broadcast broadcast) {
+	public Broadcast addBroadcast(Broadcast broadcast) {
 		
-		broadcastRepository.save(broadcast);
+		return broadcastRepository.save(broadcast);
 	}
 	
 	public void deleteBroadcast(Broadcast broadcast) {
@@ -44,6 +44,7 @@ public class BroadcastService {
 		return broadcastRepository.findOne(broadcastId);
 	}
 	
+	//This function is to give top broadcast for already broadcasted voices.
 	@Transactional
 	public Broadcast getTopBroadcast(User user, Organization organization, String format) {
 
