@@ -1,15 +1,17 @@
 package app.telephony.fsm.guards;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
-
 import in.ac.iitb.ivrs.telephony.base.events.GotDTMFEvent;
+import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
 import java.util.ArrayList;
+
 import app.business.services.OrderService;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Order;
+
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.EventTypeGuard;
 import com.continuent.tungsten.commons.patterns.fsm.State;
@@ -40,7 +42,7 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 			OrganizationService orgService = SpringContextBridge.services().getOrganizationService();
 			UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 			Order order=orderService.getOrder(orderID);
-			boolean isOrderAccepted =order.getStatus().equalsIgnoreCase("reject") || order.getStatus().equalsIgnoreCase("processed");
+			boolean isOrderAccepted =order.getStatus().equalsIgnoreCase("reject") || order.getStatus().equalsIgnoreCase("processed")||order.getStatus().equalsIgnoreCase("cancelled");
 			boolean isUserIdExistForOrderID = (userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getUserId()) == (orderService.getOrder(orderID).getMessage().getUser().getUserId());
 			boolean checkOrganization = order.getOrganization() == orgService.getOrganizationByIVRS(session.getIvrNumber());
 			if(orderService.getOrder(orderID).getMessage().equals(null)){
@@ -50,6 +52,12 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 				if(!(isOrderAccepted) && checkOrganization &&  isUserIdExistForOrderID)
 				{
 					orderService.cancelOrder(order);
+					String message = "Your Order " + orderID+" is cancelled";
+					try {
+						IVRUtils.sendSMS(session.getUserNumber(),message);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					return (allow);
 				}				
 			}

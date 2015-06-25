@@ -49,7 +49,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * The seconds of silence before which an ongoing recording is accepted.
 		 */
-		public static final int RECORDING_SILENCE = 7;
+		public static final int RECORDING_SILENCE = 5;
 		/**
 		 * The maximum duration of a recording in seconds.
 		 */

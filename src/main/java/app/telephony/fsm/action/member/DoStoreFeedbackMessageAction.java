@@ -1,15 +1,19 @@
 package app.telephony.fsm.action.member;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.business.services.BroadcastRecipientService;
+import app.business.services.BroadcastScheduleService;
 import app.business.services.GroupService;
 import app.business.services.TelephonyService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Group;
 import app.entities.InboundCall;
+import app.entities.OutboundCall;
 import app.entities.Voice;
 import app.entities.broadcast.Broadcast;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
+
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -25,8 +29,11 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		RuralictSession ruralictSession = (RuralictSession) session;
 		String messageURL=session.getMessageURL();
 		InboundCall inboundCall=ruralictSession.getCall();
+		OutboundCall outboundCall=ruralictSession.getOutboundCall();
 		Broadcast broadcast  = new VoiceBroadcast();
 		GroupService groupService = SpringContextBridge.services().getGroupService();
+		BroadcastRecipientService broadcastRecipient = SpringContextBridge.services().getBroadcastRecipientService();
+		BroadcastScheduleService broadcastScheduleService = SpringContextBridge.services().getBroadcastScheduleService();
 		String groupID = session.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		Group group = groupService.getGroup(groupId);
@@ -41,11 +48,13 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		if(isOutboundCall){
 
-			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group.getOrganization(),group, mode , type , false ,feedbackUrl,inboundCall.getTime(),inboundCall.getDuration());
+			outboundCall.setBroadcastRecipient(broadcastRecipient.getBroadcastRecipientById(broadcast.getBroadcastId()));
+			outboundCall.setBroadcastSchedule(broadcastScheduleService.getBroadcastScheduleById(broadcast.getBroadcastId()));
+			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group, mode , type , false ,feedbackUrl,null,outboundCall);
 		}
 		else{
 
-			telephonyService.addVoiceMessage(session.getUserNumber(), null ,group.getOrganization(), group, mode , type , false ,feedbackUrl, inboundCall.getTime(),inboundCall.getDuration());
+			telephonyService.addVoiceMessage(session.getUserNumber(), null, group, mode , type , false ,feedbackUrl, inboundCall,null);
 		}
 
 	}

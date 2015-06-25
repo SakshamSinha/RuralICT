@@ -45,11 +45,11 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 		BroadcastService broadcastService = SpringContextBridge.services().getVoiceBroadcastService();
 		// Add row for broadcast
 		broadcastService.addBroadcast(voicebroadcast);
-		
+
 		BroadcastRecipientService broadcastRecipientService = SpringContextBridge.services().getBroadcastRecipientService();
-		
+
 		List<GroupMembership> memberships = SpringContextBridge.services().getGroupMembershipService().getAllGroupMembershipList();
-		
+
 		// Add rows for each broadcast-recipient
 		for(GroupMembership gm:memberships){
 			User user = gm.getUser();
@@ -57,8 +57,6 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 			// Add row for broadcast-recipient
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
 		}
-		
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/groupHasBeenSelected.wav");
 
 	}
 

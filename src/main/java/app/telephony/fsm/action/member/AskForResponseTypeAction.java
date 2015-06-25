@@ -1,11 +1,11 @@
 package app.telephony.fsm.action.member;
 
-import java.util.Arrays;
+
+import java.util.Set;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
 import app.telephony.fsm.RuralictStateMachine;
-
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -24,48 +24,45 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
 
-		boolean[] responses = new boolean[] {false,false,false};
-		responses[0] = ruralictSession.isOrderAllowed();
-		responses[1] = ruralictSession.isFeedbackAllowed();
-		responses[2] = ruralictSession.isResponseAllowed();
-		int i=1,j=0;
-		String[] newResponses = new String[RuralictStateMachine.tempResponseMap.size()];
-		String[] responseTypeKeys=new String[RuralictStateMachine.tempResponseMap.size()];
-				
-		for(String key:RuralictStateMachine.tempResponseMap.keySet()){
-			responseTypeKeys[j]=key;
-			j++;
-		}
-		Arrays.sort(responseTypeKeys);
-		for(String k:responseTypeKeys){
-			if(responses[Integer.parseInt((String)k)-1]){
-				String responseType = RuralictStateMachine.tempResponseMap.get(k);
+		Integer i=1,keys=RuralictStateMachine.tempResponseMap.size();
+		for(Integer j=1;j<=keys;j++){
+			String key=j.toString();
+			String responseType = RuralictStateMachine.tempResponseMap.get(key);
+			RuralictStateMachine.tempResponseMap.remove(key);
+			if( (responseType != null) &&
+					((responseType.equalsIgnoreCase("Order") && ruralictSession.isOrderAllowed()) ||
+							(responseType.equalsIgnoreCase("Feedback") && ruralictSession.isFeedbackAllowed()) ||
+							(responseType.equalsIgnoreCase("Response") && ruralictSession.isResponseAllowed())) ){	
 				String language = session.getLanguage();
 
 				if(language.equalsIgnoreCase("en"))
 				{
-					
-				 	response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+responseType+"_"+language+".wav"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+responseType+"_"+language+".wav"); //For
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+(i)+"_"+language+".wav"); //Press
 				}
 				else
 				{
-			
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+responseType+"_"+language+".wav"); //For
 					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+(i)+"_"+language+".wav"); //Press
 				}
-
-				newResponses[i-1]=responseType;
+				RuralictStateMachine.tempResponseMap.put(i.toString(),responseType);
 				i++;
 			}
-		}
-		RuralictStateMachine.tempResponseMap.clear();
-		for(i=0;i<newResponses.length;i++){
-			RuralictStateMachine.tempResponseMap.put((i+1)+"", newResponses[i]);
+
 		}
 
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);
+	}
+
+	private static String[] toStringArray(Set<String> keys){
+		String[] res = new String[keys.size()];
+		int i=0;
+		for(String s:keys){
+			res[i]=s;
+			i++;
+		}
+		return res;
 	}
 }

@@ -6,10 +6,12 @@ import app.business.services.TelephonyService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Group;
 import app.entities.InboundCall;
+import app.entities.OutboundCall;
 import app.entities.broadcast.Broadcast;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
+
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -28,6 +30,7 @@ public class PlayResponeIsYesAction implements Action<IVRSession> {
 		String mode = "web";
 		String type ="response";
 		InboundCall inboundCall = ruralictSession.getCall();
+		OutboundCall outboundCall = ruralictSession.getOutboundCall();
 		String groupID = session.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		GroupService groupService = SpringContextBridge.services().getGroupService();
