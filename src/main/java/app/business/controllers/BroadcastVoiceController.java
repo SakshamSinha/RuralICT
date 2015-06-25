@@ -39,7 +39,7 @@ import app.telephony.config.Configs;
 
 
 @Controller
-@RequestMapping("/web/{org}")
+@RequestMapping("/ruralict/web/{org}")
 public class BroadcastVoiceController {
 
 	@Autowired

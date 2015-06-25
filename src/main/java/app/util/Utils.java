@@ -35,7 +35,7 @@ public class Utils {
 	 */
 	private final static String VOICE_DIR = "./voices/";
 	
-	private final static String WEBSITE_ADDRESS = "http://ruralict.cse.iitb.ac.in/";
+	private final static String WEBSITE_ADDRESS = "http://ruralict.cse.iitb.ac.in/ruralict";
 	//private final static String WEBSITE_ADDRESS = "http://localhost:8080/";
 
 	

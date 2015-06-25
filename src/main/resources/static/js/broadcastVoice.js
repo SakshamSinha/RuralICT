@@ -24,7 +24,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 	//function to save product
 	$scope.saveBroadcast = function(data){
 		$scope.broadcast = data;
-		$http.post('/web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
+		$http.post('/ruralict/web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
 		.success(function(data,status,header,config){
 		})
 		.error(function(data,status,header,config){
@@ -39,7 +39,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
 		$http({
 			method: 'POST',
-			url: '/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
+			url: '/ruralict/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
 			headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
 			data: formData,
 			transformRequest: function(data, headersGetterFunction) {
@@ -50,7 +50,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 			$scope.latestBroadcastableVoiceIds.voiceId = data;
 			$scope.latestBroadcastableVoiceIds.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 			console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
-			$http.post('/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
+			$http.post('/ruralict/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
 				.success(function(data,status,header,config){
 					alert("Audio successfully uploaded");
 					//TODO Eliminating this function doing hard refresh

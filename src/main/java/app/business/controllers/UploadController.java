@@ -27,7 +27,7 @@ public class UploadController {
 	VoiceService voiceService;
 	
 	@Transactional
-	@RequestMapping(value="/web/{org}/upload", method=RequestMethod.POST)
+	@RequestMapping(value="/ruralict/web/{org}/upload", method=RequestMethod.POST)
 	public @ResponseBody int handleFileUpload(HttpServletRequest request){
 		MultipartHttpServletRequest mRequest;
 		mRequest = (MultipartHttpServletRequest) request;
