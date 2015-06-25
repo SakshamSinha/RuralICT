@@ -23,7 +23,7 @@
 						</span>
 						<span>
 							<a href="#" class="inboxTextMessageSaveButton" th:attr="id='inboxTextMessageSaveButton '+${textMessage.messageId}">
-								<i class="icon-white  icon-file"></i>
+								<i class="icon-pencil"></i>
 								<!-- <i class="icon-floppy-disk" aria-hidden="true"></i> -->
 							</a>
 						</span>
@@ -118,8 +118,8 @@
 	  	<!-- Hidden Fields -->
 	  	<input type="hidden" id="inboxTextOrderId">
 	  <div class="modal-footer ">
-	    	<button type="button" id = "accept-inbox-text-order" class="btn btn-warning"><i class="icon-white icon-pencil"></i>  Accept</button>
-	    	<button id="confirm-reject-inbox-text-order" class="btn btn-primary" data-title="Reject" data-toggle="modal" data-target="#reject-inbox-text-order-modal"><i class="icon-white  icon-file"></i> Reject</button>
+	    	<button type="button" id = "accept-inbox-text-order" class="btn btn-warning"><i class="icon-white icon-ok"></i>  Accept</button>
+	    	<button id="confirm-reject-inbox-text-order" class="btn btn-primary" data-title="Reject" data-toggle="modal" data-target="#reject-inbox-text-order-modal"><i class="icon-white  icon-trash"></i> Reject</button>
 	    	<button type="button" class="btn btn-default inbox-text-modal-close" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
 	  </div>
 	</div>
@@ -140,7 +140,7 @@
 	    </div>
 	  </div>
 	  <div class="modal-footer ">
-	    <button type="button" id="reject-inbox-text-order" class="btn btn-warning"><i class="icon-white icon-pencil"></i>  Reject</button>
+	    <button type="button" id="reject-inbox-text-order" class="btn btn-warning"><i class="icon-white icon-trash"></i>  Reject</button>
 	    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
 	  </div>
 	</div>

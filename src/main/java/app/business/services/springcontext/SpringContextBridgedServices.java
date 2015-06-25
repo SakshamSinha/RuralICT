@@ -5,7 +5,7 @@ import app.business.services.BroadcastScheduleService;
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
 import app.business.services.InboundCallService;
-import app.business.services.LatestBroadcastableVoiceService;
+import app.business.services.LatestRecordedVoiceService;
 import app.business.services.OrderService;
 import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;
@@ -47,5 +47,5 @@ public interface SpringContextBridgedServices {
 	public TextMessageService getTextMessageService();
 	public VoiceMessageService getVoiceMessageService();
 	public TelephonyService getTelephonyService();
-	public LatestBroadcastableVoiceService getLatestBroadcastableVoiceService();
+	public LatestRecordedVoiceService getLatestBroadcastableVoiceService();
 }
