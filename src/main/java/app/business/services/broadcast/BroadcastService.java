@@ -29,9 +29,9 @@ public class BroadcastService {
 		broadcastRepository.save(broadcast);
 	}
 	
-	public void addBroadcast(Broadcast broadcast) {
+	public Broadcast addBroadcast(Broadcast broadcast) {
 		
-		broadcastRepository.save(broadcast);
+		return broadcastRepository.save(broadcast);
 	}
 	
 	public void deleteBroadcast(Broadcast broadcast) {

@@ -15,6 +15,7 @@
 <link th:href="@{/static/css/ruralivrs.css}" rel="stylesheet" />
 </head>
 <body>
+	<input type="hidden" id="organizationId" th:value="${organization.organizationId}">
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
@@ -22,9 +23,9 @@
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a id="organization" class="brand" href="#/home"
-					th:text="${organization.name}"
-					th:attr="data-orgId=${organization.organizationId}">Organization
+					th:text="${organization.name}">Organization
 					Name</a>
+			
 				<div class="btn-group pull-right">
 					<a class="btn" href="#"><i class="icon-user"></i> <span
 						sec:authentication="name">Admin</span></a> <a
@@ -188,20 +189,23 @@
 	<script th:src="@{/static/js/libs/angular-route.js}"></script>
 	<script th:src="@{/static/js/libs/angular-resource.js}"></script>
 	<script th:src="@{/static/js/libs/loading-bar.min.js}"></script>
-	<script th:src="@{/static/js/libs/angular.min.js}"></script>
 	<script th:src="@{/static/js/libs/recorder.js}"></script>
-	<script th:src="@{/static/js/recordFile.js}"></script>
 	<script th:src="@{/static/js/utility.js}"></script>
+	<script th:src="@{/static/js/recordFile.js}"></script>
 	<script th:src="@{/static/js/controllers.js}"></script>
 	<script th:src="@{/static/js/resources.js}"></script>
+	<script th:src="@{/static/js/groupMember.js}"></script>
 	<script th:src="@{/static/js/textMessage.js}"></script>
 	<script th:src="@{/static/js/voiceMessage.js}"></script>
-	<script th:src="@{/static/js/productQtyList.js}"></script>
 	<script th:src="@{/static/js/productList.js}"></script>
 	<script th:src="@{/static/js/orderSummaryProducts.js}"></script>
 	<script th:src="@{/static/js/orderSummaryGroups.js}"></script>
+	<script th:src="@{/static/js/groupSettings.js}"></script>
 	<script th:src="@{/static/js/groupOps.js}"></script>
 	<script th:src="@{/static/js/users.js}"></script>
+	<script th:src="@{/static/js/settings.js}"></script>
 	<script th:src="@{/static/js/broadcastVoice.js}"></script>
+	<script th:src="@{/static/js/productQtyList.js}"></script>
+		
 </body>
 </html>

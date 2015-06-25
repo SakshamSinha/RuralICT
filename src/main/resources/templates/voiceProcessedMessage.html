@@ -17,10 +17,9 @@
 
 					<td th:text="${voiceMessage.order.orderId}">Message Id</td>
 					<td th:text="${voiceMessage.user.name}">Name</td>
-					<td><audio controls>
-							<source th:attr="src=${voiceMessage.voice.url}" type="audio/wav"></source>
-							<p>Your browser does not support this audio format.</p>
-						</audio></td>
+					<td>
+						<a th:href="${voiceMessage.voice.url}" target="_blank">Play Voice Message</a>
+					</td>
 					<td	th:text="${voiceMessage.comments}">Comments</td>
 					<td>
 						<a th:href="'generateBill/'+${voiceMessage.order.orderId}" target="_blank" class="btn btn-primary">

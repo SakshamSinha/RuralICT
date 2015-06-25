@@ -35,8 +35,8 @@ public class UserPhoneNumberService {
 	/*
 	 * add a phone number to database
 	 */
-	public void addUserPhoneNumber(UserPhoneNumber userPhoneNumber) {
-			userPhoneNumberRepository.save(userPhoneNumber);
+	public UserPhoneNumber addUserPhoneNumber(UserPhoneNumber userPhoneNumber) {
+			return userPhoneNumberRepository.save(userPhoneNumber);
 	}
 	
 	/*

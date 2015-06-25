@@ -14,6 +14,9 @@ import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /*
  * This service is separated from organization service for simple reason that the former approach 
  * will serve nothing but addition or complexity to the class. Moreover this service derives data 
@@ -35,6 +38,12 @@ public class UserViewService {
 	OrganizationService organizationService;
 	
 	@Autowired
+	GroupMembershipService groupMembershipService;
+	
+	@Autowired
+	OrganizationMembershipService organizationMembershipService;
+	
+	@Autowired
 	GroupService groupService;
 	
 	/*
@@ -51,9 +60,11 @@ public class UserViewService {
 		public void setRole(String role) {
 			this.role = role;
 		}
-		public UserView(User user, UserPhoneNumber primaryPhoneNo , String role) {
+		
+		@JsonCreator
+		public UserView(@JsonProperty("user") User user, @JsonProperty("phone") UserPhoneNumber phone , @JsonProperty("role") String role) {
 			this.user = user;
-			this.phone = primaryPhoneNo;
+			this.phone = phone;
 			this.role=role;
 		}
 		public User getUser() {
@@ -119,17 +130,27 @@ public class UserViewService {
 	}
 	
 	@Transactional
-	public void addUserView(UserView userView) {
+	public UserView addUserView(UserView userView) {
 
-			userService.addUser(userView.getUser());
-			userPhoneNumberService.addUserPhoneNumber(userView.getPhone());
+			User user = userService.addUser(userView.getUser());
+			UserPhoneNumber userPhoneNumber = userView.getPhone();
+			userPhoneNumber.setUser(user);
+			userPhoneNumber = userPhoneNumberService.addUserPhoneNumber(userPhoneNumber);
+			return (new UserView(user, userPhoneNumber, null));
 	}
 	
 	@Transactional
 	public void removeUserView(UserView userView) {
-
+		
+			userPhoneNumberService.removeUserPhoneNumber(userView.getUser());
+			for(GroupMembership groupMembership: userView.getUser().getGroupMemberships()) {
+				groupMembershipService.removeGroupMembership(groupMembership);
+			}
+			for(OrganizationMembership organizationMembership: userView.getUser().getOrganizationMemberships()) {
+				organizationMembershipService.removeOrganizationMembership(organizationMembership);
+			}
 			userService.removeUser(userView.getUser());
-			userPhoneNumberService.removeUserPhoneNumber(userView.getPhone());
+			
 	}
 	
 	/*

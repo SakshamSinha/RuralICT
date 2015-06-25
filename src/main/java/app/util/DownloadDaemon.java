@@ -1,5 +1,6 @@
 package app.util;
 
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,6 +53,9 @@ public class DownloadDaemon extends Thread {
 							System.out.println("File could not be downloaded because of error in URL: (" + e.getLocalizedMessage()+")");
 							e.printStackTrace();
 						}
+						catch(FileNotFoundException e) {
+							System.out.println("File could not be downloaded because of error in URL: (" + e.getLocalizedMessage()+")");
+						}
 					}
 				}
 				catch(Exception e) {
@@ -70,6 +74,4 @@ public class DownloadDaemon extends Thread {
 	Long getSleepDuration() {
 		return this.sleepDuration;
 	}
-	
-		
 }
