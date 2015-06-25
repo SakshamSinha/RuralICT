@@ -33,10 +33,10 @@ public class Utils {
 	/**
 	 * Variable to store working path of voice files
 	 */
-	private final static String VOICE_DIR = "./src/main/resources/static/Downloads/voices/";
+	private final static String VOICE_DIR = "./voices/";
 	
-	//private final static String WEBSITE_ADDRESS = "http://ruralict.cse.iitb.ac.in/";
-	private final static String WEBSITE_ADDRESS = "http://localhost:8080/";
+	private final static String WEBSITE_ADDRESS = "http://ruralict.cse.iitb.ac.in/";
+	//private final static String WEBSITE_ADDRESS = "http://localhost:8080/";
 
 	
 	public static String getVoiceDir() {
