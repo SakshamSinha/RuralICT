@@ -1,28 +1,3 @@
-website.factory("ProductCreate",function($resource){
-	return $resource("/api/products",{
-		query: {method: "GET", isArray: false}
-	});
-});
-
-website.factory("ProductEdit",function($resource){	
-	return $resource("/api/products/:id", {id: '@id'}, {
-		query: { method: "GET", isArray: false },
-	    update: {method: "PATCH",params: {id: '@id'}}
-	});
-});
-
-website.factory("ProductDelete",function($resource){
-	return $resource("/api/products/:id",{id:'@id'},{
-		query: { method: "GET", isArray: false },
-	    update: {method: "DELETE",params: {id: '@id'}}
-	});
-});
-
-website.factory("ProductListGet",function($resource){
-	return $resorce("/api/products",{
-		query: {method: "GET", isArray: true}
-	});
-});
 
 website.controller("ProductsCtrl",function($scope, $http, $route, $location, ProductCreate, ProductEdit, ProductDelete) {
 		
