@@ -190,7 +190,8 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organizat
 			//Finally , update the entity with required values
 			$scope.organization.$update({
 				id: orgid
-			}, function() {});
+			}, function() 
+			{alert("Your Settings have been saved.") });
 		});
 	};
 
@@ -210,7 +211,7 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organizat
 			//finally update the database
 			$scope.organization.$update({
 				id: orgid
-			}, function() {});
+			}, function() {alert("Your Settings have been saved.")});
 		});
 	};
 	
@@ -229,7 +230,7 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organizat
 			//finally update the database
 			$scope.organization.$update({
 				id: orgid
-			}, function() {});
+			}, function() {alert("Your Settings have been saved.")});
 		});
 	};
 	
@@ -248,7 +249,7 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organizat
 			//finally update the database
 			$scope.outboundcall.$update({
 				id: orgid
-			}, function() {});
+			}, function() {alert("Your Settings have been saved.")});
 		});
 	};
 	
