@@ -57,6 +57,8 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 					})
 				})
 		.error(function(data, status) {
+			if (status == "500")
+				alert("Choose a different file before uploading");
 		});
 	}
 	
