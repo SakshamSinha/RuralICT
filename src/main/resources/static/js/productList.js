@@ -9,6 +9,9 @@ website.controller("ProductsCtrl",function($scope, $http, $route, $location, Pro
 			$scope.product.unitRate = data.unitRate;
 		    $scope.product.productType = data.productType;
 			ProductCreate.save($scope.product,function(){
+			},function(error){
+				if (error.status == "409")
+					alert("Product already added. Add a different product");
 			});
 		}
 		//function to edit product
