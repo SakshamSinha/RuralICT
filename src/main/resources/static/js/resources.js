@@ -1,6 +1,6 @@
 /* Resources for OrderItems */
 website.factory("AddOrderItem",['$resource',function($resource){
-	return $resource(API_ADDR + "/api/orderItems/:id", null, {
+	return $resource(API_ADDR + "api/orderItems/:id", null, {
 		save: {
 			method: "POST"
 		}
@@ -8,14 +8,14 @@ website.factory("AddOrderItem",['$resource',function($resource){
 }]);
 
 website.factory("RemoveOrderItem",function($resource){
-	return $resource(API_ADDR + "/api/orderItems/:id",{id:'@id'},{
+	return $resource(API_ADDR + "api/orderItems/:id",{id:'@id'},{
 		query: { method: "GET", isArray: false },
 		update: {method: "DELETE",params: {id: '@id'}}
 	});
 });
 
 website.factory("GetOrderItemsByOrder", function($resource) {
-	return $resource(API_ADDR + "/api/orderItems/search/findByOrder_OrderId", {orderId:"@orderId"}, {
+	return $resource(API_ADDR + "api/orderItems/search/findByOrder_OrderId", {orderId:"@orderId"}, {
 		update: {
 			method: 'GET'
 		}
@@ -24,7 +24,7 @@ website.factory("GetOrderItemsByOrder", function($resource) {
 
 /* Resources for Orders */
 website.factory("UpdateOrder", function($resource) {
-	return $resource(API_ADDR + "/api/orders/:id", {id: '@id'}, {
+	return $resource(API_ADDR + "api/orders/:id", {id: '@id'}, {
 		query: { method: "GET", isArray: false },
 		update: {method: "PATCH",params: {id: '@id'}}
 	});
@@ -32,14 +32,14 @@ website.factory("UpdateOrder", function($resource) {
 
 /* Resources for Messages */
 website.factory("UpdateMessage", function($resource) {
-	return $resource(API_ADDR + "/api/messages/:id", {id: '@id'}, {
+	return $resource(API_ADDR + "api/messages/:id", {id: '@id'}, {
 		query: { method: "GET", isArray: false },
 		update: {method: "PATCH",params: {id: '@id'}}
 	});
 });
 
 website.factory("UpdateTextMessageComment", function($resource) {
-	return $resource(API_ADDR + "/rest/textMessage/updateComment/:id/:comment", {id: "@id", comment:"@comment"}, {
+	return $resource(API_ADDR + "rest/textMessage/updateComment/:id/:comment", {id: "@id", comment:"@comment"}, {
 		update: {
 			method: 'GET'
 		}
@@ -47,7 +47,7 @@ website.factory("UpdateTextMessageComment", function($resource) {
 });
 
 website.factory("UpdateVoiceMessageComment", function($resource) {
-	return $resource(API_ADDR + "/rest/voiceMessage/updateComment/:id/:comment", {id: "@id", comment:"@comment"}, {
+	return $resource(API_ADDR + "rest/voiceMessage/updateComment/:id/:comment", {id: "@id", comment:"@comment"}, {
 		update: {
 			method: 'GET'
 		}
@@ -56,15 +56,22 @@ website.factory("UpdateVoiceMessageComment", function($resource) {
 
 /* Resources for Groups */
 website.factory("AddGroup",['$resource',function($resource){
-	return $resource(API_ADDR + "/api/groups/:id", null, {
+	return $resource(API_ADDR + "api/groups/:id", null, {
 		save: {
 			method: "POST"
 		}
 	});
 }]);
 
+website.factory("RemoveGroup",function($resource){
+	return $resource(API_ADDR + "api/groups/:id",{id:'@id'},{
+		query: { method: "GET", isArray: false },
+		update: {method: "DELETE",params: {id: '@id'}}
+	});
+});
+
 website.factory("UpdateGroup", function($resource) {
-	return $resource(API_ADDR + "/api/groups/:id", {id: '@id'}, {
+	return $resource(API_ADDR + "api/groups/:id", {id: '@id'}, {
 		query: { method: "GET", isArray: false },
 		update: {method: "PATCH",params: {id: '@id'}}
 	});
@@ -72,7 +79,7 @@ website.factory("UpdateGroup", function($resource) {
 
 /* Resources for Users */
 website.factory("AddUser",['$resource',function($resource){
-	return $resource(API_ADDR + "/api/users/:id", null, {
+	return $resource(API_ADDR + "api/users/:id", null, {
 		save: {
 			method: "POST"
 		}
@@ -80,7 +87,7 @@ website.factory("AddUser",['$resource',function($resource){
 }]);
 
 website.factory("GetUser",function($resource){
-	return $resource(API_ADDR + "/api/users/:id",{id:'@id'},{
+	return $resource(API_ADDR + "api/users/:id",{id:'@id'},{
 		query: { method: "GET", isArray: false },
 	});
 });
@@ -88,7 +95,7 @@ website.factory("GetUser",function($resource){
 
 /* Resources for UserPhoneNumbers */
 website.factory("AddUserPhoneNumber",['$resource',function($resource){
-	return $resource(API_ADDR + "/api/userPhoneNumbers/:id", null, {
+	return $resource(API_ADDR + "api/userPhoneNumbers/:id", null, {
 		save: {
 			method: "POST"
 		}
@@ -97,7 +104,8 @@ website.factory("AddUserPhoneNumber",['$resource',function($resource){
 
 /* Resources for UserView */
 website.factory("AddUserView",['$resource',function($resource){
-	return $resource(API_ADDR + "/api/userViews/add/:groupId", {groupId: "@groupId", userView: "@userView"}, {
+	console.log(API_ADDR + "api/userViews/add/:groupId");
+	return $resource(API_ADDR + "api/userViews/add/:groupId", {groupId: "@groupId", userView: "@userView"}, {
 		save: {
 			method: "POST"
 		}
@@ -105,7 +113,7 @@ website.factory("AddUserView",['$resource',function($resource){
 }]);
 
 website.factory("RemoveUserView",function($resource){
-	return $resource(API_ADDR + "/api/userViews/delete/:id",{id:'@id'},{
+	return $resource(API_ADDR + "api/userViews/delete/:id",{id:'@id'},{
 		update: {
 			method: "DELETE",params: {id: '@id'}
 		}
@@ -114,12 +122,28 @@ website.factory("RemoveUserView",function($resource){
 
 /* Resources for GroupMembership */
 website.factory("AddGroupMembership",['$resource',function($resource){
-	return $resource(API_ADDR + "/api/groupMemberships/:id", null, {
+	return $resource(API_ADDR + "api/groupMemberships/:id", null, {
 		save: {
 			method: "POST"
 		}
 	});
 }]);
+
+website.factory("RemoveGroupMembership",function($resource){
+	return $resource(API_ADDR + "/api/groupMemberships/:id",{id:'@id'},{
+		update: {
+			method: "DELETE",params: {id: '@id'}
+		}
+	});
+});
+
+website.factory("GetGroupMembershipByUserAndGroup", function($resource) {
+	return $resource(API_ADDR + "/api/groupMemberships/search/findByUserAndGroup", {user:"@user", group:"@group"}, {
+		update: {
+			method: 'GET'
+		}
+	});
+});
 
 /* Resources for Products */
 website.factory("ProductCreate",function($resource){
@@ -199,6 +223,22 @@ website.factory("UpdateOrganization", function($resource) {
 			}
         }
     });
+});
+
+/* Resources for Outbound Call */
+website.factory("UpdateBroadcastDefaultSettings", function($resource) {
+    return $resource("/api/broadcastDefaultSettings/:id", {id: '@id'}, {
+    	query: {
+    		method: "GET",
+    		isArray: false
+    	},
+    	update: {
+    		method: "PATCH",
+    		params: {
+    			id: '@id'
+    		}
+    	}
+	});
 });
 
 /* Resources for Outbound Call */

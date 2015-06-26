@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import app.data.repositories.GroupMembershipRepository;
 import app.entities.Group;
@@ -37,8 +38,19 @@ public class GroupMembershipService {
 		return groupMembershipRepository.findByGroupOrderByUser_NameAsc(group);
 	}
 	
+	@Transactional
 	public void addGroupMembership(GroupMembership groupMembership){
 		groupMembershipRepository.save(groupMembership);
+		
+		/**
+		 * To ensure that no null groups are added once parent group is added
+		 */
+		if(groupMembership.getGroup().getParentGroup() != null) {
+			/**
+			 * This mimicks the event handler for groupMemberships
+			 */
+			this.addGroupMembership(new GroupMembership(groupMembership.getGroup().getParentGroup(), groupMembership.getUser()));
+		}
 	}
 	
 	public void removeGroupMembership(GroupMembership groupMembership){
