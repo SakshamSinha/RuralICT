@@ -130,7 +130,7 @@ website.factory("AddGroupMembership",['$resource',function($resource){
 }]);
 
 website.factory("RemoveGroupMembership",function($resource){
-	return $resource(API_ADDR + "/api/groupMemberships/:id",{id:'@id'},{
+	return $resource(API_ADDR + "api/groupMemberships/:id",{id:'@id'},{
 		update: {
 			method: "DELETE",params: {id: '@id'}
 		}
@@ -138,7 +138,7 @@ website.factory("RemoveGroupMembership",function($resource){
 });
 
 website.factory("GetGroupMembershipByUserAndGroup", function($resource) {
-	return $resource(API_ADDR + "/api/groupMemberships/search/findByUserAndGroup", {user:"@user", group:"@group"}, {
+	return $resource(API_ADDR + "api/groupMemberships/search/findByUserAndGroup", {user:"@user", group:"@group"}, {
 		update: {
 			method: 'GET'
 		}
@@ -147,27 +147,27 @@ website.factory("GetGroupMembershipByUserAndGroup", function($resource) {
 
 /* Resources for Products */
 website.factory("ProductCreate",function($resource){
-	return $resource(API_ADDR + "/api/products",{
+	return $resource(API_ADDR + "api/products",{
 		query: {method: "GET", isArray: false}
 	});
 });
 
 website.factory("ProductEdit",function($resource){	
-	return $resource(API_ADDR + "/api/products/:id", {id: '@id'}, {
+	return $resource(API_ADDR + "api/products/:id", {id: '@id'}, {
 		query: { method: "GET", isArray: false },
 	    update: {method: "PATCH",params: {id: '@id'}}
 	});
 });
 
 website.factory("ProductDelete",function($resource){
-	return $resource(API_ADDR + "/api/products/:id",{id:'@id'},{
+	return $resource(API_ADDR + "api/products/:id",{id:'@id'},{
 		query: { method: "GET", isArray: false },
 	    update: {method: "DELETE",params: {id: '@id'}}
 	});
 });
 
 website.factory("ProductListGet",function($resource){
-	return $resorce(API_ADDR + "/api/products",{
+	return $resorce(API_ADDR + "api/products",{
 		query: {method: "GET", isArray: true}
 	});
 });
@@ -179,14 +179,14 @@ website.factory("PresetQuantityCreate",function($resource){
 
 website.factory("PresetQuantityEdit",function($resource){
 	
-	return $resource(API_ADDR + "/api/presetQuantities/:id", {id: '@id'}, {
+	return $resource(API_ADDR + "api/presetQuantities/:id", {id: '@id'}, {
 		query: { method: "GET", isArray: false },
 	    update: {method: "PATCH",params: {id: '@id'}}
 	});
 });
 
 website.factory("PresetQuantityDelete",function($resource){
-	return $resource(API_ADDR + "/api/presetQuantities/:id",{id:'@id'},{
+	return $resource(API_ADDR + "api/presetQuantities/:id",{id:'@id'},{
 		query: { method: "GET", isArray: false },
 	    update: {method: "DELETE",params: {id: '@id'}}
 	});
@@ -194,7 +194,7 @@ website.factory("PresetQuantityDelete",function($resource){
 
 /* Resources for Order Summary */
 website.factory("ShowOrderSummaryGroups", function($resource) {
-	return $resource(API_ADDR + "/api/orderItems/search/orderSummaryGroups", {org:"@org", groupName:"@groupName", fromTime:"@fromTime", toTime:"@toTime"}, {
+	return $resource(API_ADDR + "api/orderItems/search/orderSummaryGroups", {org:"@org", groupName:"@groupName", fromTime:"@fromTime", toTime:"@toTime"}, {
 		update: {
 			method: 'GET'
 		}
@@ -227,7 +227,7 @@ website.factory("UpdateOrganization", function($resource) {
 
 /* Resources for Outbound Call */
 website.factory("UpdateBroadcastDefaultSettings", function($resource) {
-    return $resource("/api/broadcastDefaultSettings/:id", {id: '@id'}, {
+    return $resource(API_ADDR + "api/broadcastDefaultSettings/:id", {id: '@id'}, {
     	query: {
     		method: "GET",
     		isArray: false
@@ -243,7 +243,7 @@ website.factory("UpdateBroadcastDefaultSettings", function($resource) {
 
 /* Resources for Outbound Call */
 website.factory("UpadateBroadcastDefaultSettings", function($resource) {
-    return $resource("/api/broadcastDefaultSettings/:id", {id: '@id'}, {
+    return $resource(API_ADDR + "api/broadcastDefaultSettings/:id", {id: '@id'}, {
     	query: {
     		method: "GET",
     		isArray: false

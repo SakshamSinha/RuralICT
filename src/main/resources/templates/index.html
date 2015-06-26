@@ -15,6 +15,7 @@
 <link th:href="@{/static/css/ruralivrs.css}" rel="stylesheet" />
 </head>
 <body>
+	<input type="hidden" id="contextRoot" th:value="@{/}">
 	<input type="hidden" id="organizationId" th:value="${organization.organizationId}">
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
@@ -76,8 +77,10 @@
 							9227507512</label>
 					</div>
 				</div>
-				<div class="well sidebar-nav">
-					<ng-include src="'groupsList'"></ng-include>
+				<div ng-controller="GroupsCtrl">
+					<div class="well sidebar-nav" id="groupList">
+						<ng-include src="'groupsList'"></ng-include>
+					</div>
 				</div>
 			</div>
 			<div class="span9" id="page-content">
@@ -189,8 +192,8 @@
 	<script th:src="@{/static/js/libs/angular-route.js}"></script>
 	<script th:src="@{/static/js/libs/angular-resource.js}"></script>
 	<script th:src="@{/static/js/libs/loading-bar.min.js}"></script>
-	<script th:src="@{/static/js/libs/recorder.js}"></script>
 	<script th:src="@{/static/js/utility.js}"></script>
+	<script th:src="@{/static/js/libs/recorder.js}"></script>
 	<script th:src="@{/static/js/recordFile.js}"></script>
 	<script th:src="@{/static/js/controllers.js}"></script>
 	<script th:src="@{/static/js/resources.js}"></script>

@@ -1,4 +1,4 @@
-website.controller("UserCtrl", function($window, $resource, $scope, $route, AddUserView, GetUser, RemoveUserView, AddGroupMembership, AddUserPhoneNumber) {
+website.controller("UserCtrl", function($window, $resource, $scope, $route, AddUserView, GetUser, RemoveUserView, AddGroupMembership, RemoveGroupMembership, GetGroupMembershipByUserAndGroup, AddUserPhoneNumber) {
 	$scope.addUserView = function(user, userPhoneNumber) {
 		
 		$scope.userView = new AddUserView();
@@ -12,9 +12,15 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 		}); 
 	};
 	
-	$scope.removeUserView = function(userId){
-		$scope.userView = new RemoveUserView();
-		$scope.userView.$update({id:userId},function(){});
+	$scope.removeMemberFromGroup = function(data){
+		console.log(data);
+		$scope.groupMembership = GetGroupMembershipByUserAndGroup.get(data, function(groupMembership){
+			console.log(groupMembership);
+			console.log($scope.groupMembership);
+			$scope.groupMembershipId = getId(groupMembership["_embedded"]["groupMemberships"][0]);
+			RemoveGroupMembership.update({id: $scope.groupMembershipId});	
+		}, function(error){console.log(error);});
+		console.log($scope.groupMembership);
 	};
 	
 	$scope.addGroupMembership = function(data){
@@ -44,13 +50,13 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 	};
 	
 	$scope.reload = function(){
-		setTimeout(window.location.reload.bind(window.location),2000);
+		//setTimeout(window.location.reload.bind(window.location),2000);
 	};
 });
 
 $("#page-content").on("click", "#add-new-group-user", function (e) {
 	
-	e.preventDefault();
+	//e.preventDefault();
 	/* Get values to generate orderItem objects from modal */
 	var userName = $.trim($("#newGroupUserName").val());
 	var userEmail = $.trim($("#newGroupUserEmail").val());
@@ -60,6 +66,13 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	var userAddress = $("#newGroupUserAddress").val();
 	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 	
+	if(userPrimaryPhoneNumber == ""){
+		alert("Enter Phone Number");
+		return;
+	}
+	if(userName == ""){
+		alert("Enter User Name");
+	}
 	
 	/* Create and add new row element for user */
 	
@@ -87,7 +100,7 @@ $("#page-content").on("click", ".remove-group-user", function (e) {
 	var id = $(this).attr("data-value");
 	console.log(id);
 	
-	$("#delete-group-user").val(id);
+	$("#remove-group-user").val(id);
 });
 
 $("#page-content").on("click", ".add-group-user-to-new-group", function (e) {
@@ -97,13 +110,17 @@ $("#page-content").on("click", ".add-group-user-to-new-group", function (e) {
 	$("#add-group-user-to-new-group").val(id);
 });
 
-$("#page-content").on("click", "#delete-group-user", function (e) {
+$("#page-content").on("click", "#remove-group-user", function (e) {
 	var id = $(this).val();
-	console.log(id);
+	var groupId = $("#groupId").val();
 	
-	angular.element($("#delete-group-user")).scope().removeUserView(id);
-	$('#delete-group-user-modal').modal('toggle');
-	angular.element($("#delete-group-user")).scope().reload();
+	var data = {};
+	data.user = id;
+	data.group = groupId;
+	
+	angular.element($("#remove-group-user")).scope().removeMemberFromGroup(data);
+	$('#remove-group-user-modal').modal('toggle');
+	//angular.element($("#remove-group-user")).scope().reload();
 	
 });
 

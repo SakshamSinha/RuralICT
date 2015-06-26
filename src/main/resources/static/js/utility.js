@@ -1,6 +1,4 @@
 var API_ADDR = $("#contextRoot").val();
-
-console.log(API_ADDR);
 	
 /* Function to dyanamically load audio */
 function loadAudio(audioTagName, voiceURL){

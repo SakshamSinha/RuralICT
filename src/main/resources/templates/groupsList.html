@@ -5,5 +5,12 @@
 			data-target="#add-new-group-modal">
 			<i class="icon-white icon-plus pull-right"></i>
 		</button></li>
-	<li th:each="group : ${groups}"><a th:href="@{#/group/} + ${group.groupId}" th:text="${group.name}">Group name</a></li>
+		<li><hr></li>
+		
+	<li th:each="group : ${groups}">
+		<div class="row-fluid">
+		<a th:href="@{#/group/} + ${group.groupId}" th:text="${group.name}">Group name</a>
+		<button th:value="${group.groupId}" class="close delete-group"><i class="icon-remove" aria-hidden="true"></i></button>
+		</div>
+	</li>
 </ul>
