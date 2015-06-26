@@ -1,17 +1,17 @@
 website.factory("PresetQuantityCreate",function($resource){
-	return $resource("/api/presetQuantities");
+	return $resource("/ruralict/api/presetQuantities");
 });
 
 website.factory("PresetQuantityEdit",function($resource){
 	
-	return $resource("/api/presetQuantities/:id", {id: '@id'}, {
+	return $resource("/ruralict/api/presetQuantities/:id", {id: '@id'}, {
 		query: { method: "GET", isArray: false },
 	    update: {method: "PATCH",params: {id: '@id'}}
 	});
 });
 
 website.factory("PresetQuantityDelete",function($resource){
-	return $resource("/api/presetQuantities/:id",{id:'@id'},{
+	return $resource("/ruralict/api/presetQuantities/:id",{id:'@id'},{
 		query: { method: "GET", isArray: false },
 	    update: {method: "DELETE",params: {id: '@id'}}
 	});

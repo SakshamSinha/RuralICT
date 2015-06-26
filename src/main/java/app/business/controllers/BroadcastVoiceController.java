@@ -39,7 +39,7 @@ import app.telephony.config.Configs;
 
 
 @Controller
-@RequestMapping("/ruralict/web/{org}")
+@RequestMapping("/web/{org}")
 public class BroadcastVoiceController {
 
 	@Autowired
@@ -58,7 +58,6 @@ public class BroadcastVoiceController {
 	BroadcastRecipientService broadcastRecipientService;
 	@Autowired
 	LatestRecordedVoiceService latestRecordedVoiceService;
-	public static final String OUTBOUND_APP_URL = "http://ruralict.cse.iitb.ac.in/RuralIvrs/BroadcastCallHandler";
 
 	@RequestMapping(value="/broadcastVoiceMessages/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
@@ -108,6 +107,7 @@ public class BroadcastVoiceController {
 		
 		String broadcastedTime = body.get("broadcastedTime");
 		System.out.println(broadcastedTime);
+		Timestamp timestamp = Timestamp.valueOf(broadcastedTime);
 		
 		boolean appOnly = (Integer.parseInt(body.get("appOnly")) !=0);
 		Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
@@ -115,6 +115,9 @@ public class BroadcastVoiceController {
 		boolean voiceBroadcastDraft = (Integer.parseInt(body.get("voiceBroadcastDraft")) !=0);
 		 
 		VoiceBroadcast broadcast = new VoiceBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, voice, voiceBroadcastDraft);
+		//TODO Remove the line just below. The time is updated right now but actually the top broadcast extracted in telephony service is to be done with the help of broadcast schedule and separate thread
+		broadcast.setBroadcastedTime(timestamp);
+		
 		broadcastService.addBroadcast(broadcast);
 		
 		String userIdString = body.get("userIds");
@@ -135,9 +138,10 @@ public class BroadcastVoiceController {
 		System.out.println("User:"+user.getName());
 		List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
 			for(UserPhoneNumber no:phoneNumbers)
-			{
+			{	
+				//Outbound call has to be appended with a zero after removing 91 
 				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
-				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, OUTBOUND_APP_URL));
+				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL));
 				{
 					break;
 				}

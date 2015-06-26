@@ -33,9 +33,10 @@ public class Utils {
 	/**
 	 * Variable to store working path of voice files
 	 */
-	private final static String VOICE_DIR = "./voices/";
-	
-	private final static String WEBSITE_ADDRESS = "http://ruralict.cse.iitb.ac.in/ruralict";
+	private final static String VOICE_DIR = "/home/ruralivrs/purnima/apache-tomcat-7.0.42/webapps/Downloads/voices/";
+	//private final static String VOICE_DIR = "./voices/";
+	private final static String DOWNLOAD_VOICE_DIR = "Downloads/voices/";
+	private final static String WEBSITE_ADDRESS = "http://ruralict.cse.iitb.ac.in/";
 	//private final static String WEBSITE_ADDRESS = "http://localhost:8080/";
 
 	
@@ -45,8 +46,8 @@ public class Utils {
 	
 	public static String getVoiceDirURL() {
 		//the substring method is to remove the "./" part of VOICE_DIR. There can be a better way using regex.
-		String directory = VOICE_DIR.substring(2);
-		return WEBSITE_ADDRESS + directory;
+		//String directory = VOICE_DIR.substring(2);
+		return WEBSITE_ADDRESS + DOWNLOAD_VOICE_DIR;
 	}
 
 	/**

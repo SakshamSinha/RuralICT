@@ -25,8 +25,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
 	@Override
 	public List<Product> findAll();
-
-	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
+	//TODO try to overcoe this problem
+	//@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
 	@Override
 	public Page<Product> findAll(Pageable pageable);
 

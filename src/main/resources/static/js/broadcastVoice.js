@@ -1,5 +1,5 @@
 website.factory("BroadcastCreate",function($resource){
-	return $resource("/api/voiceBroadcasts",{
+	return $resource("/ruralict/api/voiceBroadcasts",{
 		query: {method: "GET", isArray: false}
 	});
 });
@@ -24,8 +24,11 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 	//function to save product
 	$scope.saveBroadcast = function(data){
 		$scope.broadcast = data;
-		$http.post('/ruralict/web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
+		//TODO remove this
+		console.log('save broadcast has been called');
+		$http.post('/web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
 		.success(function(data,status,header,config){
+			console.log('broadcast data posted. Users called.');
 		})
 		.error(function(data,status,header,config){
 			
@@ -59,7 +62,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 				})
 		.error(function(data, status) {
 			if (status == "500")
-				alert("Choose a different file before uploading");
+				alert("File already present. Choose a different file before uploading.");
 		});
 	}
 	
