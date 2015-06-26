@@ -57,7 +57,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * Maximum number of invalid tries before disconnection.
 		 */
-		public static final int MAX_INVALID_ATTEMPTS = 4;
+		public static final int MAX_INVALID_ATTEMPTS = 5;
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * The root URL where all the voice files are.
 		 */
-		public static final String VOICE_DIR = "http://ruralict.cse.iitb.ac.in/Downloads/voice";
+		public static final String VOICE_DIR = "http://ruralict.cse.iitb.ac.in/Downloads/voices";
 	}
 
 }

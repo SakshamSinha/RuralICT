@@ -17,13 +17,16 @@ public class PlayThankYouMessageAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-
+        String language = session.getLanguage();
+        if(language==null)
+        	language = "en";
 
 		if(session.getInvalidTries()>=4){
-			response.addPlayAudio(Configs.Voice.VOICE_DIR+"/invalidTriesExceeded_"+session.getLanguage()+".wav");	
+			response.addPlayAudio(Configs.Voice.VOICE_DIR+"/invalidTriesExceeded_"+language+".wav");	
 		}
+		
 		else {
-			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/thankYou_"+session.getLanguage()+".wav");
+			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/thankYou_"+language+".wav");
 		}
 
 	}

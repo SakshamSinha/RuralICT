@@ -93,7 +93,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Action<IVRSession> doInvalidAction;
 		Guard<IVRSession, Object> onInvalidTriesLessThan4 = new OnInvalidTriesLessThanN(Configs.Telephony.MAX_INVALID_ATTEMPTS);
 		Guard<IVRSession, Object> onInvalidTriesGreaterOrEqual4 = new NegationGuard<IVRSession, Object>(onInvalidTriesLessThan4);
-		
+
 		public RuralictTransitionMap(Action<IVRSession> doInvalidInputAction) {
 			this.doInvalidAction = doInvalidInputAction;
 		}
@@ -105,8 +105,8 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 			allowTransition(output, onInvalidTriesLessThan4, input, null);
 			allowTransition(output, onInvalidTriesGreaterOrEqual4, exitOnMaxTries, null);
 		}
-		
-		
+
+
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Action<IVRSession> playInvalidGroupAction = new PlayInvalidGroupAction();
 		Action<IVRSession> playGroupIDsAction = new PlayGroupIDsAction();
 		Action<IVRSession> playRecordedMessageAction = new PlayRecordedMessageAction();
-		
+
 		/* STATES */
 
 		// start state
@@ -217,7 +217,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		State<IVRSession> dummyStateForResponse = map.addActiveState("DummyStateForResponse", userCallFlow, null);
 		State<IVRSession> dummyStateForOrder = map.addActiveState("DummyStateForOrder", userCallFlow, null);
 		State<IVRSession> replayRecord = map.addActiveState("ReplayRecord", userCallFlow, playRecordedMessageAction);
-				
+
 
 		//states for publisher call flow
 
@@ -247,7 +247,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Guard<IVRSession, Object> onDTMFOrderIDNotExist = new OnOrderIDExist(false);
 		Guard<IVRSession, Object> onIsPublisher = new OnIsPublisher(true);
 		Guard<IVRSession, Object> onIsUser = new OnIsPublisher(false);
-		
+
 		Guard<IVRSession, Object> onGotDTMFOrder = new OnResponseType("Order");
 		Guard<IVRSession, Object> onGotDTMFFeedback = new OnResponseType("Feedback");
 		Guard<IVRSession, Object> onGotDTMFResponse = new OnResponseType("Response");
@@ -262,13 +262,13 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 
 		Guard<IVRSession, Object> onCancellationDisabled = new OnUniqueOption("orderMenu", "", true);
 		Guard<IVRSession, Object> onCancellationEnabled = new OnUniqueOption("orderMenu", "", false);
-		
+
 		Guard<IVRSession, Object> onInvalidTriesLessThan4 = new OnInvalidTriesLessThanN(Configs.Telephony.MAX_INVALID_ATTEMPTS);
 		Guard<IVRSession, Object> onInvalidTriesGreaterOrEqual4 = new NegationGuard<IVRSession, Object>(onInvalidTriesLessThan4);
-		
+
 		Guard<IVRSession, Object> onGotDTMFInvalidResponseType = new OnInvalidChoice("response");
 		Guard<IVRSession, Object> onGotDTMFInvalidLanguage = new OnInvalidChoice("language");
-		
+
 		/* TRANSITIONS */
 
 		// transitions from start
@@ -278,7 +278,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(checkCallerRole, onIsUnRegisteredUser, unRegisterUser, null);
 		map.allowTransition(checkCallerRole, onIsPublisher , recordBroadcast, null);
 		map.allowTransition(checkCallerRole, onIsUser , userStart, null);
-	
+
 		// transitions from main menu
 		map.allowTransition(userStart, onUniqueLanguage, languageAndOtherMenu, null);
 		map.allowTransition(userStart, onNotUniqueLanguage,languageMenu, null);
@@ -288,8 +288,8 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(languageAndOtherMenu, onGotDTMFKey9, dummyStateForResponse, null);
 		map.invalidInputTransition(languageAndOtherMenu, onGotDTMFKeyNot1nor9,
 				map.addActiveState("InvalidInputLanguageAndOther", userCallFlow, null), customerExit);
-				
-		
+
+
 
 		// transitions from dummyStateForResponse
 		map.allowTransition(dummyStateForResponse, onUniqueResponseOrder, dummyStateForOrder, null);
@@ -311,7 +311,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(responseType, onGotDTMFResponse,responseMenu,null);
 		map.invalidInputTransition(responseType, onGotDTMFInvalidResponseType,
 				map.addActiveState("InvalidInputResponse", userCallFlow, null), customerExit);
-		
+
 		// transition from recordfeedback
 		map.allowTransition(recordFeedback, EventGuard.onRecord ,replayRecord, doAskPlayFeedbackMessagesAction);
 		map.allowTransition(replayRecord, EventGuard.proceed, confirmFeedbackMessage, null);
@@ -321,32 +321,32 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(confirmFeedbackMessage, onGotDTMFKey2, recordFeedback, null);
 		map.invalidInputTransition(confirmFeedbackMessage, onGotDTMFKeyNot1nor2,
 				map.addActiveState("InvalidInputConfirmFeedback", userCallFlow, null), customerExit);
-	
+
 		// transitions from langugaeMenu(Hindi , English , Marathi)
 		map.allowTransition(languageMenu, onLanguageSelect, dummyStateForResponse, null);
 		map.invalidInputTransition(languageMenu, onGotDTMFInvalidLanguage,
 				map.addActiveState("InvalidInputLanguageMenu", userCallFlow, null), customerExit);
-	
+
 
 		// transitions from responseMenu(Yes or No)
 		map.allowTransition(responseMenu, onGotDTMFKey1,customerExit ,playResponseIsYesAction);
 		map.allowTransition(responseMenu,onGotDTMFKey2, customerExit, playResponseIsNoAction);
 		map.invalidInputTransition(responseMenu, onGotDTMFKeyNot1nor2,
 				map.addActiveState("InvalidInputResponseMenu", userCallFlow, null), customerExit);
-	
-		
+
+
 		// transitions from orderMenu
 		map.allowTransition(orderMenu, onGotDTMFKey1, recordOrder, null);
 		map.allowTransition(orderMenu, onGotDTMFKey2, enterOrderID, null);
 		map.invalidInputTransition(orderMenu, onGotDTMFKeyNot1nor2,
 				map.addActiveState("InvalidInputOrderMenu", userCallFlow, null), customerExit);
-		
+
 
 		// transition from enterOrderID
 		map.allowTransition(enterOrderID,onDTMFOrderIDExist,customerExit, playOrderCancelAction);
 		map.invalidInputTransition(enterOrderID, onDTMFOrderIDNotExist,
 				map.addActiveState("InvalidInputenter", userCallFlow, null), customerExit);
-		
+
 		// transitions from recordOrder
 		map.allowTransition(recordOrder, EventGuard.onRecord, customerExit, doStoreOrderMessageAction);
 
@@ -362,14 +362,14 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(broadcastMedium, onGotDTMFKey1, choosePhoneGroup, null);
 		map.invalidInputTransition(broadcastMedium, onGotDTMFKeyNot1nor2,
 				map.addActiveState("InvalidInputBroadcast", publisherCallFlow, null), customerExit);
-	
+
 
 		// transitions from confirmPCMessage
 		map.allowTransition(confirmPCMessage, onGotDTMFKey1, publisherExit, doStoreBroadcastMessageAction);
 		map.allowTransition(confirmPCMessage, onGotDTMFKey2, recordBroadcast, playMessageDiscardedAction);
 		map.invalidInputTransition(confirmPCMessage, onGotDTMFKeyNot1nor2,
 				map.addActiveState("InvalidInputConfirmMessage",publisherCallFlow, null), customerExit);
-		
+
 		// transitions from choosePhoneGroup
 		map.allowTransition(choosePhoneGroup, onGotDTMFKey1, enterGroupID, null);
 		map.allowTransition(choosePhoneGroup, onGotDTMFKey2, playGroupIDs, null);
@@ -383,7 +383,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(enterGroupID, onDTMFGroupIDNotExist, choosePhoneGroup, playInvalidGroupAction);
 
 		// transitions from publisherExit
-		map.allowTransition(publisherExit, EventGuard.proceed, end, null);
+		//	map.allowTransition(publisherExit, EventGuard.proceed, end, null);
 
 		// transitions from call flow
 		map.allowTransition(parentCallFlow, EventGuard.onDisconnect, end, null);
@@ -394,5 +394,5 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		return map;
 	}
 
-	}
+}
 

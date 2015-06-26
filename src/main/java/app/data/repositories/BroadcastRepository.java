@@ -35,7 +35,7 @@ public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
 	@Override
 	public List<Broadcast> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#broadcast.organization.abbreviation)")
+/*	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#broadcast.organization.abbreviation)")*/
 	@Override
 	public <S extends Broadcast> S save(@Param("broadcast") S broadcast);
 
