@@ -72,6 +72,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			}
 			response.addPlayAudio(welcomeMessage.getVoice().getUrl());
 			if(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableBroadcasts()){
+				session.setGroupID(broadcast.getGroup().getGroupId()+"");
 				response.addPlayAudio(v.getUrl());
 			}
 			else{
@@ -93,9 +94,9 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		RuralictStateMachine.tempResponseMap.put("2", "Feedback");
 		RuralictStateMachine.tempResponseMap.put("3", "Response");
 
-		
-		
-		
+
+
+
 	}
 
 

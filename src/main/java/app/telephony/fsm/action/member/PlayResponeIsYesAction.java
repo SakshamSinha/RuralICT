@@ -1,6 +1,8 @@
 package app.telephony.fsm.action.member;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.business.services.BroadcastRecipientService;
+import app.business.services.BroadcastScheduleService;
 import app.business.services.GroupService;
 import app.business.services.TelephonyService;
 import app.business.services.springcontext.SpringContextBridge;
@@ -36,11 +38,16 @@ public class PlayResponeIsYesAction implements Action<IVRSession> {
 		GroupService groupService = SpringContextBridge.services().getGroupService();
 		Group group = groupService.getGroup(groupId);
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
+		BroadcastRecipientService broadcastRecipient = SpringContextBridge.services().getBroadcastRecipientService();
+		BroadcastScheduleService broadcastScheduleService = SpringContextBridge.services().getBroadcastScheduleService();
 		Broadcast broadcast = new VoiceBroadcast();
 		broadcast.setBroadcastId(ruralictSession.getBroadcastID());
+		
 		if(ruralictSession.isOutbound()){
 
-			telephonyService.addBinaryMessage(session.getUserNumber(),broadcast, group, mode , type , true , inboundCall.getTime());
+			outboundCall.setBroadcastRecipient(broadcastRecipient.getBroadcastRecipientById(broadcast.getBroadcastId()));
+			outboundCall.setBroadcastSchedule(broadcastScheduleService.getBroadcastScheduleById(broadcast.getBroadcastId()));
+			telephonyService.addVoiceMessage(session.getUserNumber(), broadcast, group, mode, type, false, null, null,outboundCall);
 		}
 		else{
 

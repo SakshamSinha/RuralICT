@@ -45,7 +45,7 @@ public class TelephonyService {
 
 	@Autowired
 	InboundCallService inboundCallService;
-	
+
 	@Autowired
 	OutboundCallService outboundCallService;
 
@@ -70,36 +70,52 @@ public class TelephonyService {
 	}
 
 	public void addVoiceMessage(String userPhoneNumber, Broadcast broadcast, Group group, String mode, String type, boolean response, String url, InboundCall inboundCall, OutboundCall outboundCall){
-		Voice voice=new Voice(url,false);
-		voice = voiceService.addVoice(voice);
 
-		if(broadcast == null){
-			inboundCall = inboundCallService.addInboundCall(inboundCall);
-		}
-		else{
-			outboundCall = outboundCallService.addOutboundCall(outboundCall);
-		}
-		
-
-		VoiceMessage voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, group, mode, type, response, null, voice, inboundCall);
-
-		if(type.equals("order")) {
-			Order order = new Order();
-			order.setStatus("new");
-			order.setOrganization(group.getOrganization());
-			order = orderService.addOrder(order);
-			voiceMessage.setOrder(order);
-			String message = "Your Order ID is " + order.getOrderId();
-			try {
-				IVRUtils.sendSMS(userPhoneNumber,message);
-			} catch (Exception e) {
-				e.printStackTrace();
+		VoiceMessage voiceMessage;
+           	
+		if(url == null){
+			
+			if(broadcast == null){
+				inboundCall = inboundCallService.addInboundCall(inboundCall);
+			}
+			else{
+				outboundCall = outboundCallService.addOutboundCall(outboundCall);
 			}
 			
+			 voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, group, mode, type, response, null, null, inboundCall);
 		}
+		else {
+			Voice voice=new Voice(url,false);
+			voice = voiceService.addVoice(voice);
 
-		voiceMessageService.addMessage(voiceMessage);
+			if(broadcast == null){
+				inboundCall = inboundCallService.addInboundCall(inboundCall);
+			}
+			else{
+				outboundCall = outboundCallService.addOutboundCall(outboundCall);
+			}
 
+
+			voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, group, mode, type, response, null, voice, inboundCall);
+
+			if(type.equals("order")) {
+				Order order = new Order();
+				order.setStatus("new");
+				order.setOrganization(group.getOrganization());
+				order = orderService.addOrder(order);
+				voiceMessage.setOrder(order);
+				String message = "Your Order ID is " + order.getOrderId();
+				try {
+					IVRUtils.sendSMS(userPhoneNumber,message);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+
+		}	
+			voiceMessageService.addMessage(voiceMessage);
+		
 	}
 
 	public void addTextMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response,String textContent, Timestamp textTime){
