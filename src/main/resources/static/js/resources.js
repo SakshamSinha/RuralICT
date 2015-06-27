@@ -256,3 +256,8 @@ website.factory("UpadateBroadcastDefaultSettings", function($resource) {
     	}
 	});
 });
+
+/* Resources for text broadcast */
+website.factory("TextBroadcast", function($resource) {
+	return $resource(API_ADDR + "api/textBroadcasts/:id");
+});

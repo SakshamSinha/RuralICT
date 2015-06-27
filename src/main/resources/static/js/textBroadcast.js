@@ -1,9 +1,4 @@
 /* Javascript file for the Text Broadcast View Controller */
- 
-website.factory("TextBroadcast", function($resource) {
-	return $resource("/api/textBroadcasts/:id");
-});
-
 website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, TextBroadcast, OutboundCall) {
 
 	// Get the required variables from thymeleaf attributes
