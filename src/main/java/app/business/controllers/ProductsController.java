@@ -35,8 +35,6 @@ public class ProductsController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@RequestMapping(value="/productsPage",method = RequestMethod.GET)
 	public String productsPageInitial(@PathVariable String org, Model model) {
-		
-		System.out.println("This function get has been called");
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		List<ProductType> productTypes = productService.getProductTypeList(organization);
 		List<Product> products = productService.getProductList(productTypes);
