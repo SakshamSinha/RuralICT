@@ -1,4 +1,4 @@
-website.controller("GroupsCtrl", function($scope, $route, AddGroup) {
+website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup) {
 	
 	$scope.addGroup = function(data) {
 			$scope.group = new AddGroup();
@@ -15,6 +15,17 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup) {
 				$("#group-add-failed-modal").modal('toggle');
 			});
 		
+	};
+	
+	$scope.removeGroup = function(groupId){
+		
+		$scope.group = RemoveGroup.get({id: groupId},function(){
+			
+			$scope.group.$update({id:groupId},function(group){}, function(error){
+					if(error.status == "409")
+						alert("To delete this group, remove all its members.");
+			});
+		});		
 	};
 	
 });	   
@@ -37,5 +48,14 @@ $("#add-new-group").click(function() {
 	
 });
 
-
-
+$("#groupList").on("click", ".delete-group", function(e) {
+	e.preventDefault();
+    
+	/* Get required values from modal */
+	var id = $(this).val();
+	angular.element($('#groupList')).scope().removeGroup(id);
+	//$('#view-inbox-voice-message-modal').modal('toggle');
+    
+	// Workaround for time being
+	angular.element($('#groupList')).scope().reload();  
+});

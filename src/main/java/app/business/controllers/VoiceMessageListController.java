@@ -68,7 +68,7 @@ public class VoiceMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String textNegativeResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-		List<Message> voiceResponseMessageList=voiceMessageService.getResponseList(groupService.getGroup(groupId),"voice");
+		List<Message> voiceResponseMessageList=voiceMessageService.getNegativeResponseList(groupService.getGroup(groupId),"voice");
 		model.addAttribute("message",voiceResponseMessageList);
 		return "voiceNegativeResponseMessage";
 	}

@@ -1,22 +1,3 @@
-website.factory("PresetQuantityCreate",function($resource){
-	return $resource("/api/presetQuantities");
-});
-
-website.factory("PresetQuantityEdit",function($resource){
-	
-	return $resource("/api/presetQuantities/:id", {id: '@id'}, {
-		query: { method: "GET", isArray: false },
-	    update: {method: "PATCH",params: {id: '@id'}}
-	});
-});
-
-website.factory("PresetQuantityDelete",function($resource){
-	return $resource("/api/presetQuantities/:id",{id:'@id'},{
-		query: { method: "GET", isArray: false },
-	    update: {method: "DELETE",params: {id: '@id'}}
-	});
-});
-
 website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $location, PresetQuantityCreate, PresetQuantityEdit, PresetQuantityDelete) {
 		
 		var id;

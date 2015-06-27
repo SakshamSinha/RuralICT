@@ -1,8 +1,15 @@
+var API_ADDR = $("#contextRoot").val();
+	
 /* Function to dyanamically load audio */
 function loadAudio(audioTagName, voiceURL){
 	var audio = document.getElementById(audioTagName);
 	audio.src = voiceURL;
 	audio.load();
+}
+
+function getId(object){
+	var urlChunks = object["_links"]["self"]["href"].split("/");
+	return urlChunks[urlChunks.length-1];
 }
 
 function validatedate(inputText){
