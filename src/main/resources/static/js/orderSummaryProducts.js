@@ -1,11 +1,3 @@
-website.factory("ShowOrderSummaryProducts", function($resource) {
-	return $resource("/api/orderItems/search/orderSummaryProducts", {org:"@org", prod:"@prod", fromTime:"@fromTime", toTime:"@toTime"}, {
-		update: {
-			method: 'GET'
-		}
-	});
-});
-
 website.controller('OrderSummaryProductsController', function($scope, $route, ShowOrderSummaryProducts) {
       $scope.orderItems = function(data){
         document.getElementById("totalProducts").innerHTML=0;

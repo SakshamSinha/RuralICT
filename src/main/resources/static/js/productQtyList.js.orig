@@ -1,21 +1,44 @@
+<<<<<<< HEAD
+website.factory("PresetQuantityCreate",function($resource){
+	return $resource("/ruralict/api/presetQuantities");
+});
+
+website.factory("PresetQuantityEdit",function($resource){
+	
+	return $resource("/ruralict/api/presetQuantities/:id", {id: '@id'}, {
+		query: { method: "GET", isArray: false },
+	    update: {method: "PATCH",params: {id: '@id'}}
+	});
+});
+
+website.factory("PresetQuantityDelete",function($resource){
+	return $resource("/ruralict/api/presetQuantities/:id",{id:'@id'},{
+		query: { method: "GET", isArray: false },
+	    update: {method: "DELETE",params: {id: '@id'}}
+	});
+});
+
 website.controller("PresetQuantitiesCtrl",function($window, $scope, $http, $route, $location, PresetQuantityCreate, PresetQuantityEdit, PresetQuantityDelete) {
+=======
+website.controller("PresetQuantitiesCtrl",function($scope, $http, $route, $location, PresetQuantityCreate, PresetQuantityEdit, PresetQuantityDelete) {
+>>>>>>> ae30177bdbfce36dcb5ec5ce62e8e7cdea4dbcd5
 		
 		var id;
 		//function to save the preset quantity 
 		$scope.savePresetQuantity = function(data){
 			$scope.presetQuantity = new PresetQuantityCreate();
-			$scope.presetQuantity = data;
-			console.log("Receiving quantity at savePresetQuantity "+ $scope.presetQuantity.quantity);
-			PresetQuantityCreate.save($scope.presetQuantity,function(){	
-			},function(error){
-				if (error.status == "409")
-					alert("Product Quantity already present. Add a different quantity");
+			$scope.presetQuantity.quantity = data.quantity;
+			$scope.presetQuantity.productType = data.productType;
+			$scope.presetQuantity.organization = data.organization;
+			PresetQuantityCreate.save($scope.presetQuantity,function(){
+				
 			});
 		}
 		//function to edit the preset quantity
 		$scope.editPresetQuantity = function(value){
 			
 			$scope.presetQuantity = PresetQuantityEdit.get({id:$scope.id},function(){
+				console.log("Received value: "+value);
 				$scope.presetQuantity.quantity = value;
 				$scope.presetQuantity.$update({id:$scope.id},function(){
 				});
@@ -60,9 +83,8 @@ $("#page-content").on("click", "#add-new-quantity", function(e) {
 	var productType = $('#new-presetqty-product-type-input').val();
 	var organizationId= $('#product-quantity').attr('organizationId');
 	var organization = "organizations/"+organizationId;
-	console.log("Receiving quantity: "+ quantity);
 	var data = {};
-	data.quantity = quantity;
+	data.name = quantity;
 	data.productType = productType;
 	data.organization = organization;
 	angular.element($('#add-new-quantity')).scope().savePresetQuantity(data);

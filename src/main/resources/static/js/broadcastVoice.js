@@ -1,9 +1,3 @@
-website.factory("BroadcastCreate",function($resource){
-	return $resource("/ruralict/api/voiceBroadcasts",{
-		query: {method: "GET", isArray: false}
-	});
-});
-
 website.directive('fileModel', ['$parse',function ($parse) {
     return {
         restrict: 'A',
@@ -26,7 +20,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		$scope.broadcast = data;
 		//TODO remove this
 		console.log('save broadcast has been called');
-		$http.post('/ruralict/web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
+		$http.post(API_ADDR + 'web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
 		.success(function(data,status,header,config){
 			console.log('broadcast data posted. Users called.');
 		})
@@ -42,7 +36,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
 		$http({
 			method: 'POST',
-			url: '/ruralict/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
+			url: API_ADDR + 'web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
 			headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
 			data: formData,
 			transformRequest: function(data, headersGetterFunction) {
@@ -53,7 +47,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 			$scope.latestBroadcastableVoiceIds.voiceId = data;
 			$scope.latestBroadcastableVoiceIds.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 			console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
-			$http.post('/ruralict/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
+			$http.post(API_ADDR + 'web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
 				.success(function(data,status,header,config){
 					alert("Audio successfully uploaded");
 					//TODO Eliminating this function doing hard refresh
@@ -83,8 +77,6 @@ $("#page-content").on("click","#voice-upload",function(e){
 	data.groupId = broadcastVoiceIds.attr("groupid");
 	angular.element($('#broadcast-voice-ids')).scope().uploadFile(data);
 });
-
-
 
 $("#page-content").on("click","#place-broadcast-call",function(e){
 	var data={};

@@ -3,7 +3,10 @@
 	<!--TODO Change ids such as voiceid to data-voiceid as the former is not supported in a lot of browsers   -->
     <div id="broadcast-voice-ids" th:attr="org=${organization.abbreviation},organizationid=${organization.organizationId},groupid=${group.groupId},publisherid=${publisher.userId}"></div>
     <!-- Two script tags instead of one since if src attribute is used in script tag the text content is ignored. -->
+<<<<<<< HEAD
     <script src="recordFile.js"></script>
+=======
+>>>>>>> ae30177bdbfce36dcb5ec5ce62e8e7cdea4dbcd5
     <table class="table table-striped table-bordered table-condensed" id="usertable">
         <tbody>
             <!-- 			<tr class="list-users" th:each="broadcast : ${broadcast} "> -->
@@ -25,11 +28,15 @@
             <tr>	
             		<div class="row-fluid">
             			<div class="span6">
+<<<<<<< HEAD
                     		<button class="btn btn-success" onclick="recordFile.init()" id="voice-record" data-toggle="modal" data-title="Record" data-target="#record-modal" align="center">Record</button>
+=======
+                    		<button class="btn btn-success" id="voice-record" onclick="recordFile.init();" data-toggle="modal" data-title="Record" data-target="#record-modal" align="center">Record</button>
+>>>>>>> ae30177bdbfce36dcb5ec5ce62e8e7cdea4dbcd5
                     	</div>
                     	<div class="span6">
-                   			<!-- TODO have to change styling of this button -->
-                			<input class= "display-none" type="file" size = "4" name="myFile" file-model="myFile" id="welcome_message">
+                    	<!-- TODO have to change styling of this button -->
+                    		<input type="file" name="myFile" file-model="myFile" id="welcome_message">
                     	</div>
                     </div>
              </tr>
@@ -69,7 +76,7 @@
   							<button class="btn btn-failure" id="stopButton" onclick="recordFile.stopRecording();" disabled>stop</button>
   						</div>
   						<div class="span4">
-  							<a class="btn btn-info" role="button" id="audioDownload">Download</a>
+  							<a class="btn btn-info" role="button" id="audioDownload" href="#">Download</a>
   						</div>
   					</div>
             	</form>

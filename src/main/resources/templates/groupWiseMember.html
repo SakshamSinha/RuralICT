@@ -3,7 +3,7 @@
 		<div th:if="${userViews != null }">
 			<div class="row-fluid">
 				<button class="btn btn-success" id = "add_new_user" data-toggle="modal" data-title="Add new user" data-target="#add-new-group-user-modal">
-	    			<i class="icon-white icon-plus-sign"></i> Add new user
+	    			<i class="icon-white icon-plus-sign"></i> Add New Member
 	    		</button>
 	    		<br>
 	    		<br>
@@ -32,8 +32,8 @@
 	            				<ul class="dropdown-menu">
 								  <li><a href="#" th:attr="data-value=${userView.user.userId}" class="add-group-user-to-new-group" data-toggle="modal" data-title="Add new user" data-target="#add-group-user-to-new-group-modal"><i class="icon-plus-sign"></i> Add to Group</a></li>
 					              <li><a href="#" th:attr="data-value=${userView.user.userId}"  class="add-group-user-phone-number" data-toggle="modal" data-title="Add new user" data-target="#add-group-user-phone-number-modal"><i class="icon-plus-sign"></i> Add Number</a></li>
-					              <!-- <li><a href="#" th:attr="data-value=${userView.user.userId}"  class="remove-group-user-from-group" data-toggle="modal" data-title="Add new user" data-target="remove-group-user-from-group-modal"><i class="icon-remove"></i> Remove from Group</a></li> -->
-					              <li><a href="#" th:attr="data-value=${userView.user.userId}"  class="remove-group-user" data-toggle="modal" data-title="Add new user" data-target="#delete-group-user-modal"><i class="icon-trash"></i> Delete</a></li>
+					              <li th:if="${parentGroup.groupId != groupId}"><a href="#" th:attr="data-value=${userView.user.userId}"  class="remove-group-user" data-toggle="modal" data-title="Add new user" data-target="#remove-group-user-modal"><i class="icon-remove"></i> Remove</a></li>
+					              
 	           					</ul>
 	       					</div>
 	       				</td>
@@ -66,26 +66,26 @@
 					aria-hidden="true">
 					<i class="icon-remove"></i>
 				</button>
-				<h4 class="modal-title custom_align" id="HeadingUser">Add New User</h4>
+				<h4 class="modal-title custom_align" id="HeadingUser">Add New Member</h4>
 			</div>
 			<div class="modal-body">
 				<form class="form-horizontal">
 					<div class="control-group">
 						<label class="control-label" for="newGroupUserName">Name: </label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" id="newGroupUserName"/>
+							<input type="text" class="input-xlarge" id="newGroupUserName" required/>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="newGroupUserPrimaryPhoneNumber">Phone Number:</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" id="newGroupUserPrimaryPhoneNumber"/>
+							<input type="text" class="input-xlarge" id="newGroupUserPrimaryPhoneNumber" required/>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="newGroupUserAddress">Address:</label>
+						<label class="control-label" for="newGroupUserAddress" >Address:</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" id="newGroupUserAddress"/>
+							<input type="text" class="input-xlarge" id="newGroupUserAddress" required/>
 						</div>
 					</div>
 					<div class="control-group">
@@ -197,7 +197,7 @@
 		</div>
 	</div>
 	
-	<div class="modal fade" id="remove-group-user-from-group-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
+	<div class="modal fade" id="remove-group-user-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
 		<div class="modal-dialog">
 		  <div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove" aria-hidden="true"></i></button>
@@ -211,7 +211,7 @@
 		  </div>
 		</div>
 		<div class="modal-footer ">
-		  <button type="button" id="remove-group-user-from-group" class="btn btn-warning"><i class="icon-white icon-trash"></i>  Remove</button>
+		  <button type="button" id="remove-group-user" class="btn btn-warning"><i class="icon-white icon-trash"></i>  Remove</button>
 		  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
 		</div>
 	</div>

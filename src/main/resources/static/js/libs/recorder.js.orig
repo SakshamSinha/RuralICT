@@ -1,6 +1,10 @@
 (function(window){
 
+<<<<<<< HEAD
+  var WORKER_PATH = '/ruralict/static/js/libs/recorderWorker.js';
+=======
   var WORKER_PATH = API_ADDR + 'static/js/libs/recorderWorker.js';
+>>>>>>> ae30177bdbfce36dcb5ec5ce62e8e7cdea4dbcd5
 
   var Recorder = function(source, cfg){
     var config = cfg || {};

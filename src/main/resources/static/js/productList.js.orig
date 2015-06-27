@@ -1,3 +1,32 @@
+<<<<<<< HEAD
+website.factory("ProductCreate",function($resource){
+	return $resource("/ruralict/api/products",{
+		query: {method: "GET", isArray: false}
+	});
+});
+
+website.factory("ProductEdit",function($resource){	
+	return $resource("/ruralict/api/products/:id", {id: '@id'}, {
+		query: { method: "GET", isArray: false },
+	    update: {method: "PATCH",params: {id: '@id'}}
+	});
+});
+
+website.factory("ProductDelete",function($resource){
+	return $resource("/ruralict/api/products/:id",{id:'@id'},{
+		query: { method: "GET", isArray: false },
+	    update: {method: "DELETE",params: {id: '@id'}}
+	});
+});
+
+website.factory("ProductListGet",function($resource){
+	return $resorce("/ruralict/api/products",{
+		query: {method: "GET", isArray: true}
+	});
+});
+=======
+>>>>>>> ae30177bdbfce36dcb5ec5ce62e8e7cdea4dbcd5
+
 website.controller("ProductsCtrl",function($window, $scope, $http, $route, $location, ProductCreate, ProductEdit, ProductDelete) {
 		
 		var id;
@@ -106,6 +135,11 @@ $("#page-content").on("click","#update-product",function(e){
 	angular.element(this).scope().editProduct(value);
 	$("#edit-product-modal").modal('toggle');
 	$('#update-price-input').val("");
+<<<<<<< HEAD
 	//TODO Eliminating this function doing hard refresh
 	angular.element(this).scope().reload();
 });
+
+=======
+});
+>>>>>>> ae30177bdbfce36dcb5ec5ce62e8e7cdea4dbcd5
