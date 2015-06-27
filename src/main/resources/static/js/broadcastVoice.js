@@ -26,7 +26,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		$scope.broadcast = data;
 		//TODO remove this
 		console.log('save broadcast has been called');
-		$http.post('/web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
+		$http.post('/ruralict/web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
 		.success(function(data,status,header,config){
 			console.log('broadcast data posted. Users called.');
 		})

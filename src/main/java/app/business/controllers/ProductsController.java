@@ -23,6 +23,7 @@ import app.entities.Product;
 import app.entities.ProductType;
 
 @Controller
+@RequestMapping("/web/{org}/")
 public class ProductsController {
 
 	@Autowired
@@ -32,7 +33,7 @@ public class ProductsController {
 	
 	@Transactional
 	@PreAuthorize("hasRole('ADMIN'+#org)")
-	@RequestMapping(value="/web/{org}/productsPage",method = RequestMethod.GET)
+	@RequestMapping(value="/productsPage",method = RequestMethod.GET)
 	public String productsPageInitial(@PathVariable String org, Model model) {
 		
 		System.out.println("This function get has been called");
