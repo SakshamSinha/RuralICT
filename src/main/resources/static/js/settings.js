@@ -1,64 +1,6 @@
 /**
  *  Javascript file for the Settings Controller
  */
-<<<<<<< HEAD
-website.factory("Organization", function($resource) {
-	return $resource("/api/organizations/:id", {
-		id: '@id'
-	}, {
-		query: {
-			method: "GET",
-			isArray: false
-		},
-		update: {
-			method: "PATCH",
-			params: {
-				id: '@id'
-			}
-		}
-	});
-});
-
-website.factory("OutboundCall", function($resource) {
-	return $resource("/api/broadcastDefaultSettings/:id", {
-		id: '@id'
-	}, {
-		query: {
-			method: "GET",
-			isArray: false
-		},
-		update: {
-			method: "PATCH",
-			params: {
-				id: '@id'
-			}
-		}
-	});
-});
-
-website.directive('fileModel', ['$parse',function ($parse) {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attrs) {
-			var model = $parse(attrs.fileModel);
-			var modelSetter = model.assign;
-			
-			element.bind('change', function(){
-				scope.$apply(function(){
-					modelSetter(scope, element[0].files[0]);
-				});
-			});
-		}
-	};
-}]);
-
-function changeAudioSource(url){
-	audioControl = $('#welcome-message-audio');
-	audioDownload = $('#download-message-audio');
-	audioControl.attr("src", url);
-    audioControl.load();
-    audioDownload.attr("href", url);
-}
 
 website.controller("SettingsCtrl", function($scope,$http,$routeParams, Organization, OutboundCall) {
 

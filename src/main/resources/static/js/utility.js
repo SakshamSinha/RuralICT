@@ -7,6 +7,32 @@ function loadAudio(audioTagName, voiceURL){
 	audio.load();
 }
 
+/* Directive for making uploading files easier */
+website.directive('fileModel', ['$parse',function ($parse) {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			var model = $parse(attrs.fileModel);
+			var modelSetter = model.assign;
+			
+			element.bind('change', function(){
+				scope.$apply(function(){
+					modelSetter(scope, element[0].files[0]);
+				});
+			});
+		}
+	};
+}]);
+
+/* Function to dynamically change audio of Audio control and Audio Download link */
+function changeAudioSource(url){
+	audioControl = $('#welcome-message-audio');
+	audioDownload = $('#download-message-audio');
+	audioControl.attr("src", url);
+    audioControl.load();
+    audioDownload.attr("href", url);
+}
+
 function getId(object){
 	var urlChunks = object["_links"]["self"]["href"].split("/");
 	return urlChunks[urlChunks.length-1];
