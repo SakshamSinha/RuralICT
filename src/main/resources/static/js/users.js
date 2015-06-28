@@ -21,6 +21,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 	    $scope.manageUserItems = data;
 	  }).
 	  error(function(data, status, headers, config) {
+		  alert("There was some error in response from the remote server.");
 	  });
 	
 	// Click event handler for the 'Add' Modal Button
