@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import app.business.services.OrganizationService;
 import app.business.services.UserViewService;
 import app.business.services.UserViewService.UserView;
+import app.entities.Group;
 import app.entities.Organization;
 
 @Controller
@@ -30,9 +31,12 @@ public class GroupMembersController {
 		
 		List<UserView> userViewList = userViewService.getUserViewListByGroup(groupId);
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		Group parentGroup = organizationService.getParentGroup(organization);
 		
 		model.addAttribute("organization", organization);
+		model.addAttribute("parentGroup", parentGroup);
 		model.addAttribute("userViews", userViewList);
+		model.addAttribute("groupId", groupId);
 		return "groupWiseMember";
 	}
 
