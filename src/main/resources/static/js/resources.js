@@ -241,22 +241,6 @@ website.factory("UpdateBroadcastDefaultSettings", function($resource) {
 	});
 });
 
-/* Resources for Outbound Call */
-website.factory("UpadateBroadcastDefaultSettings", function($resource) {
-    return $resource(API_ADDR + "api/broadcastDefaultSettings/:id", {id: '@id'}, {
-    	query: {
-    		method: "GET",
-    		isArray: false
-    	},
-    	update: {
-    		method: "PATCH",
-    		params: {
-    			id: '@id'
-    		}
-    	}
-	});
-});
-
 /* Resources for text broadcast */
 website.factory("TextBroadcast", function($resource) {
 	return $resource(API_ADDR + "api/textBroadcasts/:id");
