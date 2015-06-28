@@ -28,9 +28,7 @@ public class UsersController {
 
 		List<UserView> rows = userViewService.getUserViewListByOrganization(org);
 		
-		model.addAttribute("organizationMemberships",rows);
+		model.addAttribute("userViews",rows);
 		return "users";
 	}
-
-
 }
