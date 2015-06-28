@@ -63,6 +63,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			  
 		  }).
 		  error(function(data, status, headers, config) {
+			  alert("There was some error in response from the remote server.");
 		  });
 	    }
 	};
@@ -130,6 +131,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				}
 		  }).
 		  error(function(data, status, headers, config) {
+			  alert("There was some error in response from the remote server.");
 		  });			
 	};
 	
@@ -160,6 +162,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				}
 		  }).
 		  error(function(data, status, headers, config) {
+			  alert("There was some error in response from the remote server.");
 		  });			
 	};
 	
@@ -183,6 +186,7 @@ console.log("User ID of the currently selected row is : " + this.manageUserItem.
 			
 		  }).
 		  error(function(data, status, headers, config) {
+			  alert("There was some error in response from the remote server.");
 		  });			
 	};
 	
@@ -215,6 +219,7 @@ console.log("User ID of the currently selected row is : " + this.manageUserItem.
 				}
 		  }).
 		  error(function(data, status, headers, config) {
+			  alert("There was some error in response from the remote server.");
 		  });			
 	};
 	
@@ -245,6 +250,7 @@ console.log("User ID of the currently selected row is : " + this.manageUserItem.
 				}
 		  }).
 		  error(function(data, status, headers, config) {
+			  alert("There was some error in response from the remote server.");
 		  });			
 	};
 	
@@ -304,6 +310,7 @@ console.log("User ID of the currently selected row is : " + this.manageUserItem.
 				  
 			  }).
 			  error(function(data, status, headers, config) {
+				  alert("There was some error in response from the remote server.");
 			  });
 		    }
 			
@@ -330,7 +337,7 @@ console.log("User ID of the currently selected row is : " + this.manageUserItem.
 			  
 		  }).
 		  error(function(data, status, headers, config) {
-			  alert("There was some error in connecting to the remote server.");
+			  alert("There was some error in response from the remote server.");
 		  });
 	};
 
