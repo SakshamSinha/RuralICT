@@ -110,13 +110,15 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	var userAddress = $("#newGroupUserAddress").val();
 	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 	
-	if(userPrimaryPhoneNumber == ""){
-		alert("Enter Phone Number");
+	if(validatephonenumber(userPrimaryPhoneNumber)){
+		alert("Enter a valid phone numbers")
 		return;
 	}
 	if(userName == ""){
 		alert("Enter User Name");
 	}
+	
+	var phoneNumber = "91" + userPrimaryPhoneNumber;
 	
 	/* Create and add new row element for user */
 	
@@ -195,6 +197,13 @@ $("#page-content").on("click", "#add-group-user-phone-number", function (e) {
 	var id = $(this).val();
 	var phoneNumber = $("#groupUserNewPhoneNumber").val();
 	console.log(id);
+	
+	if(!validatephonenumber(phoneNumber)){
+		alert("Enter a valid phone numbers")
+		return;
+	}
+	
+	var phoneNumber = "91" + phoneNumber;
 	
 	data = {};
 	data.phoneNumber = phoneNumber;
