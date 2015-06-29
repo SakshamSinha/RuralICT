@@ -1,307 +1,299 @@
 <div th:attr="orgid=${organization.organizationId}" id="settings-page" ng-controller="SettingsCtrl">
 
 <div class="row-fluid">
-	<div class="page-header">
-		<h1>Settings <small>Edit</small></h1>
-	</div>
+    <div class="page-header">
+        <h1>Settings <small>Edit</small></h1>
+    </div>
 </div>
 <ul class="nav nav-tabs top-tab-bar" id="interest_tabs">
-	<!--top level tabs-->
-	<li><a href="#profile-settings" data-toggle="tab">Profile</a>
-	</li>
-	<li><a href="#system-settings" data-toggle="tab">System</a>
-	</li>
-	<li><a href="#bill-layout-settings" data-toggle="tab">Bill Layout</a>
-	</li>
-	<li><a href="#ivrs-menu-settings" data-toggle="tab">IVRS Menu</a>
-	</li>
+    <!--top level tabs-->
+    <li><a href="#profile-settings" data-toggle="tab">Profile</a>
+    </li>
+    <li><a href="#system-settings" data-toggle="tab">System</a>
+    </li>
+    <li><a href="#bill-layout-settings" data-toggle="tab">Bill Layout</a>
+    </li>
+    <li><a href="#ivrs-menu-settings" data-toggle="tab">IVRS Menu</a>
+    </li>
 </ul>
 <div class="tab-content">
-	<div id="profile-settings" class="tab-pane">
-		<br>
-		<br>
-		<form class="form-horizontal">
-			<fieldset>
-				<div class="control-group">
-					<label class="control-label" for="name">Name</label>
-					<div class="controls">
-						<input type="text" class="input-xlarge" id="name" />
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="email">E-mail</label>
-					<div class="controls">
-						<input type="text" class="input-xlarge" id="email" />
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="new-password">New Password</label>
-					<div class="controls">
-						<input type="password" class="input-xlarge" id="new-password" />
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="re-new-password">Re-type new password</label>
-					<div class="controls">
-						<input type="password" class="input-xlarge" id="re-new-password" />
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="pnohe">Phone</label>
-					<div class="controls">
-						<input type="text" class="input-xlarge" id="phone" />
-					</div>
-				</div>
-				<div class="control-group">
-					<label class="control-label" for="city">City</label>
-					<div class="controls">
-						<input type="text" class="input-xlarge" id="city" />
-					</div>
-				</div>
-				<div class="form-actions">
-					<input type="submit" class="btn btn-success" value="Save Details" /> <a class="btn" href="#/settings">Cancel</a>
-				</div>
-			</fieldset>
-		</form>
-	</div>
-	<div id="system-settings" class="tab-pane">
-		<!--system settings tab menu-->
-		<div id="broadcast" class="tab-pane">
-			<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
-				<li><a href="#welcome-message-settings" data-toggle="tab">Welcome Message</a>
-				</li>
-				<li><a href="#outbound-call-settings" data-toggle="tab">Outbound Call</a>
-				</li>
-				<li><a href="#inbound-call-settings" data-toggle="tab">Inbound Call</a>
-				</li>
-				<li><a href="#voice-call-settings" data-toggle="tab">Voice Call</a>
-				</li>
-				<li><a href="#dashboard-settings" data-toggle="tab">Dashboard</a>
-				</li>
-			</ul>
-			<!--system settings tab content-->
-			<div class="tab-content">
-				<div id="welcome-message-settings" class="tab-pane">
-					<div class="table-settings-system">
-						<table style="border-spacing: 40px 10px;">
-							<tr>
-								<td align='right'><b> Select Language :</b>
-								</td>
-								
-								<td>
-								<select id='select-welcome-message-language' ng-model= WelcomeMessageLanguageSelect ng-options="option.value as option.language for option in languageOptions" class="table-input-1" name='select-welcome-message'>
-								</select>
-								</td>
-							</tr>
+    <div id="profile-settings" class="tab-pane">
+        <br>
+        <br>
+        <form class="form-horizontal">
+            <fieldset>
+                <div class="control-group">
+                    <label class="control-label" for="name">Name</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="name" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="email">E-mail</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="email" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="new-password">New Password</label>
+                    <div class="controls">
+                        <input type="password" class="input-xlarge" id="new-password" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="re-new-password">Re-type new password</label>
+                    <div class="controls">
+                        <input type="password" class="input-xlarge" id="re-new-password" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="pnohe">Phone</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="phone" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="city">City</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="city" />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-success" value="Save Details" /> <a class="btn" href="#/settings">Cancel</a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div id="system-settings" class="tab-pane">
+        <!--system settings tab menu-->
+        <div id="broadcast" class="tab-pane">
+            <ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
+                <li><a href="#welcome-message-settings" data-toggle="tab">Welcome Message</a>
+                </li>
+                <li><a href="#outbound-call-settings" data-toggle="tab">Outbound Call</a>
+                </li>
+                <li><a href="#inbound-call-settings" data-toggle="tab">Inbound Call</a>
+                </li>
+                <li><a href="#voice-call-settings" data-toggle="tab">Voice Call</a>
+                </li>
+                <li><a href="#dashboard-settings" data-toggle="tab">Dashboard</a>
+                </li>
+            </ul>
+            <!--system settings tab content-->
+            <div class="tab-content">
+                <div id="welcome-message-settings" class="tab-pane">
+                    <div class="table-settings-system">
+                        <table style="border-spacing: 40px 10px;">
+                            <tr>
+                                <td><b>Welcome Message&nbsp;(स्वागत संदेश) :</b>
+                                </td>
+                            </tr>
 
-							<tr>
-								<td align='right'> Current Welcome Message :</td>
-								<td>
-									<audio id='welcome-message-audio' controls>
-										<source  src="http://ruralict.cse.iitb.ac.in/Downloads/voice/welcomeMessage_en.wav" type="audio/wav"></source>
-									</audio>
-								</td>
-							</tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <input type="file" name="welcome_message" id="welcome_message">
+                                </td>
+                            </tr>
 
-							<tr>
-								<td align='right'> Download Current Message File :</td>
-								<td><a id='download-message-audio' href="http://ruralict.cse.iitb.ac.in/Downloads/voice/welcomeMessage_en.wav" download>Download&nbsp;(डाउनलोड)</a>
-								</td>
-								
-							</tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <audio controls>
+                                        <source src="http://ruralivrs.cse.iitb.ac.in/Downloads/AFC/audio-upload/Welcome_message2015-02-20-01:34:16.wav" type="audio/wav"></source>
+                                    </audio>
+                                </td>
+                            </tr>
 
-							<tr>
-								<td align='right'> Upload New Welcome Message File :</td>
-								<td>
-									<input type="file" name="myFile" file-model="myFile" id="welcome_message">
-								</td>
-							</tr>
+                            <tr>
+                                <td></td>
+                                <td><a href="http://ruralivrs.cse.iitb.ac.in/Downloads/AFC/audio-upload/Welcome_message2015-02-20-01:34:16.wav" download>Download&nbsp;(डाउनलोड)</a>
+                                </td>
+                            </tr>
 
-						</table>
-						<div class="form-actions">
-							<input type="submit" class="btn btn-success" ng-click="uploadFile()" value="Save Details" />
-						</div>
-					</div>
-				</div>
-				<div id="outbound-call-settings" class="tab-pane">
-					<div class="table-settings-system">
-						<table>
+                        </table>
+                        <div class="form-actions">
+                            <input type="submit" class="btn btn-success" value="Save Details" />
+                        </div>
+                    </div>
+                </div>
+                <div id="outbound-call-settings" class="tab-pane">
+                    <div class="table-settings-system">
+                        <table>
 
-							<tr>
-								<b>OUTGOING CALL SETTINGS :</b>
-							</tr>
-							<tr>
-								<td><b>Call Flow : </b>
-									<br>
-									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.order name="response1" />SemiStructured&nbsp;(Order/आदेश)
-									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.feedback name="response1" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
-									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.response name="response1" />Structured&nbsp;(Response/प्रतिक्रिया)
-									<br>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<div class="form-actions">
-						<input type="submit" ng-click="updateOutgoingCallOpt()" class="btn btn-success" value="Save Details" />
-					</div>
-				</div>
-				<div id="inbound-call-settings" class="tab-pane">
-					<div class="table-settings-system">
-						<table>
-							<tr>
-								<b>INCOMING CALL SETTINGS :</b>
-							</tr>
-							<tr>
-								<td> <b>Call Flow : </b>
-									<br>
-									<br>
-									<input type="checkbox" ng-model=incomingCheckBoxOptions.order name="responsein" />SemiStructured&nbsp;(Order/आदेश)
-									<br>
-									<input type="checkbox" ng-model=incomingCheckBoxOptions.feedback name="responsein" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
-									<br>
-									<input type="checkbox" ng-model=incomingCheckBoxOptions.response name="responsein" />Structured&nbsp;(Response/प्रतिक्रिया)
-									<br>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<div class="form-actions">
-						<input type="submit" ng-click="updateIncomingCallOpt()" class="btn btn-success" value="Save Details" /> 
-					</div>
-				</div>
-				<div id="voice-call-settings" class="tab-pane">
-					<div class="table-settings-system">
-						<b>VOICE CALL OPTIONS :</b>
-						<table>
-							<tr>
-								<td>Order Cancellation&nbsp;(आदेश रद्द)</td>
-								<td>
-									<select id='ordercancel' ng-model=orderCancelSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1" name='ordercancel'>
-									</select>
-								</td>
-							</tr>
+                            <tr>
+                                <b>OUTGOING CALL SETTINGS :</b>
+                            </tr>
+                            <tr>
+                                <td>Response&nbsp;(प्रतिक्रिया):
+                                    <br>
+                                    <input type="checkbox" ng-model=outgoingCheckBoxOptions.order name="response1" />SemiStructured&nbsp;(Order/आदेश)
+                                    <br>
+                                    <input type="checkbox" ng-model=outgoingCheckBoxOptions.feedback name="response1" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
+                                    <br>
+                                    <input type="checkbox" ng-model=outgoingCheckBoxOptions.response name="response1" />Structured&nbsp;(Response/प्रतिक्रिया)
+                                    <br>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form-actions">
+                        <input type="submit" ng-click="updateOutgoingCallOpt()" class="btn btn-success" value="Save Details" />
+                    </div>
+                </div>
+                <div id="inbound-call-settings" class="tab-pane">
+                    <div class="table-settings-system">
+                        <table>
+                            <tr>
+                                <b>INCOMING CALL SETTINGS :</b>
+                            </tr>
+                            <tr>
+                                <td>Response Incoming&nbsp;(प्रतिक्रिया):
+                                    <br>
+                                    <input type="checkbox" ng-model=incomingCheckBoxOptions.order name="responsein" />SemiStructured&nbsp;(Order/आदेश)
+                                    <br>
+                                    <input type="checkbox" ng-model=incomingCheckBoxOptions.feedback name="responsein" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
+                                    <br>
+                                    <input type="checkbox" ng-model=incomingCheckBoxOptions.response name="responsein" />Structured&nbsp;(Response/प्रतिक्रिया)
+                                    <br>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form-actions">
+                        <input type="submit" ng-click="updateIncomingCallOpt()" class="btn btn-success" value="Save Details" /> 
+                    </div>
+                </div>
+                <div id="voice-call-settings" class="tab-pane">
+                    <div class="table-settings-system">
+                        <b>VOICE CALL OPTIONS :</b>
+                        <table>
+                            <tr>
+                                <td>Order Cancellation&nbsp;(आदेश रद्द)</td>
+                                <td>
+                                    <select id='ordercancel' ng-model=orderCancelSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1" name='ordercancel'>
+                                    </select>
+                                </td>
+                            </tr>
 
 
-							<tr>
-								<td>Broadcast Enabler&nbsp;(प्रसारण)</td>
+                            <tr>
+                                <td>Broadcast Enabler&nbsp;(प्रसारण)</td>
 
-								<td>
-									<select id='broadcast' ng-model= broadcastEnableSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1" name='broadcast'>
-									</select>
-								</td>
-							</tr>
-
-
-							<div id="Latest_broadcast_div">
-
-								<tr id="Latest_broadcastdiv">
-									<td>Latest broadcast enabler:</td>
-									<td>
-										<select name="Latest_broadcast"  ng-model=latestBroadcastSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1 table-width " id="Latest_broadcast">
-										</select>
-									</td>
-								</tr>
-							</div>
-							<div id="Previous_broadcast_div">
-
-								<tr id="Previous_broadcastdiv">
-									<td>Previous broadcast enabler:</td>
-									<td>
-										<select name="Previous_broadcast" ng-model=previousBroadcastSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1 table-width table-display" id="Previous_broadcast">
-										</select>
-									</td>
-								</tr>
-							</div>
+                                <td>
+                                    <select id='broadcast' ng-model= broadcastEnableSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1" name='broadcast'>
+                                    </select>
+                                </td>
+                            </tr>
 
 
-							<div id="Repeat_broadcast_div">
+                            <div id="Latest_broadcast_div">
 
-								<tr id="Repeat_broadcastdiv">
-									<td>Repeat broadcast enabler:</td>
-									<td>
-										<select name="repeat_broadcast"  ng-model=repeatBroadcastSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1 table-width" id="repeat_broadcast">
-										</select>
-									</td>
+                                <tr id="Latest_broadcastdiv">
+                                    <td>Latest broadcast enabler:</td>
+                                    <td>
+                                        <select name="Latest_broadcast"  ng-model=latestBroadcastSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1 table-width " id="Latest_broadcast">
+                                        </select>
+                                    </td>
+                                </tr>
+                            </div>
+                            <div id="Previous_broadcast_div">
 
-								</tr>
-							</div>
-
-							<br/>
-
-						</table>
-						<div class="form-actions">
-							<input type="submit" class="btn btn-success" ng-click="updateVoiceCallOpt()"  value="Save Details" />
-						</div>
-					</div>
-				</div>
-				<div id="dashboard-settings" class="tab-pane">
-					<div class="table-settings-system">
-						<b>VOICE RESPONSE MESSAGE(DASHBOARD) OPTIONS :</b>
-						<br>
-						<table>
-
-							<tr>
-								<td>Feedback Enabler &nbsp; (प्रतिपुष्टि)</td>
-								<td>
-									<select id='feedback' class="table-input-1 table-width" ng-model=feedbackSelect ng-options="option.value as option.name for option in selectOptions" name='feedback'>
-									</select>
-								</td>
-							</tr>
+                                <tr id="Previous_broadcastdiv">
+                                    <td>Previous broadcast enabler:</td>
+                                    <td>
+                                        <select name="Previous_broadcast" ng-model=previousBroadcastSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1 table-width table-display" id="Previous_broadcast">
+                                        </select>
+                                    </td>
+                                </tr>
+                            </div>
 
 
-							<tr>
-								<td>Response Enabler &nbsp; (प्रतिक्रिया)</td>
-								<td>
-									<select id='response' class="table-input-1 table-width" ng-model=responseSelect ng-options="option.value as option.name for option in selectOptions" name='response'>
-									</select>
-								</td>
-							</tr>
+                            <div id="Repeat_broadcast_div">
+
+                                <tr id="Repeat_broadcastdiv">
+                                    <td>Repeat broadcast enabler:</td>
+                                    <td>
+                                        <select name="repeat_broadcast"  ng-model=repeatBroadcastSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1 table-width" id="repeat_broadcast">
+                                        </select>
+                                    </td>
+
+                                </tr>
+                            </div>
+
+                            <br/>
+
+                        </table>
+                        <div class="form-actions">
+                            <input type="submit" class="btn btn-success" ng-click="updateVoiceCallOpt()"  value="Save Details" />
+                        </div>
+                    </div>
+                </div>
+                <div id="dashboard-settings" class="tab-pane">
+                    <div class="table-settings-system">
+                        <b>VOICE RESPONSE MESSAGE(DASHBOARD) OPTIONS :</b>
+                        <br>
+                        <table>
+
+                            <tr>
+                                <td>Feedback Enabler &nbsp; (प्रतिपुष्टि)</td>
+                                <td>
+                                    <select id='feedback' class="table-input-1 table-width" ng-model=feedbackSelect ng-options="option.value as option.name for option in selectOptions" name='feedback'>
+                                    </select>
+                                </td>
+                            </tr>
 
 
-							<tr>
-								<td>Bill Enabler &nbsp; (बिल)</td>
-								<td>
-									<!-- <select id='bill' class="table-input-1 table-width" name='bill' onchange="disableBilldown();"> -->
-									<select id='bill' class="table-input-1 table-width" ng-model=billSelect ng-options="option.value as option.name for option in selectOptions" name='bill'>
-									</select>
-								</td>
-							</tr>
+                            <tr>
+                                <td>Response Enabler &nbsp; (प्रतिक्रिया)</td>
+                                <td>
+                                    <select id='response' class="table-input-1 table-width" ng-model=responseSelect ng-options="option.value as option.name for option in selectOptions" name='response'>
+                                    </select>
+                                </td>
+                            </tr>
 
 
-							<tr>
-								<td>Save Enabler &nbsp; (संग्रहित)</td>
-								<td>
-									<select id='save-menu' class="table-input-1 table-width" ng-model=saveSelect ng-options="option.value as option.name for option in selectOptions" name='save'>
-									</select>
-								</td>
-							</tr>
+                            <tr>
+                                <td>Bill Enabler &nbsp; (बिल)</td>
+                                <td>
+                                   <!-- <select id='bill' class="table-input-1 table-width" name='bill' onchange="disableBilldown();"> -->
+                                    <select id='bill' class="table-input-1 table-width" ng-model=billSelect ng-options="option.value as option.name for option in selectOptions" name='bill'>
+                                    </select>
+                                </td>
+                            </tr>
 
-							<tr>
-								<td>Reject Enabler &nbsp; (अस्वीकृत)</td>
-								<td>
-									<select id='reject-menu' class="table-input-1 table-width" ng-model=rejectSelect ng-options="option.value as option.name for option in selectOptions" name='reject'>
-									</select>
-								</td>
-							</tr>
-									
-							<tr>
-							<td>Text Message Response &nbsp; (प्रतिक्रिया)</td>
-							<td>
-								<select id='text-menu' class="table-input-1 table-width" ng-model=textSelect ng-options="option.value as option.name for option in selectOptions" name='text_msg'>
-								</select>
-							</td>
-							</tr>
-						</table>
-						<div class="form-actions">
-							<input type="submit" class="btn btn-success" ng-click="updateDashboardOpt()" id="save-btn-voice-dashboard" value="Save Details"/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
+                            <tr>
+                                <td>Save Enabler &nbsp; (संग्रहित)</td>
+                                <td>
+                                    <select id='save-menu' class="table-input-1 table-width" ng-model=saveSelect ng-options="option.value as option.name for option in selectOptions" name='save'>
+                                    </select>
+                                </td>
+                           </tr>
+
+                           <tr>
+                               <td>Reject Enabler &nbsp; (अस्वीकृत)</td>
+                               <td>
+                                   <select id='reject-menu' class="table-input-1 table-width" ng-model=rejectSelect ng-options="option.value as option.name for option in selectOptions" name='reject'>
+                                   </select>
+                               </td>
+                           </tr>
+                                       
+                           <tr>
+                           <td>Text Message Response &nbsp; (प्रतिक्रिया)</td>
+                           <td>
+                               <select id='text-menu' class="table-input-1 table-width" ng-model=textSelect ng-options="option.value as option.name for option in selectOptions" name='text_msg'>
+                               </select>
+                           </td>
+                           </tr>
+                        </table>
+                        <div class="form-actions">
+                            <input type="submit" class="btn btn-success" ng-click="updateDashboardOpt()" id="save-btn-voice-dashboard" value="Save Details"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
