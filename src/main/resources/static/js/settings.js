@@ -1,7 +1,26 @@
 /**
  *  Javascript file for the Settings Controller
  */
-website.controller("SettingsCtrl", function($scope,$http,$routeParams, UpdateOrganization, UpdateBroadcastDefaultSettings) {
+
+/* Directive for making uploading files easier */
+website.directive('fileModel', ['$parse',function ($parse) {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+			var model = $parse(attrs.fileModel);
+			var modelSetter = model.assign;
+			
+			element.bind('change', function(){
+				scope.$apply(function(){
+					modelSetter(scope, element[0].files[0]);
+				});
+			});
+		}
+	};
+}]);
+
+/* Actual Settings Controller */
+website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateOrganization, UpdateBroadcastDefaultSettings) {
 
 	// get the current organization id
 	var orgid = document.getElementById("settings-page").getAttribute("orgid");
@@ -98,9 +117,8 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, UpdateOrg
 			return data;
 		}
 	}).success(function(data, status) {
-		console.log("Initial voice url data from the backend is :" + data);
-		console.log("English message url: " + data[0]);
-	    // set the url as recieved from the backend
+		
+		// set the url as recieved from the backend
 		$scope.englishMessageurl = data[0];
 		$scope.marathiMessageurl = data[1];
 		$scope.hindiMessageurl = data[2];
@@ -112,6 +130,7 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, UpdateOrg
 		// set initial values for the audio control and dowload link 
 		changeAudioSource($scope.languageUrl[0]);
 		}).error(function(data, status) {
+			alert("There was some error in response from the server.");
 	});
 	
 
@@ -168,7 +187,14 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, UpdateOrg
 			$scope.organization.inboundCallAskOrder = $scope.incomingCheckBoxOptions.order;
 			$scope.organization.inboundCallAskFeedback = $scope.incomingCheckBoxOptions.feedback;
 			$scope.organization.inboundCallAskResponse = $scope.incomingCheckBoxOptions.response;
-
+			
+			// check if at least one option is selected
+			if(!$scope.organization.inboundCallAskOrder && !$scope.organization.inboundCallAskFeedback && !$scope.organization.inboundCallAskResponse)
+			{
+				alert("You must select at least one option !");
+				return;
+			}
+			
 			//finally update the database
 			$scope.organization.$update({
 				id: orgid
@@ -197,13 +223,12 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, UpdateOrg
 	
 	$scope.uploadFile = function(){
 		
-		console.log("currently Selected value = " + $scope.WelcomeMessageLanguageSelect);
+		
 		var localeIndex = $scope.WelcomeMessageLanguageSelect;
-		console.log("currently selected locale = " + $scope.languageOptions[localeIndex].locale);
 		
 		// We use formData to pass various attributes to the spring controller method
 		var formData=new FormData();
-		//console.log("Myfile: " + $scope.myFile.files[0]);
+
 		formData.append("file", $scope.myFile); // can be accessed in Spring Controller using request.getPart()
 		formData.append("locale", $scope.languageOptions[localeIndex].locale);
 		formData.append("orgid", orgid);
@@ -219,18 +244,26 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, UpdateOrg
 		}).success(function(data, status) {
 			console.log("Returned data from the backend is :" + data + " its type: " + typeof data);
 			if (data === "-1")
-				{
-				  console.log("Entered if-else statement of -1");
-				  alert("The File you have uploaded is not wav audio file");
-				}
+			{
+				alert("Please select a file to upload !");
+			}
+			else if(data == "-2")
+			{
+				alert("Please Upload a File less than 10MB");
+			}
+			else if(data == "-3")
+			{
+				alert("The File you have uploaded is not a audio file");
+			}
 			else
-				{
-				console.log("successfully changed the attribute");
-				$scope.languageUrl[localeIndex] = data;
-				changeAudioSource($scope.languageUrl[localeIndex]);
-				}
+			{
+			$scope.languageUrl[localeIndex] = data;
+			changeAudioSource($scope.languageUrl[localeIndex]);
+			alert("The Audio File was Successfully Uploaded.");
+			}
 		})
 		.error(function(data, status) {
+			alert("There was some error in response from the server.");
 		});
 	}
 });
@@ -238,24 +271,21 @@ website.controller("SettingsCtrl", function($scope,$http,$routeParams, UpdateOrg
 // Jquery Specific Code
 $("#page-content").on("change","#select-welcome-message-language",function(e){
 	
-	  // Get the scope of the angular controller so that we can access required variables from it
-	  myScope = angular.element('#settings-page').scope();
-	  console.log("myScope" + myScope.languageUrl[0]);
+	// Get the scope of the angular controller so that we can access required variables from it
+	myScope = angular.element('#settings-page').scope();
+	console.log("myScope" + myScope.languageUrl[0]);
 	  
-	  // Depending on value of select element, update the audio player and download link
-	  	  if(this.value === '1')
-		  {
-	  		  console.log("marathi is selected");
-	  		  changeAudioSource(myScope.languageUrl[1]);
-		  }
-	  	  else if (this.value === '2')
-		  {
-	  		  console.log("Hindi is selected");
-	  		  changeAudioSource(myScope.languageUrl[2]);
-		  }
-	  	  else if(this.value === '0')
-	  	  {
-	  		  console.log("English is selected");
-	  		  changeAudioSource(myScope.languageUrl[0]);
-	  	 }
+	// Depending on value of select element, update the audio player and download link
+	if(this.value === '1')
+ 	{
+	  	changeAudioSource(myScope.languageUrl[1]);
+  	}
+  	else if (this.value === '2')
+  	{
+	  	changeAudioSource(myScope.languageUrl[2]);
+  	}
+  	else if(this.value === '0')
+  	{
+	  	changeAudioSource(myScope.languageUrl[0]);
+ 	}
 });

@@ -1,5 +1,5 @@
 var API_ADDR = $("#contextRoot").val();
-	
+
 /* Function to dyanamically load audio */
 function loadAudio(audioTagName, voiceURL){
 	var audio = document.getElementById(audioTagName);
@@ -7,30 +7,13 @@ function loadAudio(audioTagName, voiceURL){
 	audio.load();
 }
 
-/* Directive for making uploading files easier */
-website.directive('fileModel', ['$parse',function ($parse) {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attrs) {
-			var model = $parse(attrs.fileModel);
-			var modelSetter = model.assign;
-			
-			element.bind('change', function(){
-				scope.$apply(function(){
-					modelSetter(scope, element[0].files[0]);
-				});
-			});
-		}
-	};
-}]);
-
 /* Function to dynamically change audio of Audio control and Audio Download link */
 function changeAudioSource(url){
 	audioControl = $('#welcome-message-audio');
 	audioDownload = $('#download-message-audio');
 	audioControl.attr("src", url);
-    audioControl.load();
-    audioDownload.attr("href", url);
+	audioControl.load();
+	audioDownload.attr("href", url);
 }
 
 function getId(object){
