@@ -12,6 +12,12 @@ function getId(object){
 	return urlChunks[urlChunks.length-1];
 }
 
+function validatephonenumber(phoneNumber){
+
+	var phoneformat = /[0-9]{10}/g;
+	return (phoneformat.test(phoneNumber) && phoneNumber.length == 10); 
+}
+
 function validatedate(inputText){
 	var dateformat = /^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/;
 	

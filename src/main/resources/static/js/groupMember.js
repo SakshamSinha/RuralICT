@@ -1,4 +1,4 @@
-website.controller("UserCtrl", function($window, $resource, $scope, $route, AddUserView, GetUser, RemoveUserView, AddGroupMembership, RemoveGroupMembership, GetGroupMembershipByUserAndGroup, AddUserPhoneNumber) {
+website.controller("UserCtrl", function($window, $resource, $scope, $route, AddUserView, GetUser, RemoveUserView, AddGroupMembership, RemoveGroupMembership, GetGroupMembershipByUserAndGroup, GetGroupMembershipsByUser, AddUserPhoneNumber) {
 	$scope.addUserView = function(user, userPhoneNumber) {
 		
 		$scope.userView = new AddUserView();
@@ -29,10 +29,54 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 		$scope.groupMembership.user = data.user;
 		AddGroupMembership.save($scope.groupMembership,function(success){
 			
-			alert("Group for User has been updated.");
+			alert("Group for User has been updated.")
 		}, function(error){
 			if(error.status == "409")
 			alert("User already exists in this group.");
+		});
+	};
+	
+	$scope.getUserGroups = function(data){
+		$scope.groupList = [];
+		GetGroupMembershipsByUser.get(data, function(groupMemberships){
+			groupMemberships = groupMemberships["_embedded"]["groupMemberships"] 
+			
+			for(var count=0; count<groupMemberships.length;count++){
+				var Group = $resource(groupMemberships[count]["_links"]["group"]["href"], {}, {
+					update: {
+						method: 'GET'
+					}
+				});
+			 
+				/* This scope variable is kind of a flag to determine if all the requests are made */
+				$scope.countOfCalls = 0;
+			 
+				/* Send request for each product name */ 
+				Group.get({}, function(group){
+					$scope.groupList.push({id: getId(group), name: group.name});
+				});
+			}
+		}, function(error){console.log(error);});
+	};
+	
+	$scope.changeUserGroup = function(data){
+		$scope.groupMembership = new AddGroupMembership();
+		$scope.groupMembership.group = data.newGroup;
+		$scope.groupMembership.user = "user/" + data.user;
+		AddGroupMembership.save($scope.groupMembership,function(success){
+			$scope.groupMembership = GetGroupMembershipByUserAndGroup.get({user:data.user, group:data.group}, function(groupMembership){
+				console.log(groupMembership);
+				console.log($scope.groupMembership);
+				$scope.groupMembershipId = getId(groupMembership["_embedded"]["groupMemberships"][0]);
+				RemoveGroupMembership.update({id: $scope.groupMembershipId}, function(success){
+					alert("Group for User has been updated.");
+				});	
+			});
+			console.log($scope.groupMembership);
+		}, function(error){
+			if(error.status == "409")
+			alert("User already exists in this group.");
+			return error;
 		});
 	};
 	
@@ -50,7 +94,7 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 	};
 	
 	$scope.reload = function(){
-		//setTimeout(window.location.reload.bind(window.location),2000);
+		setTimeout(window.location.reload.bind(window.location),2000);
 	};
 });
 
@@ -66,13 +110,15 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	var userAddress = $("#newGroupUserAddress").val();
 	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 	
-	if(userPrimaryPhoneNumber == ""){
-		alert("Enter Phone Number");
+	if(validatephonenumber(userPrimaryPhoneNumber)){
+		alert("Enter a valid phone numbers")
 		return;
 	}
 	if(userName == ""){
 		alert("Enter User Name");
 	}
+	
+	var phoneNumber = "91" + userPrimaryPhoneNumber;
 	
 	/* Create and add new row element for user */
 	
@@ -152,6 +198,13 @@ $("#page-content").on("click", "#add-group-user-phone-number", function (e) {
 	var phoneNumber = $("#groupUserNewPhoneNumber").val();
 	console.log(id);
 	
+	if(!validatephonenumber(phoneNumber)){
+		alert("Enter a valid phone numbers")
+		return;
+	}
+	
+	var phoneNumber = "91" + phoneNumber;
+	
 	data = {};
 	data.phoneNumber = phoneNumber;
 	data.user = "user/" + id;
@@ -164,3 +217,22 @@ $("#page-content").on("click", "#add-group-user-phone-number", function (e) {
 	angular.element($("#add-group-user-phone-number")).scope().reload();
 });
 
+$("#page-content").on("click", ".show-user-groups", function (e) {
+	var id = $(this).attr("data-value");
+	angular.element($("#add-group-user-phone-number")).scope().getUserGroups({user:id});
+});
+
+$("#page-content").on("click", "#change-user-group", function (e) {
+	var user = $(this).val();
+	var group = $("#groupId").val();
+	var newGroup = "group/" + $("#changeUserGroup").val();
+	angular.element($("#add-group-user-phone-number")).scope().changeUserGroup({user:user, group:group, newGroup: newGroup});
+	//angular.element($("#add-group-user-phone-number")).scope().reload();
+});
+
+$("#page-content").on("click", ".change-user-group", function (e) {
+	var id = $(this).attr("data-value");
+	console.log(id);
+	
+	$("#change-user-group").val(id);
+});

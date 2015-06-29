@@ -145,6 +145,14 @@ website.factory("GetGroupMembershipByUserAndGroup", function($resource) {
 	});
 });
 
+website.factory("GetGroupMembershipsByUser", function($resource) {
+	return $resource(API_ADDR + "api/groupMemberships/search/findByUser", {user:"@user"}, {
+		update: {
+			method: 'GET'
+		}
+	});
+});
+
 /* Resources for Products */
 website.factory("ProductCreate",function($resource){
 	return $resource(API_ADDR + "api/products",{
@@ -202,7 +210,7 @@ website.factory("ShowOrderSummaryGroups", function($resource) {
 });
 	
 website.factory("ShowOrderSummaryProducts", function($resource) {
-	return $resource(API_ADDR + "/api/orderItems/search/orderSummaryProducts", {org:"@org", prod:"@prod", fromTime:"@fromTime", toTime:"@toTime"}, {
+	return $resource(API_ADDR + "api/orderItems/search/orderSummaryProducts", {org:"@org", prod:"@prod", fromTime:"@fromTime", toTime:"@toTime"}, {
 		update: {
 			method: 'GET'
 		}
@@ -211,7 +219,7 @@ website.factory("ShowOrderSummaryProducts", function($resource) {
 
 /* Resources for Organization */
 website.factory("UpdateOrganization", function($resource) {
-	return $resource(API_ADDR + "/api/organizations/:id", {id: '@id'}, {
+	return $resource(API_ADDR + "api/organizations/:id", {id: '@id'}, {
 		query: {
 			method: "GET",
 			isArray: false
