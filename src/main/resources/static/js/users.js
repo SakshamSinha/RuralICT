@@ -4,9 +4,15 @@
 
 
 website.controller("UsersCtrl", function($scope, $http, $routeParams) {
-
+	
+	// Get Organization Abbreviation from Thymeleaf
+	var abbr = document.getElementById("user-controller-page").getAttribute("organizationabbr");
+	
+	// By Default display all members
+	$scope.selectedRole = "";
+	
 	// Initialize the table
-	$http.get('/api/iitb/manageUsers/getUserList').
+	$http.get( API_ADDR + 'api/' + abbr + '/manageUsers/getUserList').
 		success(function(data, status, headers, config) {
 
 			// Store the data into Angular scope model variable
@@ -38,7 +44,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			newUserDetails.role = "User"                        // New User is by default a Member
 			newUserDetails.address = $scope.inputUserAddress;
 
-			$http.post('/api/iitb/manageUsers/addNewUser', newUserDetails).
+			$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addNewUser', newUserDetails).
 				success(function(data, status, headers, config) {
 
 					// Push the new object in the ng-repeat variable for for table
@@ -97,7 +103,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		userDetails.userid = this.manageUserItem.manageUserID;
 		userDetails.addRole = "Admin";
 
-		$http.post('/api/iitb/manageUsers/addUserRole', userDetails).
+		$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addUserRole', userDetails).
 			success(function(data, status, headers, config) {
 
 				var previousRole = manageUserItem.role;
@@ -122,7 +128,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		userDetails.userid = this.manageUserItem.manageUserID;
 		userDetails.addRole = "Publisher";
 
-		$http.post('/api/iitb/manageUsers/addUserRole', userDetails).
+		$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addUserRole', userDetails).
 			success(function(data, status, headers, config) {
 
 				var previousRole = manageUserItem.role;
@@ -147,7 +153,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		userDetails.userid = this.manageUserItem.manageUserID;
 		userDetails.addRole = "User";
 
-		$http.post('/api/iitb/manageUsers/addUserRole', userDetails).
+		$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addUserRole', userDetails).
 			success(function(data, status, headers, config) {
 
 				manageUserItem.role = "User";
@@ -166,7 +172,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		userDetails.userid = this.manageUserItem.manageUserID;
 		userDetails.removeRole = "Admin";
 
-		$http.post('/api/iitb/manageUsers/removeUserRole', userDetails).
+		$http.post( API_ADDR  + 'api/' + abbr + '/manageUsers/removeUserRole', userDetails).
 			success(function(data, status, headers, config) {
 
 				var previousRole = manageUserItem.role;
@@ -191,7 +197,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		userDetails.userid = this.manageUserItem.manageUserID;
 		userDetails.removeRole = "Publisher";
 
-		$http.post('/api/iitb/manageUsers/removeUserRole', userDetails).
+		$http.post( API_ADDR  + 'api/' + abbr + '/manageUsers/removeUserRole', userDetails).
 			success(function(data, status, headers, config) {
 
 				var previousRole = manageUserItem.role;
@@ -243,7 +249,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				newUserDetails.phone = $scope.editUserPhone;
 				newUserDetails.address = $scope.editUserAddress;
 
-				$http.post('/api/iitb/manageUsers/editUser', newUserDetails).
+				$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/editUser', newUserDetails).
 					success(function(data, status, headers, config) {
 
 						manageUserItem.name = $scope.editUserName;
@@ -270,10 +276,11 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 
 		var userid = manageUserItem.manageUserID;
 
-		$http.post('/api/iitb/manageUsers/getUserDetails', userid).
+		$http.post( API_ADDR  + 'api/' + abbr + '/manageUsers/getUserDetails', userid).
 			success(function(data, status, headers, config) {
 
 				$scope.userDetails = data;
+				console.log("userDetails is " + $scope.userDetails);
 
 				$('#get-user-details-modal').modal('show');
 
