@@ -1,5 +1,5 @@
 var API_ADDR = $("#contextRoot").val();
-	
+
 /* Function to dyanamically load audio */
 function loadAudio(audioTagName, voiceURL){
 	var audio = document.getElementById(audioTagName);
@@ -7,9 +7,24 @@ function loadAudio(audioTagName, voiceURL){
 	audio.load();
 }
 
+/* Function to dynamically change audio of Audio control and Audio Download link */
+function changeAudioSource(url){
+	audioControl = $('#welcome-message-audio');
+	audioDownload = $('#download-message-audio');
+	audioControl.attr("src", url);
+	audioControl.load();
+	audioDownload.attr("href", url);
+}
+
 function getId(object){
 	var urlChunks = object["_links"]["self"]["href"].split("/");
 	return urlChunks[urlChunks.length-1];
+}
+
+function validatephonenumber(phoneNumber){
+
+	var phoneformat = /[0-9]{10}/g;
+	return (phoneformat.test(phoneNumber) && phoneNumber.length == 10); 
 }
 
 function validatedate(inputText){

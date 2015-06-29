@@ -59,7 +59,7 @@ public interface GroupMembershipRepository extends JpaRepository<GroupMembership
 	
 	public GroupMembership findByUserAndGroup(@Param("user") User user, @Param("group") Group group);
 	
-	public List<GroupMembership> findByUser(User user);
+	public List<GroupMembership> findByUser(@Param("user") User user);
 	
 	public List<GroupMembership> findByGroup(Group group);
 	
