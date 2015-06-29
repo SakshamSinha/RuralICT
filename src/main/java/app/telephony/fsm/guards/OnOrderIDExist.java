@@ -44,7 +44,8 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 			Order order=orderService.getOrder(orderID);
 			boolean isOrderAccepted =order.getStatus().equalsIgnoreCase("reject") || order.getStatus().equalsIgnoreCase("processed")||order.getStatus().equalsIgnoreCase("cancelled");
 			boolean isUserIdExistForOrderID = (userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getUserId()) == (orderService.getOrder(orderID).getMessage().getUser().getUserId());
-			boolean checkOrganization = order.getOrganization() == orgService.getOrganizationByIVRS(session.getIvrNumber());
+			boolean checkOrganization = order.getOrganization().equals(orgService.getOrganizationByIVRS(session.getIvrNumber()));
+			
 			if(orderService.getOrder(orderID).getMessage().equals(null)){
 				return (!allow);
 			}
