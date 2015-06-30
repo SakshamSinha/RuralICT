@@ -1,5 +1,5 @@
 <div id=broadcast-text-controller ng-controller="textBroadcastCtrl">
-    <div id="broadcast-text-ids" th:attr="organizationabbr=${organization.abbreviation},organizationid=${organization.organizationId},groupid=${groupId},publisherid=${publisher.userId}">
+    <div id="broadcast-text-ids" th:attr="data-groupid=${groupId},data-publisherid=${publisher.userId}">
         <form class="form-horizontal">
             <fieldset>
                 <div class="control-group">
@@ -65,7 +65,7 @@
                     <table>
                         <tr>
                             <td>
-                                <button type="button" ng-click=saveTextBroadcastBtn() class="btn btn-success" id="place-broadcast-call" align="center">
+                                <button type="button" ng-click=saveTextBroadcastBtn() class="btn btn-success" id="place-text-broadcast-call" align="center">
                                     <i class="icon-white icon-ok"></i>Send SMS
                                 </button>
                             </td>
