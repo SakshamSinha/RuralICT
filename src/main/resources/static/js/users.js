@@ -234,13 +234,14 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			{
 				alert("Please Enter a Name for the User !");
 			}
-			else if(!$scope.editUserPhone)
+			else if(validatephonenumber($scope.editUserPhone))
 			{
 				alert("Please Enter a Phone Number !");
 			}
 			else
 			{
-
+				
+				$scope.editUserPhone = "91"+ $scope.editUserPhone;
 				// Get the attributes of the new user
 				var newUserDetails = {};
 				newUserDetails.userid = manageUserItem.manageUserID;

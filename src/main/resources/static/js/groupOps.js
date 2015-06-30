@@ -58,6 +58,7 @@ $("#groupList").on("click", ".delete-group", function(e) {
 	/* Get required values from modal */
 	var id = $(this).val();
 	angular.element($('#groupList')).scope().removeGroup(id);
+	
 	$('#view-inbox-voice-message-modal').modal('toggle');
     
 	// Workaround for time being

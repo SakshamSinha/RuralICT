@@ -243,6 +243,10 @@ $("#page-content").on("click", "#add-inbox-voice-order-items", function () {
 	if(productQuantity == "other"){
 		productQuantity = $.trim($("#inboxVoiceCustomQuantity").val());
 	}
+	if(! $.isNumeric(productQuantity)){
+		alert("Enter valid quantity.")
+		return;
+	}
 	
 	/* Create and add new row element for user */
 	var new_row = $('\
@@ -412,6 +416,10 @@ $("#page-content").on("click", "#add-saved-voice-order-items", function () {
 	var productQuantity = $.trim($("#savedVoiceProductQuantity").val());
 	if(productQuantity == "other"){
 		productQuantity = $.trim($("#savedVoiceCustomQuantity").val());
+	}
+	if(! $.isNumeric(productQuantity)){
+		alert("Enter valid quantity.")
+		return;
 	}
 	var orderId = $.trim($("#savedVoiceOrderId").val());
 	

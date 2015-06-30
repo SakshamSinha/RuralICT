@@ -196,6 +196,10 @@ $("#page-content").on("click", "#add-inbox-text-order-items", function () {
 	if(productQuantity == "other"){
 		productQuantity = $.trim($("#inboxTextCustomQuantity").val());
 	}
+	if(! $.isNumeric(productQuantity)){
+		alert("Enter valid quantity.")
+		return;
+	}
 	
 	/* Create and add new row element for user */
 	var new_row = $('\
