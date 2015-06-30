@@ -80,7 +80,6 @@ $("#page-content").on("click", "#add-new-product", function(e) {
 
 //capture the id of product on clicking the delete button
 $("#page-content").on("click", "#btn-delete", function(e) {  
-	e.preventDefault();
 	productId = $(this).attr("productid");
 	angular.element(this).scope().setId(productId);
 	angular.element(this).scope().getList();
@@ -88,6 +87,7 @@ $("#page-content").on("click", "#btn-delete", function(e) {
 
 //delete a product entry on clicking the 'yes' delete button
 $("#page-content").on("click","#delete-product",function(e){
+	console.log("Delete has been called");
 	angular.element(this).scope().deleteProduct();
 	$("#delete-product-modal").modal('toggle');
 	//TODO Eliminating this function doing hard refresh

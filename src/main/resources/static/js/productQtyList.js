@@ -9,18 +9,24 @@ website.controller("PresetQuantitiesCtrl",function($window, $scope, $http, $rout
 			PresetQuantityCreate.save($scope.presetQuantity,function(){	
 			},function(error){
 				if (error.status == "409")
-					alert("Product Quantity already present. Add a different quantity");
+					alert("Same Product Quantity already present. Add a different quantity");
 			});
 		}
+		
 		//function to edit the preset quantity
 		$scope.editPresetQuantity = function(value){
 			
 			$scope.presetQuantity = PresetQuantityEdit.get({id:$scope.id},function(){
 				$scope.presetQuantity.quantity = value;
 				$scope.presetQuantity.$update({id:$scope.id},function(){
+				},function(error){
+					console.log(error);
+					if (error.status == "409")
+						alert("Same Product Quantity already present. Update with different quantity not already present.");
 				});
 			});
 		}
+		
 		//function to delete the preset quantity 
 		$scope.deletePresetQuantity = function(){
 			$scope.presetQuantity = PresetQuantityDelete.get({id:$scope.id},function(){

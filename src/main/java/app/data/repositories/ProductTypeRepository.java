@@ -26,7 +26,7 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Intege
 	@Override
 	public List<ProductType> findAll();
 
-	//@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
+	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public Page<ProductType> findAll(Pageable pageable);
 
