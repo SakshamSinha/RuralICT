@@ -1,8 +1,10 @@
 package app.telephony.fsm.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 import app.business.services.BroadcastRecipientService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
@@ -12,6 +14,7 @@ import app.entities.Group;
 import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.User;
+import app.entities.UserPhoneNumber;
 import app.entities.Voice;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
@@ -60,12 +63,38 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 		List<GroupMembership> memberships = SpringContextBridge.services().getGroupMembershipService().getGroupMembershipListByGroup(group);
 
 		// Add rows for each broadcast-recipient
-		for(GroupMembership gm:memberships){
+		/*for(GroupMembership gm:memberships){
 			User user = gm.getUser();
 			BroadcastRecipient broadcastRecipient = new BroadcastRecipient(voicebroadcast,user);
 			// Add row for broadcast-recipient
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
-		}
+		}*/
+		
+		 List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
+         // Add rows for each broadcast-recipient
+         for(GroupMembership gm:memberships){
+                 User user = gm.getUser();
+                 BroadcastRecipient broadcastRecipient = new BroadcastRecipient(voicebroadcast,user);
+                 // Add row for broadcast-recipient
+                 broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
+                 broadcastRecipients.add(broadcastRecipient);
+         }
+         //Different for loop to avoid problem in IVRS
+         for(BroadcastRecipient recipient: broadcastRecipients)
+         {
+                 User user=recipient.getUser();
+                 System.out.println("User:"+user.getName());
+                 List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
+                 for(UserPhoneNumber no:phoneNumbers)
+                 {        
+                         //Outbound call has to be appended with a zero after removing 91 
+                         String phoneNumber = "0" + no.getPhoneNumber().substring(2);
+                         if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL));
+                         {
+                                 break;
+                         }
+                 }
+         }
 
 	}
 
