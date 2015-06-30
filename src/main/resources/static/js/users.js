@@ -6,7 +6,7 @@
 website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 	
 	// Get Organization Abbreviation from Thymeleaf
-	var abbr = document.getElementById("user-controller-page").getAttribute("organizationabbr");
+	var abbr = $('#organizationAbbr').val();
 	
 	// By Default display all members
 	$scope.selectedRole = "";
@@ -34,8 +34,13 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		{
 			alert("Please Enter a Phone Number !");
 		}
+		else if(!validatephonenumber($scope.editUserPhone))
+		{
+			alert("Please Enter a valid Phone Number.");
+		}
 		else
 		{
+			$scope.inputUserPhone = "91" + $scope.inputUserPhone;
 			// Get the attributes of the new user
 			var newUserDetails = {};
 			newUserDetails.name = $scope.inputUserName;
@@ -237,6 +242,10 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			else if(!$scope.editUserPhone)
 			{
 				alert("Please Enter a Phone Number !");
+			}
+			else if(!validatephonenumber($scope.editUserPhone))
+			{
+				alert("Please Enter a valid Phone Number.");
 			}
 			else
 			{
