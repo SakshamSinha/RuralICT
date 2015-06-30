@@ -2,10 +2,10 @@
 website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, TextBroadcast) {
 
 	// Get the required variables from thymeleaf attributes
-	var orgid = document.getElementById("broadcast-text-ids").getAttribute("organizationid");
-	var abbr = document.getElementById("broadcast-text-ids").getAttribute("organizationabbr");
-	var groupid = document.getElementById("broadcast-text-ids").getAttribute("groupid");
-	var publisherid = document.getElementById("broadcast-text-ids").getAttribute("publisherid");
+	var orgid = $('#organizationId').val();
+	var abbr = $('#organizationAbbr').val();
+	var groupid = document.getElementById("broadcast-text-ids").getAttribute("data-groupid");
+	var publisherid = document.getElementById("broadcast-text-ids").getAttribute("data-publisherid");
 	
 	// Initialize the values for radio-buttons
 	$scope.radioOptions = [false,false,false,false];
@@ -43,13 +43,19 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 		$scope.broadcast.userIds = userIds;
 		
 		// Create a new textbroadcast object by sending 'POST' request to controller
-		$http.post('/web/'+ abbr +'/textBroadcast/create/' + groupid, $scope.broadcast)
+		$http.post(API_ADDR + 'web/' + abbr + '/textBroadcast/create/' + groupid, $scope.broadcast)
 		.success(function(data,status,header,config){
-			console.log("controller called successfully from backend");
-			console.log(data);
-			console.log(status);
-			console.log(header);
-			console.log(config);
+			console.log("TextBroadcast controller called successfully from backend");
+			
+			if(data === 0)
+			{
+				alert("The SMS was sent successfully");
+			}
+			else
+			{
+				alert("There was some problem in the server !");
+			}
+			
 		})
 		.error(function(data,status,header,config){
 			
