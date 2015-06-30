@@ -1,6 +1,6 @@
 'use strict';
 
-var website = angular.module('ruralIvrs', ['ngRoute', 'ngResource', 'angular-loading-bar']);
+var website = angular.module('ruralIvrs', ['ngRoute', 'ngResource', 'angular-loading-bar', 'angularUtils.directives.dirPagination']);
 
 website.config(['$routeProvider', '$provide', '$httpProvider', 'cfpLoadingBarProvider', function($routeProvider, $provide, $httpProvider, cfpLoadingBarProvider) {
 

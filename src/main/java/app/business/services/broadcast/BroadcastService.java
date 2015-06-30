@@ -54,8 +54,6 @@ public class BroadcastService {
 			groupList.add(groupMembership.getGroup());
 		}
 		
-
-		
 		return broadcastRepository.findTopByGroupInAndOrganizationAndFormat(groupList, organization, format , (new Sort(Sort.Direction.DESC, "broadcastedTime")));
 
 	}

@@ -26,7 +26,7 @@ public interface PresetQuantityRepository extends JpaRepository<PresetQuantity, 
 	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public List<PresetQuantity> findAll();
-
+	
 	@PostFilter("hasRole('ADMIN'+filterObject.organization.abbreviation)")
 	@Override
 	public Page<PresetQuantity> findAll(Pageable pageable);

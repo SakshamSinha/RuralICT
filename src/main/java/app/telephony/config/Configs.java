@@ -18,8 +18,8 @@ public class Configs extends IVRConfigs {
 		Network.USE_PROXY = true;
 		Network.PROXY_HOST = "netmon.iitb.ac.in";
 		Network.PROXY_PORT = 80;
-		Network.PROXY_USER = "p14293";
-		Network.PROXY_PASS = "krishna*";
+		Network.PROXY_USER = "p15057";
+		Network.PROXY_PASS = "rajani@";
 	}
 
 	/**
