@@ -40,8 +40,4 @@ public class ProductQuantityController {
 		//No change in model here yet
 		return "productQuantityList";
 	}
-	
-	
-
-
 }

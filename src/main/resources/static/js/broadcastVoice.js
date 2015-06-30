@@ -1,9 +1,3 @@
-website.factory("BroadcastCreate",function($resource){
-	return $resource("/api/voiceBroadcasts",{
-		query: {method: "GET", isArray: false}
-	});
-});
-
 website.directive('fileModel', ['$parse',function ($parse) {
     return {
         restrict: 'A',
@@ -24,40 +18,66 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 	//function to save product
 	$scope.saveBroadcast = function(data){
 		$scope.broadcast = data;
-		$http.post('/web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
-		.success(function(data,status,header,config){
-		})
-		.error(function(data,status,header,config){
-			
-		})
-			
+		//TODO remove this
+		console.log('save broadcast has been called');
+		console.log($scope.broadcast.userIds);
+		if($scope.broadcast.userIds=='')
+		{
+			alert('No user selected. Select atleast one user.')
+		}
+		else
+		{
+			$http.post(API_ADDR + 'web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
+			.success(function(data,status,header,config){
+				alert('Call has been placed.')
+				console.log('broadcast data posted. Users called.');
+			})
+			.error(function(data,status,header,config){
+				
+			})	
+		}	
 	}
 		
 	$scope.uploadFile = function(ids){
-		$scope.latestBroadcastableVoiceIds =ids;
-		var formData=new FormData();
-		formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
-		$http({
-			method: 'POST',
-			url: '/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
-			headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
-			data: formData,
-			transformRequest: function(data, headersGetterFunction) {
-			return data;
-			}
-		})
-		.success(function(data, status) {
-			$scope.latestBroadcastableVoiceIds.voiceId = data;
-			$scope.latestBroadcastableVoiceIds.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-			console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
-			$http.post('/web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
-				.success(function(data,status,header,config){
-					//TODO Eliminating this function doing hard refresh
-					setTimeout($window.location.reload.bind(window.location),2000);
+		if ($scope.myFile == undefined)
+		{
+			alert("No file added. Please choose a file of '.wav' audio format");
+		}
+		else if ($scope.myFile.type != "audio/wav")
+		{
+			alert("Invalid File!! Please choose again. You can only choose a file of '.wav' audio format");
+		}
+		else
+		{
+			$scope.latestBroadcastableVoiceIds =ids;
+			var formData=new FormData();
+			
+			formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
+			$http({
+				method: 'POST',
+				url: API_ADDR + 'web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
+				headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
+				data: formData,
+				transformRequest: function(data, headersGetterFunction) {
+				return data;
+				}
+			})
+			.success(function(data, status) {
+				$scope.latestBroadcastableVoiceIds.voiceId = data;
+				$scope.latestBroadcastableVoiceIds.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+				console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
+				$http.post(API_ADDR + 'web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
+					.success(function(data,status,header,config){
+						alert("Audio successfully uploaded");
+						//TODO Eliminating this function doing hard refresh
+						setTimeout($window.location.reload.bind(window.location),2000);
+						})
 					})
-				})
-		.error(function(data, status) {
-		});
+			.error(function(data, status) {
+				if (status == "500")
+					alert("File already present. Choose a different file before uploading.");
+			});
+		}
 	}
 	
 	//TODO Eliminating this function doing hard refresh
@@ -78,9 +98,7 @@ $("#page-content").on("click","#voice-upload",function(e){
 	angular.element($('#broadcast-voice-ids')).scope().uploadFile(data);
 });
 
-
-
-$("#page-content").on("click","#place-broadcast-call",function(e){
+$("#page-content").on("click","#place-voice-broadcast-call",function(e){
 	var data={};
 	data.askOrder=0;
 	data.askFeedback=0;

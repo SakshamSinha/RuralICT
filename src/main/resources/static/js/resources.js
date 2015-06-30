@@ -1,3 +1,10 @@
+/*Resources for Broadcast*/
+website.factory("BroadcastCreate",function($resource){
+	return $resource(API_ADDR + "api/voiceBroadcasts",{
+		query: {method: "GET", isArray: false}
+	});
+});
+
 /* Resources for OrderItems */
 website.factory("AddOrderItem",['$resource',function($resource){
 	return $resource(API_ADDR + "api/orderItems/:id", null, {
