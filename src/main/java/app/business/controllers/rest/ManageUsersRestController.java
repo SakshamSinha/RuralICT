@@ -147,7 +147,7 @@ public class ManageUsersRestController {
 		{
 			membership.setIsPublisher(true);
 		}
-		else if(addRole.equals("User"))
+		else if(addRole.equals("Member"))
 		{
 			membership.setIsAdmin(false);
 			membership.setIsPublisher(false);
