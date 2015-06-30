@@ -250,7 +250,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			}
 			else
 			{
-
+				
 				// Get the attributes of the new user
 				var newUserDetails = {};
 				newUserDetails.userid = manageUserItem.manageUserID;

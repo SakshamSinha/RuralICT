@@ -129,7 +129,7 @@ public class SettingsController {
 			FileCopyUtils.copy(uploadedAudioFile.getBytes(), serverFile);
 
 			// Get the current Working Directory and the full Filepath
-			String databaseFileUrl = "http://ruralict.cse.iitb.ac.in/Downloads/voice/welcomeMessage/" + fileName;
+			String databaseFileUrl = "http://ruralict.cse.iitb.ac.in/Downloads/voices/welcomeMessage/" + fileName;
 
 			// Create a new Voice Object
 			Voice voice = new Voice(databaseFileUrl, true);
