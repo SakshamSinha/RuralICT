@@ -25,6 +25,9 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 		$scope.deleteProduct = function(data){
 			$scope.product = ProductDelete.get({id:$scope.id},function(){				
 				$scope.product.$update({id:$scope.id},function(){
+				},function(error){
+					if(error.status == "409")
+						alert("You can't delete this product as this product is present in Order Item(s).");
 				});
 			});	
 		}
@@ -88,7 +91,7 @@ $("#page-content").on("click","#delete-product",function(e){
 	angular.element(this).scope().deleteProduct();
 	$("#delete-product-modal").modal('toggle');
 	//TODO Eliminating this function doing hard refresh
-	angular.element(this).scope().reload();
+	//angular.element(this).scope().reload();
 });
 
 //capture the id of product on clicking the edit button

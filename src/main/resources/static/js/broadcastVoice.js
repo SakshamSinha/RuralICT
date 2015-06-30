@@ -20,44 +20,60 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		$scope.broadcast = data;
 		//TODO remove this
 		console.log('save broadcast has been called');
-		$http.post(API_ADDR + 'web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
-		.success(function(data,status,header,config){
-			console.log('broadcast data posted. Users called.');
-		})
-		.error(function(data,status,header,config){
-			
-		})
-			
+		console.log($scope.broadcast.userIds);
+		if($scope.broadcast.userIds=='')
+		{
+			alert('No user selected. Select atleast one user.')
+		}
+		else
+		{
+			$http.post(API_ADDR + 'web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
+			.success(function(data,status,header,config){
+				alert('Call has been placed.')
+				console.log('broadcast data posted. Users called.');
+			})
+			.error(function(data,status,header,config){
+				
+			})	
+		}	
 	}
 		
 	$scope.uploadFile = function(ids){
-		$scope.latestBroadcastableVoiceIds =ids;
-		var formData=new FormData();
-		formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
-		$http({
-			method: 'POST',
-			url: API_ADDR + 'web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
-			headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
-			data: formData,
-			transformRequest: function(data, headersGetterFunction) {
-			return data;
-			}
-		})
-		.success(function(data, status) {
-			$scope.latestBroadcastableVoiceIds.voiceId = data;
-			$scope.latestBroadcastableVoiceIds.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-			console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
-			$http.post(API_ADDR + 'web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
-				.success(function(data,status,header,config){
-					alert("Audio successfully uploaded");
-					//TODO Eliminating this function doing hard refresh
-					setTimeout($window.location.reload.bind(window.location),2000);
+		if ($scope.myFile.type != "audio/wav")
+		{
+			alert("Invalid File!! Please choose again. You can only choose a file of '.wav' audio format");
+		}
+		else
+		{
+			$scope.latestBroadcastableVoiceIds =ids;
+			var formData=new FormData();
+			
+			formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
+			$http({
+				method: 'POST',
+				url: API_ADDR + 'web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
+				headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
+				data: formData,
+				transformRequest: function(data, headersGetterFunction) {
+				return data;
+				}
+			})
+			.success(function(data, status) {
+				$scope.latestBroadcastableVoiceIds.voiceId = data;
+				$scope.latestBroadcastableVoiceIds.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+				console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
+				$http.post(API_ADDR + 'web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
+					.success(function(data,status,header,config){
+						alert("Audio successfully uploaded");
+						//TODO Eliminating this function doing hard refresh
+						setTimeout($window.location.reload.bind(window.location),2000);
+						})
 					})
-				})
-		.error(function(data, status) {
-			if (status == "500")
-				alert("File already present. Choose a different file before uploading.");
-		});
+			.error(function(data, status) {
+				if (status == "500")
+					alert("File already present. Choose a different file before uploading.");
+			});
+		}
 	}
 	
 	//TODO Eliminating this function doing hard refresh

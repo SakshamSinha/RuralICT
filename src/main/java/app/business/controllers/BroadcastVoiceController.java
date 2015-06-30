@@ -69,7 +69,7 @@ public class BroadcastVoiceController {
 		User publisher = userService.getCurrentUser();
 		
 		
-		List<GroupMembership> groupMembershipList = groupMembershipService.getGroupMembershipListByGroup(group);
+		List<GroupMembership> groupMembershipList = new ArrayList(groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group));
 		
 		//called latest recorded voice according to time
 		LatestRecordedVoice broadcast = latestRecordedVoiceService.getLatestRecordedVoiceByOrganization(organization);
@@ -78,6 +78,7 @@ public class BroadcastVoiceController {
 		List<User> users = new ArrayList<User>();
 		for(GroupMembership groupMembership : groupMembershipList) {
 			users.add(groupMembership.getUser());
+			System.out.println(groupMembership.getUser().getName());
 		}
 		
 		model.addAttribute("users",users);
@@ -95,7 +96,6 @@ public class BroadcastVoiceController {
 	@RequestMapping(value = "/broadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
 	@ResponseBody
 	public void logs(@RequestBody Map<String,String> body) {
-		System.out.println("We have received the body"+body);
 		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
 		Group group = groupService.getGroup(Integer.parseInt(body.get("groupId")));
 		User publisher = userService.getUser(Integer.parseInt(body.get("publisherId")));
@@ -106,7 +106,6 @@ public class BroadcastVoiceController {
 		boolean askResponse = (Integer.parseInt(body.get("askResponse")) !=0);
 		
 		String broadcastedTime = body.get("broadcastedTime");
-		System.out.println(broadcastedTime);
 		Timestamp timestamp = Timestamp.valueOf(broadcastedTime);
 		
 		boolean appOnly = (Integer.parseInt(body.get("appOnly")) !=0);
@@ -125,6 +124,7 @@ public class BroadcastVoiceController {
 		List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
 		for(int i=0 ; i<userIdList.length;i++)
 		{	
+			
 			User user = userService.getUser(Integer.parseInt(userIdList[i]));
 			BroadcastRecipient broadcastRecipient = new BroadcastRecipient(broadcast, user);
 			broadcastRecipients.add(broadcastRecipient);
@@ -134,9 +134,9 @@ public class BroadcastVoiceController {
 		//TODO have to shift this function to thread. Also have to ask where is the Broadcast object mentioned here.
 		for(BroadcastRecipient recipient: broadcastRecipients)
 		{
-		User user=recipient.getUser();
-		System.out.println("User:"+user.getName());
-		List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
+			User user=recipient.getUser();
+			System.out.println("User:"+user.getName());
+			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
 			for(UserPhoneNumber no:phoneNumbers)
 			{	
 				//Outbound call has to be appended with a zero after removing 91 
@@ -161,6 +161,5 @@ public class BroadcastVoiceController {
 		
 		latestRecordedVoiceService.updateLatestRecordedVoice(organization, timestamp, voice);
 	}
-
 
 }
