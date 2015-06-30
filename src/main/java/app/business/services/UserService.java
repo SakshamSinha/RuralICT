@@ -71,7 +71,6 @@ public class UserService {
 		
 		OrganizationMembership organizationMembership = organizationMembershipService.getUserOrganizationMembership(user,organization);
 		
-		System.out.println("-----------------------------"+organizationMembership);
 		if(organizationMembership.getIsAdmin()==true && organizationMembership.getIsPublisher()==false){
 			role="Admin";
 		}
