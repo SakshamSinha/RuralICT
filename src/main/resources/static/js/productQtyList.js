@@ -5,7 +5,6 @@ website.controller("PresetQuantitiesCtrl",function($window, $scope, $http, $rout
 		$scope.savePresetQuantity = function(data){
 			$scope.presetQuantity = new PresetQuantityCreate();
 			$scope.presetQuantity = data;
-			console.log("Receiving quantity at savePresetQuantity "+ $scope.presetQuantity.quantity);
 			PresetQuantityCreate.save($scope.presetQuantity,function(){	
 			},function(error){
 				if (error.status == "409")
@@ -20,7 +19,6 @@ website.controller("PresetQuantitiesCtrl",function($window, $scope, $http, $rout
 				$scope.presetQuantity.quantity = value;
 				$scope.presetQuantity.$update({id:$scope.id},function(){
 				},function(error){
-					console.log(error);
 					if (error.status == "409")
 						alert("Same Product Quantity already present. Update with different quantity not already present.");
 				});
