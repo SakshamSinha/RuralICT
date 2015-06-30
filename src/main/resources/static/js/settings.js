@@ -19,13 +19,21 @@ website.directive('fileModel', ['$parse',function ($parse) {
 	};
 }]);
 
+/* Function to dynamically change audio of Audio control and Audio Download link */
+function changeAudioSource(url){
+	audioControl = $('#welcome-message-audio');
+	audioDownload = $('#download-message-audio');
+	audioControl.attr("src", url);
+	audioControl.load();
+	audioDownload.attr("href", url);
+}
+
 /* Actual Settings Controller */
 website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateOrganization, UpdateBroadcastDefaultSettings) {
 
 	// get the current organization Attributes
-	var orgid = document.getElementById("settings-page").getAttribute("orgid");
-	var outboundcallid = document.getElementById("settings-page").getAttribute("orgid");
-	var abbr = document.getElementById("settings-page").getAttribute("organizationabbr");
+	var orgid = $('#organizationId').val();
+	var abbr = $('#organizationAbbr').val();
 
 	$scope.languageUrl  = [];
 	
@@ -95,7 +103,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 	});
 	
 	var outboundcall = UpdateBroadcastDefaultSettings.get({
-		id: outboundcallid
+		id: orgid
 	}, function() {
 		
 		//intialize 'checkbox' elements from outgoing call settings
@@ -243,7 +251,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 				return data;
 			}
 		}).success(function(data, status) {
-			console.log("Returned data from the backend is :" + data + " its type: " + typeof data);
+			
 			if (data === "-1")
 			{
 				alert("Please select a file to upload !");
