@@ -51,7 +51,7 @@ public class PlayResponeIsYesAction implements Action<IVRSession> {
 		}
 		else{
 
-			telephonyService.addVoiceMessage(session.getUserNumber(), null, group, mode, type, false, null,inboundCall,null);
+			 telephonyService.addVoiceMessage(session.getUserNumber(), null, group, mode, type, false, null,inboundCall,null);
 		}
 
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes_"+session.getLanguage()+".wav");
