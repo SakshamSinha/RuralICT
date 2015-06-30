@@ -1,11 +1,19 @@
 var API_ADDR = $("#contextRoot").val();
 
-console.log($("#organizationAbbr").val());
 /* Function to dyanamically load audio */
 function loadAudio(audioTagName, voiceURL){
 	var audio = document.getElementById(audioTagName);
 	audio.src = voiceURL;
 	audio.load();
+}
+
+/* Function to dynamically change audio of Audio control and Audio Download link */
+function changeAudioSource(url){
+	audioControl = $('#welcome-message-audio');
+	audioDownload = $('#download-message-audio');
+	audioControl.attr("src", url);
+	audioControl.load();
+	audioDownload.attr("href", url);
 }
 
 function getId(object){
