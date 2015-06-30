@@ -280,7 +280,6 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			success(function(data, status, headers, config) {
 
 				$scope.userDetails = data;
-				console.log("userDetails is " + $scope.userDetails);
 
 				$('#get-user-details-modal').modal('show');
 
