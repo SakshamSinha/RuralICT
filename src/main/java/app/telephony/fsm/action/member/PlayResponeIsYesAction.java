@@ -47,11 +47,11 @@ public class PlayResponeIsYesAction implements Action<IVRSession> {
 
 			outboundCall.setBroadcastRecipient(broadcastRecipient.getBroadcastRecipientById(broadcast.getBroadcastId()));
 			outboundCall.setBroadcastSchedule(broadcastScheduleService.getBroadcastScheduleById(broadcast.getBroadcastId()));
-			telephonyService.addVoiceMessage(session.getUserNumber(), broadcast, group, mode, type, false, null, null,outboundCall);
+			telephonyService.addVoiceMessage(session.getUserNumber(), broadcast, group, mode, type, true, null, null,outboundCall);
 		}
 		else{
 
-			 telephonyService.addVoiceMessage(session.getUserNumber(), null, group, mode, type, false, null,inboundCall,null);
+			 telephonyService.addVoiceMessage(session.getUserNumber(), null, group, mode, type, true, null,inboundCall,null);
 		}
 
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes_"+session.getLanguage()+".wav");
