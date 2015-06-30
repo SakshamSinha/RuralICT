@@ -30,8 +30,7 @@ public interface GroupMembershipRepository extends JpaRepository<GroupMembership
 	@Override
 	public GroupMembership findOne(Integer id);
 
-	@PostFilter("principal.userId == filterObject.user.userId or "
-			+ "hasRole('ADMIN_OR_PUBLISHER'+filterObject.group.organization.abbreviation)")
+	
 	@Override
 	public List<GroupMembership> findAll();
 

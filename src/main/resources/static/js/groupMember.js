@@ -116,6 +116,7 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	}
 	if(userName == ""){
 		alert("Enter User Name");
+		return;
 	}
 	
 	var phoneNumber = "91" + userPrimaryPhoneNumber;

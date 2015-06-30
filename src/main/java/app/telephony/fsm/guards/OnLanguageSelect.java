@@ -27,6 +27,10 @@ public class OnLanguageSelect extends EventTypeGuard<IVRSession> {
 			String input=ev.getInput();
 			if(RuralictStateMachine.tempLanguageMap.containsKey(input)){
 				String lang = RuralictStateMachine.tempLanguageMap.get(input);
+				if(lang==null) 
+				{
+					return false;
+				}
 				session.setLanguage(lang);
 				UserService userService = SpringContextBridge.services().getUserService();
 				UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();

@@ -18,8 +18,8 @@ public class Configs extends IVRConfigs {
 		Network.USE_PROXY = true;
 		Network.PROXY_HOST = "netmon.iitb.ac.in";
 		Network.PROXY_PORT = 80;
-		Network.PROXY_USER = "p14293";
-		Network.PROXY_PASS = "krishna*";
+		Network.PROXY_USER = "p15057";
+		Network.PROXY_PASS = "rajani@";
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * The IVR number being used for this application. Outbound calls will be made from this number.
 		 */
-		public static final String IVR_NUMBER = "912030157457";
+		public static final String IVR_NUMBER = "912233578383";
 		/**
 		 * The Text-to-speech speed for KooKoo.
 		 */
@@ -49,7 +49,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * The seconds of silence before which an ongoing recording is accepted.
 		 */
-		public static final int RECORDING_SILENCE = 7;
+		public static final int RECORDING_SILENCE = 5;
 		/**
 		 * The maximum duration of a recording in seconds.
 		 */
@@ -57,7 +57,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * Maximum number of invalid tries before disconnection.
 		 */
-		public static final int MAX_INVALID_ATTEMPTS = 4;
+		public static final int MAX_INVALID_ATTEMPTS = 5;
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * The root URL where all the voice files are.
 		 */
-		public static final String VOICE_DIR = "http://ruralict.cse.iitb.ac.in/Downloads/voice";
+		public static final String VOICE_DIR = "http://ruralict.cse.iitb.ac.in/Downloads/voices";
 	}
 
 }

@@ -7,15 +7,6 @@ function loadAudio(audioTagName, voiceURL){
 	audio.load();
 }
 
-/* Function to dynamically change audio of Audio control and Audio Download link */
-function changeAudioSource(url){
-	audioControl = $('#welcome-message-audio');
-	audioDownload = $('#download-message-audio');
-	audioControl.attr("src", url);
-	audioControl.load();
-	audioDownload.attr("href", url);
-}
-
 function getId(object){
 	var urlChunks = object["_links"]["self"]["href"].split("/");
 	return urlChunks[urlChunks.length-1];
