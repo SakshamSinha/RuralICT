@@ -91,7 +91,7 @@ public class TextBroadcastController {
 	@RequestMapping(value = "/textBroadcast/create/{groupId}", method = {RequestMethod.POST})
 	@ResponseBody
 	@Transactional
-	public void createBroadcast(@RequestBody Map<String,String> body) {
+	public int createBroadcast(@RequestBody Map<String,String> body) {
 		
 		// Get the required variables from the Broadcast JSON object passed through Angular JS
 		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organization")));
@@ -128,6 +128,7 @@ public class TextBroadcastController {
 			} 
 			catch (Exception e) {
 				e.printStackTrace();
+				return -1;
 			}
 		}
 		
@@ -137,6 +138,8 @@ public class TextBroadcastController {
 		 
 		// Set the Timestamp in the broadcast table after sending SMS to all the recipients
 		broadcastService.setBroadcastTime(timestamp, broadcast);
+		
+		return 0;
 		
 	}
 }
