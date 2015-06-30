@@ -37,42 +37,46 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         <i class="icon-remove"></i>
                     </button>
-                    <h4 class="modal-title custom_align" id="HeadingUser">Broadcast</h4>
+                    <h4 class="modal-title custom_align" id="HeadingUser">Text Broadcast</h4>
                 </div>
                 <div class="modal-body">
-                    <table>
-                        <thead>
-                            <th></th>
-                            <th>
-                                <p>
-                                    <b>
-                                            <i>Users:</i>
-                                    </b>
-                                </p>
-                            </th>
-                        </thead>
-                        <tbody>
-                            <tr id="user-text-list" th:each="user : ${users}">
-                                <td>
-                                    <input type="checkbox" class="checkthis" th:value="${user.userId}" />
-                                </td>
-                                <td>
-                                    <label th:text="${user.name}">Ankit</label>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table>
-                        <tr>
-                            <td>
-                                <button type="button" ng-click=saveTextBroadcastBtn() class="btn btn-success" id="place-text-broadcast-call" align="center">
-                                    <i class="icon-white icon-ok"></i>Send SMS
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+                <form class="form-horizontal">
+					<div class="row-fluid" style="text-align:left;">
+						<b>Users:</b><br><br>
+					</div>
+ 					<div id = "user-text-list" class="row-fluid" style="margin:0px auto; width:100%">   	 
+        				<div id="column1" style="float:left; margin:0; width:33%;">
+        					<div  th:each="user,userStat : ${users}" th:if="${userStat.index%3 == 0}" >
+                    		<label>
+								<input type="checkbox" class="checkthis" th:text ="${user.name}" th:value="${user.userId}" />
+							</label>
+							</div>
+						</div>
+						<div id="column2" style="float:left; margin:0; width:33%;">
+							<div th:each="user,userStat : ${users}" th:if="${userStat.index%3 == 1}">
+                    		<label>
+								<input type="checkbox" class="checkthis" th:text ="${user.name}" th:value="${user.userId}" />
+							</label>
+							</div>
+						</div>
+						<div id="column3" style="float:left; margin:0; width:33%;">
+							<div th:each="user,userStat : ${users}" th:if="${userStat.index%3 == 2}">
+                    		<label>
+								<input type="checkbox" class="checkthis" th:text ="${user.name}" th:value="${user.userId}" />
+							</label>
+							</div>
+						</div>
+					</div>  
+				</form>     		
+				</div>
+				<div class="modal-footer">
+					<button type="button" ng-click=saveTextBroadcastBtn() class="btn btn-success" id="place-text-broadcast-call" align="center">
+						<i class="icon-white icon-ok"></i>Send SMS
+					</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>                                       
+				</div>
+                           
                 </div>
             </div>
         </div>
     </div>
-</div>
