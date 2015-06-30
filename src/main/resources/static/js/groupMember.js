@@ -110,7 +110,7 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	var userAddress = $("#newGroupUserAddress").val();
 	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 	
-	if(validatephonenumber(userPrimaryPhoneNumber)){
+	if(!validatephonenumber(userPrimaryPhoneNumber)){
 		alert("Enter a valid phone numbers")
 		return;
 	}

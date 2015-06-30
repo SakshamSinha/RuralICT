@@ -60,7 +60,7 @@ $("#groupList").on("click", ".delete-group", function(e) {
 	angular.element($('#groupList')).scope().removeGroup(id);
 	
 	$('#view-inbox-voice-message-modal').modal('toggle');
-    prompt
+
 	// Workaround for time being
 	angular.element($('#groupList')).scope().reload();  
 });
