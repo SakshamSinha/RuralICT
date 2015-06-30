@@ -37,7 +37,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * The IVR number being used for this application. Outbound calls will be made from this number.
 		 */
-		public static final String IVR_NUMBER = "912030157457";
+		public static final String IVR_NUMBER = "912233578383";
 		/**
 		 * The Text-to-speech speed for KooKoo.
 		 */

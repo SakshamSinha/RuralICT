@@ -38,6 +38,7 @@ public class OnIsPublisher implements Guard<IVRSession,Object>{
 		}
 		else {
 
+			System.out.println(userPhoneNumber+"-----------------------"+organization);
 			String userRole= userService.getUserRole(userPhoneNumber.getUser(), organization);
 			if(ruralictSession.isOutbound()){
 				return (!allow);
