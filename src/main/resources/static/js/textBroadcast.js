@@ -1,5 +1,5 @@
 /* Javascript file for the Text Broadcast View Controller */
-website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, TextBroadcast, OutboundCall) {
+website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, TextBroadcast) {
 
 	// Get the required variables from thymeleaf attributes
 	var orgid = document.getElementById("broadcast-text-ids").getAttribute("organizationid");

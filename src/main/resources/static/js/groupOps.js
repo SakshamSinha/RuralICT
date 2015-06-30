@@ -9,10 +9,10 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup)
 				
 				window.location.reload(true);
 				$scope.groupName = group.name;
-				$("#group-add-success-modal").modal('toggle');
+				alert("New Group Added");
 			}, function(error) {
 				$scope.failure = error.data;
-				$("#group-add-failed-modal").modal('toggle');
+				alert("Adding of Group Failed");
 			});
 		
 	};
@@ -26,6 +26,10 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup)
 						alert("To delete this group, remove all its members.");
 			});
 		});		
+	};
+	
+	$scope.reload = function(){
+		setTimeout(window.location.reload.bind(window.location),2000);
 	};
 	
 });	   
@@ -44,7 +48,7 @@ $("#add-new-group").click(function() {
     
     $('#add-new-group-modal').modal('toggle');
 
-    $('#new-group-name-input').val("");
+    angular.element($('#add-new-group')).scope().reload();
 	
 });
 
@@ -54,7 +58,7 @@ $("#groupList").on("click", ".delete-group", function(e) {
 	/* Get required values from modal */
 	var id = $(this).val();
 	angular.element($('#groupList')).scope().removeGroup(id);
-	//$('#view-inbox-voice-message-modal').modal('toggle');
+	$('#view-inbox-voice-message-modal').modal('toggle');
     
 	// Workaround for time being
 	angular.element($('#groupList')).scope().reload();  
