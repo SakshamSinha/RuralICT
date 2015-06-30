@@ -22,9 +22,10 @@ website.directive('fileModel', ['$parse',function ($parse) {
 /* Actual Settings Controller */
 website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateOrganization, UpdateBroadcastDefaultSettings) {
 
-	// get the current organization id
+	// get the current organization Attributes
 	var orgid = document.getElementById("settings-page").getAttribute("orgid");
 	var outboundcallid = document.getElementById("settings-page").getAttribute("orgid");
+	var abbr = document.getElementById("settings-page").getAttribute("organizationabbr");
 
 	$scope.languageUrl  = [];
 	
@@ -110,7 +111,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 
 	$http({
 		method: 'POST',
-		url: '/web/iitb/getwelcomeMessageUrl', // The URL to Post.
+		url: API_ADDR + 'web/' + abbr + '/getwelcomeMessageUrl', // The URL to Post.
 		headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
 		data: postData,
 		transformRequest: function(data, headersGetterFunction) {
@@ -235,7 +236,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 		
 		$http({
 			method: 'POST',
-			url: '/web/iitb/upload/welcomeMessage', // The URL to Post.
+			url: API_ADDR + 'web/' + abbr + '/upload/welcomeMessage', // The URL to Post.
 			headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
 			data: formData,
 			transformRequest: function(data, headersGetterFunction) {
@@ -273,7 +274,6 @@ $("#page-content").on("change","#select-welcome-message-language",function(e){
 	
 	// Get the scope of the angular controller so that we can access required variables from it
 	myScope = angular.element('#settings-page').scope();
-	console.log("myScope" + myScope.languageUrl[0]);
 	  
 	// Depending on value of select element, update the audio player and download link
 	if(this.value === '1')
