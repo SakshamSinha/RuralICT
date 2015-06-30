@@ -36,7 +36,7 @@ public class LatestRecordedVoiceService {
 		LatestRecordedVoice latestRecordedVoice = getLatestRecordedVoiceByOrganization(organization);
 		if (latestRecordedVoice.equals(null))
 		{
-			latestRecordedVoice = new LatestRecordedVoice(organization, timestamp, voice);
+			latestRecordedVoice = new LatestRecordedVoice(organization,voice);
 		}
 		else
 		{

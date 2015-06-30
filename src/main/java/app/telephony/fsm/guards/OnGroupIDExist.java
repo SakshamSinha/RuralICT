@@ -46,7 +46,7 @@ public class OnGroupIDExist extends EventTypeGuard<IVRSession> {
 			return (!allow);
 		}
 
-		return (!allow);
+		return (false);
 	}
 
 }

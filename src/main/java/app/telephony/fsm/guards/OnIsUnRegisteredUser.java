@@ -26,6 +26,7 @@ public class OnIsUnRegisteredUser implements Guard<IVRSession, Object> {
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		String userNumber = session.getUserNumber();
 		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(userNumber);
+		
 		if(userPhoneNumber == null){
 
 			return (allow);

@@ -1,5 +1,8 @@
 package app.telephony.fsm.action.member;
 
+import java.util.HashMap;
+
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
@@ -9,8 +12,7 @@ import app.entities.Voice;
 import app.entities.WelcomeMessage;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
-import app.telephony.config.Configs;
-
+import app.telephony.fsm.RuralictStateMachine;
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -70,6 +72,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			}
 			response.addPlayAudio(welcomeMessage.getVoice().getUrl());
 			if(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableBroadcasts()){
+				session.setGroupID(broadcast.getGroup().getGroupId()+"");
 				response.addPlayAudio(v.getUrl());
 			}
 			else{
@@ -77,7 +80,22 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			}
 
 		}
-		session.setPublisher(false);
+		ruralictSession.setPublisher(false);
+
+		/* INITIALIZING RUDIMENTARY VARIABLES */
+		RuralictStateMachine.tempLanguageMap = new HashMap<String, String>();
+		RuralictStateMachine.tempLanguageMap.put("1", "mr");
+		RuralictStateMachine.tempLanguageMap.put("2", "hi");
+		RuralictStateMachine.tempLanguageMap.put("3", "en");
+
+
+		RuralictStateMachine.tempResponseMap = new HashMap<String, String>();
+		RuralictStateMachine.tempResponseMap.put("1", "Order");
+		RuralictStateMachine.tempResponseMap.put("2", "Feedback");
+		RuralictStateMachine.tempResponseMap.put("3", "Response");
+
+
+
 
 	}
 

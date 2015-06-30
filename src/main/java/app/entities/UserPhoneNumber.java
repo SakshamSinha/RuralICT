@@ -20,6 +20,7 @@ public class UserPhoneNumber implements Serializable {
 	@Column(name="phone_number")
 	private String phoneNumber;
 
+
 	@Type(type="org.hibernate.type.NumericBooleanType")
 	@Column(name="is_primary")
 	private boolean primary;
