@@ -39,7 +39,11 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 	}
 		
 	$scope.uploadFile = function(ids){
-		if ($scope.myFile.type != "audio/wav")
+		if ($scope.myFile == undefined)
+		{
+			alert("No file added. Please choose a file of '.wav' audio format");
+		}
+		else if ($scope.myFile.type != "audio/wav")
 		{
 			alert("Invalid File!! Please choose again. You can only choose a file of '.wav' audio format");
 		}
@@ -94,7 +98,7 @@ $("#page-content").on("click","#voice-upload",function(e){
 	angular.element($('#broadcast-voice-ids')).scope().uploadFile(data);
 });
 
-$("#page-content").on("click","#place-broadcast-call",function(e){
+$("#page-content").on("click","#place-voice-broadcast-call",function(e){
 	var data={};
 	data.askOrder=0;
 	data.askFeedback=0;

@@ -1,6 +1,7 @@
 package app.util;
 
 import it.sauronsoftware.jave.AudioAttributes;
+
 import it.sauronsoftware.jave.DefaultFFMPEGLocator;
 import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncodingAttributes;

@@ -20,33 +20,33 @@ public class AskForLanguageAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		
 		int i=1,j=0;
 		String[] responses = new String[RuralictStateMachine.tempLanguageMap.size()];
 		String[] responseKeys=new String[RuralictStateMachine.tempLanguageMap.size()];
-		
 		for(String key:RuralictStateMachine.tempLanguageMap.keySet()){
 			responseKeys[j]=key;
 			j++;
 		}
-		
 		Arrays.sort(responseKeys);
+
+
 		for(String k:responseKeys){
-			
 			String language = RuralictStateMachine.tempLanguageMap.get(k);
+
+			if(language==null || language.equalsIgnoreCase(session.getLanguage())){
+				continue;
+			}
 			if(language.equalsIgnoreCase("en"))
-			{
-				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
-				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
+			{		
 				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
-				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+language+".wav"); //language	
+				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+(i)+"_"+language+".wav"); //Press
 			}
 			else
 			{
-				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+language+".wav"); //language
+
 				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+language+".wav"); //For
-				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/"+(i)+"_"+language+".wav"); // 'i'
-				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+language+".wav"); //Press
+				response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+(i)+"_"+language+".wav"); //Press
+
 			}
 			responses[i-1]=language;
 			i++;
@@ -60,5 +60,5 @@ public class AskForLanguageAction implements Action<IVRSession> {
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);
 	}
-	
+
 }

@@ -41,7 +41,6 @@ public interface LatestRecordedVoiceRepository extends JpaRepository<LatestRecor
 	@Override
 	public void delete(@Param("latestVoice") LatestRecordedVoice latestVoice);
 	
-	@PreAuthorize("hasRole('ADMIN'+#latestVoice.organization.abbreviation)")
 	@Override
 	public <S extends LatestRecordedVoice> S save(@Param("latestVoice") S latestVoice);
 

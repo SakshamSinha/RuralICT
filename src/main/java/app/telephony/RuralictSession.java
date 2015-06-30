@@ -1,12 +1,16 @@
 package app.telephony;
 
 import java.sql.Timestamp;
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.RecordEvent;
+
 import com.continuent.tungsten.commons.patterns.fsm.*;
+
 import app.business.services.OrganizationService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.InboundCall;
+import app.entities.OutboundCall;
 import app.entities.Voice;
 import app.telephony.fsm.*;
 
@@ -16,16 +20,19 @@ public class RuralictSession extends IVRSession {
 	 * The persistence object associated with this session.
 	 */
 	InboundCall call;
+	OutboundCall outboundCall;
 
 	/**
 	 * The last recorded message in this session, if any.
 	 */
 	
 	Voice voiceMessage ;
+	
 	boolean isOutbound=false;
 	boolean orderAllowed=false;
 	boolean feedbackAllowed=false;
 	boolean responseAllowed=false;
+	boolean isPublisher;
 	int broadcastID;
 	RecordEvent recordEvent;
 
@@ -46,6 +53,10 @@ public class RuralictSession extends IVRSession {
 		call.setTime(new Timestamp(getStartTime().getTime()));
 		call.setFromNumber(userNumber);
 		call.setOrganization(organizationService.getOrganizationByIVRS(ivrNumber));
+		
+		outboundCall=new OutboundCall();
+
+		
 
 	}
 
@@ -56,6 +67,8 @@ public class RuralictSession extends IVRSession {
 	public void finish(long totalCallDuration) {
 		super.finish(totalCallDuration);
 		call.setDuration((int) totalCallDuration);
+		outboundCall.setDuration((int)totalCallDuration);
+	
 	}
 
 	/**
@@ -65,6 +78,14 @@ public class RuralictSession extends IVRSession {
 
 	public InboundCall getCall() {
 		return call;
+	}
+
+	public OutboundCall getOutboundCall() {
+		return outboundCall;
+	}
+
+	public void setOutboundCall(OutboundCall outboundCall) {
+		this.outboundCall = outboundCall;
 	}
 
 	public void setCall(InboundCall call) {
@@ -124,6 +145,14 @@ public class RuralictSession extends IVRSession {
 
 	public void setRecordEvent(RecordEvent recordEvent) {
 		this.recordEvent = recordEvent;
-	}	
+	}
+	
+	public boolean isPublisher() {
+		return isPublisher;
+	}
+
+	public void setPublisher(boolean isPublisher) {
+		this.isPublisher = isPublisher;
+	}
 }
 

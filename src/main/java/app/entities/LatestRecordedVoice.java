@@ -45,9 +45,8 @@ public class LatestRecordedVoice implements Serializable {
 	public LatestRecordedVoice() {
 	}
 
-	public LatestRecordedVoice(Organization organization, Timestamp recordedTime, Voice voice) {
+	public LatestRecordedVoice(Organization organization, Voice voice) {
 		this.organization = organization;
-		this.recordedTime = recordedTime;
 		this.voice = voice;
 	}
 

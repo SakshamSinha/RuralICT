@@ -91,7 +91,7 @@ $("#page-content").on("click","#delete-product",function(e){
 	angular.element(this).scope().deleteProduct();
 	$("#delete-product-modal").modal('toggle');
 	//TODO Eliminating this function doing hard refresh
-	//angular.element(this).scope().reload();
+	angular.element(this).scope().reload();
 });
 
 //capture the id of product on clicking the edit button

@@ -19,7 +19,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.organization.abbreviation)")
 	@Override
 	public Order findOne(Integer id);
 

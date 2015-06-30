@@ -32,8 +32,8 @@ public class OutboundCallService {
 		return null;
 	}
 	
-	public void addOutboundCall(OutboundCall outboundCall){
-		outboundCallRepository.save(outboundCall);
+	public OutboundCall addOutboundCall(OutboundCall outboundCall){
+		return outboundCallRepository.save(outboundCall);
 	}
 	
 	public void removeOutboundCall(OutboundCall outboundCall){

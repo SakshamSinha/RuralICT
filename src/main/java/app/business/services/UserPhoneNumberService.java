@@ -25,6 +25,14 @@ public class UserPhoneNumberService {
 	}
 	
 	/*
+	 * Get user phone number only if primary is set as false.
+	 */
+	public List<UserPhoneNumber> getUserSecondaryPhoneNumbers(User user){
+		
+		return userPhoneNumberRepository.findByUserAndPrimaryFalse(user);
+	}
+	
+	/*
 	 * Get all phone Numbers of a  user.		
 	 */
 	public List<UserPhoneNumber> getAllUserPhoneNumberList(User user){
