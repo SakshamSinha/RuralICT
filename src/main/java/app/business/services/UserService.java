@@ -78,7 +78,7 @@ public class UserService {
 			role="Publisher";
 		}
 		else if(organizationMembership.getIsAdmin()==false && organizationMembership.getIsPublisher()==false){
-			role="User";
+			role="Member";
 		}
 		else if(organizationMembership.getIsPublisher()==true && organizationMembership.getIsAdmin()==true){
 			role="Admin Publisher";

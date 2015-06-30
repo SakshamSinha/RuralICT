@@ -6,7 +6,7 @@
 website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 	
 	// Get Organization Abbreviation from Thymeleaf
-	var abbr = document.getElementById("user-controller-page").getAttribute("organizationabbr");
+	var abbr = $('#organizationAbbr').val();
 	
 	// By Default display all members
 	$scope.selectedRole = "";
@@ -34,14 +34,19 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		{
 			alert("Please Enter a Phone Number !");
 		}
+		else if(!validatephonenumber($scope.editUserPhone))
+		{
+			alert("Please Enter a valid Phone Number.");
+		}
 		else
 		{
+			$scope.inputUserPhone = "91" + $scope.inputUserPhone;
 			// Get the attributes of the new user
 			var newUserDetails = {};
 			newUserDetails.name = $scope.inputUserName;
 			newUserDetails.email = $scope.inputUserEmail;
 			newUserDetails.phone = $scope.inputUserPhone;
-			newUserDetails.role = "User"                        // New User is by default a Member
+			newUserDetails.role = "Member"                        // New User is by default a Member
 			newUserDetails.address = $scope.inputUserAddress;
 
 			$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addNewUser', newUserDetails).
@@ -84,8 +89,8 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		}
 	};
 
-	$scope.detectIfUser = function(manageUserItem) {
-		if(this.manageUserItem.role.search("User") != -1)
+	$scope.detectIfMember = function(manageUserItem) {
+		if(this.manageUserItem.role.search("Member") != -1)
 		{
 			return true;
 		}
@@ -107,7 +112,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			success(function(data, status, headers, config) {
 
 				var previousRole = manageUserItem.role;
-				if(previousRole === "User")
+				if(previousRole === "Member")
 				{
 					manageUserItem.role = "Admin";
 				}
@@ -132,7 +137,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			success(function(data, status, headers, config) {
 
 				var previousRole = manageUserItem.role;
-				if(previousRole === "User")
+				if(previousRole === "Member")
 				{
 					manageUserItem.role = "Publiser";
 				}
@@ -146,17 +151,17 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			});
 	};
 
-	$scope.makeRoleUser = function($event, manageUserItem) {
+	$scope.makeRoleMember = function($event, manageUserItem) {
 		$event.preventDefault();
 
 		var userDetails = {};
 		userDetails.userid = this.manageUserItem.manageUserID;
-		userDetails.addRole = "User";
+		userDetails.addRole = "Member";
 
 		$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addUserRole', userDetails).
 			success(function(data, status, headers, config) {
 
-				manageUserItem.role = "User";
+				manageUserItem.role = "Member";
 			}).
 			error(function(data, status, headers, config) {
 				alert("There was some error in response from the remote server.");
@@ -178,7 +183,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				var previousRole = manageUserItem.role;
 				if(previousRole === "Admin")
 				{
-					manageUserItem.role = "User";
+					manageUserItem.role = "Member";
 				}
 				else
 				{
@@ -203,7 +208,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				var previousRole = manageUserItem.role;
 				if(previousRole === "Publisher")
 				{
-					manageUserItem.role = "User";
+					manageUserItem.role = "Member";
 				}
 				else
 				{
@@ -237,6 +242,10 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			else if(!$scope.editUserPhone)
 			{
 				alert("Please Enter a Phone Number !");
+			}
+			else if(!validatephonenumber($scope.editUserPhone))
+			{
+				alert("Please Enter a valid Phone Number.");
 			}
 			else
 			{
