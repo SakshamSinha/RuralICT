@@ -203,10 +203,13 @@ public class ManageUsersRestController {
 		user.setAddress(address);
 		userService.addUser(user);
 
-		// Add the Primary Phone number for the user in the database
-		UserPhoneNumber primaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
-		primaryPhoneNumber.setPhoneNumber(phone);
-		userPhoneNumberService.addUserPhoneNumber(primaryPhoneNumber);
+		// First Remove the Previous Primary Phone Number
+		UserPhoneNumber previousPrimaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+		userPhoneNumberService.removeUserPhoneNumber(previousPrimaryPhoneNumber);
+		
+		// Then add the new Primary number to the database
+		UserPhoneNumber newPrimaryPhoneNumber = new UserPhoneNumber(user, phone, true);
+		userPhoneNumberService.addUserPhoneNumber(newPrimaryPhoneNumber);
 	}
 
 	// Method to get user details in a Modal Dialog Box

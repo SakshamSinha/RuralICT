@@ -90,17 +90,6 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		}
 	};
 
-	$scope.detectIfMember = function(manageUserItem) {
-		if(this.manageUserItem.role.search("Member") != -1)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	};
-
 	// makeRole functions are called when user does not have the specified roles
 	$scope.makeRoleAdmin = function($event, manageUserItem) {
 		$event.preventDefault();
@@ -146,23 +135,6 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				{
 					manageUserItem.role = "Admin Publisher";
 				}
-			}).
-			error(function(data, status, headers, config) {
-				alert("There was some error in response from the remote server.");
-			});
-	};
-
-	$scope.makeRoleMember = function($event, manageUserItem) {
-		$event.preventDefault();
-
-		var userDetails = {};
-		userDetails.userid = this.manageUserItem.manageUserID;
-		userDetails.addRole = "Member";
-
-		$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addUserRole', userDetails).
-			success(function(data, status, headers, config) {
-
-				manageUserItem.role = "Member";
 			}).
 			error(function(data, status, headers, config) {
 				alert("There was some error in response from the remote server.");

@@ -56,9 +56,6 @@
                                 </li>
                                 <li ng-if="detectIfPublisher(manageUserItem)" ng-click="removeRolePublisher($event, manageUserItem)"><a href="#"><i class="icon-lock"></i> Remove as <strong>Publisher</strong></a>
                                 </li>
-
-                                <li ng-if="!detectIfMember(manageUserItem)" ng-click="makeRoleMember($event, manageUserItem)"><a href="#"><i class="icon-lock"></i> Make <strong>Member</strong></a>
-                                </li>
                             </ul>
                         </div>
                     </td>
@@ -126,27 +123,27 @@
             <div class="modal-body">
                 <form class="form-horizontal">
                     <div class="control-group">
-                        <label class="control-label" for="new-user-name-input">Name</label>
+                        <label class="control-label" for="edit-user-name-input">Name</label>
                         <div class="controls">
-                            <input type="text" ng-model=editUserName class="input-xlarge" id="new-user-name-input" placeholder="George Clooney" />
+                            <input type="text" ng-model=editUserName class="input-xlarge" id="edit-user-name-input" placeholder="George Clooney" />
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="new-user-phone-input">Phone</label>
+                        <label class="control-label" for="edit-user-phone-input">Phone</label>
                         <div class="controls">
-                            <input type="text" ng-model=editUserPhone class="input-xlarge" id="new-user-phone-input" placeholder="9988776655" />
+                            <input type="text" ng-model=editUserPhone class="input-xlarge" id="edit-user-phone-input" placeholder="9988776655" />
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="new-user-address-input">Address</label>
+                        <label class="control-label" for="edit-user-address-input">Address</label>
                         <div class="controls">
-                            <input type="text" ng-model=editUserAddress class="input-xlarge" id="new-user-address-input" placeholder="A/78, Los Angeles" />
+                            <input type="text" ng-model=editUserAddress class="input-xlarge" id="edit-user-address-input" placeholder="A/78, Los Angeles" />
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="new-user-email-input">Email</label>
+                        <label class="control-label" for="edit-user-email-input">Email</label>
                         <div class="controls">
-                            <input type="text" ng-model=editUserEmail class="input-xlarge" id="new-user-email-input" placeholder="george@clooney.com" />
+                            <input type="text" ng-model=editUserEmail class="input-xlarge" id="edit-user-email-input" placeholder="george@clooney.com" />
                         </div>
                     </div>
                 </form>
