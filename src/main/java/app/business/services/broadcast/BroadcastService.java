@@ -15,7 +15,6 @@ import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
-import app.entities.broadcast.VoiceBroadcast;
 
 @Service
 public class BroadcastService {

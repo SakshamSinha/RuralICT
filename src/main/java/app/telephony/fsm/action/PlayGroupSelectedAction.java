@@ -5,7 +5,6 @@ import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import app.business.services.BroadcastRecipientService;

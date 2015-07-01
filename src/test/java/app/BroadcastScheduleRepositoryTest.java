@@ -68,7 +68,6 @@ public class BroadcastScheduleRepositoryTest {
                 )));
 	 }
     
-    @SuppressWarnings("unchecked")
 	@Test
 	@Rollback
     public void getBroadcastScheduleListByByBroadcastAndSendToAllTrueAndTimeGreaterThanOrderByTimeAscTest(){
@@ -83,7 +82,6 @@ public class BroadcastScheduleRepositoryTest {
                 )));
 	 }
     
-    @SuppressWarnings("unchecked")
 	@Test
 	@Rollback
     public void getBroadcastScheduleListByByBroadcastAndTimeGreaterThanOrderByTimeAscTest(){

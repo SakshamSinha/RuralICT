@@ -1,8 +1,6 @@
 package app.business.services.message;
 
 import java.util.List;
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;

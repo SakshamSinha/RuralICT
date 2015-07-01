@@ -33,7 +33,7 @@ public class OutgoiningSmsList {
 
 		Group group = groupRepository.findOne(groupId);
 		List<Broadcast> broadcastList = group.getBroadcasts();
-		List broadcastedMessage =  new ArrayList<>();
+		List<Broadcast> broadcastedMessage =  new ArrayList<Broadcast>();
 		for(Broadcast message : broadcastList){
 			System.out.println(message.getFormat());
 			
@@ -42,7 +42,6 @@ public class OutgoiningSmsList {
 				model.addAttribute("outGoingSms", broadcastedMessage);
 
 			}
-
 
 		}
 

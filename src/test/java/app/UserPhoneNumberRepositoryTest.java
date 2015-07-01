@@ -43,7 +43,6 @@ public class UserPhoneNumberRepositoryTest {
 	@Autowired
 	UserPhoneNumberRepository userPhoneNumberRepository;
 
-    @SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getUserPhoneNumberByUserAndPrimaryTrueTest(){
@@ -58,7 +57,6 @@ public class UserPhoneNumberRepositoryTest {
     
     }
     
-    @SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getUserPhoneNumberListByUserTest(){
