@@ -114,10 +114,15 @@ public class BroadcastVoiceController {
 		boolean voiceBroadcastDraft = (Integer.parseInt(body.get("voiceBroadcastDraft")) !=0);
 		 
 		VoiceBroadcast broadcast = new VoiceBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, voice, voiceBroadcastDraft);
-		//TODO Remove the line just below. The time is updated right now but actually the top broadcast extracted in telephony service is to be done with the help of broadcast schedule and separate thread
-		broadcast.setBroadcastedTime(timestamp);
+	
 		
 		broadcastService.addBroadcast(broadcast);
+		
+		//TODO Remove the line just below. The time is updated right now but actually the top broadcast extracted in telephony service is to be done with the help of broadcast schedule and separate thread
+		java.util.Date date= new java.util.Date();
+		Timestamp currentTimestamp= new Timestamp(date.getTime());
+		broadcast.setBroadcastedTime(currentTimestamp);
+		System.out.println(currentTimestamp);
 		
 		String userIdString = body.get("userIds");
 		String[] userIdList = userIdString.split(",");
