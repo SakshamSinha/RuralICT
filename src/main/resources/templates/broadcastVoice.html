@@ -64,15 +64,12 @@
                			<br></br>
                			<br></br>
             			<div class="row-fluid">
-               				<div class="span4">
-               					<button class="btn btn-success" id="recordButton" onclick="recordFile.startRecording();">record</button>
-               				</div>
-               				<div class="span4">
-								<button class="btn btn-failure" id="stopButton" onclick="recordFile.stopRecording();" disabled>stop</button>
+               				<button class="btn btn-primary" id="recordButton" onclick="recordFile.startRecording();"><i class="icon-white icon-play"></i></button>
+               				<button class="btn btn-primary" id="stopButton" onclick="recordFile.stopRecording();" disabled><i class="icon-white icon-stop"></i></button>
+               				<a class="btn btn-info" role="button" id="audioDownload"><i class="icon-white icon-download"></i> Download</a>
 							</div>
-							<div class="span4">
-								<a class="btn btn-info" role="button" id="audioDownload">Download</a>
-							</div>
+
+
 						</div>
       			</form>
     		</div>
