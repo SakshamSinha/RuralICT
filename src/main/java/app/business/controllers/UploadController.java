@@ -1,7 +1,6 @@
 package app.business.controllers;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;

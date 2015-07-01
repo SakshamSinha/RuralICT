@@ -11,10 +11,8 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import app.entities.Group;
 import app.entities.LatestRecordedVoice;
 import app.entities.Organization;
-import app.entities.Product;
 
 public interface LatestRecordedVoiceRepository extends JpaRepository<LatestRecordedVoice, Integer> {
 	/*

@@ -1,6 +1,5 @@
 package app.business.services;
 
-import java.security.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import app.data.repositories.OrderItemRepository;
 import app.entities.OrderItem;
-import app.entities.Organization;
 
 @Service
 public class OrderItemService {

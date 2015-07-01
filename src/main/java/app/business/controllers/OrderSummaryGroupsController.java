@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import app.business.services.OrderItemService;
 import app.business.services.OrganizationService;
-import app.business.services.ProductService;
 import app.entities.Group;
 import app.entities.Organization;
-import app.entities.Product;
-import app.entities.ProductType;
 
 @Controller
 @RequestMapping("/web/{org}")

@@ -19,6 +19,27 @@
 
 <!--top level tab content-->
 <div class="tab-content">
+
+	<!--broadcast tab menu-->
+	<div id="broadcast" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
+			<li><a href="#broadcast-voice-message" data-toggle="tab">Voice
+					Message</a></li>
+			<li><a href="#broadcast-text-message" data-toggle="tab">Text
+					Message</a></li>
+		</ul>
+		<!--brands tab content-->
+		<div class="tab-content">
+			<div id="broadcast-voice-message" class="tab-pane">
+				<ng-include
+					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include>
+			</div>
+			<div id="broadcast-text-message" class="tab-pane">
+                <ng-include
+                    th:attr="src='\'textBroadcast/'+${group.groupId}+'\''"></ng-include>
+            </div>
+		</div>
+	</div>
 	
 	<!--Voice message response tab menu-->
 	<div id="voice-message-response" class="tab-pane">
@@ -56,29 +77,10 @@
 	</div>
 
 
-	<!--brands tab menu-->
-	<div id="broadcast" class="tab-pane">
-		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
-			<li><a href="#broadcast-voice-message" data-toggle="tab">Voice
-					Message</a></li>
-			<li><a href="#broadcast-text-message" data-toggle="tab">Text
-					Message</a></li>
-		</ul>
-		<!--brands tab content-->
-		<div class="tab-content">
-			<div id="broadcast-voice-message" class="tab-pane">
-				<ng-include
-					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include>
-			</div>
-			<div id="broadcast-text-message" class="tab-pane">
-                <ng-include
-                    th:attr="src='\'textBroadcast/'+${group.groupId}+'\''"></ng-include>
-            </div>
-		</div>
-	</div>
+	
 
 
-	<!--media tab menu-->
+	<!--Text Message Response tab menu-->
 	<div id="text-message-response" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="media_tabs">
 			<li><a href="#text-message-response-inbox" data-toggle="tab">Inbox</a></li>
@@ -120,7 +122,7 @@
 		</div>
 	</div>
 
-	<!--music tab menu-->
+	<!--Sent Sms tab menu-->
 	<div id="send-sms" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="music_tabs">
 			<li><a href="#send-sms-outgoing-sms" data-toggle="tab">Outgoing
@@ -134,7 +136,7 @@
 		</div>
 	</div>
 
-	<!--public_figures tab menu-->
+	<!--Manage tab menu-->
 	<div id="manage" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="public_figures_tabs">
 			<li><a href="#manage-members" data-toggle="tab">Members</a></li>

@@ -68,8 +68,7 @@ public class BroadcastVoiceController {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		User publisher = userService.getCurrentUser();
 		
-		
-		List<GroupMembership> groupMembershipList = new ArrayList(groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group));
+		List<GroupMembership> groupMembershipList = new ArrayList<GroupMembership>(groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group));
 		
 		//called latest recorded voice according to time
 		LatestRecordedVoice broadcast = latestRecordedVoiceService.getLatestRecordedVoiceByOrganization(organization);
@@ -110,7 +109,6 @@ public class BroadcastVoiceController {
 		
 		boolean appOnly = (Integer.parseInt(body.get("appOnly")) !=0);
 		Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
-		String voiceUrl = voice.getUrl();
 		boolean voiceBroadcastDraft = (Integer.parseInt(body.get("voiceBroadcastDraft")) !=0);
 		 
 		VoiceBroadcast broadcast = new VoiceBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, voice, voiceBroadcastDraft);
