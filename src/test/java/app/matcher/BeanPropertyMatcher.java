@@ -1,19 +1,13 @@
 package app.matcher;
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
-import org.hamcrest.StringDescription;
-
 import static org.hamcrest.beans.PropertyUtil.NO_ARGUMENTS;
 import static org.hamcrest.beans.PropertyUtil.getPropertyDescriptor;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
-import org.hamcrest.Description;
-import org.hamcrest.Factory;
-import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 public class BeanPropertyMatcher<T> extends TypeSafeDiagnosingMatcher<T> {

@@ -36,7 +36,6 @@ public class OrganizationRepositoryTest {
 	@Autowired
 	OrganizationRepository organizationRepository;
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getOrganizationByAbbreviation(){
@@ -49,7 +48,6 @@ public class OrganizationRepositoryTest {
                 ));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getOrganizationByIVRS(){
@@ -62,7 +60,6 @@ public class OrganizationRepositoryTest {
                 ));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getAllOrganizationListSortedByName(){
@@ -86,7 +83,6 @@ public class OrganizationRepositoryTest {
             )));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void updateParentOrganization(){

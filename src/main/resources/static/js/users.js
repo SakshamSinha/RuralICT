@@ -34,8 +34,9 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		{
 			alert("Please Enter a Phone Number !");
 		}
-		else if(!validatephonenumber($scope.editUserPhone))
+		else if(!validatephonenumber($scope.inputUserPhone))
 		{
+			console.log()
 			alert("Please Enter a valid Phone Number.");
 		}
 		else
@@ -139,7 +140,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				var previousRole = manageUserItem.role;
 				if(previousRole === "Member")
 				{
-					manageUserItem.role = "Publiser";
+					manageUserItem.role = "Publisher";
 				}
 				else
 				{
