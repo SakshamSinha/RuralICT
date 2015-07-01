@@ -120,13 +120,8 @@ public class SettingsController {
 
 			// Save as Temporary File and Convert to Kuckoo Format
 			File temp = Utils.saveFile("temp.wav", serverFolder, uploadedAudioFile);
-
-			// Change the 'serverFile' variable to path on the server when application is deployed on server
 			File serverFile = new File(serverFolder + File.separator + fileName);
 			serverFile = Utils.convertToKookooFormat(temp, serverFile);
-
-			// The below code will actually copy the uploaded file to specific location on the server
-			FileCopyUtils.copy(uploadedAudioFile.getBytes(), serverFile);
 
 			// Get the current Working Directory and the full Filepath
 			String databaseFileUrl = "http://ruralict.cse.iitb.ac.in/Downloads/voices/welcomeMessage/" + fileName;
