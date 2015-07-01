@@ -2,12 +2,10 @@ package app.telephony.fsm.guards;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.GotDTMFEvent;
-import in.ac.iitb.ivrs.telephony.base.fsm.guards.OnGotDTMFKey;
 import app.telephony.fsm.RuralictStateMachine;
 
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.EventTypeGuard;
-import com.continuent.tungsten.commons.patterns.fsm.Guard;
 import com.continuent.tungsten.commons.patterns.fsm.State;
 
 public class OnInvalidChoice extends EventTypeGuard<IVRSession>{
@@ -26,7 +24,6 @@ public class OnInvalidChoice extends EventTypeGuard<IVRSession>{
 			
 			String input;
 			String elem;
-			boolean resp;
 			switch(type){
 			case "response":
 				input = ((GotDTMFEvent)event).getInput();

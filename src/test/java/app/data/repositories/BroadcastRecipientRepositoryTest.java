@@ -3,17 +3,12 @@ package app.data.repositories;
 import static app.matcher.BeanMatcher.has;
 import static app.matcher.BeanPropertyMatcher.property;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestExecutionListeners;
@@ -26,9 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import app.RuralIvrsApplicationTests;
 import app.entities.BroadcastRecipient;
-import app.entities.Group;
-import app.entities.GroupMembership;
-import app.entities.broadcast.Broadcast;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
 	  TransactionalTestExecutionListener.class})
@@ -47,7 +39,6 @@ public class BroadcastRecipientRepositoryTest {
 	@Autowired
 	BroadcastRepository broadcastRepository;
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getTopBroadcast(){
@@ -60,7 +51,6 @@ public class BroadcastRecipientRepositoryTest {
 	                ));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getBroadcastRecipientByUserAndBroadcast(){

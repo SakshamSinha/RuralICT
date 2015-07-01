@@ -46,7 +46,6 @@ public class OutboundCallRepositoryTest {
 	OutboundCallRepository outboundCallRepository;
 	
 	
-    @SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getOutboundCallByBroadcastScheduleAndBroadcastRecipient(){

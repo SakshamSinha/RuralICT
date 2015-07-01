@@ -37,7 +37,6 @@ public class GroupRepositoryTest {
 	@Autowired
 	GroupRepository groupRepository;
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getAllGroupListSortedByName(){
@@ -65,7 +64,6 @@ public class GroupRepositoryTest {
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	public void updateParentGroup(){
 		Group group = groupRepository.findOne(3);
