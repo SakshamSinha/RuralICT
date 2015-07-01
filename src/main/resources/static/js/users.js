@@ -228,14 +228,14 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				newUserDetails.userid = manageUserItem.manageUserID;
 				newUserDetails.name = $scope.editUserName;
 				newUserDetails.email = $scope.editUserEmail;
-				newUserDetails.phone = $scope.editUserPhone;
+				newUserDetails.phone = "91" + $scope.editUserPhone;
 				newUserDetails.address = $scope.editUserAddress;
 
 				$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/editUser', newUserDetails).
 					success(function(data, status, headers, config) {
 
 						manageUserItem.name = $scope.editUserName;
-						manageUserItem.phone = $scope.editUserPhone;
+						manageUserItem.phone = "91" + $scope.editUserPhone;
 						manageUserItem.address = $scope.editUserAddress;
 						manageUserItem.email = $scope.editUserEmail;
 
