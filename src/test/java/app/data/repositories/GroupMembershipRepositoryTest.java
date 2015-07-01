@@ -100,7 +100,6 @@ public class GroupMembershipRepositoryTest {
                 )));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getGroupMembershipListByGroup(){
@@ -115,7 +114,6 @@ public class GroupMembershipRepositoryTest {
                 )));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getGroupMembershipListByGroupSortedByUserName(){

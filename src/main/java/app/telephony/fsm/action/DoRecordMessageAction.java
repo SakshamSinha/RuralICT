@@ -32,6 +32,7 @@ public class DoRecordMessageAction implements Action<IVRSession> {
 		session.setMessageURL(recordName);
 		ruralictSession.setPublisher(true);
 		response.addRecord(record);
+	   
 	}
 
 }

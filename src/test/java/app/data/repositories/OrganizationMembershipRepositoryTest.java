@@ -40,7 +40,6 @@ public class OrganizationMembershipRepositoryTest {
 	@Autowired
 	UserRepository userRepository;
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
 	public void getUserOrganizationMembership(){
@@ -53,7 +52,6 @@ public class OrganizationMembershipRepositoryTest {
 	                ));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback
     public void getByOrganization(){

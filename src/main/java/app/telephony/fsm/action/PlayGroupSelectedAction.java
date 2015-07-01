@@ -54,8 +54,8 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 				false,
 				voice,
 				true);
-		
-		java.util.Date date= new java.util.Date();
+ 
+	    java.util.Date date= new java.util.Date();
 		Timestamp currentTimestamp= new Timestamp(date.getTime());
 		voicebroadcast.setBroadcastedTime(currentTimestamp);
 

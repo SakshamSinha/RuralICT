@@ -69,7 +69,7 @@ public class BroadcastVoiceController {
 		User publisher = userService.getCurrentUser();
 		
 		
-		List<GroupMembership> groupMembershipList = new ArrayList(groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group));
+		List<GroupMembership> groupMembershipList = new ArrayList<GroupMembership>(groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group));
 		
 		//called latest recorded voice according to time
 		LatestRecordedVoice broadcast = latestRecordedVoiceService.getLatestRecordedVoiceByOrganization(organization);
