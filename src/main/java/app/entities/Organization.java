@@ -102,7 +102,7 @@ public class Organization implements Serializable {
 
 	//bi-directional many-to-one association to BroadcastDefaultSetting
 	@OneToMany(mappedBy="organization")
-	private List<BroadcastDefaultSetting> broadcastDefaultSettings;
+	private List<BroadcastDefaultSettings> broadcastDefaultSettings;
 
 	//bi-directional many-to-one association to Group
 	@OneToMany(mappedBy="organization")
@@ -344,22 +344,22 @@ public class Organization implements Serializable {
 		return broadcast;
 	}
 
-	public List<BroadcastDefaultSetting> getBroadcastDefaultSettings() {
+	public List<BroadcastDefaultSettings> getBroadcastDefaultSettings() {
 		return this.broadcastDefaultSettings;
 	}
 
-	public void setBroadcastDefaultSettings(List<BroadcastDefaultSetting> broadcastDefaultSettings) {
+	public void setBroadcastDefaultSettings(List<BroadcastDefaultSettings> broadcastDefaultSettings) {
 		this.broadcastDefaultSettings = broadcastDefaultSettings;
 	}
 
-	public BroadcastDefaultSetting addBroadcastDefaultSetting(BroadcastDefaultSetting broadcastDefaultSetting) {
+	public BroadcastDefaultSettings addBroadcastDefaultSetting(BroadcastDefaultSettings broadcastDefaultSetting) {
 		getBroadcastDefaultSettings().add(broadcastDefaultSetting);
 		broadcastDefaultSetting.setOrganization(this);
 
 		return broadcastDefaultSetting;
 	}
 
-	public BroadcastDefaultSetting removeBroadcastDefaultSetting(BroadcastDefaultSetting broadcastDefaultSetting) {
+	public BroadcastDefaultSettings removeBroadcastDefaultSetting(BroadcastDefaultSettings broadcastDefaultSetting) {
 		getBroadcastDefaultSettings().remove(broadcastDefaultSetting);
 		broadcastDefaultSetting.setOrganization(null);
 

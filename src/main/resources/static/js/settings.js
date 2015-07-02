@@ -29,7 +29,7 @@ function changeAudioSource(url){
 }
 
 /* Actual Settings Controller */
-website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateOrganization, UpdateBroadcastDefaultSettings) {
+website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window, UpdateOrganization, UpdateBroadcastDefaultSettings) {
 
 	// get the current organization Attributes
 	var orgid = $('#organizationId').val();
@@ -226,7 +226,11 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 			//finally update the database
 			$scope.outboundcall.$update({
 				id: orgid
-			}, function() {alert("Your Settings have been saved.")});
+			}, function() {
+				alert("Your Settings have been saved.");
+				//TODO Eliminating this function doing hard refresh
+				setTimeout($window.location.reload.bind(window.location),2000);
+				});
 		});
 	};
 	
