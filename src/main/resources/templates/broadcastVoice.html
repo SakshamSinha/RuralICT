@@ -95,17 +95,17 @@
 					<div class="row-fluid"> 
 					<div class="span4">
 							<label>
-								<input id="order-check" type="checkbox" name="order" value="1" />Order
+								<input id="order-check" type="checkbox" name="order" th:checked="${askOrder}" value="1" />Order
 							</label>
 					</div>
 					<div class="span4">
 							<label>
-								<input id="feedback-check" type="checkbox" name="feedback" value="2" />Feedback
+								<input id="feedback-check" type="checkbox" name="feedback" value="2" th:checked="${askFeedback}" />Feedback
 							</label>
 					</div>
 					<div class="span4">
 							<label>
-								<input id="response-check"type="checkbox" name="response" value="3"/>Response
+								<input id="response-check"type="checkbox" name="response" value="3" th:checked="${askResponse}" />Response
 							</label>
 					</div>
 					</div>            	

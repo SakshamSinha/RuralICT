@@ -242,7 +242,7 @@ website.factory("UpdateOrganization", function($resource) {
 
 /* Resources for Outbound Call */
 website.factory("UpdateBroadcastDefaultSettings", function($resource) {
-	return $resource(API_ADDR + "api/broadcastDefaultSettings/:id", {id: '@id'}, {
+	return $resource(API_ADDR + "api/broadcastDefaultSettingses/:id", {id: '@id'}, {
 		query: {
 			method: "GET",
 			isArray: false

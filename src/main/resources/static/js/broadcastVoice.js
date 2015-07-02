@@ -82,7 +82,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 	
 	//TODO Eliminating this function doing hard refresh
 	$scope.reload = function(){
-		setTimeout($window.location.reload,2000);
+		setTimeout($window.location.reload.bind(window.location),2000);
 	}
     
 });

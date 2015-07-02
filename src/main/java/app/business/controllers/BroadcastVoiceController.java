@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import app.business.services.BroadcastDefaultSettingsService;
 import app.business.services.BroadcastRecipientService;
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
@@ -26,6 +27,7 @@ import app.business.services.OrganizationService;
 import app.business.services.UserService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
+import app.entities.BroadcastDefaultSettings;
 import app.entities.BroadcastRecipient;
 import app.entities.Group;
 import app.entities.GroupMembership;
@@ -57,6 +59,8 @@ public class BroadcastVoiceController {
 	@Autowired
 	BroadcastRecipientService broadcastRecipientService;
 	@Autowired
+	BroadcastDefaultSettingsService broadcastDefaultSettingService;
+	@Autowired
 	LatestRecordedVoiceService latestRecordedVoiceService;
 
 	@RequestMapping(value="/broadcastVoiceMessages/{groupId}")
@@ -80,10 +84,21 @@ public class BroadcastVoiceController {
 			System.out.println(groupMembership.getUser().getName());
 		}
 		
+		BroadcastDefaultSettings broadcastDefaultSetting = broadcastDefaultSettingService.getBroadcastDefaultSettingByOrganization(organization);
+		boolean askOrder = broadcastDefaultSetting.getAskOrder();
+		boolean askFeedback = broadcastDefaultSetting.getAskFeedback();
+		boolean askResponse = broadcastDefaultSetting.getAskResponse();
+		System.out.println(askOrder);
+		System.out.println(askFeedback);
+		System.out.println(askResponse);
+		
 		model.addAttribute("users",users);
 		model.addAttribute("organization",organization);
 		model.addAttribute("group",group);
 		model.addAttribute("publisher",publisher);
+		model.addAttribute("askOrder", askOrder);
+		model.addAttribute("askFeedback", askFeedback);
+		model.addAttribute("askResponse", askResponse);
 		
 		//TODO Ask what to do when user is not a publisher do we prevent it on UI side.
 		String role = userService.getUserRole(publisher, organization);
@@ -129,7 +144,7 @@ public class BroadcastVoiceController {
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
 		}
 		
-		//TODO have to shift this function to thread. Also have to ask where is the Broadcast object mentioned here.
+		//TODO have to shift this function to thread.
 		for(BroadcastRecipient recipient: broadcastRecipients)
 		{
 			User user=recipient.getUser();
@@ -154,10 +169,8 @@ public class BroadcastVoiceController {
 		System.out.println("We have received the latest body from uploader in Angular "+body);
 		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
 		Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
-		String recordedTime = body.get("broadcastedTime");
-		Timestamp timestamp = Timestamp.valueOf(recordedTime);
 		
-		latestRecordedVoiceService.updateLatestRecordedVoice(organization, timestamp, voice);
+		latestRecordedVoiceService.updateLatestRecordedVoice(organization, voice);
 	}
 
 }
