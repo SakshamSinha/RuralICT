@@ -1,0 +1,24 @@
+<div ng-controller = "BroadcastDefaultSettingsController as broadcastDefaultCtrl">
+	<div class="table-settings-system">
+		<table>
+			<tr>
+				<b>Broadcast Settings :</b>
+			</tr>
+			<tr>
+				<td><b>Call Flow : </b>
+					<br>
+					<br>
+					<input type="checkbox" ng-model=outgoingCheckBoxOptions.order name="response1" />SemiStructured&nbsp;(Order/आदेश)
+					<br>
+					<input type="checkbox" ng-model=outgoingCheckBoxOptions.feedback name="response1" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
+					<br>
+					<input type="checkbox" ng-model=outgoingCheckBoxOptions.response name="response1" />Structured&nbsp;(Response/प्रतिक्रिया)
+					<br>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="form-actions">
+		<input type="submit" ng-click="updateOutgoingCallOpt()" class="btn btn-success" value="Save Details" />
+	</div>
+</div>
