@@ -54,10 +54,11 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 				false,
 				voice,
 				true);
-		 
+ 
 	    java.util.Date date= new java.util.Date();
 		Timestamp currentTimestamp= new Timestamp(date.getTime());
 		voicebroadcast.setBroadcastedTime(currentTimestamp);
+
 		BroadcastService broadcastService = SpringContextBridge.services().getVoiceBroadcastService();
 		// Add row for broadcast
 		voicebroadcast = (VoiceBroadcast) broadcastService.addBroadcast(voicebroadcast);
