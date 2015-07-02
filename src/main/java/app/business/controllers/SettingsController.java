@@ -18,7 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -101,8 +100,6 @@ public class SettingsController {
 				return "-1";
 			}
 			
-			
-			System.out.println("Content-type: " + uploadedAudioFile.getContentType());
 			// Check if the file is of supported audio formats
 			if(!Arrays.asList(supportedAudioFiletypes).contains(uploadedAudioFile.getContentType()))
 			{
@@ -111,20 +108,17 @@ public class SettingsController {
 				return "-3";
 			}
 
+			//Check if the File Size is greater than 10MB
 			if(uploadedAudioFile.getSize() > 10000000)
 			{
 				return "-2";
 			}
 
+			// Get the File Name
 			String fileName = uploadedAudioFile.getOriginalFilename();
 			
-			System.out.println("Original Filename = " + fileName);
-
 			String locale = request.getParameter("locale");
-
-			// Create Required Entity Objects
-			WelcomeMessage welcomeMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, locale);
-
+			
 			String serverFolder = "/home/ruralivrs/Ruralict/apache-tomcat-7.0.42/webapps/Downloads/voices/welcomeMessage";
 
 			// Save as Temporary File and Convert to Kuckoo Format
@@ -134,10 +128,8 @@ public class SettingsController {
 			fileName = fileName.replaceAll("\\s+","");
 			
 			// Change Extension of the file to wav
-			
 			fileName = fileName.substring(0,fileName.length()-3);
 			fileName = fileName + "wav";
-			
 			
 			// Get the current Working Directory and the full Filepath
 			String databaseFolder = "http://ruralict.cse.iitb.ac.in/Downloads/voices/welcomeMessage/";
@@ -147,23 +139,20 @@ public class SettingsController {
 			// Check if the file is already present or not and rename it accordingly
 			Voice previousFileSameName  = voiceService.getVoicebyUrl(databaseFileUrl);
 					
-		    if(previousFileSameName != null)
-		    {
-		    	System.out.println("Renaming the File");
-		    	
-		    	// Insert some-random number to automatically rename the file
-		    	fileName = fileName.substring(0,fileName.length()-4);
-		    	Random randomint = new Random();
-		    	fileName = fileName + "_" + Integer.toString(randomint.nextInt()) + ".wav";
-		    	databaseFileUrl = databaseFolder + fileName;
-		    	
-		    }
+			if(previousFileSameName != null)
+			{
+				// Insert some-random number to automatically rename the file
+				fileName = fileName.substring(0,fileName.length()-4);
+				Random randomint = new Random();
+				fileName = fileName + "_" + Integer.toString(randomint.nextInt()) + ".wav";
+				databaseFileUrl = databaseFolder + fileName;
+				
+			}
 			
-			System.out.println("New File Name = " + fileName);
+			// Create a new file and convert the file to appropriate Kuckoo Format
 			File serverFile = new File(serverFolder + File.separator + fileName);
 			uploadedAudioFile.transferTo(temp);
 			serverFile = Utils.convertToKookooFormat(temp, serverFile);
-			
 			
 			// Create a new Voice Object
 			Voice voice = new Voice(databaseFileUrl, true);
@@ -172,6 +161,7 @@ public class SettingsController {
 			voiceService.addVoice(voice);
 
 			// Update the Welcome Message
+			WelcomeMessage welcomeMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, locale);
 			welcomeMessage.setVoice(voice);
 			welcomeMessageService.addWelcomeMessage(welcomeMessage);
 
