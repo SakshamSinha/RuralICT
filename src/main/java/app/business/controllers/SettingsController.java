@@ -3,9 +3,11 @@ package app.business.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -80,6 +82,8 @@ public class SettingsController {
 		// Convert for getting the files
 		MultipartHttpServletRequest mRequest;
 		mRequest = (MultipartHttpServletRequest) request;
+		
+		String[] supportedAudioFiletypes = new String[]{"audio/wav","audio/mp3","audio/m4a","audio/wma","audio/ogg"};
 
 		// Get Parameters passed from AngularJS using FormData
 		int organizationid = Integer.parseInt(request.getParameter("orgid"));
@@ -97,7 +101,10 @@ public class SettingsController {
 				return "-1";
 			}
 			
-			if(!uploadedAudioFile.getContentType().equals("audio/wav"))
+			
+			System.out.println("Content-type: " + uploadedAudioFile.getContentType());
+			// Check if the file is of supported audio formats
+			if(!Arrays.asList(supportedAudioFiletypes).contains(uploadedAudioFile.getContentType()))
 			{
 				// Take some action in the frontend Part
 				// like an alert box saying please upload wav file
@@ -110,6 +117,8 @@ public class SettingsController {
 			}
 
 			String fileName = uploadedAudioFile.getOriginalFilename();
+			
+			System.out.println("Original Filename = " + fileName);
 
 			String locale = request.getParameter("locale");
 
@@ -119,13 +128,39 @@ public class SettingsController {
 			String serverFolder = "/home/ruralivrs/Ruralict/apache-tomcat-7.0.42/webapps/Downloads/voices/welcomeMessage";
 
 			// Save as Temporary File and Convert to Kuckoo Format
-			File temp = Utils.saveFile("temp.wav", serverFolder, uploadedAudioFile);
-			File serverFile = new File(serverFolder + File.separator + fileName);
-			serverFile = Utils.convertToKookooFormat(temp, serverFile);
-
+			File temp = new File(serverFolder + File.separator + "temp.wav" );
+			
+			// Remove spaces as kuckoo doesn't allow filename with spaces
+			fileName = fileName.replaceAll("\\s+","");
+			
+			// Change Extension of the file to wav
+			
+			fileName = fileName.substring(0,fileName.length()-3);
+			fileName = fileName + "wav";
+			
+			
 			// Get the current Working Directory and the full Filepath
 			String databaseFileUrl = "http://ruralict.cse.iitb.ac.in/Downloads/voices/welcomeMessage/" + fileName;
 
+			
+			// Check if the file is already present or not and rename it accordingly
+			Voice previousFileSameName  = voiceService.getVoicebyUrl(databaseFileUrl);
+					
+		    if(previousFileSameName != null)
+		    {
+		    	System.out.println("");
+		    	fileName = fileName.substring(0,fileName.length()-4);
+		    	Random randomint = new Random();
+		    	fileName = fileName + Integer.toString(randomint.nextInt()) + ".wav";
+		    }
+			
+			System.out.println("New File Name = " + fileName);
+			File serverFile = new File(serverFolder + File.separator + fileName);
+			uploadedAudioFile.transferTo(temp);
+			serverFile = Utils.convertToKookooFormat(temp, serverFile);
+			
+			// Rename the File accordingly
+			
 			// Create a new Voice Object
 			Voice voice = new Voice(databaseFileUrl, true);
 
