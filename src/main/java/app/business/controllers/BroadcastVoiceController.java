@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.business.services.BroadcastDefaultSettingsService;
@@ -105,6 +106,16 @@ public class BroadcastVoiceController {
 		model.addAttribute("role", role);
 		
 		return "broadcastVoice";
+	}
+	
+	@RequestMapping(value="/broadcastDefaultSettings")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String broadcastDefaultSettings(@PathVariable String org,  Model model){
+		
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		model.addAttribute("organization", organization);
+		return "broadcastDefaultSettings";
 	}
 	
 	@RequestMapping(value = "/broadcastVoiceMessages/{groupId}", method = RequestMethod.POST)

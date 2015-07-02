@@ -1,3 +1,4 @@
+<div  ng-controller="BroadcastVoiceUrlCtrl as broadcastUrlCtrl">
 <div class="row-fluid">
 	<input type="hidden" id="groupId" th:value="${group.groupId}">
 	<div class="page-header">
@@ -8,7 +9,7 @@
 </div>
 <ul class="nav nav-tabs top-tab-bar" id="interest_tabs">
 	<!--top level tabs-->
-	<li><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
+	<li ng-click="changeUrl(url)"><a ng-href="#broadcast" data-toggle="tab">Broadcast</a></li>
 	<li><a href="#voice-message-response" data-toggle="tab">Voice
 			Message Response</a></li>
 	<li><a href="#text-message-response" data-toggle="tab">Text
@@ -22,9 +23,8 @@
 
 	<!--broadcast tab menu-->
 	<div id="broadcast" class="tab-pane">
-		<div ng-controller="BroadcastVoiceUrlCtrl as broadcastUrlCtrl">
 		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
-			<li ng-click="changeUrl(url)"><a ng-href="#broadcast-voice-message" data-toggle="tab" >Voice
+			<li><a ng-href="#broadcast-voice-message" data-toggle="tab" >Voice
 					Message</a></li>
 			<li><a href="#broadcast-text-message" data-toggle="tab">Text
 					Message</a></li>
@@ -34,13 +34,12 @@
 			<div id="broadcast-voice-message" class="tab-pane">
 <!-- 				<ng-include -->
 <!-- 					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include> -->
-			<div ng-include="url"></div>
+			<ng-include src="url"></ng-include>
 			</div>
 			<div id="broadcast-text-message" class="tab-pane">
                 <ng-include
                     th:attr="src='\'textBroadcast/'+${group.groupId}+'\''"></ng-include>
             </div>
-		</div>
 		</div>
 	</div>
 	
@@ -159,4 +158,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
