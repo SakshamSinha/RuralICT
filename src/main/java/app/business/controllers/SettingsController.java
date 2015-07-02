@@ -140,7 +140,8 @@ public class SettingsController {
 			
 			
 			// Get the current Working Directory and the full Filepath
-			String databaseFileUrl = "http://ruralict.cse.iitb.ac.in/Downloads/voices/welcomeMessage/" + fileName;
+			String databaseFolder = "http://ruralict.cse.iitb.ac.in/Downloads/voices/welcomeMessage/";
+			String databaseFileUrl = databaseFolder + fileName;
 
 			
 			// Check if the file is already present or not and rename it accordingly
@@ -148,10 +149,14 @@ public class SettingsController {
 					
 		    if(previousFileSameName != null)
 		    {
-		    	System.out.println("");
+		    	System.out.println("Renaming the File");
+		    	
+		    	// Insert some-random number to automatically rename the file
 		    	fileName = fileName.substring(0,fileName.length()-4);
 		    	Random randomint = new Random();
-		    	fileName = fileName + Integer.toString(randomint.nextInt()) + ".wav";
+		    	fileName = fileName + "_" + Integer.toString(randomint.nextInt()) + ".wav";
+		    	databaseFileUrl = databaseFolder + fileName;
+		    	
 		    }
 			
 			System.out.println("New File Name = " + fileName);
@@ -159,7 +164,6 @@ public class SettingsController {
 			uploadedAudioFile.transferTo(temp);
 			serverFile = Utils.convertToKookooFormat(temp, serverFile);
 			
-			// Rename the File accordingly
 			
 			// Create a new Voice Object
 			Voice voice = new Voice(databaseFileUrl, true);
