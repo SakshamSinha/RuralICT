@@ -138,7 +138,6 @@ public class Utils {
 		HttpURLConnection httpConn = (HttpURLConnection) url.openConnection(proxy);
 		
 		int responseCode = httpConn.getResponseCode();
-		String responseMessage = httpConn.getHeaderFields().toString();
 		String location = httpConn.getHeaderField("Location");
 		
 		// always check HTTP response code first

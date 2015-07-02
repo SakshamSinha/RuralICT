@@ -123,7 +123,8 @@ $("#page-content").on("click","#place-voice-broadcast-call",function(e){
 		data.askResponse=1;
 	}
 	//look for the time it which is broadcasted.
-	data.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+	//data.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+	//console.log(data.broadcastedTime);
 	data.appOnly = 0;
 	data.format = "voice";
 	//setting the voice id if the voice is present in group
