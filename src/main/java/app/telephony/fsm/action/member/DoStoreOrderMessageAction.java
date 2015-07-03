@@ -27,9 +27,10 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		String messageURL=session.getMessageURL();
-		RecordEvent recordEvent = (RecordEvent) event;
 		RuralictSession ruralictSession = (RuralictSession) session;
+
+		String messageURL=ruralictSession.getMessageURL();
+		RecordEvent recordEvent = (RecordEvent) event;
 		Voice voiceMessage = new Voice();
 		InboundCall inboundCall= ruralictSession.getCall();
 		OutboundCall outboundCall=ruralictSession.getOutboundCall();
@@ -43,7 +44,7 @@ public class DoStoreOrderMessageAction implements Action<IVRSession> {
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		BroadcastRecipientService broadcastRecipient = SpringContextBridge.services().getBroadcastRecipientService();
 		BroadcastScheduleService broadcastScheduleService = SpringContextBridge.services().getBroadcastScheduleService();
-		String groupID = session.getGroupID();
+		String groupID = ruralictSession.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		GroupService groupService = SpringContextBridge.services().getGroupService();
 		Group group = groupService.getGroup(groupId);

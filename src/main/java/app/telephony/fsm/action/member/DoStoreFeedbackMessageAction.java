@@ -27,14 +27,14 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		RuralictSession ruralictSession = (RuralictSession) session;
-		String messageURL=session.getMessageURL();
+		String messageURL=ruralictSession.getMessageURL();
 		InboundCall inboundCall=ruralictSession.getCall();
 		OutboundCall outboundCall=ruralictSession.getOutboundCall();
 		Broadcast broadcast  = new VoiceBroadcast();
 		GroupService groupService = SpringContextBridge.services().getGroupService();
 		BroadcastRecipientService broadcastRecipient = SpringContextBridge.services().getBroadcastRecipientService();
 		BroadcastScheduleService broadcastScheduleService = SpringContextBridge.services().getBroadcastScheduleService();
-		String groupID = session.getGroupID();
+		String groupID = ruralictSession.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		Group group = groupService.getGroup(groupId);
 		broadcast.setBroadcastId(ruralictSession.getBroadcastID());
