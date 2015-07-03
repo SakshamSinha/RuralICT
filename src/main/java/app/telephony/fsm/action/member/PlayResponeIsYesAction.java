@@ -33,7 +33,7 @@ public class PlayResponeIsYesAction implements Action<IVRSession> {
 		String type ="response";
 		InboundCall inboundCall = ruralictSession.getCall();
 		OutboundCall outboundCall = ruralictSession.getOutboundCall();
-		String groupID = session.getGroupID();
+		String groupID = ruralictSession.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		GroupService groupService = SpringContextBridge.services().getGroupService();
 		Group group = groupService.getGroup(groupId);
@@ -54,7 +54,7 @@ public class PlayResponeIsYesAction implements Action<IVRSession> {
 			 telephonyService.addVoiceMessage(session.getUserNumber(), null, group, mode, type, true, null,inboundCall,null);
 		}
 
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes_"+session.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes_"+ruralictSession.getLanguage()+".wav");
 
 	}
 
