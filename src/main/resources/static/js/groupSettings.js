@@ -1,4 +1,4 @@
-website.controller("GroupSettingsCtrl", function($scope, $route, UpdateGroup) {
+website.controller("GroupSettingsCtrl", function($scope, $route, UpdateGroup, RemoveGroup) {
 	
 	$scope.updateGroupName = function(groupId, name) {
 		$scope.group = UpdateGroup.get({id:groupId},function(){
@@ -8,6 +8,20 @@ website.controller("GroupSettingsCtrl", function($scope, $route, UpdateGroup) {
 				
 			});
 		});
+	};
+	
+	$scope.removeGroup = function(groupId){
+		
+		$scope.group = RemoveGroup.get({id: groupId},function(){
+			
+			$scope.group.$update({id:groupId},function(group){
+				window.location.href = "/";
+				
+			}, function(error){
+					if(error.status == "409")
+						alert("To delete this group, remove all its members.");
+			});
+		});		
 	};
 	
 	/* Need to find out way to reload page without refresh. Work halted since message repository gives errors */
@@ -30,5 +44,14 @@ $("#page-content").on("click", "#submitGroupSettings", function (e) {
     angular.element($('#submitGroupSettings')).scope().reload();
 });
 
+$("#page-content").on("click", "#delete-group", function(e) {
+	e.preventDefault();
+    
+	/* Get required values from modal */
+	var id = $("#groupId").val();
+	angular.element($('#delete-group')).scope().removeGroup(id);
+	
+	$('#delete-group-confirmation-modal').modal('toggle');
 
-
+	
+});
