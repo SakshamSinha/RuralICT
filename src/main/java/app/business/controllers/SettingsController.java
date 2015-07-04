@@ -62,9 +62,9 @@ public class SettingsController {
 		int organizationid = Integer.parseInt(request.getParameter("orgid"));
 		Organization organization = organizationService.getOrganizationById(organizationid);
 
-		WelcomeMessage englishMessage = welcomeMessageService.getbyOrganizationAndLocale(organization,"en");
-		WelcomeMessage marathiMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, "mr");
-		WelcomeMessage hindiMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, "hi");
+		WelcomeMessage englishMessage = welcomeMessageService.getByOrganizationAndLocale(organization,"en");
+		WelcomeMessage marathiMessage = welcomeMessageService.getByOrganizationAndLocale(organization, "mr");
+		WelcomeMessage hindiMessage = welcomeMessageService.getByOrganizationAndLocale(organization, "hi");
 
 		List<String> voices = new ArrayList<String>();
 		voices.add(englishMessage.getVoice().getUrl());
@@ -161,7 +161,7 @@ public class SettingsController {
 			voiceService.addVoice(voice);
 
 			// Update the Welcome Message
-			WelcomeMessage welcomeMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, locale);
+			WelcomeMessage welcomeMessage = welcomeMessageService.getByOrganizationAndLocale(organization, locale);
 			welcomeMessage.setVoice(voice);
 			welcomeMessageService.addWelcomeMessage(welcomeMessage);
 

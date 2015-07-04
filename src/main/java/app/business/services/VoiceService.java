@@ -27,7 +27,7 @@ public class VoiceService {
 	}
 	
 	public Voice getVoicebyUrl(String url) {
-		return voiceRepository.findByurl(url);
+		return voiceRepository.findByUrl(url);
 	}
 	
 	public List<Voice> getAllVoiceList(){

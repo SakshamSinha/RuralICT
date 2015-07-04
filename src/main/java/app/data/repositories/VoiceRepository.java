@@ -12,6 +12,6 @@ public interface VoiceRepository extends JpaRepository<Voice, Integer> {
 	 */
 	public List<Voice> findByIsDownloaded(boolean isDownloaded);
 	
-	public Voice findByurl(String url);
+	public Voice findByUrl(String url);
 
 }
