@@ -23,6 +23,7 @@ import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.UserViewService;
 import app.entities.Group;
+import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
@@ -111,6 +112,11 @@ public class ManageUsersRestController {
 		// Add the Organization Membership for the user in the Database
 		OrganizationMembership membership = new OrganizationMembership(organization, user, isAdmin, isPublisher);
 		organizationMembershipService.addOrganizationMembership(membership);
+		
+		// Add the new user by default to parent group
+		Group parentgroup = organizationService.getParentGroup(organization);
+		GroupMembership groupMembership = new GroupMembership(parentgroup, user);
+		groupMembershipService.addGroupMembership(groupMembership);
 
 		// Add the Primary Phone number for the user in the database
 		UserPhoneNumber primaryPhoneNumber = new UserPhoneNumber(user, phone, true);
