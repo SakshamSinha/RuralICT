@@ -109,7 +109,7 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	/* Get values to generate orderItem objects from modal */
 	var userName = $.trim($("#newGroupUserName").val());
 	var userEmail = $.trim($("#newGroupUserEmail").val());
-	if(userEmail.indexOf("@")==-1){
+	if(userEmail.indexOf("@")==-1 && userEmail != ""){
 		alert("Invalid Email Id");
 		return;
 	}
