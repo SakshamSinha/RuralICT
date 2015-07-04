@@ -41,10 +41,10 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		String userLang=userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getCallLocale();
 
 		if(userLang!=null && !userLang.equalsIgnoreCase("")){
-			session.setLanguage(userLang);
+			ruralictSession.setLanguage(userLang);
 		}
 		else{
-			session.setLanguage(null);
+			ruralictSession.setLanguage(null);
 		}
 
 		if(isOutbound){
@@ -54,7 +54,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			ruralictSession.setFeedbackAllowed(broadcast.getAskFeedback());
 			ruralictSession.setResponseAllowed(broadcast.getAskResponse());
 			ruralictSession.setBroadcastID(broadcast.getBroadcastId());
-			session.setGroupID(broadcast.getGroup().getGroupId()+"");
+			ruralictSession.setGroupID(broadcast.getGroup().getGroupId()+"");
 
 		}
 		else{
@@ -63,20 +63,20 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			ruralictSession.setFeedbackAllowed(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskFeedback());
 			ruralictSession.setResponseAllowed(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getInboundCallAskResponse());
 
-			if(session.getLanguage()==null){
+			if(ruralictSession.getLanguage()==null){
 
 				welcomeMessage = organizationService.getWelcomeMessageByOrganization(organizationService.getOrganizationByIVRS(session.getIvrNumber()), "en");
 			}
 			else{
-				welcomeMessage = organizationService.getWelcomeMessageByOrganization(organizationService.getOrganizationByIVRS(session.getIvrNumber()), session.getLanguage());
+				welcomeMessage = organizationService.getWelcomeMessageByOrganization(organizationService.getOrganizationByIVRS(session.getIvrNumber()), ruralictSession.getLanguage());
 			}
 			response.addPlayAudio(welcomeMessage.getVoice().getUrl());
 			if(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableBroadcasts()){
-				session.setGroupID(broadcast.getGroup().getGroupId()+"");
+				ruralictSession.setGroupID(broadcast.getGroup().getGroupId()+"");
 				response.addPlayAudio(v.getUrl());
 			}
 			else{
-				session.setGroupID(((Integer)organizationService.getParentGroup(organizationService.getOrganizationByIVRS(session.getIvrNumber())).getGroupId()).toString());
+				ruralictSession.setGroupID(((Integer)organizationService.getParentGroup(organizationService.getOrganizationByIVRS(session.getIvrNumber())).getGroupId()).toString());
 			}
 
 		}

@@ -1,6 +1,7 @@
 package app.telephony.fsm.action.member;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;
@@ -16,11 +17,12 @@ public class AskForOrderMenuAction implements Action<IVRSession> {
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
+		RuralictSession ruralictSession = (RuralictSession) session;
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForPlaceOrder_"+session.getLanguage()+".wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForCancelOrder_"+session.getLanguage()+".wav");	
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForPlaceOrder_"+ruralictSession.getLanguage()+".wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForCancelOrder_"+ruralictSession.getLanguage()+".wav");	
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

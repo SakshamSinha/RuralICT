@@ -53,7 +53,7 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 					orderService.cancelOrder(order);
 					String message = "Your Order " + orderID+" is cancelled";
 					try {
-						IVRUtils.sendSMS(session.getUserNumber(),message);
+						IVRUtils.sendSMS(session.getUserNumber(), message, order.getOrganization().getIncomingSmsCode(), null);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
