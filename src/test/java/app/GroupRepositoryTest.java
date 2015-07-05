@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import app.data.repositories.GroupMembershipRepository;
 import app.data.repositories.GroupRepository;
-import app.entities.Group;
 import app.entities.GroupMembership;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
