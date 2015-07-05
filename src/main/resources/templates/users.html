@@ -2,25 +2,6 @@
 	th:attr="organizationabbr=${organization.abbreviation}">
 	<div class="row-fluid">
 
-		<div class="page-header">
-			<h1>
-				Users <small>All users</small>
-			</h1>
-		</div>
-		<button class="btn btn-success" id="add_new_user" data-toggle="modal"
-			data-title="Add new user" data-target="#add-new-user-modal">
-			<i class="icon-white icon-plus-sign"></i> Add new user
-		</button>
-		<br> <br>
-		<form role="form">
-			<input type="radio" ng-model="selectedRole" id=roleradio1 value="">&nbsp;Display
-			All Users &nbsp; <input type="radio" ng-model="selectedRole"
-				id=roleradio2 value="Admin">&nbsp;Display all Admins &nbsp;
-			<input type="radio" ng-model="selectedRole" id=roleradio3
-				value="Publisher">&nbsp;Display all Publishers &nbsp; <input
-				type="radio" ng-model="selectedRole" id=roleradio4 value="Member">&nbsp;Display
-			All Members
-
 			<div class="page-header">
 				<h1>
 					Users <small>All users</small>
@@ -116,23 +97,6 @@
 				boundary-links="true"
 				th:attr='template-url=@{/static/js/dirPagination.tpl.html}'></dir-pagination-controls>
 	</div>
-
-	<li ng-if="!detectIfPublisher(manageUserItem)"
-		ng-click="makeRolePublisher($event, manageUserItem)"><a href="#"><i
-			class="icon-lock"></i> Make <strong>Publisher</strong></a></li>
-	<li ng-if="detectIfPublisher(manageUserItem)"
-		ng-click="removeRolePublisher($event, manageUserItem)"><a
-		href="#"><i class="icon-lock"></i> Remove as <strong>Publisher</strong></a></li>
-	</ul>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<dir-pagination-controls id="pagination-manage-users"
-	boundary-links="true"
-	th:attr='template-url=@{/static/js/dirPagination.tpl.html}'></dir-pagination-controls>
-</div>
 
 <!--  Modal dialog to add a new user -->
 <div class="modal fade" id="add-new-user-modal" tabindex="-1"
