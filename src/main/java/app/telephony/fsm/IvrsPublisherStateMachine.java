@@ -1,6 +1,4 @@
 package app.telephony.fsm;
-import java.util.Dictionary;
-
 import app.telephony.fsm.action.*;
 
 import com.continuent.tungsten.commons.patterns.fsm.Action;

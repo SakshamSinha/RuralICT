@@ -1,5 +1,7 @@
 package app;
 
+import in.ac.iitb.ivrs.telephony.base.config.IVRConfigs;
+
 import javax.servlet.Filter;
 
 import org.springframework.boot.SpringApplication;
@@ -15,9 +17,13 @@ import app.util.DownloadDaemon;
 @SpringBootApplication
 @EnableCaching
 public class RuralIvrsApplication {
-	
+
     public static void main(String[] args) {
-    	
+    	if (IVRConfigs.Network.USE_PROXY && IVRConfigs.Network.PROXY_USER.isEmpty()) {
+    		System.out.println("Please set the proxy user and password in IvrsConfig!");
+    		return;
+    	}
+
     	//To be turned on when we need to download files to iitb server
         SpringApplication.run(RuralIvrsApplication.class, args);
         (new Thread(new DownloadDaemon())).start();

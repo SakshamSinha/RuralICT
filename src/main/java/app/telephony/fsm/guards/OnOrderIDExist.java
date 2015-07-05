@@ -4,8 +4,6 @@ import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.events.GotDTMFEvent;
 import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
-import java.util.ArrayList;
-
 import app.business.services.OrderService;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
@@ -55,7 +53,7 @@ public class OnOrderIDExist extends EventTypeGuard<IVRSession> {
 					orderService.cancelOrder(order);
 					String message = "Your Order " + orderID+" is cancelled";
 					try {
-						IVRUtils.sendSMS(session.getUserNumber(),message);
+						IVRUtils.sendSMS(session.getUserNumber(), message, order.getOrganization().getIncomingSmsCode(), null);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

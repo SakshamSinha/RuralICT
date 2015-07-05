@@ -1,7 +1,9 @@
 package app.telephony.fsm.action.member;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
+
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -15,10 +17,11 @@ public class AskForLanguageAndOtherAction implements Action<IVRSession> {
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
+		RuralictSession ruralictSession = (RuralictSession) session;
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR+"/changeLanguageAndExit_"+session.getLanguage()+".wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR+"/changeLanguageAndExit_"+ruralictSession.getLanguage()+".wav");
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

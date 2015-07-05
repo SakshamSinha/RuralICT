@@ -33,16 +33,14 @@ public class OutgoiningSmsList {
 
 		Group group = groupRepository.findOne(groupId);
 		List<Broadcast> broadcastList = group.getBroadcasts();
-		List broadcastedMessage =  new ArrayList<>();
-		for(Broadcast message : broadcastList){
-			System.out.println(message.getFormat());
+		List<Broadcast> broadcastedMessage =  new ArrayList<Broadcast>();
+		for(Broadcast message : broadcastList) {
 			
 			if(message.getFormat().equalsIgnoreCase("text")){
 				broadcastedMessage.add(message);
 				model.addAttribute("outGoingSms", broadcastedMessage);
 
 			}
-
 
 		}
 

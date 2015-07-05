@@ -78,9 +78,9 @@ public class SettingsController {
 		int organizationid = Integer.parseInt(request.getParameter("orgid"));
 		Organization organization = organizationService.getOrganizationById(organizationid);
 
-		WelcomeMessage englishMessage = welcomeMessageService.getbyOrganizationAndLocale(organization,"en");
-		WelcomeMessage marathiMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, "mr");
-		WelcomeMessage hindiMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, "hi");
+		WelcomeMessage englishMessage = welcomeMessageService.getByOrganizationAndLocale(organization,"en");
+		WelcomeMessage marathiMessage = welcomeMessageService.getByOrganizationAndLocale(organization, "mr");
+		WelcomeMessage hindiMessage = welcomeMessageService.getByOrganizationAndLocale(organization, "hi");
 
 		List<String> voices = new ArrayList<String>();
 		voices.add(englishMessage.getVoice().getUrl());
@@ -172,7 +172,7 @@ public class SettingsController {
 			String locale = request.getParameter("locale");
 
 			// Create Required Entity Objects
-			WelcomeMessage welcomeMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, locale);
+			WelcomeMessage welcomeMessage = welcomeMessageService.getByOrganizationAndLocale(organization, locale);
 
 			String serverFolder = "/home/ruralivrs/Ruralict/apache-tomcat-7.0.42/webapps/Downloads/voices/welcomeMessage";
 

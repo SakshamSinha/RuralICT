@@ -26,7 +26,6 @@ public class TextMessageService extends MessageService {
 	 * Returns inbox text messages for a group  
 	 */
 	public List<Message> getInboxTextMessageList(Group group) {
-		System.out.println(getMessageListByOrderStatus(group, "text", "new"));
 		return getMessageListByOrderStatus(group, "text", "new");
 	}
 	
