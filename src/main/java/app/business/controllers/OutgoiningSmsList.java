@@ -42,6 +42,7 @@ public class OutgoiningSmsList {
 				model.addAttribute("outGoingSms", broadcastedMessage);
 
 			}
+
 		}
 
 

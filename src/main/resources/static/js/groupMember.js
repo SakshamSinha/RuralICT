@@ -119,7 +119,7 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 		return;
 	}
 	
-	var phoneNumber = "91" + userPrimaryPhoneNumber;
+	userPrimaryPhoneNumber = "91" + userPrimaryPhoneNumber;
 	
 	/* Create and add new row element for user */
 	
@@ -204,7 +204,7 @@ $("#page-content").on("click", "#add-group-user-phone-number", function (e) {
 		return;
 	}
 	
-	var phoneNumber = "91" + phoneNumber;
+	phoneNumber = "91" + phoneNumber;
 	
 	data = {};
 	data.phoneNumber = phoneNumber;

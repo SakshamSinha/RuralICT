@@ -1,4 +1,5 @@
 <div  ng-controller="BroadcastVoiceUrlCtrl as broadcastUrlCtrl">
+
 <div class="row-fluid">
 	<input type="hidden" id="groupId" th:value="${group.groupId}">
 	<div class="page-header">
@@ -9,8 +10,8 @@
 </div>
 <ul class="nav nav-tabs top-tab-bar" id="interest_tabs">
 	<!--top level tabs-->
-	<li ng-click="changeUrl(url)"><a ng-href="#broadcast" data-toggle="tab">Broadcast</a></li>
-	<li><a href="#voice-message-response" data-toggle="tab">Voice
+	<li ng-click="changeUrl(url)"><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
+	<li class="active"><a href="#voice-message-response" data-toggle="tab">Voice
 			Message Response</a></li>
 	<li><a href="#text-message-response" data-toggle="tab">Text
 			Message Response</a></li>
@@ -24,17 +25,19 @@
 	<!--broadcast tab menu-->
 	<div id="broadcast" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
-			<li><a ng-href="#broadcast-voice-message" data-toggle="tab" >Voice
+<!-- 			<li ng-class="{active:tab == 1}"><a href="#broadcast-voice-message" data-toggle="tab" >Voice -->
+			<li><a href="#broadcast-voice-message" data-toggle="tab" >Voice
 					Message</a></li>
 			<li><a href="#broadcast-text-message" data-toggle="tab">Text
 					Message</a></li>
 		</ul>
 		<!--brands tab content-->
 		<div class="tab-content">
+<!-- 			<div ng-show="tab==1" id="broadcast-voice-message" class="tab-pane"> -->
 			<div id="broadcast-voice-message" class="tab-pane">
 <!-- 				<ng-include -->
 <!-- 					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include> -->
-			<ng-include src="url"></ng-include>
+				<ng-include src="url"></ng-include>
 			</div>
 			<div id="broadcast-text-message" class="tab-pane">
                 <ng-include
@@ -46,7 +49,7 @@
 	<!--Voice message response tab menu-->
 	<div id="voice-message-response" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="all_tabs">
-			<li><a href="#voice-message-response-inbox" data-toggle="tab">Inbox</a></li>
+			<li class="active"><a href="#voice-message-response-inbox" data-toggle="tab">Inbox</a></li>
 			<li><a href="#voice-message-response-saved" data-toggle="tab">Saved</a></li>
 			<li><a href="#voice-message-response-processed"
 				data-toggle="tab">Processed</a></li>
@@ -55,7 +58,7 @@
 		</ul>
 		<!--all tab content-->
 		<div class="tab-content">
-			<div id="voice-message-response-inbox" class="tab-pane">
+			<div id="voice-message-response-inbox" class="tab-pane active">
 				<ng-include
 					th:attr="src='\'voiceMessage/'+ inbox+'/'+ ${group.groupId}+'\''"></ng-include>
 			</div>
@@ -96,7 +99,7 @@
 		</ul>
 		<!--media tab content-->
 		<div class="tab-content">
-			<div id="text-message-response-inbox" class="tab-pane">
+			<div id="text-message-response-inbox" class="tab-pane active">
 				<ng-include
 					th:attr="src='\'textMessage/'+inbox+'/'+${group.groupId}+'\''"></ng-include>
 			</div>
@@ -127,12 +130,12 @@
 	<!--Sent Sms tab menu-->
 	<div id="send-sms" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="music_tabs">
-			<li><a href="#send-sms-outgoing-sms" data-toggle="tab">Outgoing
+			<li class="active"><a href="#send-sms-outgoing-sms" data-toggle="tab">Outgoing
 					SMS</a></li>
 		</ul>
 		<!--music tab content-->
 		<div class="tab-content">
-			<div id="send-sms-outgoing-sms" class="tab-pane">
+			<div id="send-sms-outgoing-sms" class="tab-pane active">
 				<ng-include th:attr="src='\'outGoingSmsList/'+${group.groupId}+'\''"></ng-include>
 			</div>
 		</div>
@@ -141,13 +144,13 @@
 	<!--Manage tab menu-->
 	<div id="manage" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="public_figures_tabs">
-			<li><a href="#manage-members" data-toggle="tab">Members</a></li>
+			<li class="active"><a href="#manage-members" data-toggle="tab">Members</a></li>
 			<li><a href="#manage-reports" data-toggle="tab">Reports</a></li>
 			<li><a href="#manage-settings" data-toggle="tab">Settings</a></li>
 		</ul>
 		<!--public_figures tab content-->
 		<div class="tab-content" style="overflow:visible">
-			<div id="manage-members" class="tab-pane">
+			<div id="manage-members" class="tab-pane active">
 				<ng-include th:attr="src='\'memberList/'+${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="manage-reports" class="tab-pane">

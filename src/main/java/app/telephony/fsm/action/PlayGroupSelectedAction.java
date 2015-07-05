@@ -1,10 +1,12 @@
 package app.telephony.fsm.action;
 
+import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.ac.iitb.ivrs.telephony.base.IVRSession;
-import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 import app.business.services.BroadcastRecipientService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
@@ -52,6 +54,10 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 				false,
 				voice,
 				true);
+ 
+	    java.util.Date date= new java.util.Date();
+		Timestamp currentTimestamp= new Timestamp(date.getTime());
+		voicebroadcast.setBroadcastedTime(currentTimestamp);
 
 		BroadcastService broadcastService = SpringContextBridge.services().getVoiceBroadcastService();
 		// Add row for broadcast
