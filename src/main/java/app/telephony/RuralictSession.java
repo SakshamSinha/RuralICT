@@ -37,6 +37,9 @@ public class RuralictSession extends IVRSession {
 	int broadcastID;
 	RecordEvent recordEvent;
 
+	String messageURL;
+	String language;
+	String groupID;
 
 	/**
 	 * @param groupService 
@@ -155,6 +158,30 @@ public class RuralictSession extends IVRSession {
 
 	public void setPublisher(boolean isPublisher) {
 		this.isPublisher = isPublisher;
+	}
+
+	public String getMessageURL() {
+		return messageURL;
+	}
+
+	public void setMessageURL(String messageURL) {
+		this.messageURL = messageURL;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getGroupID() {
+		return groupID;
+	}
+
+	public void setGroupID(String groupID) {
+		this.groupID = groupID;
 	}
 }
 

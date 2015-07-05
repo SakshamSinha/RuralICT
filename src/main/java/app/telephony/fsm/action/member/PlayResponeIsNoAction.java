@@ -34,7 +34,7 @@ public class PlayResponeIsNoAction implements Action<IVRSession> {
 		String type ="response";
 		InboundCall inboundCall = ruralictSession.getCall();
 		OutboundCall outboundCall = ruralictSession.getOutboundCall();
-		String groupID = session.getGroupID();
+		String groupID = ruralictSession.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		GroupService groupService = SpringContextBridge.services().getGroupService();
 		BroadcastRecipientService broadcastRecipientService = SpringContextBridge.services().getBroadcastRecipientService();
@@ -58,7 +58,7 @@ public class PlayResponeIsNoAction implements Action<IVRSession> {
 		}
 
 
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsNo_"+session.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsNo_"+ruralictSession.getLanguage()+".wav");
 
 	}
 

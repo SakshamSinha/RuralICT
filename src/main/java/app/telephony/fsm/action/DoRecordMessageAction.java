@@ -27,7 +27,7 @@ public class DoRecordMessageAction implements Action<IVRSession> {
 		record.setFileName(recordName);
 		record.setMaxDuration(Configs.Telephony.MAX_RECORDING_DURATION);
 		record.setSilence(Configs.Telephony.RECORDING_SILENCE);
-		session.setMessageURL(recordName);
+		ruralictSession.setMessageURL(recordName);
 		ruralictSession.setPublisher(true);
 		response.addRecord(record);
 	   

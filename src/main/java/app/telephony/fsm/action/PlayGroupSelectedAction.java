@@ -1,11 +1,12 @@
 package app.telephony.fsm.action;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
-
 import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
 import app.business.services.BroadcastRecipientService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
@@ -18,12 +19,15 @@ import app.entities.User;
 import app.entities.UserPhoneNumber;
 import app.entities.Voice;
 import app.entities.broadcast.VoiceBroadcast;
+import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
+
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
 import com.continuent.tungsten.commons.patterns.fsm.TransitionFailureException;
 import com.continuent.tungsten.commons.patterns.fsm.TransitionRollbackException;
+import com.ozonetel.kookoo.Response;
 
 
 public class PlayGroupSelectedAction implements Action<IVRSession> {
@@ -33,15 +37,17 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 
+		Response response = session.getResponse();
+		RuralictSession ruralictSession = (RuralictSession) session;
 		Organization organization = SpringContextBridge.services().getOrganizationService().getOrganizationByIVRS(session.getIvrNumber());
 		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
-		String messageURL = session.getMessageURL();
+		String messageURL = ruralictSession.getMessageURL();
 		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		Voice voice=new Voice(url,false);
 		voice = voiceService.addVoice(voice);
 		VoiceBroadcast voicebroadcast = new VoiceBroadcast(
 				organization,
-				SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(session.getGroupID())),
+				SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(ruralictSession.getGroupID())),
 				SpringContextBridge.services().getUserPhoneNumberService().getUserPhoneNumber(session.getUserNumber()).getUser(),
 				"phone",
 				organization.getBroadcastDefaultSettings().get(0).getAskFeedback(),
@@ -51,16 +57,19 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 				voice,
 				true);
 
+
 		java.util.Date date= new java.util.Date();
+
 		Timestamp currentTimestamp= new Timestamp(date.getTime());
 		voicebroadcast.setBroadcastedTime(currentTimestamp);
+
 		BroadcastService broadcastService = SpringContextBridge.services().getVoiceBroadcastService();
 		// Add row for broadcast
 		voicebroadcast = (VoiceBroadcast) broadcastService.addBroadcast(voicebroadcast);
 
 		BroadcastRecipientService broadcastRecipientService = SpringContextBridge.services().getBroadcastRecipientService();
 
-		Group group = SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(session.getGroupID()));
+		Group group = SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(ruralictSession.getGroupID()));
 		List<GroupMembership> memberships = SpringContextBridge.services().getGroupMembershipService().getGroupMembershipListByGroup(group);
 
 		// Add rows for each broadcast-recipient

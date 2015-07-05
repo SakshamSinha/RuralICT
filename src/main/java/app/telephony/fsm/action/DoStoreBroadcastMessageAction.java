@@ -24,9 +24,9 @@ public class DoStoreBroadcastMessageAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		String messageURL=session.getMessageURL();
-		
 		RuralictSession ruralictSession = (RuralictSession) session;
+		String messageURL=ruralictSession.getMessageURL();
+		
 		InboundCall inboundCall = ruralictSession.getCall();
 		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
