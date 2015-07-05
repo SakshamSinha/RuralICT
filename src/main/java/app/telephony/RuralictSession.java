@@ -8,6 +8,7 @@ import in.ac.iitb.ivrs.telephony.base.events.RecordEvent;
 import com.continuent.tungsten.commons.patterns.fsm.*;
 
 import app.business.services.OrganizationService;
+import app.business.services.OutboundCallService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.InboundCall;
 import app.entities.OutboundCall;
@@ -55,7 +56,7 @@ public class RuralictSession extends IVRSession {
 		call.setOrganization(organizationService.getOrganizationByIVRS(ivrNumber));
 		
 		outboundCall=new OutboundCall();
-
+      
 		
 
 	}
@@ -68,7 +69,8 @@ public class RuralictSession extends IVRSession {
 		super.finish(totalCallDuration);
 		call.setDuration((int) totalCallDuration);
 		outboundCall.setDuration((int)totalCallDuration);
-	
+	    OutboundCallService outboundCallService = SpringContextBridge.services().getOutboundCallService();
+	    outboundCallService.addOutboundCall(outboundCall);
 	}
 
 	/**

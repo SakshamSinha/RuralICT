@@ -1,75 +1,97 @@
-<div id="user-controller-page" ng-controller="UsersCtrl" th:attr="organizationabbr=${organization.abbreviation}">
+<div id="user-controller-page" ng-controller="UsersCtrl"
+	th:attr="organizationabbr=${organization.abbreviation}">
     <div class="row-fluid">
-        <div class="page-header">
-            <h1>Users <small>All users</small></h1>
-        </div>
-        <button class="btn btn-success" id="add_new_user" data-toggle="modal" data-title="Add new user" data-target="#add-new-user-modal">
-            <i class="icon-white icon-plus-sign"></i> Add new user</button>
-        <br>
-        <br>
-        <form role="form">
-            <input type="radio" ng-model="selectedRole" id=roleradio1 value="">&nbsp;Display All Users &nbsp;
-            <input type="radio" ng-model="selectedRole" id=roleradio2 value="Admin">&nbsp;Display all Admins &nbsp;
-            <input type="radio" ng-model="selectedRole" id=roleradio3 value="Publisher">&nbsp;Display all Publishers &nbsp;
-            <input type="radio" ng-model="selectedRole" id=roleradio4 value="Member">&nbsp;Display All Members
+	<div class="page-header">
+		<h1>
+			Users <small>All users</small>
+		</h1>
+	</div>
+	<button class="btn btn-success" id="add_new_user" data-toggle="modal"
+		data-title="Add new user" data-target="#add-new-user-modal">
+		<i class="icon-white icon-plus-sign"></i> Add new user
+	</button>
+	<br> <br>
+	<form role="form">
+		<input type="radio" ng-model="selectedRole" id=roleradio1 value="">&nbsp;Display
+		All Users &nbsp; <input type="radio" ng-model="selectedRole"
+			id=roleradio2 value="Admin">&nbsp;Display all Admins &nbsp; <input
+			type="radio" ng-model="selectedRole" id=roleradio3 value="Publisher">&nbsp;Display
+		all Publishers &nbsp; <input type="radio" ng-model="selectedRole"
+			id=roleradio4 value="Member">&nbsp;Display All Members
 
-        </form>
-        <table class="table table-striped table-bordered table-condensed" id="usertable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>E-mail</th>
-                    <th>Phone</th>
-                    <th>Role</th>
-                    <th>Address</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="list-users" dir-paginate="manageUserItem in manageUserItems | filter:selectedRole | itemsPerPage: 7">
+	</form>
+	<table class="table table-striped table-bordered table-condensed"
+		id="usertable">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>E-mail</th>
+				<th>Phone</th>
+				<th>Role</th>
+				<th>Address</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="list-users"
+				dir-paginate="manageUserItem in manageUserItems | filter:selectedRole | itemsPerPage: 7">
 
-                    <td>{{ manageUserItem.manageUserID }}</td>
-                    <td>{{ manageUserItem.name }}</td>
-                    <td>{{ manageUserItem.email }}</td>
-                    <td>{{ manageUserItem.phone }}</td>
-                    <td>{{ manageUserItem.role }}</td>
-                    <td>{{ manageUserItem.address }}</td>
+				<td>{{ manageUserItem.manageUserID }}</td>
+				<td>{{ manageUserItem.name }}</td>
+				<td>{{ manageUserItem.email }}</td>
+				<td>{{ manageUserItem.phone }}</td>
+				<td>{{ manageUserItem.role }}</td>
+				<td>{{ manageUserItem.address }}</td>
 
-                    <td>
-                        <div class="btn-group">
-                            <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li ng-click="editRowUser($event, manageUserItem)"><a href="#" data-target="#edit-user-modal"><i class="icon-pencil"></i> Edit</a>
-                                </li>
-                                <!--  <li><a href="#"><i class="icon-trash"></i> Delete</a></li>   Remove delete button from actions dropdown-->
-                                <li ng-click="getRowUserDetails($event, manageUserItem)"><a href="#"><i class="icon-user"></i> Details</a>
-                                </li>
-                                <li class="nav-header">Permissions</li>
+				<td>
+					<div class="btn-group">
+						<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown"
+							href="#">Actions <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li ng-click="editRowUser($event, manageUserItem)"><a
+								href="#" data-target="#edit-user-modal"><i
+									class="icon-pencil"></i> Edit</a></li>
+							<!--  <li><a href="#"><i class="icon-trash"></i> Delete</a></li>   Remove delete button from actions dropdown-->
+							<li ng-click="getRowUserDetails($event, manageUserItem)"><a
+								href="#"><i class="icon-user"></i> Details</a></li>
+							<li class="nav-header">Permissions</li>
 
-                                <li ng-if="!detectIfAdmin(manageUserItem)" ng-click="makeRoleAdmin($event, manageUserItem)"><a href="#"><i class="icon-lock"></i> Make <strong>Admin</strong></a>
-                                </li>
-                                <li ng-if="detectIfAdmin(manageUserItem)" ng-click="removeRoleAdmin($event, manageUserItem)"><a href="#"><i class="icon-lock"></i> Remove as <strong>Admin</strong></a>
-                                </li>
+							<li ng-if="!detectIfAdmin(manageUserItem)"
+								ng-click="makeRoleAdmin($event, manageUserItem)"><a
+								href="#"><i class="icon-lock"></i> Make <strong>Admin</strong></a>
+							</li>
+							<li ng-if="detectIfAdmin(manageUserItem)"
+								ng-click="removeRoleAdmin($event, manageUserItem)"><a
+								href="#"><i class="icon-lock"></i> Remove as <strong>Admin</strong></a>
+							</li>
 
-                                <li ng-if="!detectIfPublisher(manageUserItem)" ng-click="makeRolePublisher($event, manageUserItem)"><a href="#"><i class="icon-lock"></i> Make <strong>Publisher</strong></a>
-                                </li>
-                                <li ng-if="detectIfPublisher(manageUserItem)" ng-click="removeRolePublisher($event, manageUserItem)"><a href="#"><i class="icon-lock"></i> Remove as <strong>Publisher</strong></a>
-                                </li>
+							<li ng-if="!detectIfPublisher(manageUserItem)"
+								ng-click="makeRolePublisher($event, manageUserItem)"><a
+								href="#"><i class="icon-lock"></i> Make <strong>Publisher</strong></a>
+							</li>
+							<li ng-if="detectIfPublisher(manageUserItem)"
+								ng-click="removeRolePublisher($event, manageUserItem)"><a
+								href="#"><i class="icon-lock"></i> Remove as <strong>Publisher</strong></a>
+							</li>
 
-                                <li ng-if="!detectIfMember(manageUserItem)" ng-click="makeRoleMember($event, manageUserItem)"><a href="#"><i class="icon-lock"></i> Make <strong>Member</strong></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <dir-pagination-controls id="pagination-manage-users" boundary-links="true" th:attr='template-url=@{/static/js/dirPagination.tpl.html}'></dir-pagination-controls>
-    </div>
+							<li ng-if="!detectIfMember(manageUserItem)"
+								ng-click="makeRoleMember($event, manageUserItem)"><a
+								href="#"><i class="icon-lock"></i> Make <strong>Member</strong></a>
+							</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<dir-pagination-controls id="pagination-manage-users"
+		boundary-links="true"
+		th:attr='template-url=@{/static/js/dirPagination.tpl.html}'></dir-pagination-controls>
+</div>
 
 
-    <!--  Modal dialog to add a new user -->
+<!--  Modal dialog to add a new user -->
     <div class="modal fade" id="add-new-user-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingAddUser" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-header">

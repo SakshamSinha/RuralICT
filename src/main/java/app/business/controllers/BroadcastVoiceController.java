@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.business.services.BroadcastRecipientService;
+import app.business.services.BroadcastScheduleService;
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
 import app.business.services.LatestRecordedVoiceService;
@@ -27,6 +28,7 @@ import app.business.services.UserService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
 import app.entities.BroadcastRecipient;
+import app.entities.BroadcastSchedule;
 import app.entities.Group;
 import app.entities.GroupMembership;
 import app.entities.LatestRecordedVoice;
@@ -58,6 +60,8 @@ public class BroadcastVoiceController {
 	BroadcastRecipientService broadcastRecipientService;
 	@Autowired
 	LatestRecordedVoiceService latestRecordedVoiceService;
+	@Autowired
+	BroadcastScheduleService broadcastScheduleService;
 
 	@RequestMapping(value="/broadcastVoiceMessages/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
@@ -118,6 +122,10 @@ public class BroadcastVoiceController {
 		broadcast.setBroadcastedTime(timestamp);
 		
 		broadcastService.addBroadcast(broadcast);
+	
+		// To store broadcast id in broadcastSchedule table
+		BroadcastSchedule broadcastSchedule = new BroadcastSchedule(broadcast, timestamp, false);
+		broadcastScheduleService.addBroadcastSchedule(broadcastSchedule);
 		
 		String userIdString = body.get("userIds");
 		String[] userIdList = userIdString.split(",");

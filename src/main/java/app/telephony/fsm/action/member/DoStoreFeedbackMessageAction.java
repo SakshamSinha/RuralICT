@@ -5,6 +5,7 @@ import app.business.services.BroadcastRecipientService;
 import app.business.services.BroadcastScheduleService;
 import app.business.services.GroupService;
 import app.business.services.TelephonyService;
+import app.business.services.UserPhoneNumberService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Group;
 import app.entities.InboundCall;
@@ -32,8 +33,9 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		OutboundCall outboundCall=ruralictSession.getOutboundCall();
 		Broadcast broadcast  = new VoiceBroadcast();
 		GroupService groupService = SpringContextBridge.services().getGroupService();
-		BroadcastRecipientService broadcastRecipient = SpringContextBridge.services().getBroadcastRecipientService();
+		BroadcastRecipientService broadcastRecipientService = SpringContextBridge.services().getBroadcastRecipientService();
 		BroadcastScheduleService broadcastScheduleService = SpringContextBridge.services().getBroadcastScheduleService();
+		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		String groupID = session.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		Group group = groupService.getGroup(groupId);
@@ -48,8 +50,8 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 		TelephonyService telephonyService = SpringContextBridge.services().getTelephonyService();
 		if(isOutboundCall){
 
-			outboundCall.setBroadcastRecipient(broadcastRecipient.getBroadcastRecipientById(broadcast.getBroadcastId()));
-			outboundCall.setBroadcastSchedule(broadcastScheduleService.getBroadcastScheduleById(broadcast.getBroadcastId()));
+			outboundCall.setBroadcastRecipient(broadcastRecipientService.getBroadcastRecipientByUserAndBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser() , broadcast));
+			outboundCall.setBroadcastSchedule(broadcastScheduleService.getAllBroadcastScheduleListByBroadcast(broadcast).get(0));
 			telephonyService.addVoiceMessage(session.getUserNumber(),broadcast,group, mode , type , false ,feedbackUrl,null,outboundCall);
 		}
 		else{

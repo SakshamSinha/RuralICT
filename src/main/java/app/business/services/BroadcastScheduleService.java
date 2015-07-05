@@ -1,6 +1,7 @@
 package app.business.services;
 
 import java.sql.Timestamp;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class BroadcastScheduleService {
 	
 	public List<BroadcastSchedule> getAllBroadcastScheduleList(){
 		return broadcastScheduleRepository.findAll();
+	}
+	
+	public List<BroadcastSchedule> getAllBroadcastScheduleListByBroadcast(Broadcast broadcast){
+		return broadcastScheduleRepository.findByBroadcast(broadcast);
 	}
 	
 	public void addBroadcastSchedule(BroadcastSchedule broadcastSchedule){
@@ -92,4 +97,6 @@ public class BroadcastScheduleService {
 		broadcastSchedule.setCancelled(cancelled);
 		broadcastScheduleRepository.save(broadcastSchedule);
 	}
+	
+	 
 }

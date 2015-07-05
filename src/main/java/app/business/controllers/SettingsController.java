@@ -5,12 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,16 +17,21 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
+import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;
+import app.business.services.UserPhoneNumberService;
+import app.business.services.UserService;
 import app.business.services.VoiceService;
 import app.business.services.WelcomeMessageService;
 import app.entities.Organization;
+import app.entities.User;
+import app.entities.UserPhoneNumber;
 import app.entities.Voice;
 import app.entities.WelcomeMessage;
 import app.util.Utils;
@@ -35,12 +39,21 @@ import app.util.Utils;
 @Controller
 @RequestMapping("/web/{org}")
 public class SettingsController {
-
+	
 	@Autowired
 	OrganizationService organizationService;
 
 	@Autowired
 	WelcomeMessageService welcomeMessageService;
+	
+	@Autowired
+	OrganizationMembershipService organizationMembershipService;
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	UserPhoneNumberService userPhoneNumberService;
 
 	@Autowired
 	VoiceService voiceService;
@@ -49,7 +62,11 @@ public class SettingsController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String settingsPage(@PathVariable String org, Model model) {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		User user = userService.getCurrentUser();
+		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+		model.addAttribute("user",user);
 		model.addAttribute("organization", organization);
+		model.addAttribute("userPhoneNumber",userPhoneNumber);
 		return "settings";
 	}
 
@@ -72,6 +89,47 @@ public class SettingsController {
 
 		return voices;
 		}
+	
+	@RequestMapping(value="/updateUser", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	@ResponseBody
+	public void updateUser(@PathVariable String org, @RequestBody Map<String,String> profileSettingDetails) {
+
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		
+  
+		// Get the input parameters from AngularJS
+		String name = profileSettingDetails.get("name");
+		String email = profileSettingDetails.get("email");
+		String phone = profileSettingDetails.get("phone");
+		String address = profileSettingDetails.get("city");
+		String password = profileSettingDetails.get("password");
+       String role ="admin";
+       
+       User user = userService.getCurrentUser();
+
+   		// Add the new User to database
+		user.setName(name);
+		user.setAddress(address);
+		user.setEmail(email);
+		user.setSha256Password(password);
+		userService.addUser(user);
+
+	//TODO -- convert password in sha256 format
+		
+		
+		// First Remove the Previous Primary Phone Number
+		UserPhoneNumber previousPrimaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+		userPhoneNumberService.removeUserPhoneNumber(previousPrimaryPhoneNumber);
+				
+		// Then add the new Primary number to the database
+		UserPhoneNumber newPrimaryPhoneNumber = new UserPhoneNumber(user, phone, true);
+		userPhoneNumberService.addUserPhoneNumber(newPrimaryPhoneNumber);
+		
+
+		
+	}
 
 	@RequestMapping(value="/upload/welcomeMessage", method=RequestMethod.POST, produces = "text/plain")
 	@Transactional

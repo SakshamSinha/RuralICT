@@ -1,13 +1,11 @@
 package app.telephony.fsm.action;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
-import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
+import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-
 import app.business.services.BroadcastRecipientService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
@@ -20,15 +18,13 @@ import app.entities.User;
 import app.entities.UserPhoneNumber;
 import app.entities.Voice;
 import app.entities.broadcast.VoiceBroadcast;
-import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
-
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
 import com.continuent.tungsten.commons.patterns.fsm.TransitionFailureException;
 import com.continuent.tungsten.commons.patterns.fsm.TransitionRollbackException;
-import com.ozonetel.kookoo.Response;
+
 
 public class PlayGroupSelectedAction implements Action<IVRSession> {
 
@@ -36,8 +32,7 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-		Response response = session.getResponse();
-		RuralictSession ruralictSession = (RuralictSession) session;
+
 		Organization organization = SpringContextBridge.services().getOrganizationService().getOrganizationByIVRS(session.getIvrNumber());
 		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
 		String messageURL = session.getMessageURL();
@@ -55,8 +50,8 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 				false,
 				voice,
 				true);
-		 
-	    java.util.Date date= new java.util.Date();
+
+		java.util.Date date= new java.util.Date();
 		Timestamp currentTimestamp= new Timestamp(date.getTime());
 		voicebroadcast.setBroadcastedTime(currentTimestamp);
 		BroadcastService broadcastService = SpringContextBridge.services().getVoiceBroadcastService();
@@ -69,38 +64,31 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 		List<GroupMembership> memberships = SpringContextBridge.services().getGroupMembershipService().getGroupMembershipListByGroup(group);
 
 		// Add rows for each broadcast-recipient
-		/*for(GroupMembership gm:memberships){
+		List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
+		// Add rows for each broadcast-recipient
+		for(GroupMembership gm:memberships){
 			User user = gm.getUser();
 			BroadcastRecipient broadcastRecipient = new BroadcastRecipient(voicebroadcast,user);
 			// Add row for broadcast-recipient
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
-		}*/
-		
-		 List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
-         // Add rows for each broadcast-recipient
-         for(GroupMembership gm:memberships){
-                 User user = gm.getUser();
-                 BroadcastRecipient broadcastRecipient = new BroadcastRecipient(voicebroadcast,user);
-                 // Add row for broadcast-recipient
-                 broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
-                 broadcastRecipients.add(broadcastRecipient);
-         }
-         //Different for loop to avoid problem in IVRS
-         for(BroadcastRecipient recipient: broadcastRecipients)
-         {
-                 User user=recipient.getUser();
-                 System.out.println("User:"+user.getName());
-                 List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
-                 for(UserPhoneNumber no:phoneNumbers)
-                 {        
-                         //Outbound call has to be appended with a zero after removing 91 
-                         String phoneNumber = "0" + no.getPhoneNumber().substring(2);
-                         if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL));
-                         {
-                                 break;
-                         }
-                 }
-         }
+			broadcastRecipients.add(broadcastRecipient);
+		}
+		//Different for loop to avoid problem in IVRS
+		for(BroadcastRecipient recipient: broadcastRecipients)
+		{
+			User user=recipient.getUser();
+			System.out.println("User:"+user.getName());
+			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
+			for(UserPhoneNumber no:phoneNumbers)
+			{        
+				//Outbound call has to be appended with a zero after removing 91 
+				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
+				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL));
+				{
+					break;
+				}
+			}
+		}
 
 	}
 
