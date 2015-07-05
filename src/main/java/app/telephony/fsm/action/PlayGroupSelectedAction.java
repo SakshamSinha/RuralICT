@@ -39,13 +39,13 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 		RuralictSession ruralictSession = (RuralictSession) session;
 		Organization organization = SpringContextBridge.services().getOrganizationService().getOrganizationByIVRS(session.getIvrNumber());
 		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
-		String messageURL = session.getMessageURL();
+		String messageURL = ruralictSession.getMessageURL();
 		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		Voice voice=new Voice(url,false);
 		voice = voiceService.addVoice(voice);
 		VoiceBroadcast voicebroadcast = new VoiceBroadcast(
 				organization,
-				SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(session.getGroupID())),
+				SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(ruralictSession.getGroupID())),
 				SpringContextBridge.services().getUserPhoneNumberService().getUserPhoneNumber(session.getUserNumber()).getUser(),
 				"phone",
 				organization.getBroadcastDefaultSettings().get(0).getAskFeedback(),
@@ -65,7 +65,7 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 
 		BroadcastRecipientService broadcastRecipientService = SpringContextBridge.services().getBroadcastRecipientService();
 
-		Group group = SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(session.getGroupID()));
+		Group group = SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(ruralictSession.getGroupID()));
 		List<GroupMembership> memberships = SpringContextBridge.services().getGroupMembershipService().getGroupMembershipListByGroup(group);
 
 		// Add rows for each broadcast-recipient

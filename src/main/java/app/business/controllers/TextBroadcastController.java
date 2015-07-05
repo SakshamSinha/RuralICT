@@ -115,7 +115,7 @@ public class TextBroadcastController {
 			
 			// Call the SendSMS function from IVRUtils
 			try {
-				IVRUtils.sendSMS(userPhoneNumber.getPhoneNumber(),textContent);
+				IVRUtils.sendSMS(userPhoneNumber.getPhoneNumber(), textContent, organization.getIncomingSmsCode(), null);
 			} 
 			catch (Exception e) {
 				e.printStackTrace();

@@ -9,10 +9,10 @@
 <meta name="author" content="IIT Bombay" />
 
 <link th:href="@{/static/css/bootstrap.css}" rel="stylesheet" /> 
-<link th:href="@{/static/css/bootstrap-responsive.css}" rel="stylesheet" />
-<link th:href="@{/static/css/loading-bar.css}" rel="stylesheet" />
 <link th:href="@{/static/css/site.css}" rel="stylesheet" />
 <link th:href="@{/static/css/ruralivrs.css}" rel="stylesheet" />
+<link th:href="@{/static/css/bootstrap-responsive.css}" rel="stylesheet" />
+<link th:href="@{/static/css/loading-bar.css}" rel="stylesheet" />
 </head>
 <body>
 	<input type="hidden" id="contextRoot" th:value="@{/}">
@@ -120,15 +120,6 @@
 						<div class="controls">
 							<input type="text" class="input-xlarge" id="new-group-name-input"
 								placeholder="Aundh" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="new-group-name-input">Group
-							Parent Group</label>
-						<div class="controls">
-							<select class="input-xlarge" id="new-group-parent-group-input">
-								<option th:each="group : ${organization.groups}" th:value="${group.groupId}" th:text="${group.name}">Quantity</option>
-							</select>
 						</div>
 					</div>
 				</form>

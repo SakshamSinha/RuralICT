@@ -14,7 +14,7 @@ public class WelcomeMessageService {
 	@Autowired
 	WelcomeMessageRepository welcomeMessageRepository;
 	
-	public WelcomeMessage getbyOrganizationAndLocale(Organization organization, String locale) {
+	public WelcomeMessage getByOrganizationAndLocale(Organization organization, String locale) {
 		return welcomeMessageRepository.findByOrganizationAndLocale(organization, locale);
 	}
 	

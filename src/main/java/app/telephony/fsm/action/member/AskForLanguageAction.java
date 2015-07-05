@@ -1,9 +1,12 @@
 package app.telephony.fsm.action.member;
 
 import java.util.Arrays;
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.telephony.RuralictSession;
 import app.telephony.config.Configs;
 import app.telephony.fsm.RuralictStateMachine;
+
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -17,6 +20,7 @@ public class AskForLanguageAction implements Action<IVRSession> {
 	@Override
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
+		RuralictSession ruralictSession = (RuralictSession) session;
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
@@ -33,7 +37,7 @@ public class AskForLanguageAction implements Action<IVRSession> {
 		for(String k:responseKeys){
 			String language = RuralictStateMachine.tempLanguageMap.get(k);
 
-			if(language==null || language.equalsIgnoreCase(session.getLanguage())){
+			if(language==null || language.equalsIgnoreCase(ruralictSession.getLanguage())){
 				continue;
 			}
 			if(language.equalsIgnoreCase("en"))

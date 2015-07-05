@@ -34,8 +34,7 @@ public class OutgoiningSmsList {
 		Group group = groupRepository.findOne(groupId);
 		List<Broadcast> broadcastList = group.getBroadcasts();
 		List<Broadcast> broadcastedMessage =  new ArrayList<Broadcast>();
-		for(Broadcast message : broadcastList){
-			System.out.println(message.getFormat());
+		for(Broadcast message : broadcastList) {
 			
 			if(message.getFormat().equalsIgnoreCase("text")){
 				broadcastedMessage.add(message);

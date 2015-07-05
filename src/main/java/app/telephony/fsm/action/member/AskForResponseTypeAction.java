@@ -33,7 +33,7 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 					((responseType.equalsIgnoreCase("Order") && ruralictSession.isOrderAllowed()) ||
 							(responseType.equalsIgnoreCase("Feedback") && ruralictSession.isFeedbackAllowed()) ||
 							(responseType.equalsIgnoreCase("Response") && ruralictSession.isResponseAllowed())) ){	
-				String language = session.getLanguage();
+				String language = ruralictSession.getLanguage();
 
 				if(language.equalsIgnoreCase("en"))
 				{
