@@ -122,7 +122,6 @@ public class BroadcastVoiceController {
 		java.util.Date date= new java.util.Date();
 		Timestamp currentTimestamp= new Timestamp(date.getTime());
 		broadcast.setBroadcastedTime(currentTimestamp);
-		System.out.println(currentTimestamp);
 		
 		String userIdString = body.get("userIds");
 		String[] userIdList = userIdString.split(",");
