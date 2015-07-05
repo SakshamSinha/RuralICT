@@ -136,11 +136,11 @@
 								<td><b>Call Flow : </b>
 									<br>
 									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.order name="response1" />SemiStructured&nbsp;(Order/à¤†à¤¦à¥‡à¤¶)
+									<input type="checkbox" ng-model=outgoingCheckBoxOptions.order name="response1" />SemiStructured&nbsp;(Order/आदेश)
 									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.feedback name="response1" />Unstructured&nbsp;(Feedback/à¤ªà¥�à¤°à¤¤à¤¿à¤ªà¥�à¤·à¥�à¤Ÿà¤¿)
+									<input type="checkbox" ng-model=outgoingCheckBoxOptions.feedback name="response1" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
 									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.response name="response1" />Structured&nbsp;(Response/à¤ªà¥�à¤°à¤¤à¤¿à¤•à¥�à¤°à¤¿à¤¯à¤¾)
+									<input type="checkbox" ng-model=outgoingCheckBoxOptions.response name="response1" />Structured&nbsp;(Response/प्रतिक्रिया)
 									<br>
 								</td>
 							</tr>
@@ -160,11 +160,11 @@
 								<td> <b>Call Flow : </b>
 									<br>
 									<br>
-									<input type="checkbox" ng-model=incomingCheckBoxOptions.order name="responsein" />SemiStructured&nbsp;(Order/à¤†à¤¦à¥‡à¤¶)
+									<input type="checkbox" ng-model=incomingCheckBoxOptions.order name="responsein" />SemiStructured&nbsp;(Order/आदेश)
 									<br>
-									<input type="checkbox" ng-model=incomingCheckBoxOptions.feedback name="responsein" />Unstructured&nbsp;(Feedback/à¤ªà¥�à¤°à¤¤à¤¿à¤ªà¥�à¤·à¥�à¤Ÿà¤¿)
+									<input type="checkbox" ng-model=incomingCheckBoxOptions.feedback name="responsein" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
 									<br>
-									<input type="checkbox" ng-model=incomingCheckBoxOptions.response name="responsein" />Structured&nbsp;(Response/à¤ªà¥�à¤°à¤¤à¤¿à¤•à¥�à¤°à¤¿à¤¯à¤¾)
+									<input type="checkbox" ng-model=incomingCheckBoxOptions.response name="responsein" />Structured&nbsp;(Response/प्रतिक्रिया)
 									<br>
 								</td>
 							</tr>
@@ -179,7 +179,7 @@
 						<b>VOICE CALL OPTIONS :</b>
 						<table>
 							<tr>
-								<td>Order Cancellation&nbsp;(à¤†à¤¦à¥‡à¤¶ à¤°à¤¦à¥�à¤¦)</td>
+								<td>Order Cancellation&nbsp;(आदेश रद्द)</td>
 								<td>
 									<select id='ordercancel' ng-model=orderCancelSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1" name='ordercancel'>
 									</select>
@@ -188,7 +188,7 @@
 
 
 							<tr>
-								<td>Broadcast Enabler&nbsp;(à¤ªà¥�à¤°à¤¸à¤¾à¤°à¤£)</td>
+								<td>Broadcast Enabler&nbsp;(प्रसारण)</td>
 
 								<td>
 									<select id='broadcast' ng-model= broadcastEnableSelect ng-options="option.value as option.name for option in selectOptions" class="table-input-1" name='broadcast'>
@@ -246,7 +246,7 @@
 						<table>
 
 							<tr>
-								<td>Feedback Enabler &nbsp; (à¤ªà¥�à¤°à¤¤à¤¿à¤ªà¥�à¤·à¥�à¤Ÿà¤¿)</td>
+								<td>Feedback Enabler &nbsp; (प्रतिपुष्टि)</td>
 								<td>
 									<select id='feedback' class="table-input-1 table-width" ng-model=feedbackSelect ng-options="option.value as option.name for option in selectOptions" name='feedback'>
 									</select>
@@ -255,7 +255,7 @@
 
 
 							<tr>
-								<td>Response Enabler &nbsp; (à¤ªà¥�à¤°à¤¤à¤¿à¤•à¥�à¤°à¤¿à¤¯à¤¾)</td>
+								<td>Response Enabler &nbsp; (प्रतिक्रिया)</td>
 								<td>
 									<select id='response' class="table-input-1 table-width" ng-model=responseSelect ng-options="option.value as option.name for option in selectOptions" name='response'>
 									</select>
@@ -264,7 +264,7 @@
 
 
 							<tr>
-								<td>Bill Enabler &nbsp; (à¤¬à¤¿à¤²)</td>
+								<td>Bill Enabler &nbsp;  (बिल)</td>
 								<td>
 									<!-- <select id='bill' class="table-input-1 table-width" name='bill' onchange="disableBilldown();"> -->
 									<select id='bill' class="table-input-1 table-width" ng-model=billSelect ng-options="option.value as option.name for option in selectOptions" name='bill'>
@@ -274,7 +274,7 @@
 
 
 							<tr>
-								<td>Save Enabler &nbsp; (à¤¸à¤‚à¤—à¥�à¤°à¤¹à¤¿à¤¤)</td>
+								<td>Save Enabler &nbsp; (संग्रहित)</td>
 								<td>
 									<select id='save-menu' class="table-input-1 table-width" ng-model=saveSelect ng-options="option.value as option.name for option in selectOptions" name='save'>
 									</select>
@@ -282,7 +282,7 @@
 							</tr>
 
 							<tr>
-								<td>Reject Enabler &nbsp; (à¤…à¤¸à¥�à¤µà¥€à¤•à¥ƒà¤¤)</td>
+								<td>Reject Enabler &nbsp; (अस्वीकृत)</td>
 								<td>
 									<select id='reject-menu' class="table-input-1 table-width" ng-model=rejectSelect ng-options="option.value as option.name for option in selectOptions" name='reject'>
 									</select>
@@ -290,7 +290,7 @@
 							</tr>
 									
 							<tr>
-							<td>Text Message Response &nbsp; (à¤ªà¥�à¤°à¤¤à¤¿à¤•à¥�à¤°à¤¿à¤¯à¤¾)</td>
+							<td>Text Message Response &nbsp; (प्रतिक्रिया)</td>
 							<td>
 								<select id='text-menu' class="table-input-1 table-width" ng-model=textSelect ng-options="option.value as option.name for option in selectOptions" name='text_msg'>
 								</select>
