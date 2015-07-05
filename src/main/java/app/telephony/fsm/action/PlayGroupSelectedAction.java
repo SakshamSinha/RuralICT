@@ -36,7 +36,6 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 	public void doAction(Event<?> event, IVRSession session, Transition<IVRSession, ?> transition, int actionType)
 			throws TransitionRollbackException, TransitionFailureException {
 
-
 		Response response = session.getResponse();
 		RuralictSession ruralictSession = (RuralictSession) session;
 		Organization organization = SpringContextBridge.services().getOrganizationService().getOrganizationByIVRS(session.getIvrNumber());
@@ -57,18 +56,13 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 				voice,
 				true);
 
-
 		java.util.Date date= new java.util.Date();
-
 		Timestamp currentTimestamp= new Timestamp(date.getTime());
 		voicebroadcast.setBroadcastedTime(currentTimestamp);
-
 		BroadcastService broadcastService = SpringContextBridge.services().getVoiceBroadcastService();
 		// Add row for broadcast
 		voicebroadcast = (VoiceBroadcast) broadcastService.addBroadcast(voicebroadcast);
-
 		BroadcastRecipientService broadcastRecipientService = SpringContextBridge.services().getBroadcastRecipientService();
-
 		Group group = SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(ruralictSession.getGroupID()));
 		List<GroupMembership> memberships = SpringContextBridge.services().getGroupMembershipService().getGroupMembershipListByGroup(group);
 
@@ -78,6 +72,7 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 		for(GroupMembership gm:memberships){
 			User user = gm.getUser();
 			BroadcastRecipient broadcastRecipient = new BroadcastRecipient(voicebroadcast,user);
+		
 			// Add row for broadcast-recipient
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
 			broadcastRecipients.add(broadcastRecipient);
@@ -92,7 +87,7 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 			{        
 				//Outbound call has to be appended with a zero after removing 91 
 				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
-				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL));
+				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL))
 				{
 					break;
 				}

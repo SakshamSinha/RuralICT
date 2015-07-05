@@ -60,7 +60,6 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 		value: '2'
 	}];
 
-
 	$scope.incomingCheckBoxOptions = {
 			"order" : false,
 			"feedback" : false,
@@ -71,9 +70,6 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 			"feedback" : false,
 			"response" : false
 	};    
-
-
-
 
 	var organization = UpdateOrganization.get({
 		id: orgid
@@ -234,7 +230,6 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 
 	$scope.uploadFile = function(){
 
-
 		var localeIndex = $scope.WelcomeMessageLanguageSelect;
 
 		// We use formData to pass various attributes to the spring controller method
@@ -307,8 +302,6 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 			error(function(data, status, headers, config) {
 				alert("There was some error in response from the remote server.");
 			});
-
-
 		}
 		else{
 			alert("Password is not same");
