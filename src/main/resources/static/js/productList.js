@@ -87,7 +87,6 @@ $("#page-content").on("click", "#btn-delete", function(e) {
 
 //delete a product entry on clicking the 'yes' delete button
 $("#page-content").on("click","#delete-product",function(e){
-	console.log("Delete has been called");
 	angular.element(this).scope().deleteProduct();
 	$("#delete-product-modal").modal('toggle');
 	//TODO Eliminating this function doing hard refresh

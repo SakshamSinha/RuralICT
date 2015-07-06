@@ -29,7 +29,7 @@ function changeAudioSource(url){
 }
 
 /* Actual Settings Controller */
-website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateOrganization, UpdateBroadcastDefaultSettings) {
+website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window, UpdateOrganization, UpdateBroadcastDefaultSettings) {
 
 	// get the current organization Attributes
 	var orgid = $('#organizationId').val();
@@ -65,11 +65,13 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 			"feedback" : false,
 			"response" : false
 	};
+<<<<<<< HEAD
 	$scope.outgoingCheckBoxOptions = {
 			"order" : false,
 			"feedback" : false,
 			"response" : false
 	};    
+
 
 	var organization = UpdateOrganization.get({
 		id: orgid
@@ -204,7 +206,6 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 			}, function() {alert("Your Settings have been saved.")});
 		});
 	};
-
 	// click function for 'save details' button in outgoing call settings
 	$scope.updateOutgoingCallOpt = function() {
 

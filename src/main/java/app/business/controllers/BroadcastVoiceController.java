@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import app.business.services.BroadcastDefaultSettingsService;
 import app.business.services.BroadcastRecipientService;
 import app.business.services.BroadcastScheduleService;
 import app.business.services.GroupMembershipService;
@@ -27,6 +28,7 @@ import app.business.services.OrganizationService;
 import app.business.services.UserService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
+import app.entities.BroadcastDefaultSettings;
 import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
 import app.entities.Group;
@@ -57,12 +59,14 @@ public class BroadcastVoiceController {
 	@Autowired
 	BroadcastService broadcastService;
 	@Autowired
+	BroadcastScheduleService broadcastScheduleService;
+	@Autowired
 	BroadcastRecipientService broadcastRecipientService;
 	@Autowired
-	LatestRecordedVoiceService latestRecordedVoiceService;
+	BroadcastDefaultSettingsService broadcastDefaultSettingService;
 	@Autowired
-	BroadcastScheduleService broadcastScheduleService;
-
+	LatestRecordedVoiceService latestRecordedVoiceService;
+	
 	@RequestMapping(value="/broadcastVoiceMessages/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
@@ -82,19 +86,32 @@ public class BroadcastVoiceController {
 		List<User> users = new ArrayList<User>();
 		for(GroupMembership groupMembership : groupMembershipList) {
 			users.add(groupMembership.getUser());
-			
+
 		}
+		
+		BroadcastDefaultSettings broadcastDefaultSettings = broadcastDefaultSettingService.getBroadcastDefaultSettingByOrganization(organization);
 		
 		model.addAttribute("users",users);
 		model.addAttribute("organization",organization);
 		model.addAttribute("group",group);
 		model.addAttribute("publisher",publisher);
+		model.addAttribute("broadcastDefaultSettings", broadcastDefaultSettings);
 		
 		//TODO Ask what to do when user is not a publisher do we prevent it on UI side.
 		String role = userService.getUserRole(publisher, organization);
 		model.addAttribute("role", role);
 		
 		return "broadcastVoice";
+	}
+	
+	@RequestMapping(value="/broadcastDefaultSettings")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String broadcastDefaultSettings(@PathVariable String org,  Model model){
+		
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		model.addAttribute("organization", organization);
+		return "broadcastDefaultSettings";
 	}
 	
 	@RequestMapping(value = "/broadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
@@ -116,21 +133,17 @@ public class BroadcastVoiceController {
 		Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
 		String voiceUrl = voice.getUrl();
 		boolean voiceBroadcastDraft = (Integer.parseInt(body.get("voiceBroadcastDraft")) !=0);
-		 
-		VoiceBroadcast broadcast = new VoiceBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, voice, voiceBroadcastDraft);
-	
 		
+		/*
+		 * Broadcast, Broadcast Recipient and Broadcast Schedule will be added
+		 * here in this module even when scheduling will be done from separate thread.
+		*/
+		//Adding Broadcast to the Broadcast table
+		VoiceBroadcast broadcast = new VoiceBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, voice, voiceBroadcastDraft);
 		broadcastService.addBroadcast(broadcast);
 	
-		// To store broadcast id in broadcastSchedule table
-		BroadcastSchedule broadcastSchedule = new BroadcastSchedule(broadcast, timestamp, false);
-		broadcastScheduleService.addBroadcastSchedule(broadcastSchedule);
-		
-		//TODO Remove the line just below. The time is updated right now but actually the top broadcast extracted in telephony service is to be done with the help of broadcast schedule and separate thread
-		java.util.Date date= new java.util.Date();
-		Timestamp currentTimestamp= new Timestamp(date.getTime());
-		broadcast.setBroadcastedTime(currentTimestamp);
-		
+	
+		//Adding Broadcast Recipient to Broadcast Recipients table
 		String userIdString = body.get("userIds");
 		String[] userIdList = userIdString.split(",");
 		List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
@@ -143,10 +156,26 @@ public class BroadcastVoiceController {
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
 		}
 		
-		//TODO have to shift this function to thread. Also have to ask where is the Broadcast object mentioned here.
+		
+		/*
+		 * TODO Updation of time and call to each Broadcast Recipient needs to be done from separate thread 
+		*/
+		java.util.Date date= new java.util.Date();
+		Timestamp currentTimestamp= new Timestamp(date.getTime());
+		broadcast.setBroadcastedTime(currentTimestamp);
+		
+		//Adding Broadcast schedule 
+		//TODO set the time at which you have actually send the schedule and set the send to all field as well.
+		BroadcastSchedule broadcastSchedule = new BroadcastSchedule(broadcast, currentTimestamp, false);
+		broadcastScheduleService.addBroadcastSchedule(broadcastSchedule);
+		
+		//Calling each of the Broadcast Recipient
 		for(BroadcastRecipient recipient: broadcastRecipients)
 		{
 			User user=recipient.getUser();
+
+			System.out.println("Broadcast Recipient:"+user.getName());
+
 			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
 			for(UserPhoneNumber no:phoneNumbers)
 			{	
@@ -164,13 +193,11 @@ public class BroadcastVoiceController {
 	@RequestMapping(value = "/latestBroadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
 	@ResponseBody
 	public void latestRecordedLogs(@RequestBody Map<String,String> body) {
-		System.out.println("We have received the latest body from uploader in Angular "+body);
+		System.out.println("The json body has been received from uploader in Angular js part"+body);
 		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
 		Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
-		String recordedTime = body.get("broadcastedTime");
-		Timestamp timestamp = Timestamp.valueOf(recordedTime);
 		
-		latestRecordedVoiceService.updateLatestRecordedVoice(organization, timestamp, voice);
+		latestRecordedVoiceService.updateLatestRecordedVoice(organization, voice);
 	}
 
 }

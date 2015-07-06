@@ -72,13 +72,13 @@
 			<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
 				<li class="active"><a href="#welcome-message-settings" data-toggle="tab">Welcome Message</a>
 				</li>
-				<li><a href="#outbound-call-settings" data-toggle="tab">Outbound Call</a>
-				</li>
 				<li><a href="#inbound-call-settings" data-toggle="tab">Inbound Call</a>
 				</li>
 				<li><a href="#voice-call-settings" data-toggle="tab">Voice Call</a>
 				</li>
 				<li><a href="#dashboard-settings" data-toggle="tab">Dashboard</a>
+				</li>
+				<li><a href="#broadcast-default-settings" data-toggle="tab">Broadcast Default Settings</a>
 				</li>
 			</ul>
 			<!--system settings tab content-->
@@ -126,6 +126,7 @@
 						</div>
 					</div>
 				</div>
+
 				<div id="outbound-call-settings" class="tab-pane">
 					<div class="table-settings-system">
 						<table>
@@ -150,6 +151,10 @@
 					<div class="form-actions">
 						<input type="submit" ng-click="updateOutgoingCallOpt()" class="btn btn-success" value="Save Details" />
 					</div>
+
+				<div id="broadcast-default-settings" class="tab-pane">
+					<ng-include th:attr="src='\'broadcastDefaultSettings'+'\''"></ng-include>		
+
 				</div>
 				<div id="inbound-call-settings" class="tab-pane">
 					<div class="table-settings-system">
