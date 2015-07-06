@@ -76,7 +76,7 @@ public class SettingsController {
 	
 	@RequestMapping(value="/resetwelcomeMessageUrl")
 	@Transactional
-	public @ResponseBody List<String> resetWelcomeMessageUrl(@PathVariable String org) throws IOException, ServletException{
+	public @ResponseBody List<String> resetWelcomeMessageUrl(@PathVariable String org) {
 
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 
