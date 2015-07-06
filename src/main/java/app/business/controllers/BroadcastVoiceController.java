@@ -89,19 +89,12 @@ public class BroadcastVoiceController {
 		}
 		
 		BroadcastDefaultSettings broadcastDefaultSettings = broadcastDefaultSettingService.getBroadcastDefaultSettingByOrganization(organization);
-//		boolean askOrder = broadcastDefaultSettings.getAskOrder();
-//		boolean askFeedback = broadcastDefaultSettings.getAskFeedback();
-//		boolean askResponse = broadcastDefaultSettings.getAskResponse();
-
 		
 		model.addAttribute("users",users);
 		model.addAttribute("organization",organization);
 		model.addAttribute("group",group);
 		model.addAttribute("publisher",publisher);
 		model.addAttribute("broadcastDefaultSettings", broadcastDefaultSettings);
-//		model.addAttribute("askOrder", askOrder);
-//		model.addAttribute("askFeedback", askFeedback);
-//		model.addAttribute("askResponse", askResponse);
 		
 		//TODO Ask what to do when user is not a publisher do we prevent it on UI side.
 		String role = userService.getUserRole(publisher, organization);
