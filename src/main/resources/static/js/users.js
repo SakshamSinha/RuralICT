@@ -36,77 +36,71 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		}
 		else if(!validatephonenumber($scope.inputUserPhone))
 		{
-			console.log()
 			alert("Please Enter a valid Phone Number.");
 		}
 		else
 		{
-			//$scope.inputUserPhone = "91" + $scope.inputUserPhone;
 			// Get the attributes of the new user
 			var newUserDetails = {};
 			newUserDetails.name = $scope.inputUserName;
 			newUserDetails.email = $scope.inputUserEmail;
 			newUserDetails.phone = $scope.inputUserPhone;
-			newUserDetails.role = "Member"                        // New User is by default a Member
+			newUserDetails.role = "Member";                   // New User is by default a Member
 			newUserDetails.address = $scope.inputUserAddress;
 			
 			
-			$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/testPhoneNumber', newUserDetails).
-			success(function(data, status, headers, config) {
-					
-				  if(data === "-1" )
-					  {
-					   alert("The number has already been entered");
-					  }
-				  else
-					  {
-					  // Add the User as we have validated the number
-					  $http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addNewUser', newUserDetails).
-						success(function(data, status, headers, config) {
-
-							// Push the new object in the ng-repeat variable for for table
-							// This Automatically updates the table
-							$scope.manageUserItems.push(data);
-
-							// Hide the modal dialog box after successful operation
-							$('#add-new-user-modal').modal('hide');
-
-						}).
-						error(function(data, status, headers, config) {
-							alert("There was some error in response from the remote server.");
-						});
-					  
-					  }
-
-			}).
-			error(function(data, status, headers, config) {
-				alert("There was some error in response from the remote server.");
-			});
-
 			
+		   // Add the User as we have validated the number
+		    $http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addNewUser', newUserDetails).
+				success(function(data, status, headers, config) {
+					
+					if(!data)
+					{
+						alert("The Entered Phone Number already exists in the database");
+					}
+					else
+					{
+						// Push the new object in the ng-repeat variable for for table
+						// This Automatically updates the table
+						$scope.manageUserItems.push(data);
+	
+						// Hide the modal dialog box after successful operation
+						$('#add-new-user-modal').modal('hide');
+					}
+
+				}).
+				error(function(data, status, headers, config) {
+					alert("There was some error in response from the remote server.");
+				});
 		}
 	};
 
 	// Utility functions used in ng-if to check the roles
 	$scope.detectIfAdmin = function(manageUserItem) {
-		if(this.manageUserItem.role.search("Admin") != -1)
+		if(manageUserItem)
 		{
-			return true;
-		}
-		else
-		{
-			return false;
+			if(this.manageUserItem.role.search("Admin") != -1)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	};
 
 	$scope.detectIfPublisher = function(manageUserItem) {
-		if(this.manageUserItem.role.search("Publisher") != -1)
+		if(manageUserItem)
 		{
-			return true;
-		}
-		else
-		{
-			return false;
+			if(this.manageUserItem.role.search("Publisher") != -1)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	};
 
@@ -248,19 +242,26 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				newUserDetails.userid = manageUserItem.manageUserID;
 				newUserDetails.name = $scope.editUserName;
 				newUserDetails.email = $scope.editUserEmail;
-				newUserDetails.phone = "91" + $scope.editUserPhone;
+				newUserDetails.phone = $scope.editUserPhone;
 				newUserDetails.address = $scope.editUserAddress;
-
+				
 				$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/editUser', newUserDetails).
 					success(function(data, status, headers, config) {
-
+						
+						if(data == "-1")
+						{
+							alert("The Entered Phone Number already exists in the database");
+						}
+						else
+						{
 						manageUserItem.name = $scope.editUserName;
-						manageUserItem.phone = "91" + $scope.editUserPhone;
+						manageUserItem.phone = data;  // we get phone number as response
 						manageUserItem.address = $scope.editUserAddress;
 						manageUserItem.email = $scope.editUserEmail;
 
 						// Hide the edit user modal dialog box after successful operation
 						$('#edit-user-modal').modal('hide');
+						}
 
 					}).
 					error(function(data, status, headers, config) {

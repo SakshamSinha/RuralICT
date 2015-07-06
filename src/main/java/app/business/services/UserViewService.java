@@ -140,7 +140,7 @@ public class UserViewService {
 				User user = userService.addUser(userView.getUser());
 				userPhoneNumber.setUser(user);
 				userPhoneNumberService.addUserPhoneNumber(userPhoneNumber);
-				return (new UserView(user, userPhoneNumber, null));
+				return (new UserView(user, userPhoneNumber, userView.getRole()));
 			}			
 			return null;
 	}

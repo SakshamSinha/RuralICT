@@ -23,12 +23,13 @@ import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.UserViewService;
 import app.entities.Group;
-import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
 import app.util.UserManage;
+
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 @RestController
 @RequestMapping("/api/{org}/manageUsers")
@@ -65,49 +66,35 @@ public class ManageUsersRestController {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 
 		List<OrganizationMembership> membershipList = organizationMembershipService.getOrganizationMembershipList(organization);
-
-		for(OrganizationMembership membership : membershipList)
-		{
-			User user = membership.getUser();
-
-			// Get required attributes for each user
-			int manageUserID = user.getUserId();
-			String name = user.getName();
-			String email = user.getEmail();
-			String phone = userPhoneNumberService.getUserPrimaryPhoneNumber(user).getPhoneNumber();
-			String role  = userService.getUserRole(user, organization);
-			String address = user.getAddress();
-
-			// Create the UserManage Object and add it to the list
-			UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address);
-			userrows.add(userrow);
-		}
-
-		return userrows;
+       
+			for(OrganizationMembership membership : membershipList)
+			{
+				
+				User user = membership.getUser();
+	
+				try
+				{
+				// Get required attributes for each user
+				int manageUserID = user.getUserId();
+				String name = user.getName();
+				String email = user.getEmail();
+				String phone = userPhoneNumberService.getUserPrimaryPhoneNumber(user).getPhoneNumber();
+				String role  = userService.getUserRole(user, organization);
+				String address = user.getAddress();
+	
+				// Create the UserManage Object and add it to the list
+				UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address);
+				userrows.add(userrow);
+				}
+				catch(NullPointerException e)
+				{
+					System.out.println("User name not having his phone number is: " + user.getName() + " having userID: " + user.getUserId());
+				}
+				
+			}
+        return userrows;
 	}
 	
-	/*
-	// Tests if the phone number already exists in the database or not
-	@RequestMapping(value="/testPhoneNumber", method = RequestMethod.POST, produces = "text/plain")
-	@PreAuthorize("hasRole('ADMIN'+#org)")
-	@Transactional
-	public String testPhoneNumber(@PathVariable String org, @RequestBody Map<String,String> newUserDetails) {
-
-		Organization organization = organizationService.getOrganizationByAbbreviation(org);
-
-		// Get the input parameters from AngularJS
-		String phone = newUserDetails.get("phone");
-		
-		// Check if the phoneNumber is already present in the database
-		if(userPhoneNumberService.findPreExistingPhoneNumber(phone))
-		{
-			return "-1";
-		}
-		else
-			return "0";
-		
-	}*/
-
 	// Method to add a new user according to the details entered in the Modal Dialog Box
 	@RequestMapping(value="/addNewUser", method = RequestMethod.POST, produces = "application/json")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
@@ -126,23 +113,35 @@ public class ManageUsersRestController {
 		// Variables to store the boolean values of the roles
 		boolean isAdmin = false;
 		boolean isPublisher = false;
-
+		
+		// Strip all the whitespaces
+		phone = phone.replaceAll("\\s+","");
+		
+		// Get the last 10 digits of the phone number and append 91 to it
+		phone = phone.substring(phone.length() - 10);
+		phone = "91" + phone;
+		
+		// Find if the number is already present in the database 
+		// If present report it to the frontend
+		if(!userPhoneNumberService.findPreExistingPhoneNumber(phone))
+		{
+			System.out.println("A previous phone number entry was found");
+			return null;
+		}
+		
 		// Add the new User to database
 		User user = new User(name, address, "en", "en", email);
 		userService.addUser(user);
-
+		
+		UserPhoneNumber primaryPhoneNumber = new UserPhoneNumber(user, phone, true);
+	    userPhoneNumberService.addUserPhoneNumber(primaryPhoneNumber);
+	    
 		// Add the Organization Membership for the user in the Database
 		OrganizationMembership membership = new OrganizationMembership(organization, user, isAdmin, isPublisher);
 		organizationMembershipService.addOrganizationMembership(membership);
 		
-		// Add the new user by default to parent group
-		Group parentgroup = organizationService.getParentGroup(organization);
-		GroupMembership groupMembership = new GroupMembership(parentgroup, user);
-		groupMembershipService.addGroupMembership(groupMembership);
-
-		// Add the Primary Phone number for the user in the database
-		UserPhoneNumber primaryPhoneNumber = new UserPhoneNumber(user, phone, true);
-		userPhoneNumberService.addUserPhoneNumber(primaryPhoneNumber);
+		// By Default Add the new user to parent group
+		groupMembershipService.addParentGroupMembership(organization, user);
 
 		// Create the UserManage Object
 		int manageUserID = user.getUserId();
@@ -214,7 +213,7 @@ public class ManageUsersRestController {
 	@RequestMapping(value="/editUser", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
-	public void editUser(@PathVariable String org, @RequestBody Map<String,String> currentUserDetails) {
+	public String editUser(@PathVariable String org, @RequestBody Map<String,String> currentUserDetails) throws MySQLIntegrityConstraintViolationException {
 
 		// Get the input parameters from AngularJS
 		int manageUserId = Integer.parseInt(currentUserDetails.get("userid"));
@@ -223,21 +222,35 @@ public class ManageUsersRestController {
 		String phone = currentUserDetails.get("phone");
 		String address = currentUserDetails.get("address");
 
+		// Strip all the whitespaces
+		phone = phone.replaceAll("\\s+","");
+		
+		// Get the last 10 digits of the phone number and append 91 to it
+		phone = phone.substring(phone.length() - 10);
+		phone = "91" + phone;
+		
+		// Find if the number is already present in the database 
+		// If present report it to the Frontend
+		if(!userPhoneNumberService.findPreExistingPhoneNumber(phone))
+		{
+			return "-1";
+		}
+		
 		// Add the new User to database
 		User user = userService.getUser(manageUserId);
 
+		// Update the attributes of the user
 		user.setName(name);
 		user.setEmail(email);
 		user.setAddress(address);
 		userService.addUser(user);
-
-		// First Remove the Previous Primary Phone Number
-		UserPhoneNumber previousPrimaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
-		userPhoneNumberService.removeUserPhoneNumber(previousPrimaryPhoneNumber);
 		
-		// Then add the new Primary number to the database
-		UserPhoneNumber newPrimaryPhoneNumber = new UserPhoneNumber(user, phone, true);
-		userPhoneNumberService.addUserPhoneNumber(newPrimaryPhoneNumber);
+		// Update the primary phone number of the user
+		UserPhoneNumber userPrimaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+		userPrimaryPhoneNumber.setPhoneNumber(phone);
+		userPhoneNumberService.addUserPhoneNumber(userPrimaryPhoneNumber);
+		
+		return phone;
 	}
 
 	// Method to get user details in a Modal Dialog Box
