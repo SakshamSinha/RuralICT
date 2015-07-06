@@ -65,30 +65,30 @@ public class ManageUsersRestController {
 
 		List<OrganizationMembership> membershipList = organizationMembershipService.getOrganizationMembershipList(organization);
 
-			for(OrganizationMembership membership : membershipList)
+		for(OrganizationMembership membership : membershipList)
+		{
+
+			User user = membership.getUser();
+
+			try
 			{
+				// Get required attributes for each user
+				int manageUserID = user.getUserId();
+				String name = user.getName();
+				String email = user.getEmail();
+				String phone = userPhoneNumberService.getUserPrimaryPhoneNumber(user).getPhoneNumber();
+				String role  = userService.getUserRole(user, organization);
+				String address = user.getAddress();
 
-				User user = membership.getUser();
-
-				try
-				{
-					// Get required attributes for each user
-					int manageUserID = user.getUserId();
-					String name = user.getName();
-					String email = user.getEmail();
-					String phone = userPhoneNumberService.getUserPrimaryPhoneNumber(user).getPhoneNumber();
-					String role  = userService.getUserRole(user, organization);
-					String address = user.getAddress();
-
-					// Create the UserManage Object and add it to the list
-					UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address);
-					userrows.add(userrow);
-				}
-				catch(NullPointerException e)
-				{
-					System.out.println("User name not having his phone number is: " + user.getName() + " having userID: " + user.getUserId());
-				}
+				// Create the UserManage Object and add it to the list
+				UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address);
+				userrows.add(userrow);
 			}
+			catch(NullPointerException e)
+			{
+				System.out.println("User name not having his phone number is: " + user.getName() + " having userID: " + user.getUserId());
+			}
+		}
 		return userrows;
 	}
 
