@@ -142,7 +142,7 @@ public class BroadcastVoiceController {
 		
 		/*
 		 * Broadcast, Broadcast Recipient and Broadcast Schedule will be added
-		even when scheduling will be done from separate thread.
+		 * here in this module even when scheduling will be done from separate thread.
 		*/
 		//Adding Broadcast to the Broadcast table
 		VoiceBroadcast broadcast = new VoiceBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, voice, voiceBroadcastDraft);
@@ -168,7 +168,6 @@ public class BroadcastVoiceController {
 		java.util.Date date= new java.util.Date();
 		Timestamp currentTimestamp= new Timestamp(date.getTime());
 		broadcast.setBroadcastedTime(currentTimestamp);
-		System.out.println(currentTimestamp);
 		
 		//Adding Broadcast schedule 
 		//TODO set the time at which you have actually send the schedule and set the send to all field as well.
@@ -179,7 +178,7 @@ public class BroadcastVoiceController {
 		for(BroadcastRecipient recipient: broadcastRecipients)
 		{
 			User user=recipient.getUser();
-			System.out.println("User:"+user.getName());
+			System.out.println("Broadcast Recipient:"+user.getName());
 			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
 			for(UserPhoneNumber no:phoneNumbers)
 			{	
@@ -197,7 +196,7 @@ public class BroadcastVoiceController {
 	@RequestMapping(value = "/latestBroadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
 	@ResponseBody
 	public void latestRecordedLogs(@RequestBody Map<String,String> body) {
-		System.out.println("We have received the latest body from uploader in Angular "+body);
+		System.out.println("The json body has been received from uploader in Angular js part"+body);
 		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
 		Voice voice = voiceService.getVoice(Integer.parseInt(body.get("voiceId")));
 		

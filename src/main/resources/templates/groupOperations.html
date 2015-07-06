@@ -10,11 +10,11 @@
 </div>
 <ul class="nav nav-tabs top-tab-bar" id="interest_tabs">
 	<!--top level tabs-->
-	<li ng-click="changeUrl(url)"><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
 	<li class="active"><a href="#voice-message-response" data-toggle="tab">Voice
 			Message Response</a></li>
 	<li><a href="#text-message-response" data-toggle="tab">Text
 			Message Response</a></li>
+	<li ng-click="changeUrl(voiceBroadcastUrl)"><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
 	<li><a href="#send-sms" data-toggle="tab">Sent SMS</a></li>
 	<li><a href="#manage" data-toggle="tab">Manage</a></li>
 </ul>
@@ -37,7 +37,7 @@
 			<div id="broadcast-voice-message" class="tab-pane">
 <!-- 				<ng-include -->
 <!-- 					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include> -->
-				<ng-include src="url"></ng-include>
+				<ng-include src="voiceBroadcastUrl"></ng-include>
 			</div>
 			<div id="broadcast-text-message" class="tab-pane">
                 <ng-include
@@ -161,4 +161,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
