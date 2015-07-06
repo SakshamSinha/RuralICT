@@ -107,7 +107,6 @@ public class TextBroadcastController {
 		// Parse the string containing User Id of the Recipients and send SMS to them
 		for(int i=0 ; i<userIdList.length;i++)
 		{	
-			System.out.println(userIdList[i]);
 			User user = userService.getUser(Integer.parseInt(userIdList[i]));
 			BroadcastRecipient recipientUser = new BroadcastRecipient(broadcast, user);
 			broadcastRecipientService.addBroadcastRecipient(recipientUser);

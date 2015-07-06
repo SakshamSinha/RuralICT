@@ -1,3 +1,5 @@
+<div  ng-controller="BroadcastVoiceUrlCtrl as broadcastUrlCtrl">
+
 <div class="row-fluid">
 	<input type="hidden" id="groupId" th:value="${group.groupId}">
 	<div class="page-header">
@@ -8,20 +10,44 @@
 </div>
 <ul class="nav nav-tabs top-tab-bar" id="interest_tabs">
 	<!--top level tabs-->
-	<li class="active"><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
-	<li><a href="#voice-message-response" data-toggle="tab">Voice
+	<li class="active"><a href="#voice-message-response" data-toggle="tab">Voice
 			Message Response</a></li>
 	<li><a href="#text-message-response" data-toggle="tab">Text
 			Message Response</a></li>
-	<li><a href="#send-sms" data-toggle="tab">Send SMS</a></li>
+	<li ng-click="changeUrl(voiceBroadcastUrl)"><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
+	<li><a href="#send-sms" data-toggle="tab">Sent SMS</a></li>
 	<li><a href="#manage" data-toggle="tab">Manage</a></li>
 </ul>
 
 <!--top level tab content-->
 <div class="tab-content">
+
+	<!--broadcast tab menu-->
+	<div id="broadcast" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
+<!-- 			<li ng-class="{active:tab == 1}"><a href="#broadcast-voice-message" data-toggle="tab" >Voice -->
+			<li><a href="#broadcast-voice-message" data-toggle="tab" >Voice
+					Message</a></li>
+			<li><a href="#broadcast-text-message" data-toggle="tab">Text
+					Message</a></li>
+		</ul>
+		<!--brands tab content-->
+		<div class="tab-content">
+<!-- 			<div ng-show="tab==1" id="broadcast-voice-message" class="tab-pane"> -->
+			<div id="broadcast-voice-message" class="tab-pane">
+<!-- 				<ng-include -->
+<!-- 					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include> -->
+				<ng-include src="voiceBroadcastUrl"></ng-include>
+			</div>
+			<div id="broadcast-text-message" class="tab-pane">
+                <ng-include
+                    th:attr="src='\'textBroadcast/'+${group.groupId}+'\''"></ng-include>
+            </div>
+		</div>
+	</div>
 	
 	<!--Voice message response tab menu-->
-	<div id="voice-message-response" class="tab-pane">
+	<div id="voice-message-response" class="tab-pane active">
 		<ul class="nav nav-tabs bottom-tab-bar" id="all_tabs">
 			<li class="active"><a href="#voice-message-response-inbox" data-toggle="tab">Inbox</a></li>
 			<li><a href="#voice-message-response-saved" data-toggle="tab">Saved</a></li>
@@ -56,43 +82,25 @@
 	</div>
 
 
-	<!--brands tab menu-->
-	<div id="broadcast" class="tab-pane active">
-		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
-			<li class="active"><a href="#broadcast-voice-message" data-toggle="tab">Voice
-					Message</a></li>
-			<li><a href="#broadcast-text-message" data-toggle="tab">Text
-					Message</a></li>
-		</ul>
-		<!--brands tab content-->
-		<div class="tab-content">
-			<div id="broadcast-voice-message" class="tab-pane active">
-				<ng-include
-					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include>
-			</div>
-			<div id="broadcast-text-message" class="tab-pane">
-                <ng-include
-                    th:attr="src='\'textBroadcast/'+${group.groupId}+'\''"></ng-include>
-            </div>
-		</div>
-	</div>
+	
 
 
-	<!--media tab menu-->
+	<!--Text Message Response tab menu-->
 	<div id="text-message-response" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="media_tabs">
-			<li class="active"><a href="#text-message-response-inbox" data-toggle="tab">Inbox</a></li>
-			<li><a href="#text-message-response-accepted" data-toggle="tab">Accepted</a></li>
-			<li><a href="#text-message-response-rejected" data-toggle="tab">Rejected</a></li>
-			<li><a href="#text-message-response-response-binary"
-				data-toggle="tab">Response(Yes/No)</a></li>
-			<li><a href="#text-message-response-feedback" data-toggle="tab">Feedback</a></li>
-			<li><a href="#text-message-response-default-message"
-				data-toggle="tab">Default Message</a></li>
+<!-- 			TODO Implement this in backend -->
+<!-- 			<li class="active"><a href="#text-message-response-inbox" data-toggle="tab">Inbox</a></li> -->
+<!-- 			<li><a href="#text-message-response-accepted" data-toggle="tab">Accepted</a></li> -->
+<!-- 			<li><a href="#text-message-response-rejected" data-toggle="tab">Rejected</a></li> -->
+<!-- 			<li><a href="#text-message-response-response-binary" -->
+<!-- 				data-toggle="tab">Response(Yes/No)</a></li> -->
+<!-- 			<li><a href="#text-message-response-feedback" data-toggle="tab">Feedback</a></li> -->
+			<li class="active"><a href="#text-message-response-default-message"
+				data-toggle="tab">Inbox</a></li>
 		</ul>
 		<!--media tab content-->
 		<div class="tab-content">
-			<div id="text-message-response-inbox" class="tab-pane active">
+			<div id="text-message-response-inbox" class="tab-pane">
 				<ng-include
 					th:attr="src='\'textMessage/'+inbox+'/'+${group.groupId}+'\''"></ng-include>
 			</div>
@@ -113,14 +121,14 @@
 				<ng-include
 					th:attr="src='\'textMessage/'+ feedback+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
-			<div id="text-message-response-default-message" class="tab-pane">
+			<div id="text-message-response-default-message" class="tab-pane active">
 				<ng-include
 					th:attr="src='\'textMessage/'+ default+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
 		</div>
 	</div>
 
-	<!--music tab menu-->
+	<!--Sent Sms tab menu-->
 	<div id="send-sms" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="music_tabs">
 			<li class="active"><a href="#send-sms-outgoing-sms" data-toggle="tab">Outgoing
@@ -134,10 +142,10 @@
 		</div>
 	</div>
 
-	<!--public_figures tab menu-->
+	<!--Manage tab menu-->
 	<div id="manage" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="public_figures_tabs">
-			<li class="active"><a href="#manage-members" data-toggle="tab">Members</a></li>
+			<li class="active"><a href="#manage-members" data-toggle="tab">Group Members</a></li>
 			<li><a href="#manage-reports" data-toggle="tab">Reports</a></li>
 			<li><a href="#manage-settings" data-toggle="tab">Settings</a></li>
 		</ul>
@@ -154,4 +162,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>

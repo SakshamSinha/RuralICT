@@ -1,5 +1,6 @@
 package app.business.services;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,7 +113,7 @@ public class UserViewService {
 		Group group = groupService.getGroup(groupId);
 		String role=null;
 		
-		List<GroupMembership> membershipList = group.getGroupMemberships();
+		List<GroupMembership> membershipList = groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group);
 		
 		List<UserView> rows = new ArrayList<UserView>();
 		
@@ -131,12 +132,18 @@ public class UserViewService {
 	
 	@Transactional
 	public UserView addUserView(UserView userView) {
-
-			User user = userService.addUser(userView.getUser());
 			UserPhoneNumber userPhoneNumber = userView.getPhone();
-			userPhoneNumber.setUser(user);
-			userPhoneNumber = userPhoneNumberService.addUserPhoneNumber(userPhoneNumber);
-			return (new UserView(user, userPhoneNumber, null));
+			
+			/**
+			 * Just to check if userPhoneNumber doesn't exist
+			 */
+			if(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber.getPhoneNumber())==null) {
+				User user = userService.addUser(userView.getUser());
+				userPhoneNumber.setUser(user);
+				userPhoneNumberService.addUserPhoneNumber(userPhoneNumber);
+				return (new UserView(user, userPhoneNumber, null));
+			}			
+			return null;
 	}
 	
 	@Transactional

@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,11 @@ import app.security.AuthenticatedUser;
 @EnableWebMvcSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new StandardPasswordEncoder();
+	}
 
 	@Bean
 	UserDetailsService userDetailsService() {
@@ -76,7 +82,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 			.userDetailsService(userDetailsService())
-				.passwordEncoder(new StandardPasswordEncoder());
+				.passwordEncoder(passwordEncoder());
 	}
 
 	/**

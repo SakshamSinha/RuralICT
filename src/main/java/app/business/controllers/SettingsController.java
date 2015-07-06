@@ -3,9 +3,11 @@ package app.business.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,9 +62,9 @@ public class SettingsController {
 		int organizationid = Integer.parseInt(request.getParameter("orgid"));
 		Organization organization = organizationService.getOrganizationById(organizationid);
 
-		WelcomeMessage englishMessage = welcomeMessageService.getbyOrganizationAndLocale(organization,"en");
-		WelcomeMessage marathiMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, "mr");
-		WelcomeMessage hindiMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, "hi");
+		WelcomeMessage englishMessage = welcomeMessageService.getByOrganizationAndLocale(organization,"en");
+		WelcomeMessage marathiMessage = welcomeMessageService.getByOrganizationAndLocale(organization, "mr");
+		WelcomeMessage hindiMessage = welcomeMessageService.getByOrganizationAndLocale(organization, "hi");
 
 		List<String> voices = new ArrayList<String>();
 		voices.add(englishMessage.getVoice().getUrl());
@@ -80,6 +81,8 @@ public class SettingsController {
 		// Convert for getting the files
 		MultipartHttpServletRequest mRequest;
 		mRequest = (MultipartHttpServletRequest) request;
+		
+		String[] supportedAudioFiletypes = new String[]{"audio/wav","audio/mp3","audio/m4a","audio/wma","audio/ogg"};
 
 		// Get Parameters passed from AngularJS using FormData
 		int organizationid = Integer.parseInt(request.getParameter("orgid"));
@@ -97,40 +100,60 @@ public class SettingsController {
 				return "-1";
 			}
 			
-			if(!uploadedAudioFile.getContentType().equals("audio/wav"))
+			// Check if the file is of supported audio formats
+			if(!Arrays.asList(supportedAudioFiletypes).contains(uploadedAudioFile.getContentType()))
 			{
 				// Take some action in the frontend Part
 				// like an alert box saying please upload wav file
 				return "-3";
 			}
 
+			//Check if the File Size is greater than 10MB
 			if(uploadedAudioFile.getSize() > 10000000)
 			{
 				return "-2";
 			}
 
+			// Get the File Name
 			String fileName = uploadedAudioFile.getOriginalFilename();
-
+			
 			String locale = request.getParameter("locale");
-
-			// Create Required Entity Objects
-			WelcomeMessage welcomeMessage = welcomeMessageService.getbyOrganizationAndLocale(organization, locale);
-
+			
 			String serverFolder = "/home/ruralivrs/Ruralict/apache-tomcat-7.0.42/webapps/Downloads/voices/welcomeMessage";
 
 			// Save as Temporary File and Convert to Kuckoo Format
-			File temp = Utils.saveFile("temp.wav", serverFolder, uploadedAudioFile);
-
-			// Change the 'serverFile' variable to path on the server when application is deployed on server
-			File serverFile = new File(serverFolder + File.separator + fileName);
-			serverFile = Utils.convertToKookooFormat(temp, serverFile);
-
-			// The below code will actually copy the uploaded file to specific location on the server
-			FileCopyUtils.copy(uploadedAudioFile.getBytes(), serverFile);
-
+			File temp = new File(serverFolder + File.separator + "temp.wav" );
+			
+			// Remove spaces as kuckoo doesn't allow filename with spaces
+			fileName = fileName.replaceAll("\\s+","");
+			
+			// Change Extension of the file to wav
+			fileName = fileName.substring(0,fileName.length()-3);
+			fileName = fileName + "wav";
+			
 			// Get the current Working Directory and the full Filepath
-			String databaseFileUrl = "http://ruralict.cse.iitb.ac.in/Downloads/voices/welcomeMessage/" + fileName;
+			String databaseFolder = "http://ruralict.cse.iitb.ac.in/Downloads/voices/welcomeMessage/";
+			String databaseFileUrl = databaseFolder + fileName;
 
+			
+			// Check if the file is already present or not and rename it accordingly
+			Voice previousFileSameName  = voiceService.getVoicebyUrl(databaseFileUrl);
+					
+			if(previousFileSameName != null)
+			{
+				// Insert some-random number to automatically rename the file
+				fileName = fileName.substring(0,fileName.length()-4);
+				Random randomint = new Random();
+				fileName = fileName + "_" + Integer.toString(randomint.nextInt()) + ".wav";
+				databaseFileUrl = databaseFolder + fileName;
+				
+			}
+			
+			// Create a new file and convert the file to appropriate Kuckoo Format
+			File serverFile = new File(serverFolder + File.separator + fileName);
+			uploadedAudioFile.transferTo(temp);
+			serverFile = Utils.convertToKookooFormat(temp, serverFile);
+			
 			// Create a new Voice Object
 			Voice voice = new Voice(databaseFileUrl, true);
 
@@ -138,6 +161,7 @@ public class SettingsController {
 			voiceService.addVoice(voice);
 
 			// Update the Welcome Message
+			WelcomeMessage welcomeMessage = welcomeMessageService.getByOrganizationAndLocale(organization, locale);
 			welcomeMessage.setVoice(voice);
 			welcomeMessageService.addWelcomeMessage(welcomeMessage);
 
