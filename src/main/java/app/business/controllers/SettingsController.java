@@ -72,7 +72,7 @@ public class SettingsController {
 		voices.add(hindiMessage.getVoice().getUrl());
 
 		return voices;
-		}
+	}
 	
 	@RequestMapping(value="/resetwelcomeMessageUrl")
 	@Transactional
@@ -98,8 +98,7 @@ public class SettingsController {
 		defaultVoiceUrl.add(hindiMessageUrl);
 		
 		return defaultVoiceUrl;
-		
-		}
+	}
 
 	@RequestMapping(value="/upload/welcomeMessage", method=RequestMethod.POST, produces = "text/plain")
 	@Transactional
