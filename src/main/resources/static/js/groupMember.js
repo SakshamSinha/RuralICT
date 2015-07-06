@@ -7,8 +7,13 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 		$scope.userView.role = "";
 		
 		$scope.groupId = $("#groupId").val();
-		AddUserView.save({groupId: $scope.groupId}, $scope.userView, function(userObject) {
-				console.log(userObject);
+		$scope.status = AddUserView.save({groupId: $scope.groupId}, $scope.userView, function(userObject) {
+				if(!status){
+					alert("Error Creating the Member.");
+				}
+				else{
+					$scope.reload();
+				}
 		}); 
 	};
 	
@@ -104,8 +109,9 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	/* Get values to generate orderItem objects from modal */
 	var userName = $.trim($("#newGroupUserName").val());
 	var userEmail = $.trim($("#newGroupUserEmail").val());
-	if(userEmail == "" && userEmail.indexOf("@")==-1){
-		userEmail = null;
+	if(userEmail.indexOf("@")==-1 && userEmail != ""){
+		alert("Invalid Email Id");
+		return;
 	}
 	var userAddress = $("#newGroupUserAddress").val();
 	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
@@ -140,7 +146,7 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	
 	angular.element($("#add-new-group-user")).scope().addUserView(user, userPhoneNumber);
 	$('#add-new-group-user-modal').modal('toggle');
-	angular.element($("#add-new-group-user")).scope().reload();
+
 });
 
 $("#page-content").on("click", ".remove-group-user", function (e) {

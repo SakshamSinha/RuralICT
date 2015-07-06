@@ -131,12 +131,18 @@ public class UserViewService {
 	
 	@Transactional
 	public UserView addUserView(UserView userView) {
-
-			User user = userService.addUser(userView.getUser());
 			UserPhoneNumber userPhoneNumber = userView.getPhone();
-			userPhoneNumber.setUser(user);
-			userPhoneNumber = userPhoneNumberService.addUserPhoneNumber(userPhoneNumber);
-			return (new UserView(user, userPhoneNumber, null));
+			
+			/**
+			 * Just to check if userPhoneNumber doesn't exist
+			 */
+			if(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber.getPhoneNumber())==null) {
+				User user = userService.addUser(userView.getUser());
+				userPhoneNumber.setUser(user);
+				userPhoneNumberService.addUserPhoneNumber(userPhoneNumber);
+				return (new UserView(user, userPhoneNumber, null));
+			}			
+			return null;
 	}
 	
 	@Transactional

@@ -29,7 +29,7 @@ function changeAudioSource(url){
 }
 
 /* Actual Settings Controller */
-website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateOrganization, UpdateBroadcastDefaultSettings) {
+website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window, UpdateOrganization, UpdateBroadcastDefaultSettings) {
 
 	// get the current organization Attributes
 	var orgid = $('#organizationId').val();
@@ -65,15 +65,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 			"feedback" : false,
 			"response" : false
 	};
-	$scope.outgoingCheckBoxOptions = {
-			"order" : false,
-			"feedback" : false,
-			"response" : false
-	};    
 	
-	
-	
-
 	var organization = UpdateOrganization.get({
 		id: orgid
 	}, function() {
@@ -102,16 +94,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 
 	});
 	
-	var outboundcall = UpdateBroadcastDefaultSettings.get({
-		id: orgid
-	}, function() {
-		
-		//intialize 'checkbox' elements from outgoing call settings
-		$scope.outgoingCheckBoxOptions.order = outboundcall.askOrder;
-		$scope.outgoingCheckBoxOptions.feedback = outboundcall.askFeedback;
-		$scope.outgoingCheckBoxOptions.response = outboundcall.askResponse;
-
-	});
+	
 	
 	// Get the initial url for the audio files from the Backend
 	var postData = new FormData();
@@ -206,25 +189,6 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 			
 			//finally update the database
 			$scope.organization.$update({
-				id: orgid
-			}, function() {alert("Your Settings have been saved.")});
-		});
-	};
-	
-	// click function for 'save details' button in outgoing call settings
-	$scope.updateOutgoingCallOpt = function() {
-
-		$scope.outboundcall = UpdateBroadcastDefaultSettings.get({
-			id: orgid
-		}, function() {
-
-			//make changes in the $resource object
-			$scope.outboundcall.askOrder = $scope.outgoingCheckBoxOptions.order;
-			$scope.outboundcall.askFeedback = $scope.outgoingCheckBoxOptions.feedback;
-			$scope.outboundcall.askResponse = $scope.outgoingCheckBoxOptions.response;
-			
-			//finally update the database
-			$scope.outboundcall.$update({
 				id: orgid
 			}, function() {alert("Your Settings have been saved.")});
 		});
