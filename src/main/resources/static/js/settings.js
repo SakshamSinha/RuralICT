@@ -65,7 +65,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			"feedback" : false,
 			"response" : false
 	};
-<<<<<<< HEAD
+
 	$scope.outgoingCheckBoxOptions = {
 			"order" : false,
 			"feedback" : false,
