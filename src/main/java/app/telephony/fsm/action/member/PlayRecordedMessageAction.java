@@ -20,7 +20,7 @@ public class PlayRecordedMessageAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		RuralictSession ruralictSession = (RuralictSession) session;
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordedFeedbackMessageIs_"+session.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordedFeedbackMessageIs_"+ruralictSession.getLanguage()+".wav");
 		response.addPlayAudio(ruralictSession.getVoiceMessage().getUrl());
 
 	}

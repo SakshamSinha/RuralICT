@@ -82,11 +82,22 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 	
 	//TODO Eliminating this function doing hard refresh
 	$scope.reload = function(){
-		setTimeout($window.location.reload,2000);
+		setTimeout($window.location.reload.bind(window.location),2000);
 	}
     
 });
 
+$("#page-content").on("click","#select-all",function(e){
+	$("#user-list input[type=checkbox]").each(function(){
+		$(this).prop("checked",true);
+	});
+});
+
+$("#page-content").on("click","#unselect-all",function(e){
+	$("#user-list input[type=checkbox]").each(function(){
+		$(this).prop("checked",false);
+	});
+});
 
 $("#page-content").on("click","#voice-upload",function(e){
 	console.log("voice upload called");
@@ -123,7 +134,8 @@ $("#page-content").on("click","#place-voice-broadcast-call",function(e){
 		data.askResponse=1;
 	}
 	//look for the time it which is broadcasted.
-	data.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+	//data.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+	//console.log(data.broadcastedTime);
 	data.appOnly = 0;
 	data.format = "voice";
 	//setting the voice id if the voice is present in group

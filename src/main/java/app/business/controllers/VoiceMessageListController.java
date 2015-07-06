@@ -90,8 +90,6 @@ public class VoiceMessageListController {
 		List<Message> voiceInboxMessageList=voiceMessageService.getInboxVoiceMessageList(groupService.getGroup(groupId));
 		List<Product> productList= productService.getProductList(organizationService.getOrganizationByAbbreviation(org));
 		List<PresetQuantity> presetQuantityList= presetQuantityService.getPresetQuantityList(organizationService.getOrganizationByAbbreviation(org));
-		System.out.println(productList);
-		System.out.println(presetQuantityList);
 		model.addAttribute("message",voiceInboxMessageList);
 		model.addAttribute("products", productList);
 		model.addAttribute("presetQuantity", presetQuantityList);

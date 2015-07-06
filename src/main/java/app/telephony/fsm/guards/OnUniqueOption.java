@@ -29,7 +29,7 @@ public class OnUniqueOption implements Guard<IVRSession,Object> {
 		RuralictSession ruralictSession = (RuralictSession) session;
 		if(optionsFor.equalsIgnoreCase("language"))
 		{
-			if(session.getLanguage()==null){
+			if(ruralictSession.getLanguage()==null){
 				return (!allow);
 			}
 			return (allow);

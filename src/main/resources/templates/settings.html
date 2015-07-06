@@ -9,7 +9,7 @@
 	<!--top level tabs-->
 	<li><a href="#profile-settings" data-toggle="tab">Profile</a>
 	</li>
-	<li><a href="#system-settings" data-toggle="tab">System</a>
+	<li class="active"><a href="#system-settings" data-toggle="tab">System</a>
 	</li>
 	<li><a href="#bill-layout-settings" data-toggle="tab">Bill Layout</a>
 	</li>
@@ -64,13 +64,11 @@
 			</fieldset>
 		</form>
 	</div>
-	<div id="system-settings" class="tab-pane">
+	<div id="system-settings" class="tab-pane active">
 		<!--system settings tab menu-->
 		<div id="broadcast" class="tab-pane">
 			<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
-				<li><a href="#welcome-message-settings" data-toggle="tab">Welcome Message</a>
-				</li>
-				<li><a href="#outbound-call-settings" data-toggle="tab">Outbound Call</a>
+				<li class="active"><a href="#welcome-message-settings" data-toggle="tab">Welcome Message</a>
 				</li>
 				<li><a href="#inbound-call-settings" data-toggle="tab">Inbound Call</a>
 				</li>
@@ -78,10 +76,12 @@
 				</li>
 				<li><a href="#dashboard-settings" data-toggle="tab">Dashboard</a>
 				</li>
+				<li><a href="#broadcast-default-settings" data-toggle="tab">Broadcast Default Settings</a>
+				</li>
 			</ul>
 			<!--system settings tab content-->
 			<div class="tab-content">
-				<div id="welcome-message-settings" class="tab-pane">
+				<div id="welcome-message-settings" class="tab-pane active">
 					<div class="table-settings-system">
 						<table style="border-spacing: 40px 10px;">
 							<tr>
@@ -113,6 +113,7 @@
 							<tr>
 								<td align='right'> Upload New Welcome Message File :</td>
 								<td>
+									<button class="btn btn-success" onclick="recordFile.init()" id="voice-record" data-toggle="modal" data-title="Record" data-target="#welcome-message-record-modal" align="center">Record</button><br>
 									<input type="file" name="myFile" file-model="myFile" id="welcome_message">
 								</td>
 							</tr>
@@ -123,30 +124,8 @@
 						</div>
 					</div>
 				</div>
-				<div id="outbound-call-settings" class="tab-pane">
-					<div class="table-settings-system">
-						<table>
-
-							<tr>
-								<b>OUTGOING CALL SETTINGS :</b>
-							</tr>
-							<tr>
-								<td><b>Call Flow : </b>
-									<br>
-									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.order name="response1" />SemiStructured&nbsp;(Order/आदेश)
-									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.feedback name="response1" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
-									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.response name="response1" />Structured&nbsp;(Response/प्रतिक्रिया)
-									<br>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<div class="form-actions">
-						<input type="submit" ng-click="updateOutgoingCallOpt()" class="btn btn-success" value="Save Details" />
-					</div>
+				<div id="broadcast-default-settings" class="tab-pane">
+					<ng-include th:attr="src='\'broadcastDefaultSettings'+'\''"></ng-include>		
 				</div>
 				<div id="inbound-call-settings" class="tab-pane">
 					<div class="table-settings-system">
@@ -317,4 +296,30 @@
 	
 	
 </div>
+</div>
+
+<div class="modal fade" id="welcome-message-record-modal" tabindex="-1" role="dialog" aria-hidden="true">
+   	<div class="modal-dialog">
+			<div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                   <i class="icon-remove"></i>
+               </button>
+               <h4 class="modal-title custom_align" id="heading-record">Record</h4>
+           	</div>
+    		<div class="modal-body">
+        		<form class="form-horizontal">
+           			<audio id="audio" controls></audio>
+               			<br></br>
+               			<br></br>
+            			<div class="row-fluid">
+               				<button class="btn btn-primary" id="recordButton" onclick="recordFile.startRecording();"><i class="icon-white icon-play"></i></button>
+               				<button class="btn btn-primary" id="stopButton" onclick="recordFile.stopRecording();" disabled><i class="icon-white icon-stop"></i></button>
+               				<a class="btn btn-info" role="button" id="audioDownload"><i class="icon-white icon-download"></i> Download</a>
+							</div>
+
+
+						</div>
+      			</form>
+    		</div>
+    </div>
 </div>

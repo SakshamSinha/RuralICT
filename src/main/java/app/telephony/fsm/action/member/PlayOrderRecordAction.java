@@ -23,13 +23,13 @@ public class PlayOrderRecordAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		RuralictSession ruralictSession = (RuralictSession) session;
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageRecordAfterBeep_"+session.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageRecordAfterBeep_"+ruralictSession.getLanguage()+".wav");
 		Record record = new Record();
 		String recordName = "message" + Calendar.getInstance().getTimeInMillis() + ((new Random()).nextInt(90000) + 10000);
 		record.setFileName(recordName);
 		record.setMaxDuration(Configs.Telephony.MAX_RECORDING_DURATION);
 		record.setSilence(Configs.Telephony.RECORDING_SILENCE);
-		session.setMessageURL(recordName);
+		ruralictSession.setMessageURL(recordName);
 		ruralictSession.setPublisher(false);
 		response.addRecord(record);
 
