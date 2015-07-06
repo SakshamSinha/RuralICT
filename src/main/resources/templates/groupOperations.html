@@ -81,18 +81,19 @@
 	<!--media tab menu-->
 	<div id="text-message-response" class="tab-pane">
 		<ul class="nav nav-tabs bottom-tab-bar" id="media_tabs">
-			<li class="active"><a href="#text-message-response-inbox" data-toggle="tab">Inbox</a></li>
-			<li><a href="#text-message-response-accepted" data-toggle="tab">Accepted</a></li>
-			<li><a href="#text-message-response-rejected" data-toggle="tab">Rejected</a></li>
-			<li><a href="#text-message-response-response-binary"
-				data-toggle="tab">Response(Yes/No)</a></li>
-			<li><a href="#text-message-response-feedback" data-toggle="tab">Feedback</a></li>
-			<li><a href="#text-message-response-default-message"
-				data-toggle="tab">Default Message</a></li>
+<!-- 			TODO Implement this in backend -->
+<!-- 			<li class="active"><a href="#text-message-response-inbox" data-toggle="tab">Inbox</a></li> -->
+<!-- 			<li><a href="#text-message-response-accepted" data-toggle="tab">Accepted</a></li> -->
+<!-- 			<li><a href="#text-message-response-rejected" data-toggle="tab">Rejected</a></li> -->
+<!-- 			<li><a href="#text-message-response-response-binary" -->
+<!-- 				data-toggle="tab">Response(Yes/No)</a></li> -->
+<!-- 			<li><a href="#text-message-response-feedback" data-toggle="tab">Feedback</a></li> -->
+			<li class="active"><a href="#text-message-response-default-message"
+				data-toggle="tab">Inbox</a></li>
 		</ul>
 		<!--media tab content-->
 		<div class="tab-content">
-			<div id="text-message-response-inbox" class="tab-pane active">
+			<div id="text-message-response-inbox" class="tab-pane">
 				<ng-include
 					th:attr="src='\'textMessage/'+inbox+'/'+${group.groupId}+'\''"></ng-include>
 			</div>
@@ -113,7 +114,7 @@
 				<ng-include
 					th:attr="src='\'textMessage/'+ feedback+'/' +${group.groupId}+'\''"></ng-include>
 			</div>
-			<div id="text-message-response-default-message" class="tab-pane">
+			<div id="text-message-response-default-message" class="tab-pane active">
 				<ng-include
 					th:attr="src='\'textMessage/'+ default+'/' +${group.groupId}+'\''"></ng-include>
 			</div>

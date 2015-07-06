@@ -1,10 +1,10 @@
 <div id="user-controller-page" ng-controller="UsersCtrl" th:attr="organizationabbr=${organization.abbreviation}">
     <div class="row-fluid">
         <div class="page-header">
-            <h1>Users <small>All users</small></h1>
+            <h1>Manage Members</h1>
         </div>
         <button class="btn btn-success" id="add_new_user" data-toggle="modal" data-title="Add new user" data-target="#add-new-user-modal">
-            <i class="icon-white icon-plus-sign"></i> Add new user</button>
+            <i class="icon-white icon-plus-sign"></i> Add new Organization Member</button>
         <br>
         <br>
         <form role="form">
@@ -70,7 +70,7 @@
         <div class="modal-dialog">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> </button>
-                <h4 class="modal-title custom_align" id="HeadingUser">Add New User</h4>
+                <h4 class="modal-title custom_align" id="HeadingUser">Add New Organization Member</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
@@ -117,7 +117,7 @@
         <div class="modal-dialog">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> </button>
-                <h4 class="modal-title custom_align" id="HeadingUser">Edit User Details</h4>
+                <h4 class="modal-title custom_align" id="HeadingUser">Edit Member Details</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
@@ -159,7 +159,7 @@
         <div class="modal-dialog">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> </button>
-                <h4 class="modal-title custom_align" id="HeadingUser">User Details</h4>
+                <h4 class="modal-title custom_align" id="HeadingUser">Member Details</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
