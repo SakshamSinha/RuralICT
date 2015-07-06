@@ -27,7 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="list-users" dir-paginate="manageUserItem in manageUserItems | filter:selectedRole | orderBy:'name' | itemsPerPage: 7">
+                <tr class="list-users" dir-paginate="manageUserItem in manageUserItems | filter:selectedRole | orderBy:'name' | itemsPerPage: 10">
 
                     <td>{{ manageUserItem.manageUserID }}</td>
                     <td>{{ manageUserItem.name }}</td>
