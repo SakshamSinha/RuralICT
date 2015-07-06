@@ -239,6 +239,33 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			alert("There was some error in response from the server.");
 		});
 	}
+	
+$scope.resetWelcomeMessageSettingsButton = function(){
+	
+	// Initialize the table
+	$http.get(API_ADDR + 'web/' + abbr + '/resetwelcomeMessageUrl').
+		success(function(data, status, headers, config) {
+			
+			var localeIndex = $scope.WelcomeMessageLanguageSelect;
+			// Clear the contents of the array
+			$scope.languageUrl.length = 0;
+			
+			// Push the new urls into it
+			$scope.languageUrl.push(data[0]);
+			$scope.languageUrl.push(data[1]);
+			$scope.languageUrl.push(data[2]);
+			
+			changeAudioSource($scope.languageUrl[localeIndex]);
+			
+			// Hide the modal
+			$('#reset-confirmation-modal').modal('hide');
+			
+		}).
+		error(function(data, status, headers, config) {
+			alert("There was some error in response from the remote server.");
+		});
+	}
+	
 });
 
 // Jquery Specific Code
