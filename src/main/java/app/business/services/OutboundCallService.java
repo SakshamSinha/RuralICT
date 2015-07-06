@@ -22,9 +22,8 @@ public class OutboundCallService {
 	@Autowired
 	BroadcastScheduleRepository	broadcastScheduleRepository;
 	
-	public List<OutboundCall> getOutboundCallList(Organization organization){
-		//**********************************************
-		return null;
+	public List<OutboundCall> getOutboundCallList(Organization organization){		
+		return outboundCallRepository.findAll();
 	}
 	
 	public List<OutboundCall> getOutboundCallList(Group group){
