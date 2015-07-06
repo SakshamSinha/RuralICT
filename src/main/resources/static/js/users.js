@@ -50,8 +50,8 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			
 			
 			
-		   // Add the User as we have validated the number
-		    $http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addNewUser', newUserDetails).
+			// Add the User as we have validated the number
+			$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addNewUser', newUserDetails).
 				success(function(data, status, headers, config) {
 					
 					if(!data)
@@ -67,7 +67,6 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 						// Hide the modal dialog box after successful operation
 						$('#add-new-user-modal').modal('hide');
 					}
-
 				}).
 				error(function(data, status, headers, config) {
 					alert("There was some error in response from the remote server.");

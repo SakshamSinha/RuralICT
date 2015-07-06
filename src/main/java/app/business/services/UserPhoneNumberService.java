@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-
 import app.data.repositories.UserPhoneNumberRepository;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
