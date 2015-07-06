@@ -85,6 +85,28 @@ public class ManageUsersRestController {
 
 		return userrows;
 	}
+	
+	/*
+	// Tests if the phone number already exists in the database or not
+	@RequestMapping(value="/testPhoneNumber", method = RequestMethod.POST, produces = "text/plain")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String testPhoneNumber(@PathVariable String org, @RequestBody Map<String,String> newUserDetails) {
+
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+
+		// Get the input parameters from AngularJS
+		String phone = newUserDetails.get("phone");
+		
+		// Check if the phoneNumber is already present in the database
+		if(userPhoneNumberService.findPreExistingPhoneNumber(phone))
+		{
+			return "-1";
+		}
+		else
+			return "0";
+		
+	}*/
 
 	// Method to add a new user according to the details entered in the Modal Dialog Box
 	@RequestMapping(value="/addNewUser", method = RequestMethod.POST, produces = "application/json")

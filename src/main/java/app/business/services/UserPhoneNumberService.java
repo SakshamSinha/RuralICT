@@ -74,6 +74,22 @@ public class UserPhoneNumberService {
 		return userPhoneNumberRepository.findOne(phoneNumber);
 	}
 	
+	/*
+	 * Check if a phone number is present in the database or not
+	 */
+	public boolean findPreExistingPhoneNumber(String phoneNumber) {
+		
+		UserPhoneNumber preExistingNumber = userPhoneNumberRepository.findOne(phoneNumber);
+		
+		if(preExistingNumber == null)
+		{
+			return true;
+		}
+		else
+			return false;
+		
+	}
+	
 	@Transactional
 	public void setPrimaryPhoneNumberByUser(User user, UserPhoneNumber userPhoneNumber) {
 		

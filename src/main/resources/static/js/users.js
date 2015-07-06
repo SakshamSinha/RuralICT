@@ -41,7 +41,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		}
 		else
 		{
-			$scope.inputUserPhone = "91" + $scope.inputUserPhone;
+			//$scope.inputUserPhone = "91" + $scope.inputUserPhone;
 			// Get the attributes of the new user
 			var newUserDetails = {};
 			newUserDetails.name = $scope.inputUserName;
@@ -49,21 +49,41 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			newUserDetails.phone = $scope.inputUserPhone;
 			newUserDetails.role = "Member"                        // New User is by default a Member
 			newUserDetails.address = $scope.inputUserAddress;
+			
+			
+			$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/testPhoneNumber', newUserDetails).
+			success(function(data, status, headers, config) {
+					
+				  if(data === "-1" )
+					  {
+					   alert("The number has already been entered");
+					  }
+				  else
+					  {
+					  // Add the User as we have validated the number
+					  $http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addNewUser', newUserDetails).
+						success(function(data, status, headers, config) {
 
-			$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addNewUser', newUserDetails).
-				success(function(data, status, headers, config) {
+							// Push the new object in the ng-repeat variable for for table
+							// This Automatically updates the table
+							$scope.manageUserItems.push(data);
 
-					// Push the new object in the ng-repeat variable for for table
-					// This Automatically updates the table
-					$scope.manageUserItems.push(data);
+							// Hide the modal dialog box after successful operation
+							$('#add-new-user-modal').modal('hide');
 
-					// Hide the modal dialog box after successful operation
-					$('#add-new-user-modal').modal('hide');
+						}).
+						error(function(data, status, headers, config) {
+							alert("There was some error in response from the remote server.");
+						});
+					  
+					  }
 
 			}).
-				error(function(data, status, headers, config) {
-					alert("There was some error in response from the remote server.");
-				});
+			error(function(data, status, headers, config) {
+				alert("There was some error in response from the remote server.");
+			});
+
+			
 		}
 	};
 

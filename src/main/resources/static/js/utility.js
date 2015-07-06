@@ -13,9 +13,14 @@ function getId(object){
 }
 
 function validatephonenumber(phoneNumber){
-
-	var phoneformat = /[0-9]{10}/g;
-	return (phoneformat.test(phoneNumber) && phoneNumber.length == 10); 
+	
+	// strip all the spaces
+	phoneNumber = phoneNumber.replace(/\s+/g, '');
+	
+	// below regex allows by 0 or +91 or without both 
+	var phoneformat =  /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
+	
+	return (phoneformat.test(phoneNumber)); 
 }
 
 function validatedate(inputText){
