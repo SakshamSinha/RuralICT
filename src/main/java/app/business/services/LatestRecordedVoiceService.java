@@ -32,7 +32,7 @@ public class LatestRecordedVoiceService {
 		latestRecordedVoiceRepository.delete(latestRecordedVoice);
 	}
 	
-	public void updateLatestRecordedVoice(Organization organization,Timestamp timestamp, Voice voice) {
+	public void updateLatestRecordedVoice(Organization organization, Voice voice) {
 		LatestRecordedVoice latestRecordedVoice = getLatestRecordedVoiceByOrganization(organization);
 		if (latestRecordedVoice.equals(null))
 		{
@@ -40,7 +40,6 @@ public class LatestRecordedVoiceService {
 		}
 		else
 		{
-			latestRecordedVoice.setTime(timestamp);
 			latestRecordedVoice.setVoice(voice);
 		}
 		addLatestRecordedVoice(latestRecordedVoice);

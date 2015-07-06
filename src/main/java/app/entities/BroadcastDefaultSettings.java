@@ -13,7 +13,7 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(name="broadcast_default_settings")
-public class BroadcastDefaultSetting implements Serializable {
+public class BroadcastDefaultSettings implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -43,10 +43,10 @@ public class BroadcastDefaultSetting implements Serializable {
 	@JoinColumn(name="group_id")
 	private Group group;
 
-	public BroadcastDefaultSetting() {
+	public BroadcastDefaultSettings() {
 	}
 
-	public BroadcastDefaultSetting(Organization organization, Group group, boolean askFeedback, boolean askOrder, boolean askResponse) {
+	public BroadcastDefaultSettings(Organization organization, Group group, boolean askFeedback, boolean askOrder, boolean askResponse) {
 		this.organization = organization;
 		this.group = group;
 		this.askFeedback = askFeedback;
