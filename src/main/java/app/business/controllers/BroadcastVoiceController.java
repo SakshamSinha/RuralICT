@@ -82,7 +82,7 @@ public class BroadcastVoiceController {
 		List<User> users = new ArrayList<User>();
 		for(GroupMembership groupMembership : groupMembershipList) {
 			users.add(groupMembership.getUser());
-			System.out.println(groupMembership.getUser().getName());
+			
 		}
 		
 		model.addAttribute("users",users);
@@ -147,7 +147,6 @@ public class BroadcastVoiceController {
 		for(BroadcastRecipient recipient: broadcastRecipients)
 		{
 			User user=recipient.getUser();
-			System.out.println("User:"+user.getName());
 			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
 			for(UserPhoneNumber no:phoneNumbers)
 			{	

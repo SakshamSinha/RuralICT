@@ -11,7 +11,7 @@
 	<li><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
 	<li class="active"><a href="#voice-message-response" data-toggle="tab">Voice
 			Message Response</a></li>
-	<li><a href="#text-message-response" data-toggle="tab">Text
+	<li th:if="${organization.enableSms}"><a href="#text-message-response" data-toggle="tab">Text
 			Message Response</a></li>
 	<li><a href="#send-sms" data-toggle="tab">Sent SMS</a></li>
 	<li><a href="#manage" data-toggle="tab">Manage</a></li>
@@ -27,8 +27,8 @@
 			<li><a href="#voice-message-response-saved" data-toggle="tab">Saved</a></li>
 			<li><a href="#voice-message-response-processed"
 				data-toggle="tab">Processed</a></li>
-			<li ><a href="#voice-message-response-feedback" data-toggle="tab">Feedback</a></li>
-			<li><a href="#voice-message-response-response" data-toggle="tab">Response</a>
+			<li th:if="${organization.enableFeedbacks}" ><a href="#voice-message-response-feedback" data-toggle="tab">Feedback</a></li>
+			<li th:if="${organization.enableResponses}"><a href="#voice-message-response-response" data-toggle="tab">Response</a>
 		</ul>
 		<!--all tab content-->
 		<div class="tab-content">
@@ -87,7 +87,7 @@
 			<li><a href="#text-message-response-rejected" data-toggle="tab">Rejected</a></li>
 			<li><a href="#text-message-response-response-binary"
 				data-toggle="tab">Response(Yes/No)</a></li>
-			<li><a href="#text-message-response-feedback" data-toggle="tab">Feedback</a></li>
+			<li ><a href="#text-message-response-feedback" data-toggle="tab">Feedback</a></li>
 			<li><a href="#text-message-response-default-message"
 				data-toggle="tab">Default Message</a></li>
 		</ul>

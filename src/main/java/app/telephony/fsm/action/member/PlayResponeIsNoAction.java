@@ -59,7 +59,7 @@ public class PlayResponeIsNoAction implements Action<IVRSession> {
 
 
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsNo_"+ruralictSession.getLanguage()+".wav");
-
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordingDone_"+ruralictSession.getLanguage()+".wav");
 	}
 
 

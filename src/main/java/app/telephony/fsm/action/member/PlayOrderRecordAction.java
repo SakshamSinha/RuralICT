@@ -32,9 +32,7 @@ public class PlayOrderRecordAction implements Action<IVRSession> {
 		ruralictSession.setMessageURL(recordName);
 		ruralictSession.setPublisher(false);
 		response.addRecord(record);
-
-	
-				
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordingDone_"+ruralictSession.getLanguage()+".wav");		
 	}
 
 }

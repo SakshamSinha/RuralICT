@@ -39,10 +39,10 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 	$scope.languageUrl  = [];
 
 	$scope.selectOptions = [{
-		name: 'Disable(बंद करना)',
+		name: 'Disable',
 		value: '0'
 	}, {
-		name: 'Enable(चालू करना)',
+		name: 'Enable',
 		value: '1'
 	}];
 
@@ -170,12 +170,8 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 
 			//make changes in the $resource object
 			$scope.organization.enableOrderCancellation  = Boolean(Number($scope.orderCancelSelect));
-			console.log($scope.organization.enableOrderCancellation);
 			$scope.organization.enableBroadcastEnable = Boolean(Number($scope.broadcastEnableSelect));
-			$scope.organization.enableLatsetBroadcast = Boolean(Number($scope.latestBroadcastSelect));
-			$scope.organization.enablePreviousBroadcast= Boolean(Number($scope.previousBroadcastSelect));
-			$scope.organization.enableRepeatBroadcast = Boolean(Number($scope.repeatBroadcastSelect));
-
+		
 			//finally update the database
 			$scope.organization.$update({
 				id: orgid
@@ -295,7 +291,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, UpdateO
 			profileSettingDetails.password =  $.trim($('#re-new-password').val());
 			$http.post( API_ADDR + 'web/' + abbr + '/updateUser', profileSettingDetails).
 			success(function(data, status, headers, config) {
-				console.log("Controller was called successfully.");
+				alert("Your Settings have been saved.")
 
 
 			}).

@@ -1,7 +1,6 @@
 package app.business.controllers;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,11 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Random;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
@@ -59,6 +62,9 @@ public class SettingsController {
 
 	@Autowired
 	VoiceService voiceService;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@RequestMapping(value="/settingsPage")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
@@ -106,7 +112,7 @@ public class SettingsController {
 		String phone = profileSettingDetails.get("phone");
 		String address = profileSettingDetails.get("city");
 		String password = profileSettingDetails.get("password");
-       String role ="admin";
+        String role ="admin";
        
        User user = userService.getCurrentUser();
 
@@ -114,12 +120,8 @@ public class SettingsController {
 		user.setName(name);
 		user.setAddress(address);
 		user.setEmail(email);
-		user.setSha256Password(password);
+		user.setSha256Password(passwordEncoder.encode(password));
 		userService.addUser(user);
-
-	//TODO -- convert password in sha256 format
-		
-		
 		// First Remove the Previous Primary Phone Number
 		UserPhoneNumber previousPrimaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
 		userPhoneNumberService.removeUserPhoneNumber(previousPrimaryPhoneNumber);
@@ -127,9 +129,7 @@ public class SettingsController {
 		// Then add the new Primary number to the database
 		UserPhoneNumber newPrimaryPhoneNumber = new UserPhoneNumber(user, phone, true);
 		userPhoneNumberService.addUserPhoneNumber(newPrimaryPhoneNumber);
-		
-
-		
+			
 	}
 
 	@RequestMapping(value="/upload/welcomeMessage", method=RequestMethod.POST, produces = "text/plain")

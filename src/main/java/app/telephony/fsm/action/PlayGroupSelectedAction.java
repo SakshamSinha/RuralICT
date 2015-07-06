@@ -6,6 +6,7 @@ import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import app.business.services.BroadcastRecipientService;
 import app.business.services.VoiceService;
@@ -77,11 +78,16 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
 			broadcastRecipients.add(broadcastRecipient);
 		}
+		try {
+			TimeUnit.MINUTES.sleep(1);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
 		//Different for loop to avoid problem in IVRS
 		for(BroadcastRecipient recipient: broadcastRecipients)
 		{
 			User user=recipient.getUser();
-			System.out.println("User:"+user.getName());
 			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
 			for(UserPhoneNumber no:phoneNumbers)
 			{        

@@ -57,7 +57,7 @@ public class PlayResponeIsYesAction implements Action<IVRSession> {
 		}
 
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsYes_"+ruralictSession.getLanguage()+".wav");
-
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordingDone_"+ruralictSession.getLanguage()+".wav");
 	}
 
 

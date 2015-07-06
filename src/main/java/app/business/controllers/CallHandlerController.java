@@ -122,6 +122,7 @@ public class CallHandlerController implements IVRSessionFactory {
 		outboundCall.setStatus(status);
 		outboundCall.setStatusDetail(statusDetails);
 		outboundCallService.addOutboundCall(outboundCall);
+		
 	}
 
 }
