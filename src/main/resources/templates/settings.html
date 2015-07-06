@@ -127,31 +127,7 @@
 					</div>
 				</div>
 
-				<div id="outbound-call-settings" class="tab-pane">
-					<div class="table-settings-system">
-						<table>
-
-							<tr>
-								<b>OUTGOING CALL SETTINGS :</b>
-							</tr>
-							<tr>
-								<td><b>Call Flow : </b>
-									<br>
-									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.order name="response1" />Order
-									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.feedback name="response1" />Feedback
-									<br>
-									<input type="checkbox" ng-model=outgoingCheckBoxOptions.response name="response1" />Response
-									<br>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<div class="form-actions">
-						<input type="submit" ng-click="updateOutgoingCallOpt()" class="btn btn-success" value="Save Details" />
-					</div>
-
+				
 				<div id="broadcast-default-settings" class="tab-pane">
 					<ng-include th:attr="src='\'broadcastDefaultSettings'+'\''"></ng-include>		
 
@@ -316,7 +292,7 @@
 		</div>
 	</div>
 	
-	<div id="bill-layout-settings" class="tab-pane">
+	<!-- <div id="bill-layout-settings" class="tab-pane">
 	<br>
 	<label>#bill-layout-settings</label>
 	</div>
@@ -324,7 +300,7 @@
 	<div id="ivrs-menu-settings" class="tab-pane">
 	<br>
 	<label>#ivrs-menu-settings</label>
-	</div>
+	</div> -->
 	
 	
 	
