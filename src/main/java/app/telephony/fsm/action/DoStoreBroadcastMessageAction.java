@@ -40,7 +40,7 @@ public class DoStoreBroadcastMessageAction implements Action<IVRSession> {
 
 		LatestRecordedVoiceService latestRecordedVoiceService = SpringContextBridge.services().getLatestBroadcastableVoiceService();
 		//TODO
-		latestRecordedVoiceService.updateLatestRecordedVoice(organization,null,voice);
+		latestRecordedVoiceService.updateLatestRecordedVoice(organization,voice);
 	}
 
 }

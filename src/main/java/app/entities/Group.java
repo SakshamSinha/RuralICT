@@ -43,7 +43,7 @@ public class Group implements Serializable {
 
 	//bi-directional many-to-one association to BroadcastDefaultSetting
 	@OneToMany(mappedBy="group")
-	private List<BroadcastDefaultSetting> broadcastDefaultSettings;
+	private List<BroadcastDefaultSettings> broadcastDefaultSettings;
 
 	//bi-directional many-to-one association to Organization
 	@ManyToOne
@@ -132,22 +132,22 @@ public class Group implements Serializable {
 		return message;
 	}
 
-	public List<BroadcastDefaultSetting> getBroadcastDefaultSettings() {
+	public List<BroadcastDefaultSettings> getBroadcastDefaultSettings() {
 		return this.broadcastDefaultSettings;
 	}
 
-	public void setBroadcastDefaultSettings(List<BroadcastDefaultSetting> broadcastDefaultSettings) {
+	public void setBroadcastDefaultSettings(List<BroadcastDefaultSettings> broadcastDefaultSettings) {
 		this.broadcastDefaultSettings = broadcastDefaultSettings;
 	}
 
-	public BroadcastDefaultSetting addBroadcastDefaultSetting(BroadcastDefaultSetting broadcastDefaultSetting) {
+	public BroadcastDefaultSettings addBroadcastDefaultSetting(BroadcastDefaultSettings broadcastDefaultSetting) {
 		getBroadcastDefaultSettings().add(broadcastDefaultSetting);
 		broadcastDefaultSetting.setGroup(this);
 
 		return broadcastDefaultSetting;
 	}
 
-	public BroadcastDefaultSetting removeBroadcastDefaultSetting(BroadcastDefaultSetting broadcastDefaultSetting) {
+	public BroadcastDefaultSettings removeBroadcastDefaultSetting(BroadcastDefaultSettings broadcastDefaultSetting) {
 		getBroadcastDefaultSettings().remove(broadcastDefaultSetting);
 		broadcastDefaultSetting.setGroup(null);
 
