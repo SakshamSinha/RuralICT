@@ -17,7 +17,7 @@
 				</div>
 			</div>
 			
-			<div class="control-group">
+			<div th:if="${parentGroup.groupId != group.groupId}" class="control-group">
 				<label class="control-label">Delete Group</label>
 				<div class="controls">
 					<button class="btn btn-warning" id="#delete-group-confirmation" data-title="View" data-toggle="modal" data-target="#delete-group-confirmation-modal">Delete</button>

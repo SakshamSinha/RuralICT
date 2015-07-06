@@ -5,14 +5,18 @@
 				id="usertable">
 				<thead>
 					<tr>
-						<th>ID</th>
+						<th>Time</th>
+						<th>Broadcast</th>
 						<th>Name</th>
 						<th>Response</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="list-messages" th:each="voiceMessage : ${message} ">
-						<td th:text="${voiceMessage.messageId}">Id</td>
+						<td th:text="${voiceMessage.broadcast.broadcastedTime}">Time</td>
+						<td>
+							<a th:href="${voiceMessage.broadcast.voice.url}" target="_blank">Play Voice Message</a>
+						</td>
 						<td th:text="${voiceMessage.user.name}">User name</td>
 						<!-- 	<td th:text="${voiceMessage.voice.url}">Message Url</td> -->
 						<td th:if="${voiceMessage.response == true}">

@@ -1,5 +1,6 @@
 package app.business.services;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,7 +113,7 @@ public class UserViewService {
 		Group group = groupService.getGroup(groupId);
 		String role=null;
 		
-		List<GroupMembership> membershipList = group.getGroupMemberships();
+		List<GroupMembership> membershipList = groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group);
 		
 		List<UserView> rows = new ArrayList<UserView>();
 		
