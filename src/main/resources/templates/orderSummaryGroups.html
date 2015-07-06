@@ -3,8 +3,8 @@
 		<h2>Order Summary(Group wise)</h2><p hidden id="orgAbbrevation" th:text="${orgAbbrevation}">text</p></br>
 			<form class="simple-form">
 				Group Name: 
-				<select id="group_name" ng-model="name">
-					<option th:each="group : ${groups}" th:value="${group.name}">
+				<select id="selectedGroup" ng-model="name">
+					<option th:each="group : ${groups}" th:value="${group.groupId}">
 	    					<p th:text="${group.name}">text</p>
 	    			</option>
 	  			</select>
@@ -12,28 +12,26 @@
 	  			To: <input type="date" id="toDate" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
 	    		<input type="submit" id="submitGroups" value="Submit" />
 	  		</form>
-	  	<h2>{{name}}</h2>
 	  	<table class="table table-striped table-bordered table-condensed" id="t01">
 	  		<tr>
-	    		<th>Unit Rate</th>
+	  			
+	    		<th>Product</th>
 	    		<th>Quantity</th>
+	    		<th>Agreggate Collection</th>
 			</tr>
-	  		<tr ng-repeat="x in orderSumGroups._embedded.orderItems">
-	  			<td>
-	  				{{x.unitRate}}
-	  		</td>
-	  		<td>
-	  			{{x.quantity}}
-	  		</td>
-	  	</tr>
-	  	<tr>
-	  		<td>
-	  			Total 
-	  		</td>
-	  		<td id="totalGroups">
-	  		0
-	  		</td>
-	  	</tr>
-	  </table>
+	  		<tr ng-repeat="x in orderSummariesGroup">
+	  			<td>{{x.productName}}</td>
+		  		<td>{{x.quantity}}</td>
+		  		<td>₹ {{x.collection}}</td>
+	  		</tr>
+	  		<tr>
+	  			<td colspan="2">
+	  				Total 
+	  			</td>
+	  			<td id="totalGroups">
+	  				0
+	  			</td>
+	  		</tr>
+	  	</table>
 	</div>
 </div>	

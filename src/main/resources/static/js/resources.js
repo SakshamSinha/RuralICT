@@ -209,17 +209,19 @@ website.factory("PresetQuantityDelete",function($resource){
 
 /* Resources for Order Summary */
 website.factory("ShowOrderSummaryGroups", function($resource) {
-	return $resource(API_ADDR + "api/orderItems/search/orderSummaryGroups", {org:"@org", groupName:"@groupName", fromTime:"@fromTime", toTime:"@toTime"}, {
+	return $resource(API_ADDR + "api/orderSummaries/groupwise", {group:"@group", fromDate:"@fromDate", toDate:"@toDate"}, {
 		update: {
-			method: 'GET'
+			method: 'GET',
+			isArray: true
 		}
 	});
 });
 	
 website.factory("ShowOrderSummaryProducts", function($resource) {
-	return $resource(API_ADDR + "api/orderItems/search/orderSummaryProducts", {org:"@org", prod:"@prod", fromTime:"@fromTime", toTime:"@toTime"}, {
+	return $resource(API_ADDR + "api/orderSummaries/productwise", {product:"@product", fromDate:"@fromDate", toDate:"@toDate"}, {
 		update: {
-			method: 'GET'
+			method: 'GET',
+			isArray: true
 		}
 	});
 });
