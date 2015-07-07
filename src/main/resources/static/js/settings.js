@@ -173,7 +173,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			//make changes in the $resource object
 			$scope.organization.enableOrderCancellation  = Boolean(Number($scope.orderCancelSelect));
 			$scope.organization.enableBroadcastEnable = Boolean(Number($scope.broadcastEnableSelect));
-		
+
 			//finally update the database
 			$scope.organization.$update({
 				id: orgid
@@ -306,33 +306,33 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 
 
 	};
-	
-$scope.resetWelcomeMessageSettingsButton = function(){
-	
-	// Initialize the table
-	$http.get(API_ADDR + 'web/' + abbr + '/resetwelcomeMessageUrl').
+
+	$scope.resetWelcomeMessageSettingsButton = function(){
+
+		// Initialize the table
+		$http.get(API_ADDR + 'web/' + abbr + '/resetwelcomeMessageUrl').
 		success(function(data, status, headers, config) {
-			
+
 			var localeIndex = $scope.WelcomeMessageLanguageSelect;
 			// Clear the contents of the array
 			$scope.languageUrl.length = 0;
-			
+
 			// Push the new urls into it
 			$scope.languageUrl.push(data[0]);
 			$scope.languageUrl.push(data[1]);
 			$scope.languageUrl.push(data[2]);
-			
+
 			changeAudioSource($scope.languageUrl[localeIndex]);
-			
+
 			// Hide the modal
 			$('#reset-confirmation-modal').modal('hide');
-			
+
 		}).
 		error(function(data, status, headers, config) {
 			alert("There was some error in response from the remote server.");
 		});
 	}
-	
+
 });
 
 //Jquery Specific Code
