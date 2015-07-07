@@ -104,19 +104,9 @@ public class OutboundCallHandlerController implements IVRSessionFactory{
 		List<BroadcastRecipient> recipients = broadcast.getBroadcastRecipients();*/
 		
 		try {
-			String userNumber="9892275485";  
-			/* TODO */
-		/*	Organization organization = broadcast.getOrganization();
-			String ivrNumber = organization.getIvrNumber();*/
-			String ivrNumber = "912030157457";
+					
+			//	response.getOutputStream().println(IVRUtils.makeOutboundCall(userNumber, ivrNumber, Configs.Telephony.OUTBOUND_APP_URL));
 			
-			//SpringContextBridge.services().getOrganizationService();
-			/*
-			 * 
-			for(BroadcastRecipient recipient:recipients){
-				userNumber = recipient.getUser().getUserPhoneNumbers().get(0).getPhoneNumber();*/
-				response.getOutputStream().println(IVRUtils.makeOutboundCall(userNumber, ivrNumber, Configs.Telephony.OUTBOUND_APP_URL));
-			//}
 			
 			
 		} catch (Exception e) {

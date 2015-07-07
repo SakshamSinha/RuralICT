@@ -59,7 +59,7 @@ public class IncomingSMSHandlerController {
 		}
 		else{
 
-			IVRUtils.sendSMS(caller_id, "You are not register",null, null);
+			IVRUtils.sendSMS(caller_id, "You are not registered",null, null);
 		}
 
 	}

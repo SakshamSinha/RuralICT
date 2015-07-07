@@ -36,7 +36,6 @@ public class DoStoreBroadcastMessageAction implements Action<IVRSession> {
 			
 		Organization organization = SpringContextBridge.services().getOrganizationService().getOrganizationByIVRS(session.getIvrNumber());
 		LatestRecordedVoiceService latestRecordedVoiceService = SpringContextBridge.services().getLatestBroadcastableVoiceService();
-		//TODO
 		latestRecordedVoiceService.updateLatestRecordedVoice(organization,voice);
 	}
 

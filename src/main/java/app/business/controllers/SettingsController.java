@@ -44,25 +44,25 @@ import app.util.Utils;
 @Controller
 @RequestMapping("/web/{org}")
 public class SettingsController {
-	
+
 	@Autowired
 	OrganizationService organizationService;
 
 	@Autowired
 	WelcomeMessageService welcomeMessageService;
-	
+
 	@Autowired
 	OrganizationMembershipService organizationMembershipService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	UserPhoneNumberService userPhoneNumberService;
 
 	@Autowired
 	VoiceService voiceService;
-	
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
@@ -97,8 +97,8 @@ public class SettingsController {
 
 		return voices;
 
-		}
-	
+	}
+
 	@RequestMapping(value="/updateUser", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
@@ -106,18 +106,18 @@ public class SettingsController {
 	public void updateUser(@PathVariable String org, @RequestBody Map<String,String> profileSettingDetails) {
 
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
-		  
+
 		// Get the input parameters from AngularJS
 		String name = profileSettingDetails.get("name");
 		String email = profileSettingDetails.get("email");
 		String phone = profileSettingDetails.get("phone");
 		String address = profileSettingDetails.get("city");
 		String password = profileSettingDetails.get("password");
-        String role ="admin";
-       
-       User user = userService.getCurrentUser();
+		String role ="admin";
 
-   		// Add the new User to database
+		User user = userService.getCurrentUser();
+
+		// Add the new User to database
 		user.setName(name);
 		user.setAddress(address);
 		user.setEmail(email);
@@ -126,13 +126,13 @@ public class SettingsController {
 		// First Remove the Previous Primary Phone Number
 		UserPhoneNumber previousPrimaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
 		userPhoneNumberService.removeUserPhoneNumber(previousPrimaryPhoneNumber);
-				
+
 		// Then add the new Primary number to the database
 		UserPhoneNumber newPrimaryPhoneNumber = new UserPhoneNumber(user, phone, true);
 		userPhoneNumberService.addUserPhoneNumber(newPrimaryPhoneNumber);
 
 	}
-	
+
 	@RequestMapping(value="/resetwelcomeMessageUrl")
 	@Transactional
 	public @ResponseBody List<String> resetWelcomeMessageUrl(@PathVariable String org) {
@@ -146,16 +146,16 @@ public class SettingsController {
 		welcomeMessageService.setWelcomeMessageVoice(englishMessage, 1);
 		welcomeMessageService.setWelcomeMessageVoice(hindiMessage, 2);
 		welcomeMessageService.setWelcomeMessageVoice(marathiMessage, 3);
-		
+
 		String englishMessageUrl = englishMessage.getVoice().getUrl();
 		String hindiMessageUrl = hindiMessage.getVoice().getUrl();
 		String marathiMessageUrl = marathiMessage.getVoice().getUrl();
-		
+
 		List<String> defaultVoiceUrl = new ArrayList<String>();
 		defaultVoiceUrl.add(englishMessageUrl);
 		defaultVoiceUrl.add(marathiMessageUrl);
 		defaultVoiceUrl.add(hindiMessageUrl);
-		
+
 		return defaultVoiceUrl;
 
 	}
@@ -167,7 +167,7 @@ public class SettingsController {
 		// Convert for getting the files
 		MultipartHttpServletRequest mRequest;
 		mRequest = (MultipartHttpServletRequest) request;
-		
+
 		String[] supportedAudioFiletypes = new String[]{"audio/wav","audio/mp3","audio/m4a","audio/wma","audio/ogg"};
 
 		// Get Parameters passed from AngularJS using FormData
@@ -185,7 +185,7 @@ public class SettingsController {
 			{
 				return "-1";
 			}
-			
+
 			// Check if the file is of supported audio formats
 			if(!Arrays.asList(supportedAudioFiletypes).contains(uploadedAudioFile.getContentType()))
 			{
@@ -202,30 +202,30 @@ public class SettingsController {
 
 			// Get the File Name
 			String fileName = uploadedAudioFile.getOriginalFilename();
-			
+
 			String locale = request.getParameter("locale");
 
-		
+
 			String serverFolder = "/home/ruralivrs/Ruralict/apache-tomcat-7.0.42/webapps/Downloads/voices/welcomeMessage";
 
 			// Save as Temporary File and Convert to Kuckoo Format
 			File temp = new File(serverFolder + File.separator + "temp.wav" );
-			
+
 			// Remove spaces as kuckoo doesn't allow filename with spaces
 			fileName = fileName.replaceAll("\\s+","");
-			
+
 			// Change Extension of the file to wav
 			fileName = fileName.substring(0,fileName.length()-3);
 			fileName = fileName + "wav";
-			
+
 			// Get the current Working Directory and the full Filepath
 			String databaseFolder = "http://ruralict.cse.iitb.ac.in/Downloads/voices/welcomeMessage/";
 			String databaseFileUrl = databaseFolder + fileName;
 
-			
+
 			// Check if the file is already present or not and rename it accordingly
 			Voice previousFileSameName  = voiceService.getVoicebyUrl(databaseFileUrl);
-					
+
 			if(previousFileSameName != null)
 			{
 				// Insert some-random number to automatically rename the file
@@ -233,14 +233,14 @@ public class SettingsController {
 				Random randomint = new Random();
 				fileName = fileName + "_" + Integer.toString(randomint.nextInt()) + ".wav";
 				databaseFileUrl = databaseFolder + fileName;
-				
+
 			}
-			
+
 			// Create a new file and convert the file to appropriate Kuckoo Format
 			File serverFile = new File(serverFolder + File.separator + fileName);
 			uploadedAudioFile.transferTo(temp);
 			serverFile = Utils.convertToKookooFormat(temp, serverFile);
-			
+
 			// Create a new Voice Object
 			Voice voice = new Voice(databaseFileUrl, true);
 
