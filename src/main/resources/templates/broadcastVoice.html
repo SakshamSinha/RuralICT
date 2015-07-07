@@ -1,7 +1,8 @@
 
 <div class="row-fluid" ng-controller="BroadcastVoiceCtrl">
 	<!--TODO Change ids such as voiceid to data-voiceid as the former is not supported in a lot of browsers   -->
-    <div id="broadcast-voice-ids" th:attr="org=${organization.abbreviation},organizationid=${organization.organizationId},groupid=${group.groupId},publisherid=${publisher.userId}"></div>
+    <div id="broadcast-voice-ids" th:attr="org=${organization.abbreviation},organizationid=${organization.organizationId},groupid=${group.groupId},publisherid=${publisher.userId}">
+    </div>
     
     <script th:src="@{/static/js/recordFile.js}"></script>
     <table class="table table-striped table-bordered table-condensed" id="usertable">
@@ -54,7 +55,7 @@
                   <i class="icon-remove"></i>
               </button>
               <h4 class="modal-title custom_align" id="heading-record">Record</h4>
-          	</div>
+		</div>
    		<div class="modal-body">
        		<form class="form-horizontal">
           			<audio id="audio" controls></audio>
@@ -65,134 +66,170 @@
               				<button class="btn btn-primary" id="stopButton" onclick="recordFile.stopRecording();" disabled><i class="icon-white icon-stop"></i></button>
               				<a class="btn btn-info" role="button" id="audioDownload"><i class="icon-white icon-download"></i> Download</a>
 					</div>
-     			</form>
+			</form>
    		</div>
     </div>
 </div>
 
-<div class="modal fade" id="broadcast-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingAddUser" aria-hidden="true">
+<div class="modal fade" id="broadcast-modal" tabindex="-2" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     <i class="icon-remove"></i>
 			</button>
-			<h4 class="modal-title custom_align" id="HeadingUser">Broadcast</h4>
+			<h4 class="modal-title custom_align" id="heading-broadcast">Broadcast</h4>
 		</div>            
 		<div class="modal-body">
 			<form class="form-horizontal">
 				<!-- 
 				FOR FUTURE
 				<div>
-					<center><b>Response Type</b></center>
-					<div id="options-list" class="row-fluid" style="margin:0px auto; width:100%"> 
-						<div id="options-column1" style="float:left; margin:0; width:33%;">
+					<div class="row">
+						<div class="span4"></div>
+						<div class="span4">
+						<b>Response Type</b>
+						</div>
+						<div class="span4"></div>
+					</div>
+					<div id="options-list" class="row-fluid"> 
+						<div id="options-column1" class="span4">
 								<label>
-									<input id="order-check" type="checkbox" name="order" th:checked="${broadcastDefaultSettings.askOrder}" value="1"/>Order
+									<input id="order-check" type="checkbox" name="order" value="1" th:checked="${broadcastDefaultSettings.askOrder}"/>  Order
 								</label>
 						</div>
-						<div id="options-column2" style="float:left; margin:0; width:33%;">
+						<div id="options-column2" class="span4">
 								<label>
-									<input id="feedback-check" type="checkbox" name="feedback" value="2" th:checked="${broadcastDefaultSettings.askFeedback}"/>Feedback
+									<input id="feedback-check" type="checkbox" name="feedback" value="2" th:checked="${broadcastDefaultSettings.askFeedback}"/>  Feedback
 							</label>
 						</div>
-						<div id="options-column3" style="float:left; margin:0; width:33%;">
+						<div id="options-column3" class="span4">
 								<label>
-									<input id="response-check"type="checkbox" name="response" value="3" th:checked="${broadcastDefaultSettings.askResponse}"/>Response
+									<input id="response-check"type="checkbox" name="response" value="3" th:checked="${broadcastDefaultSettings.askResponse}"/>  Response
 								</label>
 						</div>	
 					</div>            	
 				</div>
-				<div> -->
-					<div class="row-fluid" style="text-align:center;">
-						<b>Users</b><br>
+				<br>
+				<div class="row">
+					<div class="span4"></div>
+					<div class="span4">
+						<button class="btn btn-info" data-toggle="collapse" data-target="#group-users">
+						<i class="icon-user icon-white"></i>  Select Users
+						</button>
+>>>>>>> 56a63b160557c6fd091ea5a679e03f6b169cca94
 					</div>
-					<div class="row-fluid" style="margin:0px auto; width:100%">
-						<div style="float:left;margin:0;width:50%">
-							<div>
-								<label>
-									<input id="select-all" type="radio" name="select-all-users" checked/>Select All Users
-								</label>
+					<div class="span4"></div>
+				</div>
+				<br>
+				<div id="group-users" class="collapse">
+					<div>
+						<div class="row-fluid">
+							<div class="span6">
+									<button id="select-all" class="btn btn-primary">
+										<i class="icon-ok icon-green"></i>  Select All Users
+									</button>
 							</div>
-						</div>
-						<div style="float:left;margin:0;width:50%">
-							<div>
-								<label>
-									<input id="unselect-all" type="radio" name="select-all-users" />Unselect All Users
-								</label>
+							<div class="span6">
+									<button  id="unselect-all" class="btn btn-primary">
+										<i class="icon-remove icon-red"></i>  Unselect All Users
+									</button>
 							</div>
 						</div>
 					</div>
- 					<div id = "user-list" class="row-fluid" style="margin:0px auto; width:100%">   	 
-        				<div id="column1" style="float:left; margin:0; width:33%;">
-        					<div  th:each="user,userStat : ${users}" th:if="${userStat.index%3 == 0}" >
-	                    		<label>
-									<input type="checkbox" class="checkthis" th:text ="${user.name}" th:value="${user.userId}" checked/>
-								</label>
+					<br>
+ 					<div id = "user-list">    	 						
+						<div th:each="user,userStat : ${users}">
+							<div th:if="${userStat.count%3 == 0}">
+								<div class="row-fluid">	
+									<div class="span4">
+										<label>
+											<input type="checkbox" class="checkthis" th:text ="'  '+${users[userStat.count-3].name}" th:value="${users[userStat.count-3].userId}" checked/>
+										</label>
+									</div>
+									<div class="span4">
+										<label>
+											<input type="checkbox" class="checkthis" th:text ="'  '+${users[userStat.count-2].name}" th:value="${users[userStat.count-2].userId}" checked/>
+										</label>
+									</div>
+									<div class="span4">
+										<label>
+											<input type="checkbox" class="checkthis" th:text ="'  '+${users[userStat.count-1].name}" th:value="${users[userStat.count-1].userId}" checked/>
+										</label>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div id="column2" style="float:left; margin:0; width:33%;">
-							<div th:each="user,userStat : ${users}" th:if="${userStat.index%3 == 1}">
-	                    		<label>
-									<input type="checkbox" class="checkthis" th:text ="${user.name}" th:value="${user.userId}" checked/>
-								</label>
+						<div th:if="${#lists.size(users)%3 == 2}">
+							<div class="row-fluid" th:with="length=${#lists.size(users)}">
+								<div class="span4">
+									<label>
+											<input type="checkbox" class="checkthis" th:text ="'  '+${users[length-2].name}" th:value="${users[length-2].userId}" checked/>
+									</label>
+								</div>
+								<div class="span4">
+									<label>
+											<input type="checkbox" class="checkthis" th:text ="'  '+${users[length-1].name}" th:value="${users[length-1].userId}" checked/>
+									</label>
+								</div>
 							</div>
 						</div>
-						<div id="column3" style="float:left; margin:0; width:33%;">
-							<div th:each="user,userStat : ${users}" th:if="${userStat.index%3 == 2}">
-	                    		<label>
-									<input type="checkbox" class="checkthis" th:text ="${user.name}" th:value="${user.userId}" checked/>
-								</label>
+						<div th:if="${#lists.size(users)%3 == 1}">
+							<div class="row-fluid" th:with="length=${#lists.size(users)}">
+								<div class="span4">
+										<label>
+												<input type="checkbox" class="checkthis" th:text ="'  '+${users[length-1].name}" th:value="${users[length-1].userId}" checked/>
+										</label>
+								</div>
 							</div>
-						</div>
+						</div>	
 					</div>       		
 				</div>
 					
-					<div>
-                   		<table>
-                       	    <tr>
-                                <td>
-                                    <br> When do you want to broadcast the call
-                                </td>
-                             </tr>
-                             <tr>
-                                    <td>
-                                        <input type="checkbox" class="tr" name="now" id="now" value="newCall" checked />Now
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" class="tr" name="scheduled" id="scheduled" value="scheduled" onclick="scheduledTimes();" />Scheduled Times
-                                    </td>
-                             </tr>
-                             <tr>
-                                    <td>
-                                        <div id="scheduledTimes"></div>
-                                    </td>
-                             </tr>
-                             <tr>
-                                	<td>
-											How many BackUp Call do you want: 
-                                            <select	name="backup_calls" id="backup_calls" onchange="dropDowns1();">
-                                                <option value="0">0 backupcall</option>
-                                                <option value="1">1 backupcall</option>
-                                                <option value="2">2 backupcall</option>
-                                                <option value="3">3 backupcall</option>
-                                                <option value="4">4 backupcall</option>
-                                                <option value="5">5 backupcall</option>
-                                            </select>
-                                            <div id="myDiv"></div>
-                                	</td>
-                             </tr>
-                             <tr>
-                                    <td>
-                                                <input type="hidden" name="filePresent" id="filePresent" value="" />
-                                                <input type="hidden" name="fileName" id="fileName" value="" />
-                                                <input type="hidden" name="group_id" id="group_id">
-                                                <input type="hidden" name="tempflag" id="tempflag" value="mrequest" />
-                                                 <input type="hidden" name="req_type" id="req_type" value="broadcast" />
-                                    </td>
-                             </tr>
-                		</table>
-					</div>
+<!-- 					<div> -->
+<!--                    		<table> -->
+<!--                        	    <tr> -->
+<!--                                 <td> -->
+<!--                                     <br> When do you want to broadcast the call -->
+<!--                                 </td> -->
+<!--                              </tr> -->
+<!--                              <tr> -->
+<!--                                     <td> -->
+<!--                                         <input type="checkbox" class="tr" name="now" id="now" value="newCall" checked />Now -->
+<!--                                     </td> -->
+<!--                                     <td> -->
+<!--                                         <input type="checkbox" class="tr" name="scheduled" id="scheduled" value="scheduled" onclick="scheduledTimes();" />Scheduled Times -->
+<!--                                     </td> -->
+<!--                              </tr> -->
+<!--                              <tr> -->
+<!--                                     <td> -->
+<!--                                         <div id="scheduledTimes"></div> -->
+<!--                                     </td> -->
+<!--                              </tr> -->
+<!--                              <tr> -->
+<!--                                 	<td> -->
+<!-- 											How many BackUp Call do you want:  -->
+<!--                                             <select	name="backup_calls" id="backup_calls" onchange="dropDowns1();"> -->
+<!--                                                 <option value="0">0 backupcall</option> -->
+<!--                                                 <option value="1">1 backupcall</option> -->
+<!--                                                 <option value="2">2 backupcall</option> -->
+<!--                                                 <option value="3">3 backupcall</option> -->
+<!--                                                 <option value="4">4 backupcall</option> -->
+<!--                                                 <option value="5">5 backupcall</option> -->
+<!--                                             </select> -->
+<!--                                             <div id="myDiv"></div> -->
+<!--                                 	</td> -->
+<!--                              </tr> -->
+<!--                              <tr> -->
+<!--                                     <td> -->
+<!--                                                 <input type="hidden" name="filePresent" id="filePresent" value="" /> -->
+<!--                                                 <input type="hidden" name="fileName" id="fileName" value="" /> -->
+<!--                                                 <input type="hidden" name="group_id" id="group_id"> -->
+<!--                                                 <input type="hidden" name="tempflag" id="tempflag" value="mrequest" /> -->
+<!--                                                  <input type="hidden" name="req_type" id="req_type" value="broadcast" /> -->
+<!--                                     </td> -->
+<!--                              </tr> -->
+<!--                 		</table> -->
+<!-- 					</div> -->
 					
 			</form>
 		</div>
