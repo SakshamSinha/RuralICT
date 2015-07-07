@@ -115,13 +115,17 @@ public class CallHandlerController implements IVRSessionFactory {
 	@RequestMapping(value="/CallHandler", method=RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		printParameterMap(request.getParameterMap());
+		System.out.println("dopost ");
 		String status = request.getParameter("status");
+		System.out.println(status);
 		String statusDetails = request.getParameter("status_details");
+		System.out.println(statusDetails);
 		RuralictSession ruralictSession = (RuralictSession) request.getSession().getAttribute("telephony");
 		OutboundCall outboundCall = ruralictSession.getOutboundCall();
 		outboundCall.setStatus(status);
 		outboundCall.setStatusDetail(statusDetails);
 		outboundCallService.addOutboundCall(outboundCall);
+		System.out.println("enddddddddddddddddddd");
 		
 	}
 

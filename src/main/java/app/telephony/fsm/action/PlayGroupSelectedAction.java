@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import app.business.services.BroadcastRecipientService;
+import app.business.services.BroadcastScheduleService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.BroadcastRecipient;
+import app.entities.BroadcastSchedule;
 import app.entities.Group;
 import app.entities.GroupMembership;
 import app.entities.Organization;
@@ -67,6 +69,13 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 		Group group = SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(ruralictSession.getGroupID()));
 		List<GroupMembership> memberships = SpringContextBridge.services().getGroupMembershipService().getGroupMembershipListByGroup(group);
 
+		
+		 //Adding Broadcast schedule 
+        //set the time at which you have actually send the schedule and set the send to all field as well.
+        BroadcastScheduleService broadcastScheduleService = SpringContextBridge.services().getBroadcastScheduleService();
+        BroadcastSchedule broadcastSchedule = new BroadcastSchedule(voicebroadcast, currentTimestamp, false);
+        broadcastScheduleService.addBroadcastSchedule(broadcastSchedule);
+		
 		// Add rows for each broadcast-recipient
 		List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
 		// Add rows for each broadcast-recipient
@@ -78,12 +87,7 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
 			broadcastRecipients.add(broadcastRecipient);
 		}
-		try {
-			TimeUnit.MINUTES.sleep(1);
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
+		
 		//Different for loop to avoid problem in IVRS
 		for(BroadcastRecipient recipient: broadcastRecipients)
 		{
@@ -100,6 +104,7 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 			}
 		}
 
+		response.addHangup();
 	}
 
 }
