@@ -12,15 +12,21 @@ function getId(object){
 	return urlChunks[urlChunks.length-1];
 }
 
-function validatephonenumber(phoneNumber){
+function normalizePhoneNumber(phoneNumber){
 	
-	// strip all the spaces
-	phoneNumber = phoneNumber.replace(/\s+/g, '');
+	// strip all non numeric data
+	phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
 	
-	// below regex allows by 0 or +91 or without both 
-	var phoneformat =  /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
-	
-	return (phoneformat.test(phoneNumber)); 
+	// check if there are atleast 10 digits
+	if(phoneNumber.length < 10)
+		return false;
+	else
+	{
+		// get the last 10 digits of the phone number
+		phoneNumber = phoneNumber.substr(phoneNumber.length - 10);
+		phoneNumber = "91" + phoneNumber;
+		return phoneNumber;
+	}
 }
 
 function validatedate(inputText){

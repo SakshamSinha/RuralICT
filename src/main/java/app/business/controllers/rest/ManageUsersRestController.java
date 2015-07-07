@@ -111,13 +111,6 @@ public class ManageUsersRestController {
 		boolean isAdmin = false;
 		boolean isPublisher = false;
 
-		// Strip all the whitespaces
-		phone = phone.replaceAll("\\s+","");
-
-		// Get the last 10 digits of the phone number and append 91 to it
-		phone = phone.substring(phone.length() - 10);
-		phone = "91" + phone;
-
 		// Find if the number is already present in the database
 		// If present report it to the frontend
 		if(!userPhoneNumberService.findPreExistingPhoneNumber(phone))
@@ -217,13 +210,6 @@ public class ManageUsersRestController {
 		String email = currentUserDetails.get("email");
 		String phone = currentUserDetails.get("phone");
 		String address = currentUserDetails.get("address");
-
-		// Strip all the whitespaces
-		phone = phone.replaceAll("\\s+","");
-		
-		// Get the last 10 digits of the phone number and append 91 to it
-		phone = phone.substring(phone.length() - 10);
-		phone = "91" + phone;
 		
 		// Find if the number is already present in the database 
 		// If present report it to the Frontend

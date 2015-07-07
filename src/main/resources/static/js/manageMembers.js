@@ -34,10 +34,6 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		{
 			alert("Please Enter a Phone Number !");
 		}
-		else if(!validatephonenumber($scope.inputUserPhone))
-		{
-			alert("Please Enter a valid Phone Number.");
-		}
 		else
 		{
 			// Get the attributes of the new user
@@ -48,29 +44,37 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			newUserDetails.role = "Member";                   // New User is by default a Member
 			newUserDetails.address = $scope.inputUserAddress;
 			
-			
-			
-			// Add the User as we have validated the number
-			$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addNewUser', newUserDetails).
-				success(function(data, status, headers, config) {
-					
-					if(!data)
-					{
-						alert("The Entered Phone Number already exists in the database");
-					}
-					else
-					{
-						// Push the new object in the ng-repeat variable for for table
-						// This Automatically updates the table
-						$scope.manageUserItems.push(data);
-	
-						// Hide the modal dialog box after successful operation
-						$('#add-new-user-modal').modal('hide');
-					}
-				}).
-				error(function(data, status, headers, config) {
-					alert("There was some error in response from the remote server.");
-				});
+			if(normalizePhoneNumber(newUserDetails.phone) == false)
+			{
+				alert("Please enter a valid phone number !");
+			}
+			else
+			{
+				// Normalize the phone number to database format
+				newUserDetails.phone = normalizePhoneNumber(newUserDetails.phone);
+				
+				// Add the User as we have validated the number
+				$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/addNewUser', newUserDetails).
+					success(function(data, status, headers, config) {
+						
+						if(!data)
+						{
+							alert("The Entered Phone Number already exists in the database");
+						}
+						else
+						{
+							// Push the new object in the ng-repeat variable for for table
+							// This Automatically updates the table
+							$scope.manageUserItems.push(data);
+		
+							// Hide the modal dialog box after successful operation
+							$('#add-new-user-modal').modal('hide');
+						}
+					}).
+					error(function(data, status, headers, config) {
+						alert("There was some error in response from the remote server.");
+					});
+			}
 		}
 	};
 
