@@ -231,7 +231,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 
 		// click event handler for edit user modal save button
 		$scope.editUserModalAnchorButton = function() {
-
+			
 			// Check if required text fields are blank or not
 			if(!$scope.editUserName)
 			{
@@ -258,20 +258,49 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				}
 				else
 				{
+					//console.log("NewuserDetails: " + newUserDetails.phone);
 					// Normalize the phone number to database format
 					newUserDetails.phone = normalizePhoneNumber(newUserDetails.phone);
 					
-					$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/editUser', newUserDetails).
+					// If phone Number has been changed, update phone number as well as user details
+					if(newUserDetails.phone != manageUserItem.phone)
+					{
+						$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/editUserWithPhoneNumber', newUserDetails).
+							success(function(data, status, headers, config) {
+								
+								if(data == "-1")
+								{
+									alert("The Entered Phone Number already exists in the database");
+								}
+								else
+								{
+									manageUserItem.name = $scope.editUserName;
+									manageUserItem.phone = newUserDetails.phone;  // Normalized phone number
+									manageUserItem.address = $scope.editUserAddress;
+									manageUserItem.email = $scope.editUserEmail;
+			
+									// Hide the edit user modal dialog box after successful operation
+									$('#edit-user-modal').modal('hide');
+									
+									// clear the contents of scope variables
+									$scope.editUserName = '';
+									$scope.editUserEmail = '';
+									$scope.editUserPhone = '';
+									$scope.editUserAddress = '';
+								}
+		
+							}).
+							error(function(data, status, headers, config) {
+								alert("There was some error in response from the remote server.");
+							});
+					}
+					// Or else just update the user details
+					else
+					{
+						$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/editUserOnly', newUserDetails).
 						success(function(data, status, headers, config) {
 							
-							if(data == "-1")
-							{
-								alert("The Entered Phone Number already exists in the database");
-							}
-							else
-							{
 							manageUserItem.name = $scope.editUserName;
-							manageUserItem.phone = data;  // we get phone number as response
 							manageUserItem.address = $scope.editUserAddress;
 							manageUserItem.email = $scope.editUserEmail;
 	
@@ -283,12 +312,13 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 							$scope.editUserEmail = '';
 							$scope.editUserPhone = '';
 							$scope.editUserAddress = '';
-							}
 	
 						}).
 						error(function(data, status, headers, config) {
 							alert("There was some error in response from the remote server.");
 						});
+					}
+					
 				}
 			}
 
