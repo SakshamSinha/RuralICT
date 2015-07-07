@@ -23,5 +23,11 @@ public class manageController {
 	public String manageIncomingCallsReports(@PathVariable String org, @PathVariable int groupId, Model model) {
 		return "manageInboundCallReports";
 	}
+	@RequestMapping(value="/manage/outgoingCalls/{groupId}")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String manageOutgoingCallsReports(@PathVariable String org, @PathVariable int groupId, Model model) {
+		return "manageOutboundCallReports";
+	}
 
 }
