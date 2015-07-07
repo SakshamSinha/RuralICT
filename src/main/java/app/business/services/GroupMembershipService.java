@@ -17,6 +17,9 @@ import app.entities.User;
 public class GroupMembershipService {
 	@Autowired
 	GroupMembershipRepository groupMembershipRepository;
+	
+	@Autowired
+	OrganizationService organizationService;
 		
 	public GroupMembership getUserGroupMembership(User user, Group group){
 		return groupMembershipRepository.findByUserAndGroup(user,group);
@@ -51,6 +54,12 @@ public class GroupMembershipService {
 			 */
 			this.addGroupMembership(new GroupMembership(groupMembership.getGroup().getParentGroup(), groupMembership.getUser()));
 		}
+	}
+	
+	public void addParentGroupMembership(Organization organization, User user){
+		Group parentgroup = organizationService.getParentGroup(organization);
+		GroupMembership groupMembership = new GroupMembership(parentgroup, user);
+		groupMembershipRepository.save(groupMembership);
 	}
 	
 	public void removeGroupMembership(GroupMembership groupMembership){
