@@ -72,7 +72,7 @@ public class UserPhoneNumberService {
 	 */
 	public UserPhoneNumber getUserPhoneNumber(String phoneNumber) {
 		
-		return userPhoneNumberRepository.findOne(phoneNumber);
+		return userPhoneNumberRepository.findByPhoneNumber(phoneNumber);
 	}
 	
 	/*

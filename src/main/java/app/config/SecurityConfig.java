@@ -63,7 +63,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 					if (users != null && !users.isEmpty()) {
 						user = users.get(0);
 					} else {
-						UserPhoneNumber number = userPhoneNumberRepository.findOne(username);
+						UserPhoneNumber number = userPhoneNumberRepository.findByPhoneNumber(username);
 						if (number != null) {
 							user = number.getUser();
 						}

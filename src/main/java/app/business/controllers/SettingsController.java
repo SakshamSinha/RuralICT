@@ -96,7 +96,6 @@ public class SettingsController {
 		voices.add(hindiMessage.getVoice().getUrl());
 
 		return voices;
-
 	}
 
 	@RequestMapping(value="/updateUser", method = RequestMethod.POST)
