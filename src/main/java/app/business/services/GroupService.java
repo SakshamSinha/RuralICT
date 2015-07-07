@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import app.data.repositories.GroupRepository;
 import app.entities.Group;
 import app.entities.GroupMembership;
+import app.entities.Organization;
 
 @Service
 public class GroupService {
@@ -49,4 +50,7 @@ public class GroupService {
 		return groupRepository.findAllByOrderByNameAsc();
 	}
 
+	public List<Group> getGroupListByOrganization(Organization organization){
+		return groupRepository.findByOrganization(organization);
+	}
 }

@@ -26,9 +26,9 @@ public class RuralictSession extends IVRSession {
 	/**
 	 * The last recorded message in this session, if any.
 	 */
-	
+
 	Voice voiceMessage ;
-	
+
 	boolean isOutbound=false;
 	boolean orderAllowed=false;
 	boolean feedbackAllowed=false;
@@ -46,7 +46,7 @@ public class RuralictSession extends IVRSession {
 	 * @throws InstantiationException 
 	 * @see {@link IVRSession#IVRSession(String, String, String, String, String, Class)}
 	 */
-	
+
 	public RuralictSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator)
 			throws FiniteStateException, InstantiationException {
 
@@ -57,10 +57,10 @@ public class RuralictSession extends IVRSession {
 		call.setTime(new Timestamp(getStartTime().getTime()));
 		call.setFromNumber(userNumber);
 		call.setOrganization(organizationService.getOrganizationByIVRS(ivrNumber));
-		
+
 		outboundCall=new OutboundCall();
-      
-		
+
+
 
 	}
 
@@ -72,8 +72,8 @@ public class RuralictSession extends IVRSession {
 		super.finish(totalCallDuration);
 		call.setDuration((int) totalCallDuration);
 		outboundCall.setDuration((int)totalCallDuration);
-	    OutboundCallService outboundCallService = SpringContextBridge.services().getOutboundCallService();
-	    outboundCallService.addOutboundCall(outboundCall);
+		OutboundCallService outboundCallService = SpringContextBridge.services().getOutboundCallService();
+		outboundCallService.addOutboundCall(outboundCall);
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class RuralictSession extends IVRSession {
 	public void setRecordEvent(RecordEvent recordEvent) {
 		this.recordEvent = recordEvent;
 	}
-	
+
 	public boolean isPublisher() {
 		return isPublisher;
 	}
