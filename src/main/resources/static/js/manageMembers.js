@@ -69,6 +69,12 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		
 							// Hide the modal dialog box after successful operation
 							$('#add-new-user-modal').modal('hide');
+							
+							// Clear the contents of scope variables
+							$scope.inputUserName = '';
+							$scope.inputUserEmail = '';
+							$scope.inputUserPhone = '';
+							$scope.inputUserAddress = '';
 						}
 					}).
 					error(function(data, status, headers, config) {
@@ -76,11 +82,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 					});
 			}
 			
-			// Clear the contents of scope variables
-			$scope.inputUserName = '';
-			$scope.inputUserEmail = '';
-			$scope.inputUserPhone = '';
-			$scope.inputUserAddress = '';
+			
 		}
 	};
 
@@ -275,18 +277,18 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 	
 							// Hide the edit user modal dialog box after successful operation
 							$('#edit-user-modal').modal('hide');
+							
+							// clear the contents of scope variables
+							$scope.editUserName = '';
+							$scope.editUserEmail = '';
+							$scope.editUserPhone = '';
+							$scope.editUserAddress = '';
 							}
 	
 						}).
 						error(function(data, status, headers, config) {
 							alert("There was some error in response from the remote server.");
 						});
-					
-					// clear the contents of scope variables
-					$scope.editUserName = '';
-					$scope.editUserEmail = '';
-					$scope.editUserPhone = '';
-					$scope.editUserAddress = '';
 				}
 			}
 
