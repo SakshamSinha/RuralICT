@@ -355,11 +355,3 @@ $("#page-content").on("change","#select-welcome-message-language",function(e){
 		changeAudioSource(myScope.languageUrl[0]);
 	}
 });
-
-
-
-
-
-
-
-
