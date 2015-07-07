@@ -85,9 +85,9 @@ public class OrderSummaryService {
 			}
 			else {
 				float summaryValues[] = {
-										orderSummaryHashList.get(orderItem.getProduct().getName())[0] + orderItem.getQuantity(), 
-										orderSummaryHashList.get(orderItem.getProduct().getName())[1] + orderItem.getUnitRate()
-								  };
+					orderSummaryHashList.get(orderItem.getProduct().getName())[0] + orderItem.getQuantity(), 
+					orderSummaryHashList.get(orderItem.getProduct().getName())[1] + orderItem.getUnitRate()
+				};
 				
 				orderSummaryHashList.put(orderItem.getProduct().getName(), summaryValues);
 				
@@ -119,9 +119,9 @@ public class OrderSummaryService {
 			}
 			else {
 				float summaryValues[] = {
-										orderSummaryHashList.get(orderItem.getOrder().getMessage().getGroup().getName())[0] + orderItem.getQuantity(), 
-										orderSummaryHashList.get(orderItem.getOrder().getMessage().getGroup().getName())[1] + orderItem.getUnitRate()
-								  };
+					orderSummaryHashList.get(orderItem.getOrder().getMessage().getGroup().getName())[0] + orderItem.getQuantity(), 
+					orderSummaryHashList.get(orderItem.getOrder().getMessage().getGroup().getName())[1] + orderItem.getUnitRate()
+				};
 				
 				orderSummaryHashList.put(orderItem.getOrder().getMessage().getGroup().getName(), summaryValues);
 				
