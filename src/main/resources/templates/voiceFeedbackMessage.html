@@ -6,7 +6,7 @@
 				id="usertable">
 				<thead>
 					<tr>
-						<th>ID</th>
+						<th>Time</th>
 						<th>Name</th>
 						<th>Message</th>
 						<th>Comment</th>
@@ -15,14 +15,11 @@
 				</thead>
 				<tbody>
 					<tr class="list-messages" th:each="voiceMessage : ${message} ">
-						<td th:text="${voiceMessage.messageId}">Id</td>
+						<td th:text="${voiceMessage.time}">Time</td>
 						<td th:text="${voiceMessage.user.name}">User name</td>
 						<!-- 	<td th:text="${voiceMessage.voice.url}">Message Url</td> -->
 						<td>
-							<audio controls>
-								<source th:attr="src=${voiceMessage.voice.url}" type="audio/wav"></source>
-								<p>Your browser does not support this audio format.</p>
-							</audio>
+							<a th:href="${voiceMessage.voice.url}" target="_blank">Play Voice Message</a>
 						</td>
 						<td>
 							<span>
