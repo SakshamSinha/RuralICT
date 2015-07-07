@@ -25,7 +25,7 @@ $("#page-content").on("click", "#submitBut", function(e) {
     else if(to=="") alert("Please select(type) a valid To date in yyyy-mm-dd format");
     else if(validatedate(from)==false)	alert("Please select(type) a valid From date in yyyy-mm-dd format");
     else if(validatedate(to)==false)	alert("Please select(type) a valid To date in yyyy-mm-dd format");
-    else if(to<from)	alert("To date should be ahead of From date!");
+    else if(to<from)  alert("To date should be ahead of From date!");
     else{
     	var data={};
     	data.org = $("#organizationId").val();
@@ -33,4 +33,4 @@ $("#page-content").on("click", "#submitBut", function(e) {
 	    data.toDate=to;
 	    angular.element($('#submitBut')).scope().callReports(data);
     }
-   });
+});

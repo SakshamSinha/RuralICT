@@ -17,34 +17,24 @@ website.controller("ManageOutboundCallsController", function($scope, $http, $rou
 	
 	$scope.submit = function(){
 		var dat={};
-    	dat.grp = $('#groupId').val();
-    	var from= $('#fromDate2').val();
-        var to= $('#toDate2').val();
-        if(from=="") alert("Please select(type) a valid From date in yyyy-mm-dd format1");
-        else if(to=="") alert("Please select(type) a valid To date in yyyy-mm-dd format2");
-        else if(validatedate(from)==false)	alert("Please select(type) a valid From date in yyyy-mm-dd format3");
-        else if(validatedate(to)==false)	alert("Please select(type) a valid To date in yyyy-mm-dd format4");
-        else if(to<from) alert("To date should be ahead of From date!");
+		dat.grp = $('#groupId').val();
+		var from= $('#fromDate2').val();
+		var to= $('#toDate2').val();
+		if(from=="") alert("Please select(type) a valid From date in yyyy-mm-dd format");
+		else if(to=="") alert("Please select(type) a valid To date in yyyy-mm-dd format");
+		else if(validatedate(from)==false)	alert("Please select(type) a valid From date in yyyy-mm-dd format");
+		else if(validatedate(to)==false)	alert("Please select(type) a valid To date in yyyy-mm-dd format");
+		else if(to<from) alert("To date should be ahead of From date!");
         
-		var data= 	OutboundCallReports.update(dat, function(success){
-			
-		    for (i = 0; i < data.length; i++) {
-		    	
-		    	var dateStr = data[i].dateTime;
-		    	
-		    	if(dateStr>=from && dateStr<to){
-//		    		console.log(data[i].phone);
-//			    	console.log(data[i].status);
-//			    	console.log("date: "+dateStr);
-			    	$scope.outgoingCallRows.push(data[i]);
-		    		
+		var data= OutboundCallReports.update(dat, function(success){
+			for (i = 0; i < data.length; i++) {
+				var dateStr = data[i].dateTime;
+				if(dateStr>=from && dateStr<to){
+					$scope.outgoingCallRows.push(data[i]);		    
 		    	}
 		    }	    
 		}, function(error){
-			alert("Error: " + error,status);
-			
-		});
-		
-	}
-	
+			alert("Error: " + error,status);			
+		});		
+	}	
 });
