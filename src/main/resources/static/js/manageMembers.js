@@ -248,28 +248,38 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				newUserDetails.phone = $scope.editUserPhone;
 				newUserDetails.address = $scope.editUserAddress;
 				
-				$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/editUser', newUserDetails).
-					success(function(data, status, headers, config) {
-						
-						if(data == "-1")
-						{
-							alert("The Entered Phone Number already exists in the database");
-						}
-						else
-						{
-						manageUserItem.name = $scope.editUserName;
-						manageUserItem.phone = data;  // we get phone number as response
-						manageUserItem.address = $scope.editUserAddress;
-						manageUserItem.email = $scope.editUserEmail;
-
-						// Hide the edit user modal dialog box after successful operation
-						$('#edit-user-modal').modal('hide');
-						}
-
-					}).
-					error(function(data, status, headers, config) {
-						alert("There was some error in response from the remote server.");
-					});
+				if(normalizePhoneNumber(newUserDetails.phone) == false)
+				{
+					alert("Please enter a valid phone number !");
+				}
+				else
+				{
+					// Normalize the phone number to database format
+					newUserDetails.phone = normalizePhoneNumber(newUserDetails.phone);
+					
+					$http.post( API_ADDR + 'api/' + abbr + '/manageUsers/editUser', newUserDetails).
+						success(function(data, status, headers, config) {
+							
+							if(data == "-1")
+							{
+								alert("The Entered Phone Number already exists in the database");
+							}
+							else
+							{
+							manageUserItem.name = $scope.editUserName;
+							manageUserItem.phone = data;  // we get phone number as response
+							manageUserItem.address = $scope.editUserAddress;
+							manageUserItem.email = $scope.editUserEmail;
+	
+							// Hide the edit user modal dialog box after successful operation
+							$('#edit-user-modal').modal('hide');
+							}
+	
+						}).
+						error(function(data, status, headers, config) {
+							alert("There was some error in response from the remote server.");
+						});
+				}
 			}
 
 		};
