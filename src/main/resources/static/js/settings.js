@@ -245,13 +245,9 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 				return data;
 			}
 		}).success(function(data, status) {
-<<<<<<< HEAD
 
-			if (data === "-1")
-=======
-			
 			if (data == "-1")
->>>>>>> a9465f14b7dbdbbfa117cb421f71501cd805010a
+
 			{
 				alert("Please select a file to upload !");
 			}
@@ -274,8 +270,6 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			alert("There was some error in response from the server.");
 		});
 	}
-<<<<<<< HEAD
-
 	$scope.updateSetting= function(){
 
 		var name = $.trim($('#name').val());
@@ -312,8 +306,6 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 
 
 	};
-
-=======
 	
 $scope.resetWelcomeMessageSettingsButton = function(){
 	
@@ -341,7 +333,6 @@ $scope.resetWelcomeMessageSettingsButton = function(){
 		});
 	}
 	
->>>>>>> a9465f14b7dbdbbfa117cb421f71501cd805010a
 });
 
 //Jquery Specific Code
