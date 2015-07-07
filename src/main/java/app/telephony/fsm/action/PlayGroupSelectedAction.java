@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.business.services.BroadcastRecipientService;
+import app.business.services.BroadcastScheduleService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.BroadcastRecipient;
+import app.entities.BroadcastSchedule;
 import app.entities.Group;
 import app.entities.GroupMembership;
 import app.entities.Organization;
@@ -55,36 +57,36 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 				voice,
 				true);
  
-	    java.util.Date date= new java.util.Date();
-		Timestamp currentTimestamp= new Timestamp(date.getTime());
-		voicebroadcast.setBroadcastedTime(currentTimestamp);
-
-		BroadcastService broadcastService = SpringContextBridge.services().getVoiceBroadcastService();
-		// Add row for broadcast
-		voicebroadcast = (VoiceBroadcast) broadcastService.addBroadcast(voicebroadcast);
-
-		BroadcastRecipientService broadcastRecipientService = SpringContextBridge.services().getBroadcastRecipientService();
-
 		Group group = SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(ruralictSession.getGroupID()));
 		List<GroupMembership> memberships = SpringContextBridge.services().getGroupMembershipService().getGroupMembershipListByGroup(group);
-
-		// Add rows for each broadcast-recipient
-		/*for(GroupMembership gm:memberships){
-			User user = gm.getUser();
-			BroadcastRecipient broadcastRecipient = new BroadcastRecipient(voicebroadcast,user);
-			// Add row for broadcast-recipient
-			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
-		}*/
 		
-		 List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
-         // Add rows for each broadcast-recipient
-         for(GroupMembership gm:memberships){
+		// Add row for broadcast
+		BroadcastService broadcastService = SpringContextBridge.services().getVoiceBroadcastService();
+		voicebroadcast = (VoiceBroadcast) broadcastService.addBroadcast(voicebroadcast);
+		
+		//Updation of time and call to each Broadcast Recipient needs to be done from separate thread 
+		java.util.Date date= new java.util.Date();
+		Timestamp currentTimestamp= new Timestamp(date.getTime());
+		voicebroadcast.setBroadcastedTime(currentTimestamp);
+		
+		//Adding Broadcast schedule 
+		//set the time at which you have actually send the schedule and set the send to all field as well.
+		BroadcastScheduleService broadcastScheduleService = SpringContextBridge.services().getBroadcastScheduleService();
+		BroadcastSchedule broadcastSchedule = new BroadcastSchedule(voicebroadcast, currentTimestamp, false);
+		broadcastScheduleService.addBroadcastSchedule(broadcastSchedule);
+		 
+		BroadcastRecipientService broadcastRecipientService = SpringContextBridge.services().getBroadcastRecipientService();
+		List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
+		
+        // Add rows for each broadcast-recipient
+        for(GroupMembership gm:memberships){
                  User user = gm.getUser();
                  BroadcastRecipient broadcastRecipient = new BroadcastRecipient(voicebroadcast,user);
                  // Add row for broadcast-recipient
                  broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
                  broadcastRecipients.add(broadcastRecipient);
          }
+      
          //Different for loop to avoid problem in IVRS
          for(BroadcastRecipient recipient: broadcastRecipients)
          {
@@ -101,6 +103,8 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
                          }
                  }
          }
+         
+         response.addHangup();
 
 	}
 
