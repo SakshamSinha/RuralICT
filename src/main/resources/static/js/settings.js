@@ -216,7 +216,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			}
 		}).success(function(data, status) {
 			
-			if (data === "-1")
+			if (data == "-1")
 			{
 				alert("Please select a file to upload !");
 			}
