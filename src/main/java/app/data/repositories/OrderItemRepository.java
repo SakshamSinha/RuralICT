@@ -1,6 +1,6 @@
 package app.data.repositories;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +15,10 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Group;
 import app.entities.OrderItem;
 import app.entities.Organization;
+import app.entities.Product;
 
 public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	/*
@@ -61,4 +63,8 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	
 	@RestResource(rel="orderSummaryGroups", path="orderSummaryGroups")
 	public List<OrderItem> findByOrder_Organization_AbbreviationAndOrder_Message_Group_NameAndOrder_Message_TimeBetween(@Param("org") String org, @Param("groupName") String name, @Param("fromTime")  @DateTimeFormat(pattern = "yyyy-MM-dd") Date from, @Param("toTime")  @DateTimeFormat(pattern = "yyyy-MM-dd") Date to);
+	
+	public List<OrderItem> findByOrder_Message_GroupAndOrder_Message_TimeBetween(Group group, @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate, @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate);
+	
+	public List<OrderItem> findByProductAndOrder_Message_TimeBetween(Product product, @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate, @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate);
 }

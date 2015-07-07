@@ -1,29 +1,19 @@
-website.factory("ShowOrderSummaryGroups", function($resource) {
-	return $resource("/api/orderItems/search/orderSummaryGroups", {org:"@org", groupName:"@groupName", fromTime:"@fromTime", toTime:"@toTime"}, {
-		update: {
-			method: 'GET'
-		}
-	});
-});
-
 website.controller('OrderSummaryGroupsController', function($scope, $route, ShowOrderSummaryGroups) {
-      $scope.orderItems = function(data){
+      $scope.orderSummaries = function(data){
         document.getElementById("totalGroups").innerHTML=0;
-      	$scope.orderSumGroups =  ShowOrderSummaryGroups.get(data, function(orderItem){
+      	$scope.orderSummariesGroup =  ShowOrderSummaryGroups.update(data, function(orderSummaries){
       		var locTotal=0;
-      		var orderItemArray=orderItem._embedded.orderItems;
-      		for(var i=0; i<orderItemArray.length; i++){
-      			locTotal+=((parseFloat(orderItemArray[i].quantity))*(parseFloat(orderItemArray[i].unitRate)));
+      		for(var i=0; i<orderSummaries.length; i++){
+      			locTotal+=((parseFloat(orderSummaries[i].collection)));
       		}
-      		document.getElementById("totalGroups").innerHTML=locTotal;
+      		document.getElementById("totalGroups").innerHTML="₹ " + locTotal;
       	});
 	};
 });
       
 $("#page-content").on("click", "#submitGroups", function(e) {
     e.preventDefault();
-    var org= $.trim($('#orgAbbrevation').text());
-    var group_data= $.trim($('#group_name').val());
+    var group= $.trim($('#selectedGroup').val());
     var from= $.trim($('#fromDate').val());
     var to= $.trim($('#toDate').val());
     if(from=="") alert("Please select(type) a valid From date in yyyy-mm-dd format");
@@ -33,10 +23,9 @@ $("#page-content").on("click", "#submitGroups", function(e) {
     else if(to<from)	alert("To date should be ahead of From date!");
     else{
     	var data={};
-	    data.org=org;
-	    data.groupName=group_data;
-	    data.fromTime=from;
-	    data.toTime=to;
-	    angular.element($('#submitGroups')).scope().orderItems(data);
+	    data.group=group;
+	    data.fromDate=from;
+	    data.toDate=to;
+	    angular.element($('#submitGroups')).scope().orderSummaries(data);
     }
    });
