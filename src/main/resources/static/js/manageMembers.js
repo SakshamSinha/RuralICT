@@ -233,10 +233,6 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			{
 				alert("Please Enter a Phone Number !");
 			}
-			else if(!validatephonenumber($scope.editUserPhone))
-			{
-				alert("Please Enter a valid Phone Number.");
-			}
 			else
 			{
 				
