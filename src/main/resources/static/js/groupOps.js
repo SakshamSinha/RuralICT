@@ -10,9 +10,15 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup)
 				window.location.reload(true);
 				$scope.groupName = group.name;
 				alert("New Group Added");
+				angular.element($('#add-new-group')).scope().reload();
 			}, function(error) {
 				$scope.failure = error.data;
-				alert("Adding of Group Failed");
+				if(error.status == "409"){
+					alert("Group Already Exists");
+				}
+				else{
+					alert("Adding of Group Failed");
+				}
 			});
 		
 	};
@@ -37,6 +43,6 @@ $("#add-new-group").click(function() {
     
     $('#add-new-group-modal').modal('toggle');
 
-    angular.element($('#add-new-group')).scope().reload();
+    
 	
 });

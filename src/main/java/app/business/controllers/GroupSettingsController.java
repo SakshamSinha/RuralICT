@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import app.business.services.GroupService;
+import app.business.services.OrganizationService;
 import app.entities.Group;
 
 @Controller
@@ -16,12 +17,17 @@ public class GroupSettingsController {
 
 	@Autowired
 	GroupService groupService;
+	
+	@Autowired
+	OrganizationService organizationService;
 
 	@RequestMapping(value="/groupSettings/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String groupPage(@PathVariable String org, @PathVariable int groupId, Model model) {
 		Group group = groupService.getGroup(groupId);
+		Group parentGroup = organizationService.getParentGroup(organizationService.getOrganizationByAbbreviation(org));
 		model.addAttribute("group", group);
+		model.addAttribute("parentGroup", parentGroup);
 		return "groupSettings";
 	}
 
