@@ -89,7 +89,7 @@ public class BroadcastVoiceController {
 		}
 		
 		BroadcastDefaultSettings broadcastDefaultSettings = broadcastDefaultSettingService.getBroadcastDefaultSettingByOrganization(organization);
-		
+	
 		model.addAttribute("users",users);
 		model.addAttribute("organization",organization);
 		model.addAttribute("group",group);
