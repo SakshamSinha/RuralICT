@@ -75,6 +75,12 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 						alert("There was some error in response from the remote server.");
 					});
 			}
+			
+			// Clear the contents of scope variables
+			$scope.inputUserName = '';
+			$scope.inputUserEmail = '';
+			$scope.inputUserPhone = '';
+			$scope.inputUserAddress = '';
 		}
 	};
 
@@ -275,6 +281,12 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 						error(function(data, status, headers, config) {
 							alert("There was some error in response from the remote server.");
 						});
+					
+					// clear the contents of scope variables
+					$scope.editUserName = '';
+					$scope.editUserEmail = '';
+					$scope.editUserPhone = '';
+					$scope.editUserAddress = '';
 				}
 			}
 
