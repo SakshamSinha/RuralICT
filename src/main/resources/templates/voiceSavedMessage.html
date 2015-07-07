@@ -6,7 +6,7 @@
 				id="usertable">
 				<thead>
 					<tr>
-						<th>Message ID</th>
+						<th>Order ID</th>
 						<th>Time</th>
 						<th>Member</th>
 						<th>Message</th>
@@ -17,7 +17,7 @@
 				<tbody>
 					<tr class="list-users" th:each="voiceMessage : ${message} ">
 	
-						<td th:text="${voiceMessage.messageId}">Message Id</td>
+						<td th:text="${voiceMessage.order.orderId}">Order Id</td>
 						<td th:attr="id='savedVoiceMessageTime'+${voiceMessage.messageId}" th:text="${voiceMessage.Time}">Time</td>
 						<td th:attr="id='savedVoiceMessageName'+${voiceMessage.messageId}" th:text="${voiceMessage.user.name}">Name</td>
 						<td>
