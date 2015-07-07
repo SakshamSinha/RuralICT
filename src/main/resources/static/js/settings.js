@@ -245,8 +245,13 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 				return data;
 			}
 		}).success(function(data, status) {
+<<<<<<< HEAD
 
 			if (data === "-1")
+=======
+			
+			if (data == "-1")
+>>>>>>> a9465f14b7dbdbbfa117cb421f71501cd805010a
 			{
 				alert("Please select a file to upload !");
 			}
@@ -269,6 +274,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			alert("There was some error in response from the server.");
 		});
 	}
+<<<<<<< HEAD
 
 	$scope.updateSetting= function(){
 
@@ -307,6 +313,35 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 
 	};
 
+=======
+	
+$scope.resetWelcomeMessageSettingsButton = function(){
+	
+	// Initialize the table
+	$http.get(API_ADDR + 'web/' + abbr + '/resetwelcomeMessageUrl').
+		success(function(data, status, headers, config) {
+			
+			var localeIndex = $scope.WelcomeMessageLanguageSelect;
+			// Clear the contents of the array
+			$scope.languageUrl.length = 0;
+			
+			// Push the new urls into it
+			$scope.languageUrl.push(data[0]);
+			$scope.languageUrl.push(data[1]);
+			$scope.languageUrl.push(data[2]);
+			
+			changeAudioSource($scope.languageUrl[localeIndex]);
+			
+			// Hide the modal
+			$('#reset-confirmation-modal').modal('hide');
+			
+		}).
+		error(function(data, status, headers, config) {
+			alert("There was some error in response from the remote server.");
+		});
+	}
+	
+>>>>>>> a9465f14b7dbdbbfa117cb421f71501cd805010a
 });
 
 //Jquery Specific Code

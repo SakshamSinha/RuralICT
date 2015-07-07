@@ -28,7 +28,7 @@ public interface UserPhoneNumberRepository extends JpaRepository<UserPhoneNumber
 
 	UserPhoneNumber findByUserAndPrimaryTrue(@Param("user") User user);
 	List<UserPhoneNumber> findByUserAndPrimaryFalse(@Param("user") User user);
-	
 	List<UserPhoneNumber> findByUser(@Param("user") User user);
+	UserPhoneNumber findByPhoneNumber(String phoneNumber);
 
 }
