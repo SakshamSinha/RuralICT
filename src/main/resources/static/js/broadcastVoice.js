@@ -133,6 +133,7 @@ $("#page-content").on("click","#place-voice-broadcast-call",function(e){
 	{
 		data.askResponse=1;
 	}
+	console.log("Place broadcast is being called.");
 	//look for the time it which is broadcasted.
 	//data.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 	//console.log(data.broadcastedTime);

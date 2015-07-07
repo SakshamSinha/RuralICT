@@ -1,21 +1,19 @@
 website.controller('OrderSummaryProductsController', function($scope, $route, ShowOrderSummaryProducts) {
-      $scope.orderItems = function(data){
+      $scope.orderSummaries = function(data){
         document.getElementById("totalProducts").innerHTML=0;
-      	$scope.orderSumProducts =  ShowOrderSummaryProducts.get(data, function(orderItem){
+      	$scope.orderSummariesProduct =  ShowOrderSummaryProducts.update(data, function(orderSummaries){
       		var locTotal=0;
-      		var orderItemArray=orderItem._embedded.orderItems;
-      		for(var i=0; i<orderItemArray.length; i++){
-      			locTotal+=((parseFloat(orderItemArray[i].quantity))*(parseFloat(orderItemArray[i].unitRate)));
+      		for(var i=0; i<orderSummaries.length; i++){
+      			locTotal+=(parseFloat(orderSummaries[i].collection));
       		}
-      		document.getElementById("totalProducts").innerHTML=locTotal;
+      		document.getElementById("totalProducts").innerHTML="₹ " + locTotal;
       	});
 	};
 });
       
 $("#page-content").on("click", "#submitProducts", function(e) {
     e.preventDefault();
-    var org= $.trim($('#orgAbbrevation').text());
-    var prod_data= $.trim($('#prod_name').val());
+    var product= $.trim($('#product').val());
     var from= $.trim($('#fromDate').val());
     var to= $.trim($('#toDate').val());
     if(from=="") alert("Please select(type) a valid From date in yyyy-mm-dd format");
@@ -25,10 +23,9 @@ $("#page-content").on("click", "#submitProducts", function(e) {
     else if(to<from)	alert("To date should be ahead of From date!");
     else{
     	var data={};
-	    data.org=org;
-	    data.prod=prod_data;
-	    data.fromTime=from;
-	    data.toTime=to;
-	    angular.element($('#submitProducts')).scope().orderItems(data);
+	    data.product=product;
+	    data.fromDate=from;
+	    data.toDate=to;
+	    angular.element($('#submitProducts')).scope().orderSummaries(data);
     }
 });

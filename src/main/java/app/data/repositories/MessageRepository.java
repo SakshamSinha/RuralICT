@@ -43,13 +43,13 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	 * Search functions
 	 */
 	
-	public List<Message> findByGroupAndTypeAndFormat(Group group,String type,String format);
+	public List<Message> findByGroupAndTypeAndFormat(Group group,String type,String format, Sort sort);
 	public List<Message> findByGroupAndFormat(Group group,String format);
 	//These are commented because these may be required if our function with sort would not work....
 	//public List<Message> findByGroupAndFormatAndOrder_Status(Group group,String format,String status);
 	//public List<Message> findByGroupAndFormatAndOrder_StatusOrderByTime(Group group,String format,String status);
 	public List<Message> findByGroupAndFormatAndOrder_Status(Group group,String format,String status,Sort sort);
-	public List<Message> findByGroupAndResponseAndTypeAndFormat(Group group, boolean response,String type, String format);
+	public List<Message> findByGroupAndResponseAndTypeAndFormat(Group group, boolean response,String type, String format, Sort sort);
 	public List<Message> findByGroup(Group group);
 
 }

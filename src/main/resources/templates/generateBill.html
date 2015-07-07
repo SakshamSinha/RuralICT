@@ -7,19 +7,20 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="Rural IVRS Web application." />
 		<meta name="author" content="IIT Bombay" />
-		
-		<link th:href="@{/static/css/bootstrap.css}" rel="stylesheet" />
-		<link th:href="@{/static/css/bootstrap-responsive.css}" rel="stylesheet" />
-		<link th:href="@{/static/css/loading-bar.css}" rel="stylesheet" />
-		<link th:href="@{/static/css/site.css}" rel="stylesheet" />
-		<link th:href="@{/static/css/ruralivrs.css}" rel="stylesheet" />
+		<style>
+			table, th, td {
+    			border: 1px solid black;
+    			border-collapse: collapse;
+			}
+		</style>
 	</head>
 	<body style="font-family:Times New Roman; font-size:8">
 		<div class="container-fluid">
 			<div class="row-fluid" style="text-align:center">
-				<div class="span4"></div>
+				
 				<div class="span4">
-					<table class="table table-bordered table-condensed">
+				<center>
+					<table class="table">
 						<thead>
 							<tr>
 								<td colspan="2" style="text-align:center">
@@ -56,7 +57,7 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<table class="table table-bordered table-condensed">
+									<table>
 										<thead>
 											<th>Product</th>
 											<th>Quantity</th>
@@ -76,7 +77,7 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<table class="table table-bordered table-condensed">
+									<table width="100%">
 										<tbody>
 											<tr>
 												<th>Total</th>
@@ -93,8 +94,10 @@
 							</tr>
 						</tbody>
 					</table>
+				</center>
 				</div>
-				<div class="span4"></div>
+				
+				
 			</div>
 		</div>
 	</body>

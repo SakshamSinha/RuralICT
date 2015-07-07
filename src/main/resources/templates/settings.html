@@ -119,10 +119,17 @@
 							</tr>
 
 						</table>
-						<div class="form-actions">
-							<input type="submit" class="btn btn-success" ng-click="uploadFile()" value="Save Details" />
-						</div>
-					</div>
+						 <div class="form-actions"> 
+							<div class="row">
+								<div class="span2">	
+									 <input style="float:right" type="submit" class="btn btn-success" ng-click="uploadFile()" value="Save Details"/>
+								</div>
+								<div class="span10">
+									<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reset-confirmation-modal">Reset</button>
+								</div>
+							</div>
+						 </div>  
+				</div>
 				</div>
 				<div id="broadcast-default-settings" class="tab-pane">
 					<ng-include th:attr="src='\'broadcastDefaultSettings'+'\''"></ng-include>		
@@ -296,6 +303,24 @@
 	
 	
 </div>
+
+<!--  Confirmation Modal dialog for Reset button in Welcome Message Settings -->
+    <div class="modal fade" id="reset-confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingAddUser" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> </button>
+                <h4 class="modal-title custom_align" id="HeadingMemebrDetails">Confirmation Box</h4>
+            </div>
+            <div class="modal-body">
+                <label> Are you sure to reset to default settings ?</label>
+            </div>
+        </div>
+        <div class="modal-footer ">
+            <button type="button" class="btn btn-danger" ng-click="resetWelcomeMessageSettingsButton()" id="reset-confirmation-dialog-yes"><i class="icon-white icon-ok"></i>Yes</button>
+            <button type="button" class="btn btn-success" id="reset-confirmation-dialog-no" data-dismiss="modal"><i class="icon-white icon-remove"></i>No</button>
+        </div>
+    </div>
+
 </div>
 
 <div class="modal fade" id="welcome-message-record-modal" tabindex="-1" role="dialog" aria-hidden="true">

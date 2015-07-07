@@ -72,7 +72,33 @@ public class SettingsController {
 		voices.add(hindiMessage.getVoice().getUrl());
 
 		return voices;
-		}
+	}
+	
+	@RequestMapping(value="/resetwelcomeMessageUrl")
+	@Transactional
+	public @ResponseBody List<String> resetWelcomeMessageUrl(@PathVariable String org) {
+
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+
+		WelcomeMessage englishMessage = welcomeMessageService.getByOrganizationAndLocale(organization,"en");
+		WelcomeMessage marathiMessage = welcomeMessageService.getByOrganizationAndLocale(organization, "mr");
+		WelcomeMessage hindiMessage = welcomeMessageService.getByOrganizationAndLocale(organization, "hi");
+
+		welcomeMessageService.setWelcomeMessageVoice(englishMessage, 1);
+		welcomeMessageService.setWelcomeMessageVoice(hindiMessage, 2);
+		welcomeMessageService.setWelcomeMessageVoice(marathiMessage, 3);
+		
+		String englishMessageUrl = englishMessage.getVoice().getUrl();
+		String hindiMessageUrl = hindiMessage.getVoice().getUrl();
+		String marathiMessageUrl = marathiMessage.getVoice().getUrl();
+		
+		List<String> defaultVoiceUrl = new ArrayList<String>();
+		defaultVoiceUrl.add(englishMessageUrl);
+		defaultVoiceUrl.add(marathiMessageUrl);
+		defaultVoiceUrl.add(hindiMessageUrl);
+		
+		return defaultVoiceUrl;
+	}
 
 	@RequestMapping(value="/upload/welcomeMessage", method=RequestMethod.POST, produces = "text/plain")
 	@Transactional
