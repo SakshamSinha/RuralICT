@@ -258,7 +258,6 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				}
 				else
 				{
-					//console.log("NewuserDetails: " + newUserDetails.phone);
 					// Normalize the phone number to database format
 					newUserDetails.phone = normalizePhoneNumber(newUserDetails.phone);
 					
