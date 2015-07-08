@@ -8,21 +8,6 @@ import in.ac.iitb.ivrs.telephony.base.config.IVRConfigs;
 public class Configs extends IVRConfigs {
 
 	/**
-	 * Override the IVRBase configuration with application-specific values.
-	 */
-	public static void init() {
-		// KooKoo configuration
-		KooKoo.API_KEY = "KK4063496a1784f9f003768bd6e34c185b";
-
-		// Network configuration
-		Network.USE_PROXY = true;
-		Network.PROXY_HOST = "netmon.iitb.ac.in";
-		Network.PROXY_PORT = 80;
-		Network.PROXY_USER = "p15057";
-		Network.PROXY_PASS = "rajani@";
-	}
-
-	/**
 	 * Telephony-specific configuration.
 	 */
 	public static class Telephony {

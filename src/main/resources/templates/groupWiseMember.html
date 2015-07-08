@@ -13,19 +13,30 @@
 				<thead>
 					<tr>
 						<th>Sr. No.</th>
-						<th>Name</th>
-						<th>E-mail</th>
+						<th>Name</th>						
+						<th>Groups</th>						
 						<th>Phone</th>
+						<th>E-mail</th>
 						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="list-users"
-						th:each="userView, iterationStatus : ${userViews} ">
+					<tr class="list-users" th:each="userView, iterationStatus : ${userViews} ">
 						<td th:text="${iterationStatus.count}">1</td>
 						<td th:text="${userView.user.name}">Member Name</td>
-						<td th:text="${userView.user.email}">Member EmailId</td>
+						<td>
+						<span th:each="groups,itrStatus : ${userView.user.groupMemberships}">
+							<span th:if="${itrStatus.count < 3}">							
+								<span th:if="${itrStatus.count == 2}">,</span>
+								<span th:text="${groups.group.name}"></span>
+							</span>
+							<span th:if="${itrStatus.count == 3}">
+								, <a href="#" th:attr="data-value=${userView.user.userId}"  class="show-user-groups" data-toggle="modal" data-title="Add new user" data-target="#show-user-groups-modal">See more</a>			
+							</span>
+						</span>
+						</td>
 						<td th:text="${userView.phone.phoneNumber}">Member PhoneNumber</td>
+						<td th:text="${userView.user.email}">Member EmailId</td>
 						<td>
 	          				<div class="btn-group">
 	            				<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
