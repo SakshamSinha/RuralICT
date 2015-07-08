@@ -36,6 +36,8 @@ public interface OutboundCallRepository extends JpaRepository<OutboundCall, Inte
 	@Override
 	public List<OutboundCall> findAll(Sort sort);
 
+	//TODO
+//	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcastRecipient.broadcast.organization.abbreviation)")
 	@Override
 	public <S extends OutboundCall> S save(@Param("call") S call);
 

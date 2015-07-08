@@ -22,7 +22,8 @@ public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSche
 	 * Default functions
 	 */
 
-	
+	//TODO
+	//@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.broadcast.organization.abbreviation)")
 	@Override
 	public BroadcastSchedule findOne(Integer id);
 
@@ -38,6 +39,8 @@ public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSche
 	@Override
 	public List<BroadcastSchedule> findAll(Sort sort);
 
+	//TODO
+	//@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#schedule.broadcast.organization.abbreviation)")
 	@Override
 	public <S extends BroadcastSchedule> S save(@Param("schedule") S schedule);
 

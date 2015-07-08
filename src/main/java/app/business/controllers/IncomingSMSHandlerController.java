@@ -50,7 +50,7 @@ public class IncomingSMSHandlerController {
 			user = userPhoneNumberService.getUserPhoneNumber(caller_id).getUser();
 		}
 		catch(Exception e){
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		if(user!=null){
 
