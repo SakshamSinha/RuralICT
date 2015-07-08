@@ -20,35 +20,35 @@ public class MessageService {
 	 * Returns messages with 'Yes' Response for a group  
 	 */
 	public List<Message> getPositiveResponseList(Group group, String format) {
-		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, true, "response", format);
+		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, true, "response", format, new Sort(Direction.DESC, "time"));
 	}
 
 	/*
 	 * Returns messages with 'No' Response for a group  
 	 */
 	public List<Message> getNegativeResponseList(Group group, String format) {
-		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, false, "response", format);
+		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, false, "response", format, new Sort(Direction.DESC, "time"));
 	}
 
 	/*
 	 * Returns messages which are of type 'response' for a group
 	 */
 	public List<Message> getResponseList(Group group, String format) {
-		return messageRepository.findByGroupAndTypeAndFormat(group, "response", format);
+		return messageRepository.findByGroupAndTypeAndFormat(group, "response", format, new Sort(Direction.DESC, "time"));
 	}
 
 	/*
 	 * Return messages which are of type 'feedback' for a group
 	 */
 	public List<Message> getFeedbackList(Group group, String format) {
-		return messageRepository.findByGroupAndTypeAndFormat(group, "feedback", format);
+		return messageRepository.findByGroupAndTypeAndFormat(group, "feedback", format, new Sort(Direction.DESC, "time"));
 	}
 
 	/*
 	 * Returns messages which are of type 'order' for a group
 	 */
 	public List<Message> getOrderList(Group group, String format) {
-		return messageRepository.findByGroupAndTypeAndFormat(group, "order", format);
+		return messageRepository.findByGroupAndTypeAndFormat(group, "order", format, new Sort(Direction.DESC, "time"));
 	}
 
 	/*

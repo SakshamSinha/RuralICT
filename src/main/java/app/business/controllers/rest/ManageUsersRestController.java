@@ -199,10 +199,10 @@ public class ManageUsersRestController {
 	}
 
 	// Method to add a new user according to the details entered in the Modal Dialog Box
-	@RequestMapping(value="/editUser", method = RequestMethod.POST)
+	@RequestMapping(value="/editUserWithPhoneNumber", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
-	public String editUser(@PathVariable String org, @RequestBody Map<String,String> currentUserDetails) {
+	public String editUserWithPhoneNumber(@PathVariable String org, @RequestBody Map<String,String> currentUserDetails) {
 
 		// Get the input parameters from AngularJS
 		int manageUserId = Integer.parseInt(currentUserDetails.get("userid"));
@@ -233,6 +233,28 @@ public class ManageUsersRestController {
 		userPhoneNumberService.addUserPhoneNumber(userPrimaryPhoneNumber);
 		
 		return phone;
+	}
+	
+	// Method to edit a exisitng user only if his phone number is not altered
+	@RequestMapping(value="/editUserOnly", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public void editUserOnly(@PathVariable String org, @RequestBody Map<String,String> currentUserDetails) {
+
+		// Get the input parameters from AngularJS
+		int manageUserId = Integer.parseInt(currentUserDetails.get("userid"));
+		String name = currentUserDetails.get("name");
+		String email = currentUserDetails.get("email");
+		String address = currentUserDetails.get("address");
+		
+		// Add the new User to database
+		User user = userService.getUser(manageUserId);
+
+		// Update the attributes of the user
+		user.setName(name);
+		user.setEmail(email);
+		user.setAddress(address);
+		userService.addUser(user);
 	}
 
 	// Method to get user details in a Modal Dialog Box

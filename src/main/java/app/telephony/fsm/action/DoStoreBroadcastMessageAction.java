@@ -11,7 +11,6 @@ import app.entities.LatestRecordedVoice;
 import app.entities.Organization;
 import app.entities.Voice;
 import app.telephony.RuralictSession;
-
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -36,10 +35,7 @@ public class DoStoreBroadcastMessageAction implements Action<IVRSession> {
 		inboundCall.setDuration(ruralictSession.getRecordEvent().getDuration());
 			
 		Organization organization = SpringContextBridge.services().getOrganizationService().getOrganizationByIVRS(session.getIvrNumber());
-		LatestRecordedVoice latestRecordedVoice = new LatestRecordedVoice(organization, voice);
-
 		LatestRecordedVoiceService latestRecordedVoiceService = SpringContextBridge.services().getLatestBroadcastableVoiceService();
-		//TODO
 		latestRecordedVoiceService.updateLatestRecordedVoice(organization,voice);
 	}
 

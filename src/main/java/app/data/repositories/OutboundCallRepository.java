@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
+import app.entities.Group;
 import app.entities.OutboundCall;
 
 public interface OutboundCallRepository extends JpaRepository<OutboundCall, Integer> {
@@ -36,7 +37,8 @@ public interface OutboundCallRepository extends JpaRepository<OutboundCall, Inte
 	@Override
 	public List<OutboundCall> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#call.broadcastRecipient.broadcast.organization.abbreviation)")
+	//TODO
+//	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+filterObject.broadcastRecipient.broadcast.organization.abbreviation)")
 	@Override
 	public <S extends OutboundCall> S save(@Param("call") S call);
 
@@ -48,4 +50,6 @@ public interface OutboundCallRepository extends JpaRepository<OutboundCall, Inte
 	 * Search functions
 	 */
 	public OutboundCall findByBroadcastScheduleAndBroadcastRecipient(BroadcastSchedule broadcastSchedule, BroadcastRecipient broadcastRecipient);
+	public List<OutboundCall> findByBroadcastRecipient_Broadcast_Group(@Param("group") Group group);
+	
 }

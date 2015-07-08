@@ -24,6 +24,22 @@
 	<!--top level tab content-->
 	<div class="tab-content">
 
+<<<<<<< HEAD
+	<!--broadcast tab menu-->
+	<div id="broadcast" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
+<!-- 			<li ng-class="{active:tab == 1}"><a href="#broadcast-voice-message" data-toggle="tab" >Voice -->
+			<li><a href="#broadcast-voice-message" data-toggle="tab" >Voice
+					Message</a></li>
+			<li><a href="#broadcast-text-message" data-toggle="tab">Text
+					Message</a></li>
+		</ul>
+		<!--brands tab content-->
+		<div class="tab-content">
+<!-- 			<div ng-show="tab==1" id="broadcast-voice-message" class="tab-pane"> -->
+			<div id="broadcast-voice-message" class="tab-pane">
+				<ng-include src="voiceBroadcastUrl"></ng-include>
+=======
 
 		<!--broadcast tab menu-->
 		<div id="broadcast" class="tab-pane">
@@ -38,11 +54,14 @@
 			<div class="tab-content">
 				<!-- 			<div ng-show="tab==1" id="broadcast-voice-message" class="tab-pane"> -->
 				<div id="broadcast-voice-message" class="tab-pane">
+					<!-- 				<ng-include -->
+					<!-- 					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include> -->
 					<ng-include src="voiceBroadcastUrl"></ng-include>
 				</div>
 				<div id="broadcast-text-message" class="tab-pane">
 					<ng-include th:attr="src='\'textBroadcast/'+${group.groupId}+'\''"></ng-include>
 				</div>
+>>>>>>> be22d05c595d6642a37e94eb47f87be505334d6e
 			</div>
 		</div>
 
@@ -165,13 +184,11 @@
 					<li><a href="#incoming-calls" data-toggle="tab">Incoming Calls</a></li>
 					<li><a href="#outgoing-calls" data-toggle="tab">Outgoing Calls</a></li>
 				</ul>
-				<div class="tab-content" style="overflow:visible">
-					<div id="incoming-calls" class="tab-pane">
-						<ng-include	th:attr="src='\'manage/'+ incomingCalls+'/' +${group.groupId}+'\''"></ng-include>
-					</div>
-					<div id="outgoing-calls" class="tab-pane">
-						<ng-include	th:attr="src='\'manage/'+ outgoingCalls+'/' +${group.groupId}+'\''"></ng-include>
-					</div>
+				<div id="incoming-calls" class="tab-pane">
+					<ng-include	th:attr="src='\'manage/'+ incomingCalls+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="outgoing-calls" class="tab-pane">
+					<ng-include	th:attr="src='\'manage/'+ outgoingCalls+'/' +${group.groupId}+'\''"></ng-include>
 				</div>				
 			</div>
 			<div id="manage-settings" class="tab-pane">

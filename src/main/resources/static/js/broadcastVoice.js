@@ -100,6 +100,21 @@ $("#page-content").on("click","#unselect-all",function(e){
 	});
 });
 
+$("#page-content").on("click","#broadcast-message-file",function(e){
+	console.log("Choose file button clicked");
+	this.value = null;
+});
+
+$("#page-content").on("change","#broadcast-message-file",function(e){
+	console.log("Something is happening");
+	//$(this).val();
+	
+	var urlString = $(this).val();
+	var filename = urlString.slice(12);
+	console.log(filename);
+	$("#broadcast-file-url").text(filename);
+});
+
 $("#page-content").on("click","#voice-upload",function(e){
 	console.log("voice upload called");
 	broadcastVoiceIds = $("#broadcast-voice-ids");
@@ -122,6 +137,8 @@ $("#page-content").on("click","#place-voice-broadcast-call",function(e){
 	data.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 	data.publisherId = broadcastVoiceIds.attr("publisherid");
 	data.mode = "web";
+	
+	alert($("#order-check").is(":checked"));
 	if($("#order-check").is(":checked"))
 	{
 			data.askOrder=1;

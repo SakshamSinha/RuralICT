@@ -4,8 +4,8 @@
 			<h2>Order Summary(Product wise)</h2><p hidden id="orgAbbrevation" th:text="${orgAbbrevation}">text</p>
 	    	</br></br></br>
 	    	Product Name: 
-	    	<select placeholder="Choose product" id="prod_name" ng-model="name">
-	    		<option th:each="product : ${products}" th:value="${product.name}">
+	    	<select placeholder="Choose product" id="product" ng-model="name">
+	    		<option th:each="product : ${products}" th:value="${product.productId}">
 	    			<p th:text="${product.name}">text</p>
 	    		</option>
 	  		</select>
@@ -13,19 +13,20 @@
 	  		To:<input type="date" id="toDate" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
 	    	<input type="submit" id="submitProducts" value="Submit" />
 	  	</form>
-	  	<h2>{{name}}</h2>
 	  	<table class="table table-striped table-bordered table-condensed" id="t01">
 	    	<tr>
-	    		<th>Unit Rate</th>
+	    		<th>Group</th>
 	    		<th>Quantity</th>
+	    		<th>Amount</th>
 			</tr>
-	  		<tr ng-repeat="x in orderSumProducts._embedded.orderItems">
-	  			<td class="unitRate">{{x.unitRate}}</td>
+	  		<tr ng-repeat="x in orderSummariesProduct">
+	  			<td>{{x.groupName}}</td>
 	  			<td class="quantity">{{x.quantity}}</td>
+	  			<td>₹ {{x.collection}}</td>
 	  		</tr>
 	  		<tr>
-	  			<td>
-	  				Total 
+	  			<td colspan="2">
+	  				Total Amount
 	  			</td>
 	  			<td id="totalProducts">
 	  				0
