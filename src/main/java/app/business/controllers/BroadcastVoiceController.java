@@ -25,6 +25,7 @@ import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
 import app.business.services.LatestRecordedVoiceService;
 import app.business.services.OrganizationService;
+import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
@@ -54,6 +55,8 @@ public class BroadcastVoiceController {
 	GroupMembershipService groupMembershipService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	UserPhoneNumberService userPhoneNumberService;
 	@Autowired
 	VoiceService voiceService;
 	@Autowired
@@ -172,6 +175,8 @@ public class BroadcastVoiceController {
 		{
 			User user=recipient.getUser();
 			System.out.println("Broadcast Recipient:"+user.getName());
+			//TODO use the user's primary phone number.
+			//userPhoneNumberService.getUserPrimaryPhoneNumber(user);
 			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
 			for(UserPhoneNumber no:phoneNumbers)
 			{	
