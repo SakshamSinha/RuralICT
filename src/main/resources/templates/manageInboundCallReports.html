@@ -1,0 +1,25 @@
+<div ng-controller="ManageInboundCallsController">
+	<div class="row-fluid">
+		<h2>Incoming Calls</h2><p hidden id="orgAbbrevation" th:text="${orgAbbrevation}">text</p></br>
+			<form class="simple-form">
+				
+	  			From: <input type="date" id="fromDate" name="From" ng-model="fromDate" placeholder="yyyy-mm-dd">
+	  			To: <input type="date" id="toDate" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
+	    		<input type="submit" id="submitBut" value="Submit" />
+	  		</form>
+	  	<table class="table table-striped table-bordered table-condensed" id="t01">
+	  		<tr>
+	    		<th>Date - Time</th>
+	    		<th>Number</th>
+			</tr>
+	  		<tr ng-repeat="x in incomingCallReports._embedded.inboundCalls">
+	  			<td>
+	  				{{mySplit(x.time ,0)}}
+	  		</td>
+	  		<td>
+	  			{{x.fromNumber}}
+	  		</td>
+	  	</tr>
+	  </table>
+	</div>
+</div>

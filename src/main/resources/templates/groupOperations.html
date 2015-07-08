@@ -150,25 +150,33 @@
 			</div>
 		</div>
 
-		<!--Manage tab menu-->
-		<div id="manage" class="tab-pane">
-			<ul class="nav nav-tabs bottom-tab-bar" id="public_figures_tabs">
-				<li class="active"><a href="#manage-members" data-toggle="tab">Group
-						Members</a></li>
-				<li><a href="#manage-reports" data-toggle="tab">Reports</a></li>
-				<li><a href="#manage-settings" data-toggle="tab">Settings</a></li>
-			</ul>
-			<!--public_figures tab content-->
-			<div class="tab-content" style="overflow: visible">
-				<div id="manage-members" class="tab-pane active">
-					<ng-include th:attr="src='\'memberList/'+${group.groupId}+'\''"></ng-include>
+	<!--Manage tab menu-->
+	<div id="manage" class="tab-pane">
+		<ul class="nav nav-tabs bottom-tab-bar" id="public_figures_tabs">
+			<li class="active"><a href="#manage-members" data-toggle="tab">Group Members</a></li>
+			<li><a href="#manage-reports" data-toggle="tab">Reports</a></li>
+			<li><a href="#manage-settings" data-toggle="tab">Settings</a></li>
+		</ul>
+		<!--public_figures tab content-->
+		<div class="tab-content" style="overflow:visible">
+			<div id="manage-members" class="tab-pane active">
+				<ng-include th:attr="src='\'memberList/'+${group.groupId}+'\''"></ng-include>
+			</div>
+			<div id="manage-reports" class="tab-pane">
+				<ul class="nav nav-tabs bottom-tab-bar" id="manage_reports_tabs">
+					<li><a href="#incoming-calls" data-toggle="tab">Incoming Calls</a></li>
+					<li><a href="#outgoing-calls" data-toggle="tab">Outgoing Calls</a></li>
+				</ul>
+				<div id="incoming-calls" class="tab-pane">
+					<ng-include	th:attr="src='\'manage/'+ incomingCalls+'/' +${group.groupId}+'\''"></ng-include>
 				</div>
-				<div id="manage-reports" class="tab-pane">
-					<i>manage-reports</i>
-				</div>
-				<div id="manage-settings" class="tab-pane">
-					<ng-include th:attr="src='\'groupSettings/'+${group.groupId}+'\''"></ng-include>
-				</div>
+				<div id="outgoing-calls" class="tab-pane">
+					<ng-include	th:attr="src='\'manage/'+ outgoingCalls+'/' +${group.groupId}+'\''"></ng-include>
+				</div>				
+			</div>
+			<div id="manage-settings" class="tab-pane">
+				<ng-include th:attr="src='\'groupSettings/'+${group.groupId}+'\''"></ng-include>
+
 			</div>
 		</div>
 	</div>
