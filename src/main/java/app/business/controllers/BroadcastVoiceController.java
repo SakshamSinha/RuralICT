@@ -125,7 +125,7 @@ public class BroadcastVoiceController {
 		String mode = body.get("mode");
 		//Converting string to integer and converting to boolean
 		boolean askOrder = (Integer.parseInt(body.get("askOrder")) !=0);
-		boolean askFeedback = (Integer.parseInt(body.get("askFeedback")) !=0);;
+		boolean askFeedback = (Integer.parseInt(body.get("askFeedback")) !=0);
 		boolean askResponse = (Integer.parseInt(body.get("askResponse")) !=0);
 		
 		String broadcastedTime = body.get("broadcastedTime");
@@ -176,17 +176,20 @@ public class BroadcastVoiceController {
 			User user=recipient.getUser();
 			System.out.println("Broadcast Recipient:"+user.getName());
 			//TODO use the user's primary phone number.
-			//userPhoneNumberService.getUserPrimaryPhoneNumber(user);
-			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
-			for(UserPhoneNumber no:phoneNumbers)
-			{	
-				//Outbound call has to be appended with a zero after removing 91 
-				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
-				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL));
-				{
-					break;
-				}
-			}
+			UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+			String phoneNumber = "0" + userPhoneNumber.getPhoneNumber().substring(2);
+			IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL);
+			
+//			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
+//			for(UserPhoneNumber no:phoneNumbers)
+//			{	
+//				//Outbound call has to be appended with a zero after removing 91 
+//				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
+//				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL));
+//				{
+//					break;
+//				}
+//			}
 		}
 	    
 	}
