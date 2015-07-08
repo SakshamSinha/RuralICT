@@ -167,11 +167,13 @@
 					<li><a href="#incoming-calls" data-toggle="tab">Incoming Calls</a></li>
 					<li><a href="#outgoing-calls" data-toggle="tab">Outgoing Calls</a></li>
 				</ul>
-				<div id="incoming-calls" class="tab-pane">
-					<ng-include	th:attr="src='\'manage/'+ incomingCalls+'/' +${group.groupId}+'\''"></ng-include>
-				</div>
-				<div id="outgoing-calls" class="tab-pane">
-					<ng-include	th:attr="src='\'manage/'+ outgoingCalls+'/' +${group.groupId}+'\''"></ng-include>
+				<div class="tab-content" style="overflow:visible">
+					<div id="incoming-calls" class="tab-pane">
+						<ng-include	th:attr="src='\'manage/'+ incomingCalls+'/' +${group.groupId}+'\''"></ng-include>
+					</div>
+					<div id="outgoing-calls" class="tab-pane">
+						<ng-include	th:attr="src='\'manage/'+ outgoingCalls+'/' +${group.groupId}+'\''"></ng-include>
+					</div>
 				</div>				
 			</div>
 			<div id="manage-settings" class="tab-pane">
