@@ -191,7 +191,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			//make changes in the $resource object
 			$scope.organization.inboundCallAskOrder = $scope.incomingCheckBoxOptions.order;
 			$scope.organization.inboundCallAskFeedback = $scope.incomingCheckBoxOptions.feedback;
-			$scope.organization.inboundCallAskResponse = $scope.incomingCheckBoxOptions.response;
+			//$scope.organization.inboundCallAskResponse = $scope.incomingCheckBoxOptions.response;
 
 			// check if at least one option is selected
 			if(!$scope.organization.inboundCallAskOrder && !$scope.organization.inboundCallAskFeedback && !$scope.organization.inboundCallAskResponse)
