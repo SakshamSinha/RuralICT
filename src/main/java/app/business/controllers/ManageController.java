@@ -14,7 +14,7 @@ import app.entities.message.Message;
 
 @Controller
 @RequestMapping("/web/{org}")
-public class manageController {
+public class ManageController {
 
 	
 	@RequestMapping(value="/manage/incomingCalls/{groupId}")
