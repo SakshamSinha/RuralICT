@@ -336,8 +336,8 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 $("#page-content").on("change","#select-welcome-message-language",function(e){
 
 	// Get the scope of the angular controller so that we can access required variables from it
-	myScope = angular.element('#settings-page').scope();
-
+	myScope = angular.element('#settings-page-ids').scope();
+	
 	// Depending on value of select element, update the audio player and download link
 	if(this.value === '1')
 	{
