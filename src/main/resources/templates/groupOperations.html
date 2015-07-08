@@ -155,7 +155,16 @@
 				<ng-include th:attr="src='\'memberList/'+${group.groupId}+'\''"></ng-include>
 			</div>
 			<div id="manage-reports" class="tab-pane">
-				<i>manage-reports</i>
+				<ul class="nav nav-tabs bottom-tab-bar" id="manage_reports_tabs">
+					<li><a href="#incoming-calls" data-toggle="tab">Incoming Calls</a></li>
+					<li><a href="#outgoing-calls" data-toggle="tab">Outgoing Calls</a></li>
+				</ul>
+				<div id="incoming-calls" class="tab-pane">
+					<ng-include	th:attr="src='\'manage/'+ incomingCalls+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="outgoing-calls" class="tab-pane">
+					<ng-include	th:attr="src='\'manage/'+ outgoingCalls+'/' +${group.groupId}+'\''"></ng-include>
+				</div>				
 			</div>
 			<div id="manage-settings" class="tab-pane">
 				<ng-include th:attr="src='\'groupSettings/'+${group.groupId}+'\''"></ng-include>

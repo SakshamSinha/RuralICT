@@ -1,4 +1,5 @@
 package app.business.services;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,13 @@ public class OutboundCallService {
 	@Autowired
 	BroadcastScheduleRepository	broadcastScheduleRepository;
 	
-	public List<OutboundCall> getOutboundCallList(Organization organization){
-		//**********************************************
-		return null;
+	public List<OutboundCall> getOutboundCallList(Organization organization){		
+		return outboundCallRepository.findAll();
 	}
 	
 	public List<OutboundCall> getOutboundCallList(Group group){
-		//************************************************
-		return null;
+		List<OutboundCall> outboundCallList = new ArrayList<OutboundCall>(outboundCallRepository.findByBroadcastRecipient_Broadcast_Group(group));
+		return outboundCallList;
 	}
 	
 	public OutboundCall addOutboundCall(OutboundCall outboundCall){
