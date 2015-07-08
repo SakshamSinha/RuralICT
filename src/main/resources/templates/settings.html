@@ -70,13 +70,13 @@
 			<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
 				<li class="active"><a href="#welcome-message-settings" data-toggle="tab">Welcome Message</a>
 				</li>
-				<li><a href="#inbound-call-settings" data-toggle="tab">Inbound Call</a>
+				<li><a href="#inbound-call-settings" data-toggle="tab">Incoming Defaults</a>
 				</li>
 				<li><a href="#voice-call-settings" data-toggle="tab">Voice Call</a>
 				</li>
-				<li><a href="#dashboard-settings" data-toggle="tab">Dashboard</a>
-				</li>
-				<li><a href="#broadcast-default-settings" data-toggle="tab">Broadcast Default Settings</a>
+  				<li><a href="#dashboard-settings" data-toggle="tab">Dashboard</a> 
+ 				</li> -->
+				<li><a href="#broadcast-default-settings" data-toggle="tab">Broadcast Defaults</a>
 				</li>
 			</ul>
 			<!--system settings tab content-->
@@ -144,11 +144,9 @@
 								<td> <b>Call Flow : </b>
 									<br>
 									<br>
-									<input type="checkbox" ng-model=incomingCheckBoxOptions.order name="responsein" />SemiStructured&nbsp;(Order/आदेश)
+									<input type="checkbox" ng-model=incomingCheckBoxOptions.order name="responsein" />Order
 									<br>
-									<input type="checkbox" ng-model=incomingCheckBoxOptions.feedback name="responsein" />Unstructured&nbsp;(Feedback/प्रतिपुष्टि)
-									<br>
-									<input type="checkbox" ng-model=incomingCheckBoxOptions.response name="responsein" />Structured&nbsp;(Response/प्रतिक्रिया)
+									<input type="checkbox" ng-model=incomingCheckBoxOptions.feedback name="responsein" />Feedback
 									<br>
 								</td>
 							</tr>
