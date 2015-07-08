@@ -369,9 +369,6 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		map.allowTransition(enterGroupID, onDTMFGroupIDExist, publisherExit, playGroupSelectedAction);
 		map.allowTransition(enterGroupID, onDTMFGroupIDNotExist, choosePhoneGroup, playInvalidGroupAction);
 
-		// transitions from publisherExit
-		//	map.allowTransition(publisherExit, EventGuard.proceed, end, null);
-
 		// transitions from call flow
 		map.allowTransition(parentCallFlow, EventGuard.onDisconnect, end, null);
 
