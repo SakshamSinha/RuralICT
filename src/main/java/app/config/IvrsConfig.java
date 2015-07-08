@@ -14,8 +14,8 @@ public class IvrsConfig {
 		IVRConfigs.Network.PROXY_PORT = 80;
 
 		// XXX: IMPORTANT: Make sure you fill these up before deploying on IIT servers!
-		IVRConfigs.Network.PROXY_USER = "";
-		IVRConfigs.Network.PROXY_PASS = "";
+		IVRConfigs.Network.PROXY_USER = "p13226";
+		IVRConfigs.Network.PROXY_PASS = "purnima165*";
 
 		// TODO: Move all the configs in this file to an external file that is not committed to the repository, and is
 		//       shared by the team locally. A sample empty version of that file can be provided in the repository.

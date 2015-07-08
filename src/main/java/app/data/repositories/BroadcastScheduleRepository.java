@@ -12,7 +12,9 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
+import app.entities.User;
 import app.entities.broadcast.Broadcast;
 
 public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSchedule, Integer> {
@@ -20,7 +22,8 @@ public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSche
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.broadcast.organization.abbreviation)")
+	//TODO
+	//@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.broadcast.organization.abbreviation)")
 	@Override
 	public BroadcastSchedule findOne(Integer id);
 
@@ -36,7 +39,8 @@ public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSche
 	@Override
 	public List<BroadcastSchedule> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#schedule.broadcast.organization.abbreviation)")
+	//TODO
+	//@PreAuthorize("hasRole('ADMIN_OR_PUBLISHER'+#schedule.broadcast.organization.abbreviation)")
 	@Override
 	public <S extends BroadcastSchedule> S save(@Param("schedule") S schedule);
 
@@ -50,5 +54,7 @@ public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSche
 	public List<BroadcastSchedule> findByBroadcastOrderByTimeAsc(Broadcast broadcast);
 	public List<BroadcastSchedule> findByBroadcastAndSendToAllTrueAndTimeGreaterThanOrderByTimeAsc(Broadcast broadcast, Timestamp time);
 	public List<BroadcastSchedule> findByBroadcastAndTimeGreaterThanOrderByTimeAsc(Broadcast broadcast, Timestamp time);
+
+	public List<BroadcastSchedule> findByBroadcast(Broadcast broadcast);
 
 }

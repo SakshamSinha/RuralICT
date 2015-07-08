@@ -66,7 +66,7 @@ public class BroadcastVoiceController {
 	BroadcastDefaultSettingsService broadcastDefaultSettingService;
 	@Autowired
 	LatestRecordedVoiceService latestRecordedVoiceService;
-
+	
 	@RequestMapping(value="/broadcastVoiceMessages/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
@@ -86,6 +86,7 @@ public class BroadcastVoiceController {
 		List<User> users = new ArrayList<User>();
 		for(GroupMembership groupMembership : groupMembershipList) {
 			users.add(groupMembership.getUser());
+
 		}
 		
 		BroadcastDefaultSettings broadcastDefaultSettings = broadcastDefaultSettingService.getBroadcastDefaultSettingByOrganization(organization);
@@ -140,7 +141,8 @@ public class BroadcastVoiceController {
 		//Adding Broadcast to the Broadcast table
 		VoiceBroadcast broadcast = new VoiceBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, voice, voiceBroadcastDraft);
 		broadcastService.addBroadcast(broadcast);
-		
+	
+	
 		//Adding Broadcast Recipient to Broadcast Recipients table
 		String userIdString = body.get("userIds");
 		String[] userIdList = userIdString.split(",");
@@ -171,7 +173,9 @@ public class BroadcastVoiceController {
 		for(BroadcastRecipient recipient: broadcastRecipients)
 		{
 			User user=recipient.getUser();
+
 			System.out.println("Broadcast Recipient:"+user.getName());
+
 			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
 			for(UserPhoneNumber no:phoneNumbers)
 			{	

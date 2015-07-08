@@ -1,93 +1,99 @@
-<div  ng-controller="BroadcastVoiceUrlCtrl as broadcastUrlCtrl">
+<div ng-controller="BroadcastVoiceUrlCtrl as broadcastUrlCtrl">
 
-<div class="row-fluid">
-	<input type="hidden" id="groupId" th:value="${group.groupId}">
-	<div class="page-header">
-		<h1 th:text="${group.name}">
-			Parent Group <small>Group operations</small>
-		</h1>
-	</div>
-</div>
-<ul class="nav nav-tabs top-tab-bar" id="interest_tabs">
-	<!--top level tabs-->
-	<li class="active"><a href="#voice-message-response" data-toggle="tab">Voice
-			Message Response</a></li>
-	<li><a href="#text-message-response" data-toggle="tab">Text
-			Message Response</a></li>
-	<li ng-click="changeUrl(voiceBroadcastUrl)"><a href="#broadcast" data-toggle="tab">Broadcast</a></li>
-	<li><a href="#send-sms" data-toggle="tab">Sent SMS</a></li>
-	<li><a href="#manage" data-toggle="tab">Manage</a></li>
-</ul>
-
-<!--top level tab content-->
-<div class="tab-content">
-
-	<!--broadcast tab menu-->
-	<div id="broadcast" class="tab-pane">
-		<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
-<!-- 			<li ng-class="{active:tab == 1}"><a href="#broadcast-voice-message" data-toggle="tab" >Voice -->
-			<li><a href="#broadcast-voice-message" data-toggle="tab" >Voice
-					Message</a></li>
-			<li><a href="#broadcast-text-message" data-toggle="tab">Text
-					Message</a></li>
-		</ul>
-		<!--brands tab content-->
-		<div class="tab-content">
-<!-- 			<div ng-show="tab==1" id="broadcast-voice-message" class="tab-pane"> -->
-			<div id="broadcast-voice-message" class="tab-pane">
-				<ng-include
-					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include>
-<!-- 				<ng-include src="voiceBroadcastUrl"></ng-include> -->
-			</div>
-			<div id="broadcast-text-message" class="tab-pane">
-                <ng-include
-                    th:attr="src='\'textBroadcast/'+${group.groupId}+'\''"></ng-include>
-            </div>
+	<div class="row-fluid">
+		<input type="hidden" id="groupId" th:value="${group.groupId}">
+		<div class="page-header">
+			<h1 th:text="${group.name}">
+				Parent Group <small>Group operations</small>
+			</h1>
 		</div>
 	</div>
-	
-	<!--Voice message response tab menu-->
-	<div id="voice-message-response" class="tab-pane active">
-		<ul class="nav nav-tabs bottom-tab-bar" id="all_tabs">
-			<li class="active"><a href="#voice-message-response-inbox" data-toggle="tab">Inbox</a></li>
-			<li><a href="#voice-message-response-saved" data-toggle="tab">Saved</a></li>
-			<li><a href="#voice-message-response-processed"
-				data-toggle="tab">Processed</a></li>
-			<li><a href="#voice-message-response-feedback" data-toggle="tab">Feedback</a></li>
-			<li><a href="#voice-message-response-response" data-toggle="tab">Response</a>
-		</ul>
-		<!--all tab content-->
-		<div class="tab-content">
-			<div id="voice-message-response-inbox" class="tab-pane active">
-				<ng-include
-					th:attr="src='\'voiceMessage/'+ inbox+'/'+ ${group.groupId}+'\''"></ng-include>
-			</div>
-			<div id="voice-message-response-saved" class="tab-pane">
-				<ng-include
-					th:attr="src='\'voiceMessage/'+ saved+'/'+ ${group.groupId}+'\''"></ng-include>
-			</div>
-			<div id="voice-message-response-processed" class="tab-pane">
-				<ng-include
-					th:attr="src='\'voiceMessage/'+ processed+'/'+ ${group.groupId}+'\''"></ng-include>
-			</div>
-			<div id="voice-message-response-feedback" class="tab-pane">
-				<ng-include
-					th:attr="src='\'voiceMessage/'+ feedback+'/' +${group.groupId}+'\''"></ng-include>
-			</div>
-			<div id="voice-message-response-response" class="tab-pane">
-				<ng-include
-					th:attr="src='\'voiceMessage/'+ response+'/' +${group.groupId}+'\''"></ng-include>
+	<ul class="nav nav-tabs top-tab-bar" id="interest_tabs">
+		<!--top level tabs-->
+		<li class="active"><a href="#voice-message-response"
+			data-toggle="tab">Voice Message Response</a></li>
+		<li th:if="${organization.enableSms}"><a
+			href="#text-message-response" data-toggle="tab">Text Message
+				Response</a></li>
+		<li ng-click="changeUrl(voiceBroadcastUrl)"><a href="#broadcast"
+			data-toggle="tab">Broadcast</a></li>
+		<li><a href="#send-sms" data-toggle="tab">Sent SMS</a></li>
+		<li><a href="#manage" data-toggle="tab">Manage</a></li>
+	</ul>
+
+	<!--top level tab content-->
+	<div class="tab-content">
+
+
+		<!--broadcast tab menu-->
+		<div id="broadcast" class="tab-pane">
+			<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
+				<!-- 			<li ng-class="{active:tab == 1}"><a href="#broadcast-voice-message" data-toggle="tab" >Voice -->
+				<li><a href="#broadcast-voice-message" data-toggle="tab">Voice
+						Message</a></li>
+				<li><a href="#broadcast-text-message" data-toggle="tab">Text
+						Message</a></li>
+			</ul>
+			<!--brands tab content-->
+			<div class="tab-content">
+				<!-- 			<div ng-show="tab==1" id="broadcast-voice-message" class="tab-pane"> -->
+				<div id="broadcast-voice-message" class="tab-pane">
+					<!-- 				<ng-include -->
+					<!-- 					th:attr="src='\'broadcastVoiceMessages/'+${group.groupId}+'\''"></ng-include> -->
+					<ng-include src="voiceBroadcastUrl"></ng-include>
+				</div>
+				<div id="broadcast-text-message" class="tab-pane">
+					<ng-include th:attr="src='\'textBroadcast/'+${group.groupId}+'\''"></ng-include>
+				</div>
 			</div>
 		</div>
-	</div>
+
+		<!--Voice message response tab menu-->
+		<div id="voice-message-response" class="tab-pane active">
+			<ul class="nav nav-tabs bottom-tab-bar" id="all_tabs">
+				<li class="active"><a href="#voice-message-response-inbox"
+					data-toggle="tab">Inbox</a></li>
+				<li><a href="#voice-message-response-saved" data-toggle="tab">Saved</a></li>
+				<li><a href="#voice-message-response-processed"
+					data-toggle="tab">Processed</a></li>
+				<li th:if="${organization.enableFeedbacks}"><a
+					href="#voice-message-response-feedback" data-toggle="tab">Feedback</a></li>
+				<li th:if="${organization.enableResponses}"><a
+					href="#voice-message-response-response" data-toggle="tab">Response</a>
+			</ul>
+			<!--all tab content-->
+			<div class="tab-content">
+				<div id="voice-message-response-inbox" class="tab-pane active">
+					<ng-include
+						th:attr="src='\'voiceMessage/'+ inbox+'/'+ ${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="voice-message-response-saved" class="tab-pane">
+					<ng-include
+						th:attr="src='\'voiceMessage/'+ saved+'/'+ ${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="voice-message-response-processed" class="tab-pane">
+					<ng-include
+						th:attr="src='\'voiceMessage/'+ processed+'/'+ ${group.groupId}+'\''"></ng-include>
+				</div>
+
+				<div id="voice-message-response-feedback" class="tab-pane">
+					<ng-include
+						th:attr="src='\'voiceMessage/'+ feedback+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="voice-message-response-response" class="tab-pane">
+					<ng-include
+						th:attr="src='\'voiceMessage/'+ response+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+			</div>
+		</div>
 
 
-	
 
 
-	<!--Text Message Response tab menu-->
-	<div id="text-message-response" class="tab-pane">
-		<ul class="nav nav-tabs bottom-tab-bar" id="media_tabs">
+
+		<!--Text Message Response tab menu-->
+		<div id="text-message-response" class="tab-pane">
+					<ul class="nav nav-tabs bottom-tab-bar" id="media_tabs">
 <!-- 			TODO Implement this in backend -->
 <!-- 			<li class="active"><a href="#text-message-response-inbox" data-toggle="tab">Inbox</a></li> -->
 <!-- 			<li><a href="#text-message-response-accepted" data-toggle="tab">Accepted</a></li> -->
@@ -98,49 +104,51 @@
 			<li class="active"><a href="#text-message-response-default-message"
 				data-toggle="tab">Inbox</a></li>
 		</ul>
-		<!--media tab content-->
-		<div class="tab-content">
-			<div id="text-message-response-inbox" class="tab-pane">
-				<ng-include
-					th:attr="src='\'textMessage/'+inbox+'/'+${group.groupId}+'\''"></ng-include>
-			</div>
-			<div id="text-message-response-accepted" class="tab-pane">
-				 <ng-include
-					th:attr="src='\'textMessage/'+accepted+'/' +${group.groupId}+'\''"></ng-include> 
-			</div>
-			<div id="text-message-response-rejected" class="tab-pane">
-				 <ng-include
-					th:attr="src='\'textMessage/'+rejected+'/' +${group.groupId}+'\''"></ng-include> 
+			<!--media tab content-->
+			<div class="tab-content">
+				<div id="text-message-response-inbox" class="tab-pane">
+					<ng-include
+						th:attr="src='\'textMessage/'+inbox+'/'+${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="text-message-response-accepted" class="tab-pane">
+					<ng-include
+						th:attr="src='\'textMessage/'+accepted+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="text-message-response-rejected" class="tab-pane">
+					<ng-include
+						th:attr="src='\'textMessage/'+rejected+'/' +${group.groupId}+'\''"></ng-include>
 
-			</div>
-			<div id="text-message-response-response-binary" class="tab-pane">
-				<ng-include
-					th:attr="src='\'textMessage/'+ response+'/' +${group.groupId}+'\''"></ng-include>
-			</div>
-			<div id="text-message-response-feedback" class="tab-pane">
-				<ng-include
-					th:attr="src='\'textMessage/'+ feedback+'/' +${group.groupId}+'\''"></ng-include>
-			</div>
-			<div id="text-message-response-default-message" class="tab-pane active">
-				<ng-include
-					th:attr="src='\'textMessage/'+ default+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="text-message-response-response-binary" class="tab-pane">
+					<ng-include
+						th:attr="src='\'textMessage/'+ response+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="text-message-response-feedback" class="tab-pane">
+					<ng-include
+						th:attr="src='\'textMessage/'+ feedback+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="text-message-response-default-message"
+					class="tab-pane active">
+					<ng-include
+						th:attr="src='\'textMessage/'+ default+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<!--Sent Sms tab menu-->
-	<div id="send-sms" class="tab-pane">
-		<ul class="nav nav-tabs bottom-tab-bar" id="music_tabs">
-			<li class="active"><a href="#send-sms-outgoing-sms" data-toggle="tab">Outgoing
-					SMS</a></li>
-		</ul>
-		<!--music tab content-->
-		<div class="tab-content">
-			<div id="send-sms-outgoing-sms" class="tab-pane active">
-				<ng-include th:attr="src='\'outGoingSmsList/'+${group.groupId}+'\''"></ng-include>
+		<!--Sent Sms tab menu-->
+		<div id="send-sms" class="tab-pane">
+			<ul class="nav nav-tabs bottom-tab-bar" id="music_tabs">
+				<li class="active"><a href="#send-sms-outgoing-sms"
+					data-toggle="tab">Outgoing SMS</a></li>
+			</ul>
+			<!--music tab content-->
+			<div class="tab-content">
+				<div id="send-sms-outgoing-sms" class="tab-pane active">
+					<ng-include
+						th:attr="src='\'outGoingSmsList/'+${group.groupId}+'\''"></ng-include>
+				</div>
 			</div>
 		</div>
-	</div>
 
 	<!--Manage tab menu-->
 	<div id="manage" class="tab-pane">
@@ -170,8 +178,8 @@
 			</div>
 			<div id="manage-settings" class="tab-pane">
 				<ng-include th:attr="src='\'groupSettings/'+${group.groupId}+'\''"></ng-include>
+
 			</div>
 		</div>
 	</div>
-</div>
 </div>

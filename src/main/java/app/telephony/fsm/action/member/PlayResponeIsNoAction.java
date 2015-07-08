@@ -5,6 +5,7 @@ import app.business.services.BroadcastRecipientService;
 import app.business.services.BroadcastScheduleService;
 import app.business.services.GroupService;
 import app.business.services.TelephonyService;
+import app.business.services.UserPhoneNumberService;
 import app.business.services.springcontext.SpringContextBridge;
 import app.entities.Group;
 import app.entities.InboundCall;
@@ -36,8 +37,9 @@ public class PlayResponeIsNoAction implements Action<IVRSession> {
 		String groupID = ruralictSession.getGroupID();
 		int groupId = Integer.parseInt(groupID);
 		GroupService groupService = SpringContextBridge.services().getGroupService();
-		BroadcastRecipientService broadcastRecipient = SpringContextBridge.services().getBroadcastRecipientService();
+		BroadcastRecipientService broadcastRecipientService = SpringContextBridge.services().getBroadcastRecipientService();
 		BroadcastScheduleService broadcastScheduleService = SpringContextBridge.services().getBroadcastScheduleService();
+		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		Group group = groupService.getGroup(groupId);
 		Broadcast broadcast = new VoiceBroadcast();
 		broadcast.setBroadcastId(ruralictSession.getBroadcastID());
@@ -45,8 +47,8 @@ public class PlayResponeIsNoAction implements Action<IVRSession> {
 		
 		if(ruralictSession.isOutbound()){
 		
-			outboundCall.setBroadcastRecipient(broadcastRecipient.getBroadcastRecipientById(broadcast.getBroadcastId()));
-			outboundCall.setBroadcastSchedule(broadcastScheduleService.getBroadcastScheduleById(broadcast.getBroadcastId()));
+			outboundCall.setBroadcastRecipient(broadcastRecipientService.getBroadcastRecipientByUserAndBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser() , broadcast));
+			outboundCall.setBroadcastSchedule(broadcastScheduleService.getAllBroadcastScheduleListByBroadcast(broadcast).get(0));
 			telephonyService.addVoiceMessage(session.getUserNumber(), broadcast, group, mode, type, false, null, null,outboundCall);
 			
 		}
@@ -57,7 +59,7 @@ public class PlayResponeIsNoAction implements Action<IVRSession> {
 
 
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourResponseIsNo_"+ruralictSession.getLanguage()+".wav");
-
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordingDone_"+ruralictSession.getLanguage()+".wav");
 	}
 
 
