@@ -27,10 +27,10 @@ $("#page-content").on("click", "#submitBut", function(e) {
     else if(validatedate(to)==false)	alert("Please select(type) a valid To date in yyyy-mm-dd format");
     else if(to<from)  alert("To date should be ahead of From date!");
     else{
-    	var data={};
-    	data.org = $("#organizationId").val();
-	    data.fromDate=from;
-	    data.toDate=to;
-	    angular.element($('#submitBut')).scope().callReports(data);
+		var data={};
+		data.org = $("#organizationId").val();
+		data.fromDate=from;
+		data.toDate=to;
+		angular.element($('#submitBut')).scope().callReports(data);
     }
 });

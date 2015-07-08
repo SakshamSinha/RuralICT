@@ -111,6 +111,9 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 		alert("Invalid Email Id");
 		return;
 	}
+	else if (userEmail == ""){
+		userEmail = null;
+	}
 	var userAddress = $("#newGroupUserAddress").val();
 	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 	
