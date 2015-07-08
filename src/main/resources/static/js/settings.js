@@ -62,7 +62,8 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 
 	$scope.incomingCheckBoxOptions = {
 			"order" : false,
-			"feedback" : false
+			"feedback" : false,
+			"response" : false
 	};
 
 	$scope.outgoingCheckBoxOptions = {
@@ -93,6 +94,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 		// 'checkbox' elements from incoming call settings
 		$scope.incomingCheckBoxOptions.order = organization.inboundCallAskOrder;
 		$scope.incomingCheckBoxOptions.feedback = organization.inboundCallAskFeedback;
+		$scope.incomingCheckBoxOptions.response = organization.inboundCallAskResponse;
 
 		// 'select' element from welcome message settings
 		$scope.WelcomeMessageLanguageSelect = '0';  // set default option in select as "English"
@@ -189,9 +191,10 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			//make changes in the $resource object
 			$scope.organization.inboundCallAskOrder = $scope.incomingCheckBoxOptions.order;
 			$scope.organization.inboundCallAskFeedback = $scope.incomingCheckBoxOptions.feedback;
-
+			$scope.organization.inboundCallAskResponse = $scope.incomingCheckBoxOptions.response;
+			
 			// check if at least one option is selected
-			if(!$scope.organization.inboundCallAskOrder && !$scope.organization.inboundCallAskFeedback)
+			if(!$scope.organization.inboundCallAskOrder && !$scope.organization.inboundCallAskFeedback && !$scope.organization.inboundCallAskResponse)
 			{
 				alert("You must select at least one option !");
 				return;
