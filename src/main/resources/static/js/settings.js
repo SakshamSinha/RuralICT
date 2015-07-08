@@ -172,7 +172,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 
 			//make changes in the $resource object
 			$scope.organization.enableOrderCancellation  = Boolean(Number($scope.orderCancelSelect));
-			$scope.organization.enableBroadcastEnable = Boolean(Number($scope.broadcastEnableSelect));
+			$scope.organization.enableBroadcasts = Boolean(Number($scope.broadcastEnableSelect));
 
 			//finally update the database
 			$scope.organization.$update({

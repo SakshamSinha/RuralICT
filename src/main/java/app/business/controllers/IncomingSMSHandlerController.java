@@ -1,29 +1,19 @@
 package app.business.controllers;
 
 import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
-
-
-
-
 import java.io.IOException;
 import java.sql.Timestamp;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import app.business.services.TelephonyService;
 import app.business.services.UserPhoneNumberService;
 import app.entities.Group;
-import app.entities.GroupMembership;
 import app.entities.User;
-import app.entities.message.TextMessage;
-
 
 @Controller
 public class IncomingSMSHandlerController {
@@ -61,13 +51,6 @@ public class IncomingSMSHandlerController {
 
 			IVRUtils.sendSMS(caller_id, "You are not registered",null, null);
 		}
-
-	}
-
-
-	@RequestMapping(value="/IncomingSMSHandler", method=RequestMethod.POST)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
 	}
 

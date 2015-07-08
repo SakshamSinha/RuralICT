@@ -26,23 +26,16 @@ public class PlayGroupIDsAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/theGroupIDsAre.wav");
-		GroupMembershipService groupMembershipService = SpringContextBridge.services().getGroupMembershipService();
 		GroupService groupService = SpringContextBridge.services().getGroupService();
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
-		UserPhoneNumberService userPhoneNumberService=SpringContextBridge.services().getUserPhoneNumberService();
 		HashMap<Integer,String> groups = new HashMap<Integer, String>();
-		/*
-		 	List<GroupMembership>  groupMemberships = groupMembershipService.getGroupsByUserAndOrganizationSorted(
-				userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), 
-				organizationService.getOrganizationByIVRS(session.getIvrNumber()));
-		 */
 		List<Group> group = groupService.getGroupListByOrganization(organizationService.getOrganizationByIVRS(session.getIvrNumber()));
 		if(group.isEmpty()){
 			response.addPlayText("You are currently not added to any groups", Configs.Telephony.TTS_SPEED);
 		}
 
 		for(Group groupList : group){
-			
+
 			Integer groupId =groupList.getGroupId();
 			String groupName = groupList.getName();
 			groups.put(groupId, groupName);
@@ -50,7 +43,7 @@ public class PlayGroupIDsAction implements Action<IVRSession> {
 		}
 
 		for(Integer k:groups.keySet()){
-			
+
 			response.addPlayText(k.toString(), Configs.Telephony.TTS_SPEED);	// Group ID
 			response.addPlayText(groups.get(k), Configs.Telephony.TTS_SPEED);   // Group Name
 

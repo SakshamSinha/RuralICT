@@ -69,25 +69,25 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 		Group group = SpringContextBridge.services().getGroupService().getGroup(Integer.parseInt(ruralictSession.getGroupID()));
 		List<GroupMembership> memberships = SpringContextBridge.services().getGroupMembershipService().getGroupMembershipListByGroup(group);
 
-		
-		 //Adding Broadcast schedule 
-        //set the time at which you have actually send the schedule and set the send to all field as well.
-        BroadcastScheduleService broadcastScheduleService = SpringContextBridge.services().getBroadcastScheduleService();
-        BroadcastSchedule broadcastSchedule = new BroadcastSchedule(voicebroadcast, currentTimestamp, false);
-        broadcastScheduleService.addBroadcastSchedule(broadcastSchedule);
-		
+
+		//Adding Broadcast schedule 
+		//set the time at which you have actually send the schedule and set the send to all field as well.
+		BroadcastScheduleService broadcastScheduleService = SpringContextBridge.services().getBroadcastScheduleService();
+		BroadcastSchedule broadcastSchedule = new BroadcastSchedule(voicebroadcast, currentTimestamp, false);
+		broadcastScheduleService.addBroadcastSchedule(broadcastSchedule);
+
 		// Add rows for each broadcast-recipient
 		List<BroadcastRecipient> broadcastRecipients = new ArrayList<BroadcastRecipient>();
 		// Add rows for each broadcast-recipient
 		for(GroupMembership gm:memberships){
 			User user = gm.getUser();
 			BroadcastRecipient broadcastRecipient = new BroadcastRecipient(voicebroadcast,user);
-		
+
 			// Add row for broadcast-recipient
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
 			broadcastRecipients.add(broadcastRecipient);
 		}
-		
+
 		//Different for loop to avoid problem in IVRS
 		for(BroadcastRecipient recipient: broadcastRecipients)
 		{

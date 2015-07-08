@@ -24,8 +24,7 @@ import app.telephony.RuralictSession;
 @Controller
 public class CallHandlerController implements IVRSessionFactory {
 
-	@Autowired
-	OutboundCallService outboundCallService;
+	
 
 	/**
 	 * Create a new IVR session.
@@ -115,14 +114,7 @@ public class CallHandlerController implements IVRSessionFactory {
 	@RequestMapping(value="/CallHandler", method=RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		printParameterMap(request.getParameterMap());
-		String status = request.getParameter("status");
-		String statusDetails = request.getParameter("status_details");
-		RuralictSession ruralictSession = (RuralictSession) request.getSession().getAttribute("telephony");
-		OutboundCall outboundCall = ruralictSession.getOutboundCall();
-		outboundCall.setStatus(status);
-		outboundCall.setStatusDetail(statusDetails);
-		outboundCallService.addOutboundCall(outboundCall);
-		
+				
 	}
 
 }
