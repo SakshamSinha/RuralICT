@@ -42,6 +42,14 @@ public class UserPhoneNumber implements Serializable {
 		this.primary = primary;
 	}
 
+	public int getUserPhoneNumberId() {
+		return this.userPhoneNumberId;
+	}
+
+	public void setUserPhoneNumberId(int userPhoneNumberId) {
+		this.userPhoneNumberId = userPhoneNumberId;
+	}
+
 	public String getPhoneNumber() {
 		return this.phoneNumber;
 	}

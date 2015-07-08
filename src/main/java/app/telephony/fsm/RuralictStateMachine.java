@@ -5,14 +5,12 @@ import in.ac.iitb.ivrs.telephony.base.fsm.EventGuard;
 import in.ac.iitb.ivrs.telephony.base.fsm.IVRStateTransitionMap;
 import in.ac.iitb.ivrs.telephony.base.fsm.guards.OnGotDTMFKey;
 import in.ac.iitb.ivrs.telephony.base.fsm.guards.OnInvalidTriesLessThanN;
-
 import java.util.HashMap;
 import app.telephony.config.Configs;
 import app.telephony.fsm.action.AskBroadcastMediumAction;
 import app.telephony.fsm.action.AskChooseGroupAction;
 import app.telephony.fsm.action.AskConfirmBroadcastMessageAction;
 import app.telephony.fsm.action.AskEnterGroupIDAction;
-import app.telephony.fsm.action.DoDisconnectAction;
 import app.telephony.fsm.action.DoEndAction;
 import app.telephony.fsm.action.DoInvalidInputAction;
 import app.telephony.fsm.action.DoReceivedBroadcastMessageAction;
@@ -25,7 +23,6 @@ import app.telephony.fsm.action.PlayMessageDiscardedAction;
 import app.telephony.fsm.action.PlayRecordedBroadcastMessageAction;
 import app.telephony.fsm.action.PlayThankYouMessageAction;
 import app.telephony.fsm.action.member.AskConfirmFeedbackAction;
-import app.telephony.fsm.action.member.AskConfirmOrderAction;
 import app.telephony.fsm.action.member.AskForLanguageAction;
 import app.telephony.fsm.action.member.AskForLanguageAndOtherAction;
 import app.telephony.fsm.action.member.AskForOrderMenuAction;
@@ -36,7 +33,6 @@ import app.telephony.fsm.action.member.DoAskPlayFeedbackMessagesAction;
 import app.telephony.fsm.action.member.DoStoreFeedbackMessageAction;
 import app.telephony.fsm.action.member.DoStoreOrderMessageAction;
 import app.telephony.fsm.action.member.PlayFeedbackRecordAction;
-import app.telephony.fsm.action.member.PlayInvalidOrderAction;
 import app.telephony.fsm.action.member.PlayOrderCancelAction;
 import app.telephony.fsm.action.member.PlayOrderRecordAction;
 import app.telephony.fsm.action.member.PlayRecordedMessageAction;
@@ -135,7 +131,6 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Action<IVRSession> askForResponseTypeAction = new AskForResponseTypeAction();
 		Action<IVRSession> askForOrderMenuAction = new AskForOrderMenuAction();
 		Action<IVRSession> askForResponseAction = new AskForResponseAction();
-		Action<IVRSession> askConfirmOrderAction = new AskConfirmOrderAction();
 		Action<IVRSession> askOrderIDAction = new AskOrderIDAction();
 		Action<IVRSession> askConfirmFeedbackAction = new AskConfirmFeedbackAction();
 
@@ -143,13 +138,11 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Action<IVRSession> doAskPlayFeedbackMessagesAction = new DoAskPlayFeedbackMessagesAction();
 		Action<IVRSession> doStoreOrderMessageAction = new DoStoreOrderMessageAction();
 		Action<IVRSession> doStoreFeedbackMessageAction = new DoStoreFeedbackMessageAction();
-		Action<IVRSession> doDisconnectAction = new DoDisconnectAction();
 		Action<IVRSession> doEndAction = new DoEndAction();
 
 		// playing a message to the user
 		Action<IVRSession> playFeedbackRecordAction = new PlayFeedbackRecordAction();
 		Action<IVRSession> playOrderRecordAction = new PlayOrderRecordAction();
-		Action<IVRSession> playInvalidOrderAction = new PlayInvalidOrderAction();
 		Action<IVRSession> playThankYouMessageAction = new PlayThankYouMessageAction();
 		Action<IVRSession> playWelcomeMessageAction = new PlayWelcomeMessageAction();
 		Action<IVRSession> playOrderCancelAction = new PlayOrderCancelAction();
@@ -236,10 +229,7 @@ public class RuralictStateMachine extends StateMachine<IVRSession>{
 		Guard<IVRSession, Object> onGotDTMFKey9 = new OnGotDTMFKey(new String[] {"9"}, true);
 		Guard<IVRSession, Object> onDTMFGroupIDExist = new OnGroupIDExist(true);
 		Guard<IVRSession, Object> onDTMFGroupIDNotExist = new OnGroupIDExist(false);
-		Guard<IVRSession, Object> onGotDTMFKeyNot1nor2nor3 = new OnGotDTMFKey(new String[] {"1", "2" ,"3"}, false);
-		Guard<IVRSession, Object> onGotDTMFKeyEmpty = new OnGotDTMFKey(new String[] {""}, true);
 		Guard<IVRSession, Object> onLanguageSelect = new OnLanguageSelect();
-		Guard<IVRSession, Object> onGotDTMFKey3 = new OnGotDTMFKey(new String[] {"3"}, true);
 		Guard<IVRSession, Object> onDTMFOrderIDExist = new OnOrderIDExist(true);
 		Guard<IVRSession, Object> onDTMFOrderIDNotExist = new OnOrderIDExist(false);
 		Guard<IVRSession, Object> onIsPublisher = new OnIsPublisher(true);

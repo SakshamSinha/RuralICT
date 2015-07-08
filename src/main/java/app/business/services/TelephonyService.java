@@ -56,7 +56,7 @@ public class TelephonyService {
 		InboundCall inboundCall = new InboundCall(organization, fromNumber, time, duration);
 		inboundCall = inboundCallService.addInboundCall(inboundCall);
 
-		VoiceMessage voiceMessage=new VoiceMessage(user, broadcast, group, mode, type, response, null, voice, inboundCall);
+		VoiceMessage voiceMessage=new VoiceMessage(user, broadcast, inboundCall.getTime(), group, mode, type, response, null, voice, inboundCall);
 
 		if(type.equals("order")) {
 			Order order = new Order();
@@ -72,17 +72,18 @@ public class TelephonyService {
 	public void addVoiceMessage(String userPhoneNumber, Broadcast broadcast, Group group, String mode, String type, boolean response, String url, InboundCall inboundCall, OutboundCall outboundCall){
 
 		VoiceMessage voiceMessage;
-           	
 		if(url == null){
-			
+
 			if(broadcast == null){
 				inboundCall = inboundCallService.addInboundCall(inboundCall);
+				voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast,inboundCall.getTime(), group, mode, type, response, null, null, inboundCall);
 			}
 			else{
+				 
 				outboundCall = outboundCallService.addOutboundCall(outboundCall);
+				voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, broadcast.getBroadcastedTime(), group, mode, type, response, null, null, inboundCall);
 			}
-			
-			 voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, group, mode, type, response, null, null, inboundCall);
+
 		}
 		else {
 			Voice voice=new Voice(url,false);
@@ -90,13 +91,13 @@ public class TelephonyService {
 
 			if(broadcast == null){
 				inboundCall = inboundCallService.addInboundCall(inboundCall);
+				voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, inboundCall.getTime(), group, mode, type, response, null, voice, inboundCall);
 			}
 			else{
 				outboundCall = outboundCallService.addOutboundCall(outboundCall);
+				voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, broadcast.getBroadcastedTime(), group, mode, type, response, null, voice, inboundCall);
 			}
 
-
-			voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, group, mode, type, response, null, voice, inboundCall);
 
 			if(type.equals("order")) {
 				Order order = new Order();
@@ -114,8 +115,8 @@ public class TelephonyService {
 			}
 
 		}	
-			voiceMessageService.addMessage(voiceMessage);
-		
+		voiceMessageService.addMessage(voiceMessage);
+
 	}
 
 	public void addTextMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response,String textContent, Timestamp textTime){

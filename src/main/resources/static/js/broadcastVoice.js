@@ -121,6 +121,8 @@ $("#page-content").on("click","#place-voice-broadcast-call",function(e){
 	data.broadcastedTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
 	data.publisherId = broadcastVoiceIds.attr("publisherid");
 	data.mode = "web";
+	
+	alert($("#order-check").is(":checked"));
 	if($("#order-check").is(":checked"))
 	{
 			data.askOrder=1;
