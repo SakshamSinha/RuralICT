@@ -101,17 +101,14 @@ $("#page-content").on("click","#unselect-all",function(e){
 });
 
 $("#page-content").on("click","#broadcast-message-file",function(e){
-	console.log("Choose file button clicked");
+	//In order to set the value of file as null
 	this.value = null;
 });
 
 $("#page-content").on("change","#broadcast-message-file",function(e){
-	console.log("Something is happening");
-	//$(this).val();
-	
-	var urlString = $(this).val();
-	var filename = urlString.slice(12);
-	console.log(filename);
+	//get the filename set by the fileModel angular directive
+	var filename = angular.element($('#broadcast-voice-ids')).scope().myFile.name;
+	//set the filename to be seen in UI
 	$("#broadcast-file-url").text(filename);
 });
 
@@ -138,7 +135,6 @@ $("#page-content").on("click","#place-voice-broadcast-call",function(e){
 	data.publisherId = broadcastVoiceIds.attr("publisherid");
 	data.mode = "web";
 	
-	alert($("#order-check").is(":checked"));
 	if($("#order-check").is(":checked"))
 	{
 			data.askOrder=1;

@@ -157,7 +157,6 @@ public class BroadcastVoiceController {
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
 		}
 		
-		
 		/*
 		 * TODO Updation of time and call to each Broadcast Recipient needs to be done from separate thread 
 		*/
