@@ -20,7 +20,6 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		$scope.broadcast = data;
 		//TODO remove this
 		console.log('save broadcast has been called');
-		console.log($scope.broadcast.userIds);
 		if($scope.broadcast.userIds=='')
 		{
 			alert('No user selected. Select atleast one user.')
@@ -53,7 +52,6 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 			var formData=new FormData();
 			
 			formData.append("file",$scope.myFile); //myFile.files[0] will take the file and append in formData since the name is myFile.
-			console.log($scope.myFile);
 			$http({
 				method: 'POST',
 				url: API_ADDR + 'web/'+$scope.latestBroadcastableVoiceIds.abbr+'/upload', // The URL to Post.
