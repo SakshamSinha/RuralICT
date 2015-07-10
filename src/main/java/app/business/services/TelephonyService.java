@@ -80,7 +80,7 @@ public class TelephonyService {
 			}
 			else{
 				 
-				outboundCall = outboundCallService.addOutboundCall(outboundCall);
+			//	outboundCall = outboundCallService.addOutboundCall(outboundCall);
 				voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, broadcast.getBroadcastedTime(), group, mode, type, response, null, null, inboundCall);
 			}
 

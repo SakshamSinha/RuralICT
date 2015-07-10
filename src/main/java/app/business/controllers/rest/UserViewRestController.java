@@ -22,29 +22,29 @@ import app.entities.OrganizationMembership;
 @RestController
 @RequestMapping("/api")
 public class UserViewRestController {
-	
+
 	@Autowired
 	UserViewService userViewService;
-	
+
 	@Autowired
 	GroupService groupService;
-	
+
 	@Autowired
 	GroupMembershipService groupMembershipService;
-	
+
 	@Autowired
 	OrganizationMembershipService organizationMembershipService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@RequestMapping(value="/userViews/add/{groupId}", method=RequestMethod.POST)
 	@Transactional
 	public @ResponseBody boolean addUserView(@RequestBody UserView userView, @PathVariable int groupId) {
 		try {
 			Group group = groupService.getGroup(groupId);
 			userView = userViewService.addUserView(userView);
-			
+			System.out.println("Username :" + userView.getUser().getName() + "group" + group.getName());
 			groupMembershipService.addGroupMembership(new GroupMembership(group, userView.getUser()));
 			organizationMembershipService.addOrganizationMembership(new OrganizationMembership(group.getOrganization(), userView.getUser(), false, false));
 		}
@@ -54,7 +54,7 @@ public class UserViewRestController {
 		}
 		return true;
 	}
-	
+
 	@RequestMapping(value="/userViews/delete/{userId}", method=RequestMethod.DELETE)
 	@Transactional
 	public @ResponseBody boolean removeUserView(@PathVariable int userId) {

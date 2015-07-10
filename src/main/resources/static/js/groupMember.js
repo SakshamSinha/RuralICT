@@ -8,12 +8,9 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 		
 		$scope.groupId = $("#groupId").val();
 		$scope.status = AddUserView.save({groupId: $scope.groupId}, $scope.userView, function(userObject) {
-				if(!status){
-					alert("Error Creating the Member.");
-				}
-				else{
 					$scope.reload();
-				}
+		}, function(error){
+				alert("Error creating Member")
 		}); 
 	};
 	
@@ -116,16 +113,16 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	var userAddress = $("#newGroupUserAddress").val();
 	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 	
-	if(!validatephonenumber(userPrimaryPhoneNumber)){
-		alert("Enter a valid phone numbers")
-		return;
-	}
 	if(userName == ""){
 		alert("Enter User Name");
 		return;
 	}
 	
-	userPrimaryPhoneNumber = "91" + userPrimaryPhoneNumber;
+	userPrimaryPhoneNumber = normalizePhoneNumber(userPrimaryPhoneNumber);
+	if(userPrimaryPhoneNumber == false){
+		alert("Invalid phone number.");
+		return;
+	}
 	
 	/* Create and add new row element for user */
 	

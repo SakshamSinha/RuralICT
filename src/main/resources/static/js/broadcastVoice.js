@@ -122,7 +122,6 @@ $("#page-content").on("click","#place-voice-broadcast-call",function(e){
 	data.publisherId = broadcastVoiceIds.attr("publisherid");
 	data.mode = "web";
 	
-	alert($("#order-check").is(":checked"));
 	if($("#order-check").is(":checked"))
 	{
 			data.askOrder=1;

@@ -104,7 +104,6 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 			}
 		}
 
-		response.addHangup();
 	}
 
 }

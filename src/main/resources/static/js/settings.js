@@ -290,15 +290,26 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			profileSettingDetails.phone = $.trim($('#phone').val());
 			profileSettingDetails.city =  $.trim($('#city').val());
 			profileSettingDetails.password =  $.trim($('#re-new-password').val());
-			$http.post( API_ADDR + 'web/' + abbr + '/updateUser', profileSettingDetails).
-			success(function(data, status, headers, config) {
-				alert("Your Settings have been saved.")
+			if(normalizePhoneNumber(profileSettingDetails.phone) == false)
+			{
+				alert("Please enter a valid phone number !");
+			}
+			else
+			{
+
+				// Normalize the phone number to database format
+				profileSettingDetails.phone = normalizePhoneNumber(profileSettingDetails.phone);
+
+				$http.post( API_ADDR + 'web/' + abbr + '/updateUser', profileSettingDetails).
+				success(function(data, status, headers, config) {
+					alert("Your Settings have been saved.")
 
 
-			}).
-			error(function(data, status, headers, config) {
-				alert("There was some error in response from the remote server.");
-			});
+				}).
+				error(function(data, status, headers, config) {
+					alert("There was some error in response from the remote server.");
+				});
+			}
 		}
 		else{
 			alert("Password is not same");

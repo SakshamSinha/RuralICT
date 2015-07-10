@@ -31,6 +31,8 @@ public class PlayThankYouMessageAction implements Action<IVRSession> {
 		else {
 			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/thankYou_"+language+".wav");
 		}
+		
+		response.addHangup();
 
 	}
 }

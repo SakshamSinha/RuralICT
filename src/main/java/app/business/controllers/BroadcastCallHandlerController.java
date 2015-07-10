@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import app.business.services.OutboundCallService;
+import app.entities.BroadcastRecipient;
+import app.entities.BroadcastSchedule;
 import app.entities.OutboundCall;
 import app.telephony.RuralictSession;
 
@@ -127,11 +129,13 @@ public class BroadcastCallHandlerController  implements IVRSessionFactory {
 		String status = request.getParameter("status");
 		String statusDetails = request.getParameter("status_details");
 		RuralictSession ruralictSession = (RuralictSession) request.getSession().getAttribute("telephony");
-		OutboundCall outboundCall = ruralictSession.getOutboundCall();
+	    OutboundCall outboundCall = ruralictSession.getOutboundCall();
 		outboundCall.setStatus(status);
 		outboundCall.setStatusDetail(statusDetails);
 		outboundCallService.addOutboundCall(outboundCall);
+		
 	}
+
 
 }
 
