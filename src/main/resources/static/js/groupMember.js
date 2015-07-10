@@ -10,7 +10,9 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 		$scope.status = AddUserView.save({groupId: $scope.groupId}, $scope.userView, function(userObject) {
 					$scope.reload();
 		}, function(error){
+
 				alert("Error creating Member")
+
 		}); 
 	};
 	
@@ -113,6 +115,7 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	var userAddress = $("#newGroupUserAddress").val();
 	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 	
+
 	if(userName == ""){
 		alert("Enter User Name");
 		return;
@@ -123,7 +126,7 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 		alert("Invalid phone number.");
 		return;
 	}
-	
+
 	/* Create and add new row element for user */
 	
 	/* Create order item element and push it in the queue */
@@ -201,13 +204,12 @@ $("#page-content").on("click", "#add-group-user-phone-number", function (e) {
 	var id = $(this).val();
 	var phoneNumber = $("#groupUserNewPhoneNumber").val();
 	console.log(id);
-	
-	if(!validatephonenumber(phoneNumber)){
-		alert("Enter a valid phone numbers")
+
+	phoneNumber = normalizePhoneNumber(phoneNumber);
+	if(phoneNumber == false){
+		alert("Invalid phone number.");
 		return;
 	}
-	
-	phoneNumber = "91" + phoneNumber;
 	
 	data = {};
 	data.phoneNumber = phoneNumber;

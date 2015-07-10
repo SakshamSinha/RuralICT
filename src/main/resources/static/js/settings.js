@@ -192,7 +192,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			$scope.organization.inboundCallAskOrder = $scope.incomingCheckBoxOptions.order;
 			$scope.organization.inboundCallAskFeedback = $scope.incomingCheckBoxOptions.feedback;
 			$scope.organization.inboundCallAskResponse = $scope.incomingCheckBoxOptions.response;
-
+			
 			// check if at least one option is selected
 			if(!$scope.organization.inboundCallAskOrder && !$scope.organization.inboundCallAskFeedback && !$scope.organization.inboundCallAskResponse)
 			{
@@ -350,8 +350,8 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 $("#page-content").on("change","#select-welcome-message-language",function(e){
 
 	// Get the scope of the angular controller so that we can access required variables from it
-	myScope = angular.element('#settings-page').scope();
-
+	myScope = angular.element('#settings-page-ids').scope();
+	
 	// Depending on value of select element, update the audio player and download link
 	if(this.value === '1')
 	{

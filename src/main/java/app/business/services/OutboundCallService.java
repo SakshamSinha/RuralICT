@@ -23,7 +23,7 @@ public class OutboundCallService {
 	@Autowired
 	BroadcastScheduleRepository	broadcastScheduleRepository;
 	
-	public List<OutboundCall> getOutboundCallList(Organization organization){		
+	public List<OutboundCall> getAllOutboundCallList(){		
 		return outboundCallRepository.findAll();
 	}
 	
