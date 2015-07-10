@@ -117,4 +117,13 @@ public class VoiceMessageListController {
 		model.addAttribute("message",voiceSavedMessageList);
 		return "voiceSavedMessage";
 	}
+	
+	@RequestMapping(value="/voiceMessage/cancelled/{groupId}")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public String voiceCancelledMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
+		List<Message> voiceCancelledMessageList=voiceMessageService.getCancelledVoiceMessageList(groupService.getGroup(groupId));
+		model.addAttribute("message",voiceCancelledMessageList);
+		return "voiceCancelledMessage";
+	}
 }
