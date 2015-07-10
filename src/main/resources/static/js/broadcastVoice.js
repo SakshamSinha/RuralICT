@@ -20,7 +20,6 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		$scope.broadcast = data;
 		//TODO remove this
 		console.log('save broadcast has been called');
-		console.log($scope.broadcast.userIds);
 		if($scope.broadcast.userIds=='')
 		{
 			alert('No user selected. Select atleast one user.')
@@ -97,6 +96,18 @@ $("#page-content").on("click","#unselect-all",function(e){
 	$("#user-list input[type=checkbox]").each(function(){
 		$(this).prop("checked",false);
 	});
+});
+
+$("#page-content").on("click","#broadcast-message-file",function(e){
+	//In order to set the value of file as null
+	this.value = null;
+});
+
+$("#page-content").on("change","#broadcast-message-file",function(e){
+	//get the filename set by the fileModel angular directive
+	var filename = angular.element($('#broadcast-voice-ids')).scope().myFile.name;
+	//set the filename to be seen in UI
+	$("#broadcast-file-url").text(filename);
 });
 
 $("#page-content").on("click","#voice-upload",function(e){
