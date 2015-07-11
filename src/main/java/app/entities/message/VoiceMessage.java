@@ -1,5 +1,7 @@
 package app.entities.message;
 
+import java.sql.Timestamp;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -34,11 +36,12 @@ public class VoiceMessage extends Message {
 		
 	}
 
-	public VoiceMessage(User user, Broadcast broadcast, Group group, String mode, String type, boolean response, Order order,
+	public VoiceMessage(User user, Broadcast broadcast, Timestamp time, Group group, String mode, String type, boolean response, Order order,
 			Voice voice, InboundCall inboundCall) {
 
-		super(user, broadcast, inboundCall.getTime(), group, mode, "voice", type, response, order);
+		super(user, broadcast, time, group, mode, "voice", type, response, order);
 		this.voice = voice;
+		this.inboundCall = inboundCall;
 	}
 
 	public Voice getVoice() {

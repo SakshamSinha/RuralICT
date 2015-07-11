@@ -57,7 +57,7 @@
 								<li class="divider"></li>
 								<li><a href="#/orderSummaryGroups">Group wise</a></li>
 							</ul></li>
-						<li><a href="#/users">Manage Users</a></li>
+						<li><a href="#/users">Manage Members</a></li>
 						<li><a href="#/settings">Settings</a></li>
 					</ul>
 				</div>
@@ -177,6 +177,46 @@
   <!-- /.modal-dialog --> 
 </div>
 	</div>
+			<div class="modal fade" id="group-add-failed-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddFailed" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="HeadingAddFailed">Failed to add group</h4>
+      </div>
+      <div class="modal-body">
+	    <b>Technical details:</b><br/>
+        <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>{{failure}}</div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> OK</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+		
+		
+		<div class="modal fade" id="group-add-success-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddSuccess" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="HeadingAddSuccess">Group added</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success"><span class="glyphicon glyphicon-success-sign"></span>Group <b>{{groupName}}</b> successfully added!</div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-success" data-dismiss="modal"><i class="icon-white icon-remove"></i> OK</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+	</div>
 
 	<script th:src="@{/static/js/libs/jquery.js}"></script>
 	<script th:src="@{/static/js/libs/bootstrap.min.js}"></script>
@@ -198,13 +238,14 @@
 	<script th:src="@{/static/js/orderSummaryGroups.js}"></script>
 	<script th:src="@{/static/js/groupSettings.js}"></script>
 	<script th:src="@{/static/js/groupOps.js}"></script>
-	<script th:src="@{/static/js/users.js}"></script>
+	<script th:src="@{/static/js/manageMembers.js}"></script>
 	<script th:src="@{/static/js/settings.js}"></script>
 	<script th:src="@{/static/js/broadcastVoice.js}"></script>
 	<script th:src="@{/static/js/productQtyList.js}"></script>
 	<script th:src="@{/static/js/textBroadcast.js}"></script>
 	<script th:src="@{/static/js/broadcastVoiceUrl.js}"></script>
 	<script th:src="@{/static/js/broadcastDefaultSettings.js}"></script>
-		
+	<script th:src="@{/static/js/manageInboundCalls.js}"></script>	
+	<script th:src="@{/static/js/manageOutboundCalls.js}"></script>
 </body>
 </html>

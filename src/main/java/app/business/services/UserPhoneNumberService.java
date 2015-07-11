@@ -44,7 +44,8 @@ public class UserPhoneNumberService {
 	 * add a phone number to database
 	 */
 	public UserPhoneNumber addUserPhoneNumber(UserPhoneNumber userPhoneNumber) {
-			return userPhoneNumberRepository.save(userPhoneNumber);
+		
+		return userPhoneNumberRepository.save(userPhoneNumber);
 	}
 	
 	/*
@@ -71,7 +72,23 @@ public class UserPhoneNumberService {
 	 */
 	public UserPhoneNumber getUserPhoneNumber(String phoneNumber) {
 		
-		return userPhoneNumberRepository.findOne(phoneNumber);
+		return userPhoneNumberRepository.findByPhoneNumber(phoneNumber);
+	}
+	
+	/*
+	 * Check if a phone number is present in the database or not
+	 */
+	public boolean findPreExistingPhoneNumber(String phoneNumber) {
+		
+		UserPhoneNumber preExistingNumber = userPhoneNumberRepository.findByPhoneNumber(phoneNumber);
+		
+		if(preExistingNumber == null)
+		{
+			return true;
+		}
+		else
+			return false;
+		
 	}
 	
 	@Transactional

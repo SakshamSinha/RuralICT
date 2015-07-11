@@ -17,9 +17,12 @@ public class UserPhoneNumber implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="user_phone_number_id")
+	private int userPhoneNumberId;
+	
 	@Column(name="phone_number")
 	private String phoneNumber;
-
 
 	@Type(type="org.hibernate.type.NumericBooleanType")
 	@Column(name="is_primary")
@@ -37,6 +40,14 @@ public class UserPhoneNumber implements Serializable {
 		this.user = user;
 		this.phoneNumber = phoneNumber;
 		this.primary = primary;
+	}
+
+	public int getUserPhoneNumberId() {
+		return this.userPhoneNumberId;
+	}
+
+	public void setUserPhoneNumberId(int userPhoneNumberId) {
+		this.userPhoneNumberId = userPhoneNumberId;
 	}
 
 	public String getPhoneNumber() {

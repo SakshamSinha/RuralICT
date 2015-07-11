@@ -63,7 +63,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 					if (users != null && !users.isEmpty()) {
 						user = users.get(0);
 					} else {
-						UserPhoneNumber number = userPhoneNumberRepository.findOne(username);
+						UserPhoneNumber number = userPhoneNumberRepository.findByPhoneNumber(username);
 						if (number != null) {
 							user = number.getUser();
 						}
@@ -125,7 +125,7 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 					           // I couldn't figure out how to do it only for the REST part. If someone figures
 					           // this out, please do it.  --Ankit
 				.authorizeRequests() 
-					.antMatchers("/static/**", "/CallHandler","/OutboundCallHandler","/BroadcastCallHandler").permitAll()
+					.antMatchers("/static/**", "/CallHandler","/OutboundCallHandler","/BroadcastCallHandler","/IncomingSMSHandler").permitAll()
 					.anyRequest().authenticated()
 					.and()
 				.formLogin()

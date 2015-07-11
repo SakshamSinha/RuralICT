@@ -67,21 +67,28 @@ public class ManageUsersRestController {
 
 		for(OrganizationMembership membership : membershipList)
 		{
+
 			User user = membership.getUser();
 
-			// Get required attributes for each user
-			int manageUserID = user.getUserId();
-			String name = user.getName();
-			String email = user.getEmail();
-			String phone = userPhoneNumberService.getUserPrimaryPhoneNumber(user).getPhoneNumber();
-			String role  = userService.getUserRole(user, organization);
-			String address = user.getAddress();
+			try
+			{
+				// Get required attributes for each user
+				int manageUserID = user.getUserId();
+				String name = user.getName();
+				String email = user.getEmail();
+				String phone = userPhoneNumberService.getUserPrimaryPhoneNumber(user).getPhoneNumber();
+				String role  = userService.getUserRole(user, organization);
+				String address = user.getAddress();
 
-			// Create the UserManage Object and add it to the list
-			UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address);
-			userrows.add(userrow);
+				// Create the UserManage Object and add it to the list
+				UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address);
+				userrows.add(userrow);
+			}
+			catch(NullPointerException e)
+			{
+				System.out.println("User name not having his phone number is: " + user.getName() + " having userID: " + user.getUserId());
+			}
 		}
-
 		return userrows;
 	}
 
@@ -104,17 +111,26 @@ public class ManageUsersRestController {
 		boolean isAdmin = false;
 		boolean isPublisher = false;
 
+		// Find if the number is already present in the database
+		// If present report it to the frontend
+		if(!userPhoneNumberService.findPreExistingPhoneNumber(phone))
+		{
+			return null;
+		}
+
 		// Add the new User to database
 		User user = new User(name, address, "en", "en", email);
 		userService.addUser(user);
+
+		UserPhoneNumber primaryPhoneNumber = new UserPhoneNumber(user, phone, true);
+		userPhoneNumberService.addUserPhoneNumber(primaryPhoneNumber);
 
 		// Add the Organization Membership for the user in the Database
 		OrganizationMembership membership = new OrganizationMembership(organization, user, isAdmin, isPublisher);
 		organizationMembershipService.addOrganizationMembership(membership);
 
-		// Add the Primary Phone number for the user in the database
-		UserPhoneNumber primaryPhoneNumber = new UserPhoneNumber(user, phone, true);
-		userPhoneNumberService.addUserPhoneNumber(primaryPhoneNumber);
+		// By Default Add the new user to parent group
+		groupMembershipService.addParentGroupMembership(organization, user);
 
 		// Create the UserManage Object
 		int manageUserID = user.getUserId();
@@ -183,10 +199,10 @@ public class ManageUsersRestController {
 	}
 
 	// Method to add a new user according to the details entered in the Modal Dialog Box
-	@RequestMapping(value="/editUser", method = RequestMethod.POST)
+	@RequestMapping(value="/editUserWithPhoneNumber", method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
-	public void editUser(@PathVariable String org, @RequestBody Map<String,String> currentUserDetails) {
+	public String editUserWithPhoneNumber(@PathVariable String org, @RequestBody Map<String,String> currentUserDetails) {
 
 		// Get the input parameters from AngularJS
 		int manageUserId = Integer.parseInt(currentUserDetails.get("userid"));
@@ -194,19 +210,51 @@ public class ManageUsersRestController {
 		String email = currentUserDetails.get("email");
 		String phone = currentUserDetails.get("phone");
 		String address = currentUserDetails.get("address");
-
+		
+		// Find if the number is already present in the database 
+		// If present report it to the Frontend
+		if(!userPhoneNumberService.findPreExistingPhoneNumber(phone))
+		{
+			return "-1";
+		}
+		
 		// Add the new User to database
 		User user = userService.getUser(manageUserId);
 
+		// Update the attributes of the user
 		user.setName(name);
 		user.setEmail(email);
 		user.setAddress(address);
 		userService.addUser(user);
+		
+		// Update the primary phone number of the user
+		UserPhoneNumber userPrimaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+		userPrimaryPhoneNumber.setPhoneNumber(phone);
+		userPhoneNumberService.addUserPhoneNumber(userPrimaryPhoneNumber);
+		
+		return phone;
+	}
+	
+	// Method to edit a exisitng user only if his phone number is not altered
+	@RequestMapping(value="/editUserOnly", method = RequestMethod.POST)
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	public void editUserOnly(@PathVariable String org, @RequestBody Map<String,String> currentUserDetails) {
 
-		// Add the Primary Phone number for the user in the database
-		UserPhoneNumber primaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
-		primaryPhoneNumber.setPhoneNumber(phone);
-		userPhoneNumberService.addUserPhoneNumber(primaryPhoneNumber);
+		// Get the input parameters from AngularJS
+		int manageUserId = Integer.parseInt(currentUserDetails.get("userid"));
+		String name = currentUserDetails.get("name");
+		String email = currentUserDetails.get("email");
+		String address = currentUserDetails.get("address");
+		
+		// Add the new User to database
+		User user = userService.getUser(manageUserId);
+
+		// Update the attributes of the user
+		user.setName(name);
+		user.setEmail(email);
+		user.setAddress(address);
+		userService.addUser(user);
 	}
 
 	// Method to get user details in a Modal Dialog Box

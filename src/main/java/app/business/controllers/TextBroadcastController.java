@@ -64,9 +64,9 @@ public class TextBroadcastController {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		User user = userService.getCurrentUser();
 		
-		List<GroupMembership> groupMembershipList = groupMembershipService.getGroupMembershipListByGroup(group);
-		List<User> users = new ArrayList<User>();
+		List<GroupMembership> groupMembershipList = new ArrayList<GroupMembership>(groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group));
 		
+		List<User> users = new ArrayList<User>();
 		for(GroupMembership groupMembership : groupMembershipList) {
 			users.add(groupMembership.getUser());
 		}

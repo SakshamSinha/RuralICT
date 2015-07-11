@@ -25,6 +25,7 @@ import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
 import app.business.services.LatestRecordedVoiceService;
 import app.business.services.OrganizationService;
+import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
@@ -54,6 +55,8 @@ public class BroadcastVoiceController {
 	GroupMembershipService groupMembershipService;
 	@Autowired
 	UserService userService;
+	@Autowired
+	UserPhoneNumberService userPhoneNumberService;
 	@Autowired
 	VoiceService voiceService;
 	@Autowired
@@ -122,7 +125,7 @@ public class BroadcastVoiceController {
 		String mode = body.get("mode");
 		//Converting string to integer and converting to boolean
 		boolean askOrder = (Integer.parseInt(body.get("askOrder")) !=0);
-		boolean askFeedback = (Integer.parseInt(body.get("askFeedback")) !=0);;
+		boolean askFeedback = (Integer.parseInt(body.get("askFeedback")) !=0);
 		boolean askResponse = (Integer.parseInt(body.get("askResponse")) !=0);
 		
 		String broadcastedTime = body.get("broadcastedTime");
@@ -154,7 +157,6 @@ public class BroadcastVoiceController {
 			broadcastRecipientService.addBroadcastRecipient(broadcastRecipient);
 		}
 		
-		
 		/*
 		 * TODO Updation of time and call to each Broadcast Recipient needs to be done from separate thread 
 		*/
@@ -172,16 +174,21 @@ public class BroadcastVoiceController {
 		{
 			User user=recipient.getUser();
 			System.out.println("Broadcast Recipient:"+user.getName());
-			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
-			for(UserPhoneNumber no:phoneNumbers)
-			{	
-				//Outbound call has to be appended with a zero after removing 91 
-				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
-				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL));
-				{
-					break;
-				}
-			}
+			//TODO use the user's primary phone number.
+			UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+			String phoneNumber = "0" + userPhoneNumber.getPhoneNumber().substring(2);
+			IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL);
+			
+//			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
+//			for(UserPhoneNumber no:phoneNumbers)
+//			{	
+//				//Outbound call has to be appended with a zero after removing 91 
+//				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
+//				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL));
+//				{
+//					break;
+//				}
+//			}
 		}
 	    
 	}
