@@ -6,71 +6,59 @@
     <script th:src="@{/static/js/recordFile.js}"></script>
     
 	<div class="row-fluid">	
-		<div class="span3"></div>
-		<div th:if="${broadcast==null}" style="text-align:center;" class="span6">
+		<div th:if="${broadcast==null}" style="text-align:left;" class="span8">
 			<h4>No recording for <span th:text="${organization.name}">Organization</span> till now.</h4>
 			<br>
 		</div>
-		<div th:unless="${broadcast==null}"  style="text-align:center;" class="span6">
+		<div th:unless="${broadcast==null}"  style="text-align:left;" class="span8">
 	    	<h4 id = "latest-voice" th:attr="voiceid=${broadcast.voice.voiceId}">Latest Recorded Audio</h4>
 	      	<br>
-	      	<audio th:attr="src=${broadcast.voice.url}" controls style="text-align:center;">
+	      	<audio th:attr="src=${broadcast.voice.url}" controls style="text-align:left;">
 			</audio>
+			<a class="btn btn-info btn-small" role="button" th:attr="href=${broadcast.voice.url}" style="text-align:right;margin-bottom:25px;margin-left:10px" download>
+				<i class="icon-white icon-download-alt"></i> Download Audio
+			</a>
 		</div>
-		<div class="span3"></div>
+		<div class="span4"></div>
 	</div>
-	<br>
-	<br>
-	<div class="row">
-		<div class="span3"></div>
+	<div class="row-fluid">
 		<div class="span6">
-			<table class="table" style="text-align:center;">
-				<thead>
-					<tr>
-						<th></th>
-						<th></th>
-					</tr>
-				</thead>	
-				<tbody>
-					<tr>
-						<td style="text-align:left;">
-							<a class="btn btn-info" role="button" th:attr="href=${broadcast.voice.url}" download>
-								<i class="icon-white icon-download-alt"></i> Download Audio
-							</a>
-						</td>
-						<td style="text-align:right;">
-					      	<button class="btn btn-primary" onclick="recordFile.init()" id="voice-record" data-toggle="modal" data-title="Record" data-target="#record-modal" align="center">
-								<i class="icon-headphones icon-white"></i> Record New Audio
-							</button>
-						</td>
-					</tr>
-			
-					<tr>		
-						<td style="text-align:left;">
-							<!-- TODO have to change styling of this button -->
-							<input class= "display-none" type="file" size = "4" name="myFile" file-model="myFile" id="welcome_message"/>
-						</td>
-						<td style="text-align:right;"> 
-							<button type="submit" class="btn btn-inverse" id="voice-upload">
-								<i class="icon-upload icon-white"></i> Upload Audio
-							</button>
-						</td>
-					</tr>
-		     	
-		     		<tr>
-		     			<td colspan="2" style="text-align:center;">
-							<button class="btn btn-success" id="voice-broadcast" data-toggle="modal" data-title="Broadcast" data-target="#broadcast-modal" align="center">
-								<i class="icon-bullhorn icon-white"></i> Broadcast
-							</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div style="text-align:left;">
+		      	<button class="btn btn-info btn-small" onclick="recordFile.init()" id="voice-record" data-toggle="modal" data-title="Record" data-target="#record-modal" align="center">
+					<i class="icon-headphones icon-white"></i> Record New Audio
+				</button>
+			</div>
 		</div>
-		<div class="span3"></div>
+		<div class="span6"></div>
+	</div>
+			
+	<div class="row-fluid">
+		<div class="span8" style="text-align:left;margin-top:15px;">		
+			<div id="broadcast-message">
+				<!-- TODO have to change styling of this button -->
+				<label class="custom-file-upload btn btn-info btn-small" role="button">
+					<input id="broadcast-message-file" type="file" size = "4" name="myFile" file-model="myFile" />
+					<i class="icon-folder-open icon-white"></i> Choose Audio
+				</label>
+				<span id="broadcast-file-url"></span>
+				<button type="submit" class="btn btn-info btn-small" id="voice-upload" style="margin-left:10px;">
+					<i class="icon-upload icon-white"></i> Upload Chosen Audio
+				</button>
+			</div>
+		</div>
+		<div class="span4"></div>
+	</div>
+		     	
+	<div class="row-fluid" style="margin-top:15px";>
+		<div class="span6" style="text-align:left;">
+			<button class="btn btn-success" id="voice-broadcast" data-toggle="modal" data-title="Broadcast" data-target="#broadcast-modal" align="center">
+				<i class="icon-bullhorn icon-white"></i> Broadcast
+			</button>
+		</div>
+		<div class="span6"></div>
 	</div>
 </div>
-
+			
 <div class="modal fade" id="record-modal" tabindex="-1" role="dialog" aria-hidden="true">
    	<div class="modal-dialog">
 		<div class="modal-header">
@@ -124,7 +112,7 @@
 						</div>
 						<div id="options-column3" class="span4">
 								<label>
-									<input id="response-check"type="checkbox" name="response" value="3" th:checked="${broadcastDefaultSettings.askResponse}"/>  Response
+									<input id="response-check" type="checkbox" name="response" value="3" th:checked="${broadcastDefaultSettings.askResponse}"/>  Response
 								</label>
 						</div>	
 					</div>            	

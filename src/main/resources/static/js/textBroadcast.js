@@ -65,3 +65,15 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 		
 	};
 });
+
+$("#page-content").on("click","#text-broadcast-select-all",function(e){
+	$("#text-broadcast-user-list input[type=checkbox]").each(function(){
+		$(this).prop("checked",true);
+	});
+});
+
+$("#page-content").on("click","#text-broadcast-unselect-all",function(e){
+	$("#text-broadcast-user-list input[type=checkbox]").each(function(){
+		$(this).prop("checked",false);
+	});
+});
