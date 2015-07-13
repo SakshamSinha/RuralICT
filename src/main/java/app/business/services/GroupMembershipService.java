@@ -48,12 +48,12 @@ public class GroupMembershipService {
 		/**
 		 * To ensure that no null groups are added once parent group is added
 		 */
-		if(groupMembership.getGroup().getParentGroup() != null) {
+		//if(groupMembership.getGroup().getParentGroup() != null) {
 			/**
 			 * This mimicks the event handler for groupMemberships
 			 */
-			this.addGroupMembership(new GroupMembership(groupMembership.getGroup().getParentGroup(), groupMembership.getUser()));
-		}
+			//this.addGroupMembership(new GroupMembership(groupMembership.getGroup().getParentGroup(), groupMembership.getUser()));
+		//}
 	}
 	
 	public void addParentGroupMembership(Organization organization, User user){
