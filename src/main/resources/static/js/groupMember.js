@@ -11,7 +11,7 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 					$scope.reload();
 		}, function(error){
 			
-			alert("Error creating Member")
+			createAlert("Error Adding Member","Member could not be added.")
 		}); 
 	};
 	
@@ -32,10 +32,10 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 		$scope.groupMembership.user = data.user;
 		AddGroupMembership.save($scope.groupMembership,function(success){
 			
-			alert("Group for User has been updated.")
+			createAlert("User Group Updated","Group for User has been updated.")
 		}, function(error){
 			if(error.status == "409")
-			alert("User already exists in this group.");
+				createAlert("Error Updating User Group","User already exists in this group.");
 		});
 	};
 	
@@ -72,13 +72,13 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 				console.log($scope.groupMembership);
 				$scope.groupMembershipId = getId(groupMembership["_embedded"]["groupMemberships"][0]);
 				RemoveGroupMembership.update({id: $scope.groupMembershipId}, function(success){
-					alert("Group for User has been updated.");
+					createAlert("User Group Updated","Group for User has been updated.");
 				});	
 			});
 			console.log($scope.groupMembership);
 		}, function(error){
 			if(error.status == "409")
-			alert("User already exists in this group.");
+				createAlert("Error Updating User Group","User already exists in this group.");
 			return error;
 		});
 	};
@@ -89,10 +89,10 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 		$scope.userPhoneNumber.phoneNumber = data.phoneNumber;
 		$scope.userPhoneNumber.primary = data.primary;
 		AddUserPhoneNumber.save($scope.userPhoneNumber,function(success){
-			alert("Phone Number has been added.");
+			createAlert("Phone Number Added","Phone Number has been added.");
 		}, function(error){
 			if(error.status == "409")
-			alert("Duplicate Phone Number");
+				createAlert("Error Adding Phone Number","Duplicate Phone Number");
 		});
 	};
 	
@@ -108,7 +108,7 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	var userName = $.trim($("#newGroupUserName").val());
 	var userEmail = $.trim($("#newGroupUserEmail").val());
 	if(userEmail.indexOf("@")==-1 && userEmail != ""){
-		alert("Invalid Email Id");
+		createAlert("Invalid Input","Invalid Email Id");
 		return;
 	}
 	else if (userEmail == ""){
@@ -119,13 +119,13 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	
 	
 	if(userName == ""){
-		alert("Enter User Name");
+		createAlert("Invalid Input","Enter User Name");
 		return;
 	}
 	
 	userPrimaryPhoneNumber = normalizePhoneNumber(userPrimaryPhoneNumber);
 	if(userPrimaryPhoneNumber == false){
-		alert("Invalid phone number.");
+		createAlert("Invalid Input","Invalid phone number.");
 		return;
 	}
 	/* Create and add new row element for user */
@@ -208,7 +208,7 @@ $("#page-content").on("click", "#add-group-user-phone-number", function (e) {
 
 	phoneNumber = normalizePhoneNumber(phoneNumber);
 	if(phoneNumber == false){
-		alert("Invalid phone number.");
+		createAlert("Invalid Input","Invalid phone number.");
 		return;
 	}
 	
