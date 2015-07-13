@@ -26,9 +26,10 @@
 						<td th:text="${userView.user.name}">Member Name</td>
 						<td>
 						<span th:each="groups,itrStatus : ${userView.user.groupMemberships}">
-							<span th:if="${itrStatus.count < 3}">							
+							<span th:if="${itrStatus.count < 3}">
+															
 								<span th:if="${itrStatus.count == 2}">,</span>
-								<span th:text="${groups.group.name}"></span>
+								<span th:if="${groups.group.organization == organization}" th:text="${groups.group.name}"></span>
 							</span>
 							<span th:if="${itrStatus.count == 3}">
 								, <a href="#" th:attr="data-value=${userView.user.userId}"  class="show-user-groups" data-toggle="modal" data-title="Add new user" data-target="#show-user-groups-modal">See more</a>			
