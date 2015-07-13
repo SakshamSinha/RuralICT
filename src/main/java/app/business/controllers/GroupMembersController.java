@@ -32,9 +32,10 @@ public class GroupMembersController {
 		List<UserView> userViewList = userViewService.getUserViewListByGroup(groupId);
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		Group parentGroup = organizationService.getParentGroup(organization);
-		
+		int parentGroupId = parentGroup.getGroupId();
 		model.addAttribute("organization", organization);
 		model.addAttribute("parentGroup", parentGroup);
+		model.addAttribute("parentgroupid", parentGroupId);
 		model.addAttribute("userViews", userViewList);
 		model.addAttribute("groupId", groupId);
 		return "groupWiseMember";
