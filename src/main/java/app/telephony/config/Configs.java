@@ -14,11 +14,11 @@ public class Configs extends IVRConfigs {
 		/**
 		 * KooKoo application URL for Outbound Calls.
 		 */
-		public static final String OUTBOUND_APP_URL = "http://ruralict.cse.iitb.ac.in/RuralIvrs/BroadcastCallHandler";
+		public static final String OUTBOUND_APP_URL = "http://qassist.cse.iitb.ac.in/ruralict/BroadcastCallHandler";
 		/**
 		 * KooKoo application URL.
 		 */
-		public static final String APP_URL = "http://ruralict.cse.iitb.ac.in/RuralIvrs/CallHandler";
+		public static final String APP_URL = "http://qassist.cse.iitb.ac.in/ruralict/CallHandler";
 		/**
 		 * The IVR number being used for this application. Outbound calls will be made from this number.
 		 */

@@ -26,16 +26,16 @@ import app.telephony.RuralictSession;
 @Controller
 public class BroadcastCallHandlerController  implements IVRSessionFactory {
 
-	
+
 	@Autowired
 	OutboundCallService outboundCallService;
-	
+
 	/**
 	 * Create a new IVR session.
 	 * @return The new Ruralict session.
 	 */
 
-	
+
 	@Override
 	public IVRSession createSession(String sessionId, String userNumber, String ivrNumber, String circle, String operator) throws Exception {
 
@@ -124,16 +124,16 @@ public class BroadcastCallHandlerController  implements IVRSessionFactory {
 	 */
 	@RequestMapping(value="/BroadcastCallHandler", method=RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		printParameterMap(request.getParameterMap());
 		String status = request.getParameter("status");
 		String statusDetails = request.getParameter("status_details");
 		RuralictSession ruralictSession = (RuralictSession) request.getSession().getAttribute("telephony");
-	    OutboundCall outboundCall = ruralictSession.getOutboundCall();
+		OutboundCall outboundCall = ruralictSession.getOutboundCall();
 		outboundCall.setStatus(status);
 		outboundCall.setStatusDetail(statusDetails);
 		outboundCallService.addOutboundCall(outboundCall);
-		
+
 	}
 
 

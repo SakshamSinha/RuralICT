@@ -34,6 +34,5 @@ public class PlayThankYouMessageAction implements Action<IVRSession> {
 		
 		response.addHangup();
 
-		response.addHangup();
 	}
 }

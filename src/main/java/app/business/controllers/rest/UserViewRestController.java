@@ -44,7 +44,7 @@ public class UserViewRestController {
 		try {
 			Group group = groupService.getGroup(groupId);
 			userView = userViewService.addUserView(userView);
-			System.out.println("Username :" + userView.getUser().getName() + "group" + group.getName());
+
 			groupMembershipService.addGroupMembership(new GroupMembership(group, userView.getUser()));
 			organizationMembershipService.addOrganizationMembership(new OrganizationMembership(group.getOrganization(), userView.getUser(), false, false));
 		}
