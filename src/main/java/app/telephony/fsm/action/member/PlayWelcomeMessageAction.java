@@ -36,12 +36,12 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 		VoiceBroadcast broadcast;
 		broadcast = (VoiceBroadcast) broadcastService.getTopBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), organizationService.getOrganizationByIVRS(session.getIvrNumber()), "voice");
-		
+
 		if(broadcast == null){
 			response.addPlayText("No broadcast message");
 		}
 		else{
-		v = broadcast.getVoice();
+			v = broadcast.getVoice();
 		}
 		String userLang=userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getCallLocale();
 
@@ -55,7 +55,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		if(isOutbound){
 
 			if(v==null){
-			response.addPlayAudio(v.getUrl());
+				response.addPlayAudio(v.getUrl());
 			}
 			ruralictSession.setOrderAllowed(broadcast.getAskOrder());
 			ruralictSession.setFeedbackAllowed(broadcast.getAskFeedback());
@@ -83,8 +83,8 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 					ruralictSession.setGroupID("0");
 				}
 				else {
-				ruralictSession.setGroupID(broadcast.getGroup().getGroupId()+"");
-				response.addPlayAudio(v.getUrl());
+					ruralictSession.setGroupID(broadcast.getGroup().getGroupId()+"");
+					response.addPlayAudio(v.getUrl());
 				}
 			}
 			else{
