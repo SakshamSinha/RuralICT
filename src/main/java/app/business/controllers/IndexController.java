@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import app.business.services.OrganizationService;
+import app.entities.Group;
 import app.entities.Organization;
 
 
@@ -23,6 +24,8 @@ public class IndexController {
 	public String indexPage(@PathVariable String org, Model model) {
 		
 	    Organization organization= organizationService.getOrganizationByAbbreviation(org);
+	    Group parentGroup = organizationService.getParentGroup(organization);
+	    model.addAttribute("parentGroup", parentGroup);
 		model.addAttribute("organization", organization);
 		return "index";
 	}
