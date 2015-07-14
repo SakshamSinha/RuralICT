@@ -23,9 +23,9 @@ public class IndexController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String indexPage(@PathVariable String org, Model model) {
 		
-	    Organization organization= organizationService.getOrganizationByAbbreviation(org);
-	    Group parentGroup = organizationService.getParentGroup(organization);
-	    model.addAttribute("parentGroup", parentGroup);
+		Organization organization= organizationService.getOrganizationByAbbreviation(org);
+		Group parentGroup = organizationService.getParentGroup(organization);
+		model.addAttribute("parentGroup", parentGroup);
 		model.addAttribute("organization", organization);
 		return "index";
 	}
