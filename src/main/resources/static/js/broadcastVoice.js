@@ -22,13 +22,13 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		console.log('save broadcast has been called');
 		if($scope.broadcast.userIds=='')
 		{
-			alert('No user selected. Select atleast one user.')
+			createAlert("No user selected", "Select atleast one user.")
 		}
 		else
 		{
 			$http.post(API_ADDR + 'web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
 			.success(function(data,status,header,config){
-				alert('Call has been placed.')
+				createAlert("Call Placed",'Call has been placed.')
 				console.log('broadcast data posted. Users called.');
 			})
 			.error(function(data,status,header,config){
@@ -40,11 +40,11 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 	$scope.uploadFile = function(ids){
 		if ($scope.myFile == undefined)
 		{
-			alert("No file added. Please choose a file of '.wav' audio format");
+			createAlert("Error Uploading File","No file added. Please choose a file of '.wav' audio format");
 		}
 		else if ($scope.myFile.type != "audio/wav")
 		{
-			alert("Invalid File!! Please choose again. You can only choose a file of '.wav' audio format");
+			createAlert("Error Uploading File","Invalid File!! Please choose again. You can only choose a file of '.wav' audio format");
 		}
 		else
 		{
@@ -67,14 +67,14 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 				console.log("Audio successfully uploaded and added in voice table. Posting over to Latest Broadcast Voice controller");
 				$http.post(API_ADDR + 'web/'+$scope.latestBroadcastableVoiceIds.abbr+'/latestBroadcastVoiceMessages/'+$scope.latestBroadcastableVoiceIds.groupId,$scope.latestBroadcastableVoiceIds)
 					.success(function(data,status,header,config){
-						alert("Audio successfully uploaded");
+						createAlert("Audio Uploaded","Audio successfully uploaded");
 						//TODO Eliminating this function doing hard refresh
 						setTimeout($window.location.reload.bind(window.location),2000);
 						})
 					})
 			.error(function(data, status) {
 				if (status == "500")
-					alert("File already present. Choose a different file before uploading.");
+					createAlert("Error Uploading File","File already present. Choose a different file before uploading.");
 			});
 		}
 	}

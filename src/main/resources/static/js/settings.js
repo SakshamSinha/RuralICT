@@ -138,7 +138,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 		// set initial values for the audio control and dowload link 
 		changeAudioSource($scope.languageUrl[0]);
 	}).error(function(data, status) {
-		alert("There was some error in response from the server.");
+		createAlert("Error Storing Audio","There was some error in response from the server.");
 	});
 
 
@@ -160,7 +160,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			$scope.organization.$update({
 				id: orgid
 			}, function() 
-			{alert("Your Settings have been saved.") });
+			{createAlert("Settings Saved","Your Settings have been saved.") });
 		});
 	};
 
@@ -177,7 +177,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			//finally update the database
 			$scope.organization.$update({
 				id: orgid
-			}, function() {alert("Your Settings have been saved.")});
+			}, function() {createAlert("Settings Saved","Your Settings have been saved.")});
 		});
 	};
 
@@ -196,14 +196,14 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			// check if at least one option is selected
 			if(!$scope.organization.inboundCallAskOrder && !$scope.organization.inboundCallAskFeedback && !$scope.organization.inboundCallAskResponse)
 			{
-				alert("You must select at least one option !");
+				createAlert("Invalid Inpput","You must select at least one option !");
 				return;
 			}
 
 			//finally update the database
 			$scope.organization.$update({
 				id: orgid
-			}, function() {alert("Your Settings have been saved.")});
+			}, function() {createAlert("Your Settings have been saved.")});
 		});
 	};
 	// click function for 'save details' button in outgoing call settings
@@ -221,7 +221,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			//finally update the database
 			$scope.outboundcall.$update({
 				id: orgid
-			}, function() {alert("Your Settings have been saved.")});
+			}, function() {createAlert("Settings Saved","Your Settings have been saved.")});
 		});
 	};
 
@@ -249,25 +249,25 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			if (data == "-1")
 
 			{
-				alert("Please select a file to upload !");
+				createAlert("Error Uploading File","Please select a file to upload !");
 			}
 			else if(data == "-2")
 			{
-				alert("Please Upload a File less than 10MB");
+				createAlert("Error Uploading File","Please Upload a File less than 10MB");
 			}
 			else if(data == "-3")
 			{
-				alert("The File you have uploaded is not a audio file");
+				createAlert("Error Uploading File","The File you have uploaded is not a audio file");
 			}
 			else
 			{
 				$scope.languageUrl[localeIndex] = data;
 				changeAudioSource($scope.languageUrl[localeIndex]);
-				alert("The Audio File was Successfully Uploaded.");
+				createAlert("Audio Uploaded","The Audio File was Successfully Uploaded.");
 			}
 		})
 		.error(function(data, status) {
-			alert("There was some error in response from the server.");
+			createAlert("Error Uploading File","There was some error in response from the server.");
 		});
 	}
 	$scope.updateSetting= function(){
@@ -280,7 +280,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 		var email = $.trim($('#email').val());
 
 		if (!password || !conformPassword){
-			alert("Please enter password");
+			createAlert("Error Saving Profile","Please enter password");
 		}
 		else if(password == conformPassword){
 
@@ -290,29 +290,30 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			profileSettingDetails.phone = $.trim($('#phone').val());
 			profileSettingDetails.city =  $.trim($('#city').val());
 			profileSettingDetails.password =  $.trim($('#re-new-password').val());
+
 			if(normalizePhoneNumber(profileSettingDetails.phone) == false)
 			{
-				alert("Please enter a valid phone number !");
+				createAlert("Enter Phone Number","Please enter a valid phone number !");
 			}
 			else
 			{
 
+			$http.post( API_ADDR + 'web/' + abbr + '/updateUser', profileSettingDetails).
+			success(function(data, status, headers, config) {
+				createAlert("Settings Saved","Your Settings have been saved.")
+
 				// Normalize the phone number to database format
 				profileSettingDetails.phone = normalizePhoneNumber(profileSettingDetails.phone);
 
-				$http.post( API_ADDR + 'web/' + abbr + '/updateUser', profileSettingDetails).
-				success(function(data, status, headers, config) {
-					alert("Your Settings have been saved.")
 
+			}).
+			error(function(data, status, headers, config) {
+				createAlert("Error Saving Settings","There was some error in response from the remote server.");
+			});
 
-				}).
-				error(function(data, status, headers, config) {
-					alert("There was some error in response from the remote server.");
-				});
-			}
 		}
 		else{
-			alert("Password is not same");
+			createAlert("Error Saving Profile","Password is not same");
 		}
 
 
@@ -340,7 +341,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 
 		}).
 		error(function(data, status, headers, config) {
-			alert("There was some error in response from the remote server.");
+			createAlert("Error Reseting Welcome Message","There was some error in response from the remote server.");
 		});
 	}
 

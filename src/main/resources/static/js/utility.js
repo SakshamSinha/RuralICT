@@ -7,9 +7,30 @@ function loadAudio(audioTagName, voiceURL){
 	audio.load();
 }
 
+function getAudioPlayer(linkObject){
+	
+	var parent = linkObject.parentNode;
+	var url = linkObject.href;
+	console.log(url);
+	var audioNode = document.createElement("audio");
+	audioNode.id = "newAudio" 
+	parent.removeChild(linkObject);
+	parent.innerHTML = '<audio controls id="newAudio"></audio>'
+	loadAudio("newAudio",url);
+	audioNode.removeAttribute("id"); 
+	console.log(audioNode.id);
+}
+
+
 function getId(object){
 	var urlChunks = object["_links"]["self"]["href"].split("/");
 	return urlChunks[urlChunks.length-1];
+}
+
+function createAlert(heading, message){
+	$("#messageHeading").text(heading);
+	$("#messageContent").text(message);
+	$('#message-modal').modal("toggle");
 }
 
 function normalizePhoneNumber(phoneNumber){
