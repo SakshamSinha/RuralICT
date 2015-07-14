@@ -19,8 +19,6 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 	$scope.removeMemberFromGroup = function(data){
 		console.log(data);
 		$scope.groupMembership = GetGroupMembershipByUserAndGroup.get(data, function(groupMembership){
-			console.log(groupMembership);
-			console.log($scope.groupMembership);
 			$scope.groupMembershipId = getId(groupMembership["_embedded"]["groupMemberships"][0]);
 			RemoveGroupMembership.update({id: $scope.groupMembershipId});	
 		}, function(error){console.log(error);});
