@@ -8,7 +8,7 @@ website.controller("PresetQuantitiesCtrl",function($window, $scope, $http, $rout
 			PresetQuantityCreate.save($scope.presetQuantity,function(){	
 			},function(error){
 				if (error.status == "409")
-					alert("Same Product Quantity already present. Add a different quantity");
+					createAlert("Error Updating Quantity","Same Product Quantity already present. Add a different quantity");
 			});
 		}
 		
@@ -20,7 +20,7 @@ website.controller("PresetQuantitiesCtrl",function($window, $scope, $http, $rout
 				$scope.presetQuantity.$update({id:$scope.id},function(){
 				},function(error){
 					if (error.status == "409")
-						alert("Same Product Quantity already present. Update with different quantity not already present.");
+						createAlert("Error Updating Quantity","Same Product Quantity already present. Update with different quantity not already present.");
 				});
 			});
 		}

@@ -49,11 +49,11 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 			
 			if(data === 0)
 			{
-				alert("The SMS was sent successfully");
+				createAlert("SMS Sent","The SMS has been sent successfully");
 			}
 			else
 			{
-				alert("There was some problem in the server !");
+				createAlert("Error Sending Message","There was some problem in the server !");
 			}
 			
 		})

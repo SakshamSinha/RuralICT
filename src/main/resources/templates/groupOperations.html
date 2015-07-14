@@ -29,7 +29,7 @@
 		<div id="broadcast" class="tab-pane">
 			<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
 				<!-- 			<li ng-class="{active:tab == 1}"><a href="#broadcast-voice-message" data-toggle="tab" >Voice -->
-				<li><a href="#broadcast-voice-message" data-toggle="tab">Voice
+				<li class="active"><a href="#broadcast-voice-message" data-toggle="tab">Voice
 						Message</a></li>
 				<li><a href="#broadcast-text-message" data-toggle="tab">Text
 						Message</a></li>
@@ -37,7 +37,7 @@
 			<!--brands tab content-->
 			<div class="tab-content">
 				<!-- 			<div ng-show="tab==1" id="broadcast-voice-message" class="tab-pane"> -->
-				<div id="broadcast-voice-message" class="tab-pane">
+				<div id="broadcast-voice-message" class="tab-pane active">
 					<ng-include src="voiceBroadcastUrl"></ng-include>
 				</div>
 				<div id="broadcast-text-message" class="tab-pane">

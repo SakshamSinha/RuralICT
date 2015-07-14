@@ -6,12 +6,12 @@ website.controller("GroupSettingsCtrl", function($scope, $route, UpdateGroup, Re
 			
 			$scope.group.$update({id:groupId},function(success){
 				
-				alert("Group Renamed Successfully");
+				createAlert("Group Updated","Group Renamed Successfully");
 				$scope.reload();
 			}, function(error){
 				
 				if(error.status == "409"){
-					alert("Group Name should be distinct.")
+					createAlert("Invalid Input","Group Name should be distinct.")
 				}
 			});
 		});
@@ -26,7 +26,7 @@ website.controller("GroupSettingsCtrl", function($scope, $route, UpdateGroup, Re
 				
 			}, function(error){
 					if(error.status == "409")
-						alert("To delete this group, remove all its members.");
+						createAlert("Error Deleting Group","To delete this group, remove all its members.");
 			});
 		});		
 	};
