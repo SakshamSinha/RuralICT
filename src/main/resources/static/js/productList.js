@@ -10,7 +10,7 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			ProductCreate.save($scope.product,function(){
 			},function(error){
 				if (error.status == "409")
-					alert("Product already added. Add a different product");
+					createAlert("Error Adding Product","Product already added. Add a different product");
 			});
 		}
 		//function to edit product
@@ -27,7 +27,7 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 				$scope.product.$update({id:$scope.id},function(){
 				},function(error){
 					if(error.status == "409")
-						alert("You can't delete this product as this product is present in Order Item(s).");
+						createAlert("Error Deleting Product","You can't delete this product.");
 				});
 			});	
 		}

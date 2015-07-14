@@ -19,7 +19,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			$scope.manageUserItems = data;
 		}).
 		error(function(data, status, headers, config) {
-			alert("There was some error in response from the remote server.");
+			createAlert("Error Fetching Data","There was some error in response from the remote server.");
 		});
 
 	// Click event handler for the 'Add' Modal Button
@@ -28,11 +28,11 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		// Check if required text fields are blank or not
 		if(!$scope.inputUserName)
 		{
-			alert("Please Enter a Name for the User !");
+			createAlert("Invalid Input","Please Enter a Name for the User !");
 		}
 		else if(!$scope.inputUserPhone)
 		{
-			alert("Please Enter a Phone Number !");
+			createAlert("Invalid Input","Please Enter a Phone Number !");
 		}
 		else
 		{
@@ -46,7 +46,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			
 			if(normalizePhoneNumber(newUserDetails.phone) == false)
 			{
-				alert("Please enter a valid phone number !");
+				createAlert("Invalid Input","Please enter a valid phone number !");
 			}
 			else
 			{
@@ -59,7 +59,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 						
 						if(!data)
 						{
-							alert("The Entered Phone Number already exists in the database");
+							createAlert("Invalid Input","The Entered Phone Number already exists in the database");
 						}
 						else
 						{
@@ -78,7 +78,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 						}
 					}).
 					error(function(data, status, headers, config) {
-						alert("There was some error in response from the remote server.");
+						createAlert("Error Adding Member","There was some error in response from the remote server.");
 					});
 			}
 			
@@ -137,7 +137,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				}
 			}).
 			error(function(data, status, headers, config) {
-				alert("There was some error in response from the remote server.");
+				createAlert("Error Updating Member","There was some error in response from the remote server.");
 			});
 	};
 
@@ -162,7 +162,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				}
 			}).
 			error(function(data, status, headers, config) {
-				alert("There was some error in response from the remote server.");
+				createAlert("Error Updating Member","There was some error in response from the remote server.");
 			});
 	};
 
@@ -189,7 +189,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				}
 			}).
 			error(function(data, status, headers, config) {
-				alert("There was some error in response from the remote server.");
+				createAlert("Error Updating Member","There was some error in response from the remote server.");
 			});
 	};
 
@@ -214,7 +214,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				}
 			}).
 			error(function(data, status, headers, config) {
-				alert("There was some error in response from the remote server.");
+				createAlert("Error Updating Member","There was some error in response from the remote server.");
 			});
 	};
 
@@ -235,11 +235,11 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			// Check if required text fields are blank or not
 			if(!$scope.editUserName)
 			{
-				alert("Please Enter a Name for the User !");
+				createAlert("Invalid Input","Please Enter a Name for the User !");
 			}
 			else if(!$scope.editUserPhone)
 			{
-				alert("Please Enter a Phone Number !");
+				createAlert("Invalid Input","Please Enter a Phone Number !");
 			}
 			else
 			{
@@ -254,7 +254,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 				
 				if(normalizePhoneNumber(newUserDetails.phone) == false)
 				{
-					alert("Please enter a valid phone number !");
+					createAlert("Invalid Input","Please enter a valid phone number !");
 				}
 				else
 				{
@@ -269,7 +269,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 								
 								if(data == "-1")
 								{
-									alert("The Entered Phone Number already exists in the database");
+									createAlert("Invalid Input","The Entered Phone Number already exists in the database");
 								}
 								else
 								{
@@ -290,7 +290,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		
 							}).
 							error(function(data, status, headers, config) {
-								alert("There was some error in response from the remote server.");
+								createAlert("Error Updating Member","There was some error in response from the remote server.");
 							});
 					}
 					// Or else just update the user details
@@ -314,7 +314,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 	
 						}).
 						error(function(data, status, headers, config) {
-							alert("There was some error in response from the remote server.");
+							createAlert("Error Updating Member","There was some error in response from the remote server.");
 						});
 					}
 					
@@ -340,7 +340,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 
 			}).
 			error(function(data, status, headers, config) {
-				alert("There was some error in response from the remote server.");
+				createAlert("Error Fetching Data","There was some error in response from the remote server.");
 			});
 	};
 

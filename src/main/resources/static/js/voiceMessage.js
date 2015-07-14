@@ -352,7 +352,7 @@ $("#page-content").on("click", ".inboxVoiceMessageSaveButton", function (e) {
 	/* Remove order item from the queue */
 	angular.element($("#inboxVoiceMessageComment" + id)).scope().updateVoiceComment(id,comment);
 	
-	alert("Comment has been updated");
+	createAlert("Comment Updated","Comment has been updated");
 	
 });
 
