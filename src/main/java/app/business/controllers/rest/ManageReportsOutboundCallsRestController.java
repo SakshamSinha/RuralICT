@@ -75,7 +75,7 @@ public class ManageReportsOutboundCallsRestController {
 		
 
 		List<OutboundCall> outboundCallList= outboundCallService.getOutboundCallList(group);
-		
+
 		String status;
 		String phoneNum;
 		String dateTime;
