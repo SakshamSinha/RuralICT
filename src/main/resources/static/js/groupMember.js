@@ -174,7 +174,7 @@ $("#page-content").on("click", "#remove-group-user", function (e) {
 	
 	angular.element($("#remove-group-user")).scope().removeMemberFromGroup(data);
 	$('#remove-group-user-modal').modal('toggle');
-	//angular.element($("#remove-group-user")).scope().reload();
+	angular.element($("#remove-group-user")).scope().reload();
 	
 });
 
