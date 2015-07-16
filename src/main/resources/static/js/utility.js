@@ -1,6 +1,6 @@
 var API_ADDR = $("#contextRoot").val();
-
-/* Function to dyanamically load audio */
+var ORG_ABBR = $("#organizationAbbr").val();
+/* Function to dynamically load audio */
 function loadAudio(audioTagName, voiceURL){
 	var audio = document.getElementById(audioTagName);
 	audio.src = voiceURL;
