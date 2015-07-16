@@ -38,7 +38,7 @@ website.controller("BroadcastDefaultSettingsController",function($window, $scope
 			$scope.outboundcall.$update({
 				id: orgid
 			}, function() {
-				alert("Your Settings have been saved.");
+				createAlert("Settings Saved","Your Settings have been saved.");
 			});
 		});
 	};

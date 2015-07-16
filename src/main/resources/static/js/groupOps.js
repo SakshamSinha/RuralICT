@@ -7,17 +7,16 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup)
 			$scope.group.parentGroup = data.parentGroup;
 			AddGroup.save($scope.group, function(group) {
 				
-				window.location.reload(true);
 				$scope.groupName = group.name;
-				alert("New Group Added");
+				createAlert("Group Added", "New group has been added successfully.")
 				angular.element($('#add-new-group')).scope().reload();
 			}, function(error) {
 				$scope.failure = error.data;
 				if(error.status == "409"){
-					alert("Group Already Exists");
+					createAlert("Group Addition Failed", "Group already exists.")
 				}
 				else{
-					alert("Adding of Group Failed");
+					createAlert("Group Addition Failed", "Group could not be created.")
 				}
 			});
 		
@@ -33,7 +32,7 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup)
 //add new group from index.html
 $("#add-new-group").click(function() {  
     var name = $.trim($('#new-group-name-input').val());
-    var parentGroup = "parentGroup/1";
+    var parentGroup = "parentGroup/" + $.trim($('#new-group-parent-group-input').val());
     console.log(name);
     var data ={};
     data.name=name;
