@@ -32,7 +32,7 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup)
 //add new group from index.html
 $("#add-new-group").click(function() {  
     var name = $.trim($('#new-group-name-input').val());
-    var parentGroup = "parentGroup/1";
+    var parentGroup = "parentGroup/" + $.trim($('#new-group-parent-group-input').val());
     console.log(name);
     var data ={};
     data.name=name;
