@@ -30,14 +30,19 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		RuralictSession ruralictSession = (RuralictSession) session;
 		boolean isOutbound = ruralictSession.isOutbound();
 		WelcomeMessage welcomeMessage;
-
+		Voice v=null;
 		BroadcastService broadcastService= SpringContextBridge.services().getVoiceBroadcastService();
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 		VoiceBroadcast broadcast;
 		broadcast = (VoiceBroadcast) broadcastService.getTopBroadcast(userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser(), organizationService.getOrganizationByIVRS(session.getIvrNumber()), "voice");
-		Voice v = broadcast.getVoice();
 
+		if(broadcast == null){
+			response.addPlayText("No broadcast message");
+		}
+		else{
+			v = broadcast.getVoice();
+		}
 		String userLang=userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getCallLocale();
 
 		if(userLang!=null && !userLang.equalsIgnoreCase("")){
@@ -49,7 +54,9 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 
 		if(isOutbound){
 
-			response.addPlayAudio(v.getUrl());
+			if(v==null){
+				response.addPlayAudio(v.getUrl());
+			}
 			ruralictSession.setOrderAllowed(broadcast.getAskOrder());
 			ruralictSession.setFeedbackAllowed(broadcast.getAskFeedback());
 			ruralictSession.setResponseAllowed(broadcast.getAskResponse());
@@ -72,8 +79,13 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			}
 			response.addPlayAudio(welcomeMessage.getVoice().getUrl());
 			if(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableBroadcasts()){
-				ruralictSession.setGroupID(broadcast.getGroup().getGroupId()+"");
-				response.addPlayAudio(v.getUrl());
+				if(broadcast == null){
+					ruralictSession.setGroupID("0");
+				}
+				else {
+					ruralictSession.setGroupID(broadcast.getGroup().getGroupId()+"");
+					response.addPlayAudio(v.getUrl());
+				}
 			}
 			else{
 				ruralictSession.setGroupID(((Integer)organizationService.getParentGroup(organizationService.getOrganizationByIVRS(session.getIvrNumber())).getGroupId()).toString());
