@@ -29,7 +29,7 @@
 		<div id="broadcast" class="tab-pane">
 			<ul class="nav nav-tabs bottom-tab-bar" id="brands_tabs">
 				<!-- 			<li ng-class="{active:tab == 1}"><a href="#broadcast-voice-message" data-toggle="tab" >Voice -->
-				<li><a href="#broadcast-voice-message" data-toggle="tab">Voice
+				<li class="active"><a href="#broadcast-voice-message" data-toggle="tab">Voice
 						Message</a></li>
 				<li><a href="#broadcast-text-message" data-toggle="tab">Text
 						Message</a></li>
@@ -37,7 +37,7 @@
 			<!--brands tab content-->
 			<div class="tab-content">
 				<!-- 			<div ng-show="tab==1" id="broadcast-voice-message" class="tab-pane"> -->
-				<div id="broadcast-voice-message" class="tab-pane">
+				<div id="broadcast-voice-message" class="tab-pane active">
 					<ng-include src="voiceBroadcastUrl"></ng-include>
 				</div>
 				<div id="broadcast-text-message" class="tab-pane">
@@ -54,6 +54,7 @@
 				<li><a href="#voice-message-response-saved" data-toggle="tab">Saved</a></li>
 				<li><a href="#voice-message-response-processed"
 					data-toggle="tab">Processed</a></li>
+				<li><a href="#voice-message-response-cancelled" data-toggle="tab">Cancelled</a></li>
 				<li th:if="${organization.enableFeedbacks}"><a
 					href="#voice-message-response-feedback" data-toggle="tab">Feedback</a></li>
 				<li th:if="${organization.enableResponses}"><a
@@ -81,6 +82,10 @@
 				<div id="voice-message-response-response" class="tab-pane">
 					<ng-include
 						th:attr="src='\'voiceMessage/'+ response+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="voice-message-response-cancelled" class="tab-pane">
+					<ng-include
+						th:attr="src='\'voiceMessage/'+ cancelled+'/' +${group.groupId}+'\''"></ng-include>
 				</div>
 			</div>
 		</div>

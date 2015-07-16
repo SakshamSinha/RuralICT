@@ -20,11 +20,11 @@ website.controller("ManageOutboundCallsController", function($scope, $http, $rou
 		dat.grp = $('#groupId').val();
 		var from= $('#fromDate2').val();
 		var to= $('#toDate2').val();
-		if(from=="") alert("Please select(type) a valid From date in yyyy-mm-dd format");
-		else if(to=="") alert("Please select(type) a valid To date in yyyy-mm-dd format");
-		else if(validatedate(from)==false)	alert("Please select(type) a valid From date in yyyy-mm-dd format");
-		else if(validatedate(to)==false)	alert("Please select(type) a valid To date in yyyy-mm-dd format");
-		else if(to<from) alert("To date should be ahead of From date!");
+		if(from=="") createAlert("Invalid Input","Please select(type) a valid From date in yyyy-mm-dd format");
+		else if(to=="") createAlert("Invalid Input","Please select(type) a valid To date in yyyy-mm-dd format");
+		else if(validatedate(from)==false)	createAlert("Invalid Input","Please select(type) a valid From date in yyyy-mm-dd format");
+		else if(validatedate(to)==false)	createAlert("Invalid Input","Please select(type) a valid To date in yyyy-mm-dd format");
+		else if(to<from) createAlert("Invalid Input","To date should be ahead of From date!");
         
 		var data= OutboundCallReports.update(dat, function(success){
 			for (i = 0; i < data.length; i++) {
@@ -34,7 +34,7 @@ website.controller("ManageOutboundCallsController", function($scope, $http, $rou
 		    	}
 		    }	    
 		}, function(error){
-			alert("Error: " + error,status);			
+			createAlert("Error Fetching Data","Error: " + error,status);			
 		});		
 	}	
 });

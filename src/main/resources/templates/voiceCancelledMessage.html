@@ -1,0 +1,30 @@
+<div ng-controller="VoiceMessageCtrl">
+	<div class="row-fluid">
+	
+		<div th :if="${message !=null}">
+			<table class="table table-striped table-bordered table-condensed"
+				id="usertable">
+				<thead>
+					<tr>
+						<th>Order ID</th>
+						<th>Time</th>
+						<th>Member</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="list-users" th:each="voiceMessage : ${message} ">
+	
+						<td th:text="${voiceMessage.order.orderId}">Order Id</td>
+						<td th:attr="id='savedVoiceMessageTime'+${voiceMessage.messageId}" th:text="${voiceMessage.Time}">Time</td>
+						<td th:attr="id='savedVoiceMessageName'+${voiceMessage.messageId}" th:text="${voiceMessage.user.name}">Name</td>						
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+		<div th:if="${message == null}">
+			<B>No New Message </B>
+	
+		</div>
+	</div>
+</div>
