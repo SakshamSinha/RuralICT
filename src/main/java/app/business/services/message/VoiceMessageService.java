@@ -49,4 +49,8 @@ public class VoiceMessageService extends MessageService {
 	public List<Message> getRejectedVoiceMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "voice", "rejected");
 	}
+	
+	public List<Message> getCancelledVoiceMessageList(Group group) {
+		return getMessageListByOrderStatus(group, "voice", "cancelled");
+	}
 }
