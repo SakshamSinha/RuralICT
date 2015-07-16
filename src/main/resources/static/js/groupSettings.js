@@ -22,7 +22,6 @@ website.controller("GroupSettingsCtrl", function($scope, $route, UpdateGroup, Re
 		$scope.group = RemoveGroup.get({id: groupId},function(){
 			
 			$scope.group.$update({id:groupId},function(group){
-				//window.location.href = "/" + API_ADDR + "/";
 				$scope.reload();
 			}, function(error){
 					if(error.status == "409")
