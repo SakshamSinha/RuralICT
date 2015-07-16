@@ -79,8 +79,7 @@ public class TelephonyService {
 				voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast,inboundCall.getTime(), group, mode, type, response, null, null, inboundCall);
 			}
 			else{
-				 
-			//	outboundCall = outboundCallService.addOutboundCall(outboundCall);
+		
 				voiceMessage=new VoiceMessage(userPhoneNumberService.getUserPhoneNumber(userPhoneNumber).getUser(), broadcast, broadcast.getBroadcastedTime(), group, mode, type, response, null, null, inboundCall);
 			}
 
