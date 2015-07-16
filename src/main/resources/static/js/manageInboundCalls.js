@@ -1,5 +1,5 @@
 website.factory("InboundCallReports", function($resource) {
-	return $resource("/api/inboundCalls/search/getInboundCalls", {org:"@org", fromDate:"@fromDate", toDate:"@toDate"}, {
+	return $resource(API_ADDR+"/api/inboundCalls/search/getInboundCalls", {org:"@org", fromDate:"@fromDate", toDate:"@toDate"}, {
 		update: {
 			method: 'GET'
 		}

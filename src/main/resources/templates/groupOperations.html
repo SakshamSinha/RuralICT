@@ -54,6 +54,7 @@
 				<li><a href="#voice-message-response-saved" data-toggle="tab">Saved</a></li>
 				<li><a href="#voice-message-response-processed"
 					data-toggle="tab">Processed</a></li>
+				<li><a href="#voice-message-response-cancelled" data-toggle="tab">Cancelled</a></li>
 				<li th:if="${organization.enableFeedbacks}"><a
 					href="#voice-message-response-feedback" data-toggle="tab">Feedback</a></li>
 				<li th:if="${organization.enableResponses}"><a
@@ -81,6 +82,10 @@
 				<div id="voice-message-response-response" class="tab-pane">
 					<ng-include
 						th:attr="src='\'voiceMessage/'+ response+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="voice-message-response-cancelled" class="tab-pane">
+					<ng-include
+						th:attr="src='\'voiceMessage/'+ cancelled+'/' +${group.groupId}+'\''"></ng-include>
 				</div>
 			</div>
 		</div>
@@ -180,6 +185,4 @@
 			</div>
 		</div>
 	</div>
-</div>
-
 </div>
