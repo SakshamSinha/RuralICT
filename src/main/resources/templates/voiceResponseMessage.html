@@ -1,12 +1,12 @@
 <ul class="nav nav-tabs top-tab-bar" id="response_tabs">
 	<!--top level tabs-->
-	<li><a href="#voiceyes" data-toggle="tab">Yes</a></li>
+	<li class="active"><a href="#voiceyes" data-toggle="tab">Yes</a></li>
 	<li><a href="#voiceno" data-toggle="tab">No</a></li>
 	<li><a href="#voiceall" data-toggle="tab">All</a></li>
 </ul>
 
 <div class="tab-content">
-	<div id="voiceyes" class="tab-pane">
+	<div id="voiceyes" class="tab-pane active">
 		<ng-include
 			th:attr="src='\'voiceMessage/response/positive/'+${group.groupId}+'\''"></ng-include>
 	</div>
