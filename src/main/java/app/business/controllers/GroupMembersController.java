@@ -34,6 +34,7 @@ public class GroupMembersController {
 		Group parentGroup = organizationService.getParentGroup(organization);
 		model.addAttribute("organization", organization);
 		model.addAttribute("userViews", userViewList);
+		model.addAttribute("parentGroup", parentGroup);
 		model.addAttribute("groupId", groupId);
 		return "groupWiseMember";
 	}

@@ -58,8 +58,9 @@ public class UserViewRestController {
 			{
 				// if phone number doesn't exist, add the user and his phone number to database
 				userView = userViewService.addUserView(userView);
+				phone = userPhoneNumberService.getUserPhoneNumber(userView.getPhone().getPhoneNumber());
 			}
-			
+			//System.out.println("phone.getUser() = " + phone.getUser());
 			groupMembershipService.addGroupMembership(new GroupMembership(group, phone.getUser()));
 			organizationMembershipService.addOrganizationMembership(new OrganizationMembership(group.getOrganization(),phone.getUser(), false, false));
 		}
