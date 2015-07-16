@@ -1,11 +1,9 @@
 package app.business.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import app.data.repositories.UserPhoneNumberRepository;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
@@ -101,6 +99,8 @@ public class UserPhoneNumberService {
 		userPhoneNumberRepository.save(userPhoneNumber);
 	
 	}
+	
+   
 }
 
 

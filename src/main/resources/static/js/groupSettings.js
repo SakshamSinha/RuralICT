@@ -22,8 +22,7 @@ website.controller("GroupSettingsCtrl", function($scope, $route, UpdateGroup, Re
 		$scope.group = RemoveGroup.get({id: groupId},function(){
 			
 			$scope.group.$update({id:groupId},function(group){
-				window.location.href = "/";
-				
+				window.location.href = "/" + API_ADDR + "/";
 			}, function(error){
 					if(error.status == "409")
 						createAlert("Error Deleting Group","To delete this group, remove all its members.");
@@ -58,6 +57,5 @@ $("#page-content").on("click", "#delete-group", function(e) {
 	angular.element($('#delete-group')).scope().removeGroup(id);
 	
 	$('#delete-group-confirmation-modal').modal('toggle');
-
-	
+	//angular.element($('#delete-group')).scope().reload();	
 });

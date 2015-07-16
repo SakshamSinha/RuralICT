@@ -25,25 +25,25 @@ import app.entities.UserPhoneNumber;
 @RestController
 @RequestMapping("/api")
 public class UserViewRestController {
-	
+
 	@Autowired
 	UserViewService userViewService;
-	
+
 	@Autowired
 	GroupService groupService;
-	
+
 	@Autowired
 	GroupMembershipService groupMembershipService;
-	
+
 	@Autowired
 	OrganizationMembershipService organizationMembershipService;
-	
+
 	@Autowired
 	UserPhoneNumberService userPhoneNumberService;
 	
 	@Autowired
 	UserService userService;
-	
+
 	@RequestMapping(value="/userViews/add/{groupId}", method=RequestMethod.POST)
 	@Transactional
 	public @ResponseBody boolean addUserView(@RequestBody UserView userView, @PathVariable int groupId) {
@@ -51,6 +51,7 @@ public class UserViewRestController {
 		Group group = groupService.getGroup(groupId);
 		
 		try {
+
 			
 			UserPhoneNumber phone = userPhoneNumberService.getUserPhoneNumber(userView.getPhone().getPhoneNumber());
 			
@@ -60,7 +61,7 @@ public class UserViewRestController {
 				userView = userViewService.addUserView(userView);
 				phone = userPhoneNumberService.getUserPhoneNumber(userView.getPhone().getPhoneNumber());
 			}
-			//System.out.println("phone.getUser() = " + phone.getUser());
+
 			groupMembershipService.addGroupMembership(new GroupMembership(group, phone.getUser()));
 			organizationMembershipService.addOrganizationMembership(new OrganizationMembership(group.getOrganization(),phone.getUser(), false, false));
 		}
@@ -70,7 +71,7 @@ public class UserViewRestController {
 		}
 		return true;
 	}
-	
+
 	@RequestMapping(value="/userViews/delete/{userId}", method=RequestMethod.DELETE)
 	@Transactional
 	public @ResponseBody boolean removeUserView(@PathVariable int userId) {

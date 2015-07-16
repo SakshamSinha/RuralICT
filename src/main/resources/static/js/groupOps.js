@@ -32,13 +32,20 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup)
 //add new group from index.html
 $("#add-new-group").click(function() {  
     var name = $.trim($('#new-group-name-input').val());
+
+    // for getting parent group ID of current organization 
     var parentGroupId = $("#parentGroupId").val();
     var parentGroup = "parentGroup/" + parentGroupId;
+
+    // for child hirarchy
+   	// var parentGroup = "parentGroup/" + $.trim($('#new-group-parent-group-input').val());
+
     console.log(name);
     var data ={};
     data.name=name;
     data.organization = "organization/" + $("#organizationId").val();
-    data.parentGroup = parentGroup;
+    // for child hirarchy
+  //  data.parentGroup = parentGroup;
     angular.element($('#add-new-group')).scope().addGroup(data);
     
     $('#add-new-group-modal').modal('toggle');
