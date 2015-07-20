@@ -321,7 +321,47 @@ public class Organization implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public boolean isHasOnlyInbox() {
+		return hasOnlyInbox;
+	}
 
+	public void setHasOnlyInbox(boolean hasOnlyInbox) {
+		this.hasOnlyInbox = hasOnlyInbox;
+	}
+
+	public boolean isHasFeedback() {
+		return hasFeedback;
+	}
+
+	public void setHasFeedback(boolean hasFeedback) {
+		this.hasFeedback = hasFeedback;
+	}
+
+	public boolean isHasResponse() {
+		return hasResponse;
+	}
+
+	public void setHasResponse(boolean hasResponse) {
+		this.hasResponse = hasResponse;
+	}
+
+	public boolean isHasTextMessageResponse() {
+		return hasTextMessageResponse;
+	}
+
+	public void setHasTextMessageResponse(boolean hasTextMessageResponse) {
+		this.hasTextMessageResponse = hasTextMessageResponse;
+	}
+
+	public boolean isHasBill() {
+		return hasBill;
+	}
+
+	public void setHasBill(boolean hasBill) {
+		this.hasBill = hasBill;
+	}
+	
 	public List<Broadcast> getBroadcasts() {
 		return this.broadcasts;
 	}

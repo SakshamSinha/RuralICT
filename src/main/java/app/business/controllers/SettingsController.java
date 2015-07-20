@@ -70,10 +70,12 @@ public class SettingsController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String settingsPage(@PathVariable String org, Model model) {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		List<Organization> organizations = organizationService.getAllOrganizationList();
 		User user = userService.getCurrentUser();
 		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
 		model.addAttribute("user",user);
 		model.addAttribute("organization", organization);
+		model.addAttribute("organizations", organizations);
 		model.addAttribute("userPhoneNumber",userPhoneNumber);
 		return "settings";
 	}
@@ -94,7 +96,7 @@ public class SettingsController {
 		voices.add(englishMessage.getVoice().getUrl());
 		voices.add(marathiMessage.getVoice().getUrl());
 		voices.add(hindiMessage.getVoice().getUrl());
-
+		
 		return voices;
 	}
 
@@ -258,5 +260,13 @@ public class SettingsController {
 		{
 			return "-1";
 		}
+	}
+	
+	@RequestMapping(value="/updateOrganizationConfiguration", method=RequestMethod.POST)
+	@Transactional
+	public void updateOrganizationConfiguration(HttpServletRequest request){
+		System.out.println(request.getParameter("organizationData"));
+		
+
 	}
 }
