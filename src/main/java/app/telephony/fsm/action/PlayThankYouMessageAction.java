@@ -24,7 +24,7 @@ public class PlayThankYouMessageAction implements Action<IVRSession> {
         if(language==null)
         	language = "hi";
 
-		if(session.getInvalidTries()>=4){
+		if(session.getInvalidTries()>=5){
 			response.addPlayAudio(Configs.Voice.VOICE_DIR+"/invalidTriesExceeded_"+language+".wav");	
 		}
 		

@@ -153,7 +153,7 @@ website.factory("GetGroupMembershipByUserAndGroup", function($resource) {
 });
 
 website.factory("GetGroupMembershipsByUser", function($resource) {
-	return $resource(API_ADDR + "api/groupMemberships/search/findByUser", {user:"@user"}, {
+	return $resource(API_ADDR + "api/groupMemberships/search/groupMemberShip", {user:"@user", organization:"@organization"}, {
 		update: {
 			method: 'GET'
 		}
@@ -244,7 +244,7 @@ website.factory("UpdateOrganization", function($resource) {
 
 /* Resources for Outbound Call */
 website.factory("UpdateBroadcastDefaultSettings", function($resource) {
-	return $resource(API_ADDR + "api/broadcastDefaultSettingses/:id", {id: '@id'}, {
+	return $resource(API_ADDR + "api/broadcastDefaultSettings/:id", {id: '@id'}, {
 		query: {
 			method: "GET",
 			isArray: false
