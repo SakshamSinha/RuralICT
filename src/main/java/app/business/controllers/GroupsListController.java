@@ -1,6 +1,7 @@
 package app.business.controllers;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,8 +27,32 @@ public class GroupsListController {
 	@Transactional
 	public String groupsList(@PathVariable String org, Model model) {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
-		model.addAttribute("groups",new ArrayList<Group> (organizationService.getOrganizationGroupList(organization)));
+		ArrayList<Group> childOrganizaitionsList = new ArrayList<Group> (organizationService.getOrganizationGroupList(organization));
+		childOrganizaitionsList.sort(new GroupNameComparator());
+		int i = 0;
+		Group parentGroup=null;
+		for (Group group:childOrganizaitionsList)
+		{
+			if(group.getParentGroup()==null)
+			{
+				parentGroup=group;
+				break;
+			}
+			i++;
+		}
+		childOrganizaitionsList.remove(i);
+		childOrganizaitionsList.add(0, parentGroup);
+		model.addAttribute("groups",childOrganizaitionsList);
 		return "groupsList";
 	}
 
+	class GroupNameComparator implements Comparator<Group>
+	{
+		@Override
+		public int compare(Group o1, Group o2) {
+			int i=o1.getName().compareTo(o2.getName());
+			return i;
+		}
+		
+	}
 }
