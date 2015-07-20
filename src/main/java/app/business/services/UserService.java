@@ -69,19 +69,26 @@ public class UserService {
 		
 		String role = null;
 		
-		OrganizationMembership organizationMembership = organizationMembershipService.getUserOrganizationMembership(user,organization);
-		
-		if(organizationMembership.getIsAdmin()==true && organizationMembership.getIsPublisher()==false){
-			role="Admin";
+		try{
+			OrganizationMembership organizationMembership = organizationMembershipService.getUserOrganizationMembership(user,organization);
+			
+			if(organizationMembership.getIsAdmin()==true && organizationMembership.getIsPublisher()==false){
+				role="Admin";
+			}
+			else if(organizationMembership.getIsPublisher()==true && organizationMembership.getIsAdmin()==false){
+				role="Publisher";
+			}
+			else if(organizationMembership.getIsAdmin()==false && organizationMembership.getIsPublisher()==false){
+				role="Member";
+			}
+			else if(organizationMembership.getIsPublisher()==true && organizationMembership.getIsAdmin()==true){
+				role="Admin Publisher";
+			}
 		}
-		else if(organizationMembership.getIsPublisher()==true && organizationMembership.getIsAdmin()==false){
-			role="Publisher";
-		}
-		else if(organizationMembership.getIsAdmin()==false && organizationMembership.getIsPublisher()==false){
-			role="Member";
-		}
-		else if(organizationMembership.getIsPublisher()==true && organizationMembership.getIsAdmin()==true){
-			role="Admin Publisher";
+		catch (NullPointerException e)
+		{
+			System.out.println("User whose Organization Membership is missing from database is: " + user.getName() + " userID: " + user.getUserId());
+			System.out.println("Missing Organization ID is: " + organization.getOrganizationId());
 		}
 		
 		return role;

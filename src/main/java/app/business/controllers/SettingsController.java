@@ -117,21 +117,28 @@ public class SettingsController {
 		String role ="admin";
 
 		User user = userService.getCurrentUser();
+		UserPhoneNumber previousPrimaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
 
 		// Add the new User to database
 		user.setName(name);
 		user.setAddress(address);
 		user.setEmail(email);
 		user.setSha256Password(passwordEncoder.encode(password));
-		userService.addUser(user);
-		// First Remove the Previous Primary Phone Number
-		UserPhoneNumber previousPrimaryPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
-		userPhoneNumberService.removeUserPhoneNumber(previousPrimaryPhoneNumber);
 
-		// Then add the new Primary number to the database
-		UserPhoneNumber newPrimaryPhoneNumber = new UserPhoneNumber(user, phone, true);
-		userPhoneNumberService.addUserPhoneNumber(newPrimaryPhoneNumber);
 
+		// Find if the number is already present in the database 
+		// If present report it to the Frontend
+		if(!userPhoneNumberService.findPreExistingPhoneNumber(phone))
+		{
+			userService.addUser(user);
+		}
+
+		else {
+
+			// Then add the new Primary number to the database
+			previousPrimaryPhoneNumber.setPhoneNumber(phone);
+			userPhoneNumberService.addUserPhoneNumber(previousPrimaryPhoneNumber);
+		}
 	}
 
 	@RequestMapping(value="/resetwelcomeMessageUrl")

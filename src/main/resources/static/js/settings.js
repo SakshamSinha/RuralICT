@@ -295,15 +295,27 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			profileSettingDetails.phone = $.trim($('#phone').val());
 			profileSettingDetails.city =  $.trim($('#city').val());
 			profileSettingDetails.password =  $.trim($('#re-new-password').val());
+
+			if(normalizePhoneNumber(profileSettingDetails.phone) == false)
+			{
+				createAlert("Enter Phone Number","Please enter a valid phone number !");
+			}
+			else
+			{
+
 			$http.post( API_ADDR + 'web/' + abbr + '/updateUser', profileSettingDetails).
 			success(function(data, status, headers, config) {
 				createAlert("Settings Saved","Your Settings have been saved.")
 
+				// Normalize the phone number to database format
+				profileSettingDetails.phone = normalizePhoneNumber(profileSettingDetails.phone);
+
 
 			}).
 			error(function(data, status, headers, config) {
-				createAlert("Error Sving Settings","There was some error in response from the remote server.");
+				createAlert("Error Saving Settings","There was some error in response from the remote server.");
 			});
+
 		}
 		else{
 			createAlert("Error Saving Profile","Password is not same");

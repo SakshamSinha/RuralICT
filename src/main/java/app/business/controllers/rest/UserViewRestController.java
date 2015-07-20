@@ -12,41 +12,58 @@ import org.springframework.web.bind.annotation.RestController;
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
 import app.business.services.OrganizationMembershipService;
+import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.UserViewService;
 import app.business.services.UserViewService.UserView;
 import app.entities.Group;
 import app.entities.GroupMembership;
 import app.entities.OrganizationMembership;
+import app.entities.User;
+import app.entities.UserPhoneNumber;
 
 @RestController
 @RequestMapping("/api")
 public class UserViewRestController {
-	
+
 	@Autowired
 	UserViewService userViewService;
-	
+
 	@Autowired
 	GroupService groupService;
-	
+
 	@Autowired
 	GroupMembershipService groupMembershipService;
-	
+
 	@Autowired
 	OrganizationMembershipService organizationMembershipService;
+
+	@Autowired
+	UserPhoneNumberService userPhoneNumberService;
 	
 	@Autowired
 	UserService userService;
-	
+
 	@RequestMapping(value="/userViews/add/{groupId}", method=RequestMethod.POST)
 	@Transactional
 	public @ResponseBody boolean addUserView(@RequestBody UserView userView, @PathVariable int groupId) {
+		
+		Group group = groupService.getGroup(groupId);
+		
 		try {
-			Group group = groupService.getGroup(groupId);
-			userView = userViewService.addUserView(userView);
+
 			
-			groupMembershipService.addGroupMembership(new GroupMembership(group, userView.getUser()));
-			organizationMembershipService.addOrganizationMembership(new OrganizationMembership(group.getOrganization(), userView.getUser(), false, false));
+			UserPhoneNumber phone = userPhoneNumberService.getUserPhoneNumber(userView.getPhone().getPhoneNumber());
+			
+			if(userPhoneNumberService.findPreExistingPhoneNumber(userView.getPhone().getPhoneNumber()))
+			{
+				// if phone number doesn't exist, add the user and his phone number to database
+				userView = userViewService.addUserView(userView);
+				phone = userPhoneNumberService.getUserPhoneNumber(userView.getPhone().getPhoneNumber());
+			}
+
+			groupMembershipService.addGroupMembership(new GroupMembership(group, phone.getUser()));
+			organizationMembershipService.addOrganizationMembership(new OrganizationMembership(group.getOrganization(),phone.getUser(), false, false));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -54,7 +71,7 @@ public class UserViewRestController {
 		}
 		return true;
 	}
-	
+
 	@RequestMapping(value="/userViews/delete/{userId}", method=RequestMethod.DELETE)
 	@Transactional
 	public @ResponseBody boolean removeUserView(@PathVariable int userId) {
