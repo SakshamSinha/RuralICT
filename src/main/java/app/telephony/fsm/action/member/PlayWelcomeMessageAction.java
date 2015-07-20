@@ -57,6 +57,9 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			if(v==null){
 				response.addPlayAudio(v.getUrl());
 			}
+			else{
+				response.addPlayAudio(v.getUrl());
+			}
 			ruralictSession.setOrderAllowed(broadcast.getAskOrder());
 			ruralictSession.setFeedbackAllowed(broadcast.getAskFeedback());
 			ruralictSession.setResponseAllowed(broadcast.getAskResponse());
