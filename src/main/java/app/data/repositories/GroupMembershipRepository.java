@@ -67,7 +67,7 @@ public interface GroupMembershipRepository extends JpaRepository<GroupMembership
 	
 	public List<GroupMembership> findAllByOrderByUser_NameAsc();
 	
-	@RestResource(rel="groupMemberShip", path="groupMemberShip")
+	@RestResource(rel="findByUserAndGroup_Organization", path="findByUserAndGroup_Organization")
 	public List<GroupMembership> findByUserAndGroup_Organization(@Param("user") User user,@Param("organization") Organization organization);
 	
 	public List<GroupMembership> findByUserAndGroup_OrganizationOrderByGroup_NameAsc(User user,Organization organization);	

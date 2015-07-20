@@ -153,7 +153,7 @@ website.factory("GetGroupMembershipByUserAndGroup", function($resource) {
 });
 
 website.factory("GetGroupMembershipsByUser", function($resource) {
-	return $resource(API_ADDR + "api/groupMemberships/search/groupMemberShip", {user:"@user", organization:"@organization"}, {
+	return $resource(API_ADDR + "api/groupMemberships/search/findByUserAndGroup_Organization", {user:"@user", organization:"@organization"}, {
 		update: {
 			method: 'GET'
 		}
