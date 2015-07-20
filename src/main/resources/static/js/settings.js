@@ -29,7 +29,7 @@ function changeAudioSource(url){
 }
 
 /* Actual Settings Controller */
-website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window, UpdateOrganization, UpdateBroadcastDefaultSettings) {
+website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window, UpdateOrganization, UpdateBroadcastDefaultSettings, OrganizationListGet) {
 
 	// get the current organization Attributes
 	var orgid = $('#organizationId').val();
@@ -141,7 +141,12 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 		createAlert("Error Storing Audio","There was some error in response from the server.");
 	});
 
-
+	//TODO List of Organizations would be required from Angular JS
+	var organizationList = OrganizationListGet.get(function(){
+		$scope.organizations = organizationList._embedded.organizations;
+		console.log($scope.organizations);
+	});
+	
 	// click function for 'save details' button in voice dashboard settings
 	$scope.updateDashboardOpt = function() {
 
@@ -332,6 +337,117 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			createAlert("Error Reseting Welcome Message","There was some error in response from the remote server.");
 		});
 	}
+	$scope.organizationData = [];
+	$scope.saveConfiguration = function(){
+		var updateOrganizationSettings = new FormData();
+		$("#system-configuration-settings > #organization-row").each(function(){
+			
+			
+			dataObject = {};
+			var orgid = $("#organization-name",this).attr("organizationId");
+			dataObject.organizationId = orgid;
+			dataObject.hasOnlyInbox = false;
+			dataObject.hasFeedback = false;
+			dataObject.hasResponse = false;
+			dataObject.hasTextMessageResponse = false;
+			dataObject.hasBill = false;
+			if ($("#only-inbox > input",this).is(":checked"))
+			{
+				dataObject.hasOnlyInbox = true;
+			}
+			if ($("#feedback > input",this).is(":checked"))
+			{
+				dataObject.hasFeedback = true;
+			}
+			if ($("#response > input",this).is(":checked"))
+			{
+				dataObject.hasResponse = true;
+			}
+			if ($("#text-message-response > input",this).is(":checked"))
+			{
+				console.log(orgid + "text message response is set to be true");
+				dataObject.hasTextMessageResponse = true;
+			} 
+			if ($("#bill > input",this).is(":checked"))
+			{
+				console.log(orgid + "bill is set to be true");
+				dataObject.hasBill = true;
+			}
+			
+			$scope.organizationData.push(dataObject);
+			console.log("Organization Id is :" + orgid);
+		});
+		
+		updateOrganizationSettings.append("organizationData",$scope.organizationData);
+		$http({
+			method: 'POST',
+			url: API_ADDR + 'web/' + abbr + '/updateOrganizationConfiguration', // The URL to Post.
+			headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
+			data: updateOrganizationSettings,
+			transformRequest: function(data, headersGetterFunction) {
+				return data;
+			}
+		}).success(function(data, status) {
+			console.log(data);
+		}).error(function(data, status) {
+			console.log(data);
+		});
+		
+//		for (i=0;i < $scope.organizationData.length;i++)
+//		{
+//			newUserInterfaceData = $scope.organizationData[i];
+//			oldDatabaseData = $scope.organizations[i];
+//			console.log(oldDatabaseData);
+//			oldDatabaseData.hasOnlyInbox = newUserInterfaceData.hasOnlyInbox;
+//			oldDatabaseData.hasFeedback = newUserInterfaceData.hasFeedback;
+//			oldDatabaseData.hasResponse = newUserInterfaceData.hasResponse;
+//			oldDatabaseData.hasTextMessageResponse = newUserInterfaceData.hasTextMessageResponse;
+//			oldDatabaseData.hasBill = newUserInterfaceData.hasBill;
+			
+//			oldDatabaseData.$update({
+//				id:newUserInterfaceData.organizationId
+//			},function(){
+//				console.log("Organization updated");
+//			});
+			
+//			$http({
+//				method: 'PATCH',
+//				url: API_ADDR + 'api/organizations/' + newUserInterfaceData.organizationId, // The URL to Post.
+//				headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
+//				data: oldDatabaseData,
+//				transformRequest: function(data, headersGetterFunction) {
+//					return data;
+//				}
+//			})
+//			.success(function(data, status) {
+//				console.log(data);
+//			})
+//			.error(function(data, status) {
+//				console.log(data);
+//			});
+			
+//			$scope.organization = UpdateOrganization.get({
+//				id:data.organizationId
+//				},function(){
+//					console.log("Print this: " + $scope.organization.organizationId);
+//					console.log($scope.organization);
+//					$scope.organization.hasOnlyInbox = data.hasOnlyInbox;
+//					$scope.organization.hasFeedback = data.hasFeedback;
+//					$scope.organization.hasResponse = data.hasResponse;
+//					$scope.organization.hasTextMessageResponse = data.hasTextMessageResponse;
+//					$scope.organization.hasBill = data.hasBill;
+//					console.log($scope.organization);
+//					$scope.organization.$update({
+//						id:data.organizationId
+//					},function(){
+//							console.log("Organization updated");
+//					});
+//					console.log(data);
+//					
+//				});
+//		}
+
+	}
 
 });
 
@@ -354,4 +470,16 @@ $("#page-content").on("change","#select-welcome-message-language",function(e){
 	{
 		changeAudioSource(myScope.languageUrl[0]);
 	}
+});
+
+$("#page-content").on("click","welcome-message-file",function(e){
+	//In order to set the value of file as null
+	this.value = null;
+});
+
+$("#page-content").on("change","#welcome-message-file",function(e){
+	//get the filename set by the fileModel angular directive
+	var filename = angular.element('#settings-page-ids').scope().myFile.name;
+	//set the filename to be seen in UI
+	$("#welcome-message-url").text(filename);
 });
