@@ -165,17 +165,10 @@ website.factory("OrganizationListGet",function($resource){
 	});
 });
 
-website.factory("UpdateOrganization", function($resource) {
-	return $resource(API_ADDR + "api/organizations/:id", {id: '@id'}, {
-		query: {
-			method: "GET",
-			isArray: false
-		},
+website.factory("GetGroupMembershipsByUser", function($resource) {
+	return $resource(API_ADDR + "api/groupMemberships/search/findByUserAndGroup_Organization", {user:"@user", organization:"@organization"}, {
 		update: {
-			method: "PATCH",
-			params: {
-				id: '@id'
-			}
+			method: 'GET'
 		}
 	});
 });

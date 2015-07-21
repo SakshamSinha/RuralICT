@@ -303,26 +303,26 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			else
 			{
 
-			$http.post( API_ADDR + 'web/' + abbr + '/updateUser', profileSettingDetails).
-			success(function(data, status, headers, config) {
-				createAlert("Settings Saved","Your Settings have been saved.")
+				$http.post( API_ADDR + 'web/' + abbr + '/updateUser', profileSettingDetails).
+				success(function(data, status, headers, config) {
+					createAlert("Settings Saved","Your Settings have been saved.")
 
-				// Normalize the phone number to database format
-				profileSettingDetails.phone = normalizePhoneNumber(profileSettingDetails.phone);
+					// Normalize the phone number to database format
+					profileSettingDetails.phone = normalizePhoneNumber(profileSettingDetails.phone);
 
 
-			}).
-			error(function(data, status, headers, config) {
-				createAlert("Error Saving Settings","There was some error in response from the remote server.");
-			});
+				}).
+				error(function(data, status, headers, config) {
+					createAlert("Error Saving Settings","There was some error in response from the remote server.");
+				});
 			}
 
 		}
+		
 		else{
 			createAlert("Error Saving Profile","Password is not same");
 		}
-
-
+		
 	}
 
 	$scope.resetWelcomeMessageSettingsButton = function(){

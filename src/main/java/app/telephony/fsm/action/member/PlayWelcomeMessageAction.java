@@ -3,6 +3,7 @@ package app.telephony.fsm.action.member;
 import java.util.HashMap;
 
 
+
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
@@ -12,7 +13,9 @@ import app.entities.Voice;
 import app.entities.WelcomeMessage;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.RuralictSession;
+import app.telephony.config.Configs;
 import app.telephony.fsm.RuralictStateMachine;
+
 import com.continuent.tungsten.commons.patterns.fsm.Action;
 import com.continuent.tungsten.commons.patterns.fsm.Event;
 import com.continuent.tungsten.commons.patterns.fsm.Transition;
@@ -30,7 +33,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 		RuralictSession ruralictSession = (RuralictSession) session;
 		boolean isOutbound = ruralictSession.isOutbound();
 		WelcomeMessage welcomeMessage;
-		Voice v=null;
+		Voice voiceMessage=null;
 		BroadcastService broadcastService= SpringContextBridge.services().getVoiceBroadcastService();
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
@@ -41,7 +44,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			response.addPlayText("No broadcast message");
 		}
 		else{
-			v = broadcast.getVoice();
+			voiceMessage = broadcast.getVoice();
 		}
 		String userLang=userPhoneNumberService.getUserPhoneNumber(session.getUserNumber()).getUser().getCallLocale();
 
@@ -54,18 +57,25 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 
 		if(isOutbound){
 
-			if(v==null){
-				response.addPlayAudio(v.getUrl());
+			if(voiceMessage==null){
+				response.addPlayText("No broadcast Message");
 			}
 			else{
-				response.addPlayAudio(v.getUrl());
+				response.addPlayAudio(voiceMessage.getUrl());
 			}
+			
+			if((broadcast.getAskOrder()==false)&(broadcast.getAskFeedback()==false)&(broadcast.getAskResponse()==false)){
+				response.addPlayAudio(Configs.Voice.VOICE_DIR + "/thankYou_"+userLang+".wav");
+				response.addHangup();
+				
+			}
+			else{
 			ruralictSession.setOrderAllowed(broadcast.getAskOrder());
 			ruralictSession.setFeedbackAllowed(broadcast.getAskFeedback());
 			ruralictSession.setResponseAllowed(broadcast.getAskResponse());
 			ruralictSession.setBroadcastID(broadcast.getBroadcastId());
 			ruralictSession.setGroupID(broadcast.getGroup().getGroupId()+"");
-
+			}
 		}
 		else{
 
@@ -81,13 +91,14 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 				welcomeMessage = organizationService.getWelcomeMessageByOrganization(organizationService.getOrganizationByIVRS(session.getIvrNumber()), ruralictSession.getLanguage());
 			}
 			response.addPlayAudio(welcomeMessage.getVoice().getUrl());
+			
 			if(organizationService.getOrganizationByIVRS(session.getIvrNumber()).getEnableBroadcasts()){
 				if(broadcast == null){
 					ruralictSession.setGroupID("0");
 				}
 				else {
 					ruralictSession.setGroupID(broadcast.getGroup().getGroupId()+"");
-					response.addPlayAudio(v.getUrl());
+					response.addPlayAudio(voiceMessage.getUrl());
 				}
 			}
 			else{
