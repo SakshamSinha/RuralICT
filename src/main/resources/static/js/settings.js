@@ -315,6 +315,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			error(function(data, status, headers, config) {
 				createAlert("Error Saving Settings","There was some error in response from the remote server.");
 			});
+			}
 
 		}
 		else{
@@ -322,7 +323,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 		}
 
 
-	};
+	}
 
 	$scope.resetWelcomeMessageSettingsButton = function(){
 
@@ -349,6 +350,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			createAlert("Error Reseting Welcome Message","There was some error in response from the remote server.");
 		});
 	}
+	//Below part in angular controller would be implemented in beta version
 	$scope.organizationData = [];
 	$scope.saveConfiguration = function(){
 		var updateOrganizationSettings = new FormData();
@@ -389,76 +391,16 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			$scope.organizationData.push(dataObject);
 			console.log("Organization Id is :" + orgid);
 		});
-		
+		var myjsonstring = JSON.stringify($scope.organizationData);
+		console.log(myjsonstring);
 		updateOrganizationSettings.append("organizationData",$scope.organizationData);
-		$http({
-			method: 'POST',
-			url: API_ADDR + 'web/' + abbr + '/updateOrganizationConfiguration', // The URL to Post.
-			headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
-			data: updateOrganizationSettings,
-			transformRequest: function(data, headersGetterFunction) {
-				return data;
-			}
-		}).success(function(data, status) {
+		$http.post(API_ADDR + 'web/'+abbr+'/updateOrganizationConfiguration',myjsonstring)
+		.success(function(data,status,header,config){
 			console.log(data);
-		}).error(function(data, status) {
+		})
+		.error(function(data,status,header,config){
 			console.log(data);
 		});
-		
-//		for (i=0;i < $scope.organizationData.length;i++)
-//		{
-//			newUserInterfaceData = $scope.organizationData[i];
-//			oldDatabaseData = $scope.organizations[i];
-//			console.log(oldDatabaseData);
-//			oldDatabaseData.hasOnlyInbox = newUserInterfaceData.hasOnlyInbox;
-//			oldDatabaseData.hasFeedback = newUserInterfaceData.hasFeedback;
-//			oldDatabaseData.hasResponse = newUserInterfaceData.hasResponse;
-//			oldDatabaseData.hasTextMessageResponse = newUserInterfaceData.hasTextMessageResponse;
-//			oldDatabaseData.hasBill = newUserInterfaceData.hasBill;
-			
-//			oldDatabaseData.$update({
-//				id:newUserInterfaceData.organizationId
-//			},function(){
-//				console.log("Organization updated");
-//			});
-			
-//			$http({
-//				method: 'PATCH',
-//				url: API_ADDR + 'api/organizations/' + newUserInterfaceData.organizationId, // The URL to Post.
-//				headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
-//				data: oldDatabaseData,
-//				transformRequest: function(data, headersGetterFunction) {
-//					return data;
-//				}
-//			})
-//			.success(function(data, status) {
-//				console.log(data);
-//			})
-//			.error(function(data, status) {
-//				console.log(data);
-//			});
-			
-//			$scope.organization = UpdateOrganization.get({
-//				id:data.organizationId
-//				},function(){
-//					console.log("Print this: " + $scope.organization.organizationId);
-//					console.log($scope.organization);
-//					$scope.organization.hasOnlyInbox = data.hasOnlyInbox;
-//					$scope.organization.hasFeedback = data.hasFeedback;
-//					$scope.organization.hasResponse = data.hasResponse;
-//					$scope.organization.hasTextMessageResponse = data.hasTextMessageResponse;
-//					$scope.organization.hasBill = data.hasBill;
-//					console.log($scope.organization);
-//					$scope.organization.$update({
-//						id:data.organizationId
-//					},function(){
-//							console.log("Organization updated");
-//					});
-//					console.log(data);
-//					
-//				});
-//		}
-
 	}
 
 });

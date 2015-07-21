@@ -10,9 +10,12 @@
 
 <link th:href="@{/static/css/bootstrap.css}" rel="stylesheet" /> 
 <link th:href="@{/static/css/site.css}" rel="stylesheet" />
-<link th:href="@{/static/css/ruralivrs.css}" rel="stylesheet" />
 <link th:href="@{/static/css/bootstrap-responsive.css}" rel="stylesheet" />
 <link th:href="@{/static/css/loading-bar.css}" rel="stylesheet" />
+<link th:href="@{/static/css/jquery-ui.min.css}" rel="stylesheet" />
+<link th:href="@{/static/css/jquery-ui.structure.min.css}" rel="stylesheet" />
+<link th:href="@{/static/css/jquery-ui.theme.min.css}" rel="stylesheet" />
+<link th:href="@{/static/css/ruralivrs.css}" rel="stylesheet" />
 </head>
 <body>
 	<input type="hidden" id="contextRoot" th:value="@{/}">
@@ -230,13 +233,27 @@
 	  </div>
 	</div>
 </div>
+	<!-- cdn for modernizr, if you haven't included it already -->
+	<script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+	<!-- polyfiller file to detect and load polyfills -->
 
+<!-- 	<script> -->
+<!--  webshims.setOptions('waitReady', false);--> 	  	
+<!--  webshims.setOptions('forms-ext', {types: 'date'});-->   		
+<!--  webshims.polyfill('forms forms-ext');-->   		
+<!-- 	</script> -->
+	
+<!-- 	<script th:src="@{/static/js/libs/1.12.4/extras/modernizr-custom.js}"></script> -->
+<!-- 	<script th:src="@{/static/js/libs/1.12.4/polyfiller.js}"></script> -->
 	<script th:src="@{/static/js/libs/jquery.js}"></script>
+	<script th:src="@{/static/js/libs/jquery-ui.min.js}"></script>
+	<script th:src="@{/static/js/libs/js-webshim/minified/polyfiller.js}"></script>
 	<script th:src="@{/static/js/libs/bootstrap.min.js}"></script>
 	<script th:src="@{/static/js/libs/angular.js}"></script>
 	<script th:src="@{/static/js/libs/angular-route.js}"></script>
 	<script th:src="@{/static/js/libs/angular-resource.js}"></script>
 	<script th:src="@{/static/js/libs/loading-bar.min.js}"></script>
+	<script th:src="@{/static/js/libs/dirPagination.js}"></script>
 	<script th:src="@{/static/js/libs/dirPagination.js}"></script>
 	<script th:src="@{/static/js/utility.js}"></script>
 	<script th:src="@{/static/js/libs/recorder.js}"></script>
@@ -260,5 +277,6 @@
 	<script th:src="@{/static/js/broadcastDefaultSettings.js}"></script>
 	<script th:src="@{/static/js/manageInboundCalls.js}"></script>	
 	<script th:src="@{/static/js/manageOutboundCalls.js}"></script>
+
 </body>
 </html>
