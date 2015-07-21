@@ -12,10 +12,8 @@
 		<li><a href="#profile-settings" data-toggle="tab">Profile</a></li>
 		<li class="active"><a href="#system-settings" data-toggle="tab">System</a>
 		</li>
-		<!-- 
-	TODO for future
-	<li><a href="#bill-layout-settings" data-toggle="tab">Bill Layout</a>
-	</li> -->
+		<!--  <li><a href="#bill-layout-settings" data-toggle="tab">Bill Layout</a>
+	</li>   -->
 
 	</ul>
 	<div class="tab-content">
@@ -94,7 +92,7 @@
 						<div class="table-settings-system">
 							<table style="border-spacing: 40px 10px;">
 								<tr>
-									<td align='right'><b> Select Language :</b></td>
+									<td><b> Select Language :</b></td>
 
 									<td><select id='select-welcome-message-language'
 										ng-model=WelcomeMessageLanguageSelect
@@ -104,7 +102,7 @@
 								</tr>
 
 								<tr>
-									<td align='right'>Current Welcome Message :</td>
+									<td>Current Welcome Message :</td>
 									<td><audio id='welcome-message-audio' controls>
 											<source
 												src="http://ruralict.cse.iitb.ac.in/Downloads/voice/welcomeMessage_en.wav"
@@ -113,7 +111,7 @@
 								</tr>
 
 								<tr>
-									<td align='right'>Download Current Message File :</td>
+									<td>Download Current Message File :</td>
 									<td><a id='download-message-audio'
 										href="http://ruralict.cse.iitb.ac.in/Downloads/voice/welcomeMessage_en.wav"
 										download>Download</a></td>
@@ -121,7 +119,7 @@
 								</tr>
 
 								<tr>
-									<td align='right'>Upload New Welcome Message File :</td>
+									<td>Upload New Welcome Message File :</td>
 									<td>
 										<button class="btn btn-success" onclick="recordFile.init()"
 											id="voice-record" data-toggle="modal" data-title="Record"
@@ -157,10 +155,7 @@
 						<div class="table-settings-system">
 							<table>
 								<tr>
-									<b>INCOMING CALL SETTINGS :</b>
-								</tr>
-								<tr>
-									<td><b>Call Flow :</b><br>
+									<td>
 									<br> <input type="checkbox"
 										ng-model=incomingCheckBoxOptions.order name="orderIncoming" />Order<br>
 										<input type="checkbox"
@@ -178,7 +173,7 @@
 					</div>
 					<div id="voice-call-settings" class="tab-pane">
 						<div class="table-settings-system">
-							<b>VOICE CALL OPTIONS :</b>
+							
 							<table>
 								<tr>
 									<td>Order Cancellation</td>
@@ -246,7 +241,7 @@
 					</div>
 					<div id="dashboard-settings" class="tab-pane">
 						<div class="table-settings-system">
-							<b>VOICE RESPONSE MESSAGE(DASHBOARD) OPTIONS :</b> <br>
+							
 							<table>
 
 								<tr>
@@ -266,7 +261,6 @@
 										ng-options="option.value as option.name for option in selectOptions"
 										name='response'>
 									</select></td>
-								</tr>
 
 
 								<tr>
@@ -320,18 +314,57 @@
 			</div>
 		</div>
 
-		<!-- <div id="bill-layout-settings" class="tab-pane">
-	<br>
-	<label>#bill-layout-settings</label>
-	</div>
+<!--  
+For Future
+<div id="bill-layout-settings" class="tab-pane">
+	<br> <br>
+			<form class="form-horizontal">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="orgName">Organization Name</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="orgName"
+								th:value="${billLayout.organization.name}" />
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="address">Address</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="address"
+								th:value="${billLayout.organization.address}" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="contact">Contact</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="contact"
+								th:value="${billLayout.organization.contact}" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="header">Bill Header</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="header"
+								th:value="${billLayout.headerContent}" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="footer">Bill Footer</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="footer"
+								th:value="${billLayout.footerContent}" />
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="submit" ng-click="updateBillLayoutSetting()"
+							class="btn btn-success" value="Save Bill Details" /> <a class="btn"
+							href="#/settings">Cancel</a>
+					</div>
+				</fieldset>
+	</div> 
+	 -->
 	
-	<div id="ivrs-menu-settings" class="tab-pane">
-	<br>
-	<label>#ivrs-menu-settings</label>
-	</div> -->
-
-
-
 	</div>
 
 	<!--  Confirmation Modal dialog for Reset button in Welcome Message Settings -->

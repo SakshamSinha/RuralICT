@@ -230,7 +230,8 @@ $("#page-content").on("click", "#add-group-user-phone-number", function (e) {
 
 $("#page-content").on("click", ".show-user-groups", function (e) {
 	var id = $(this).attr("data-value");
-	angular.element($("#add-group-user-phone-number")).scope().getUserGroups({user:id});
+	var orgId = $("#organizationId").val();
+	angular.element($("#add-group-user-phone-number")).scope().getUserGroups({user:id, organization:orgId});
 });
 
 $("#page-content").on("click", "#change-user-group", function (e) {
