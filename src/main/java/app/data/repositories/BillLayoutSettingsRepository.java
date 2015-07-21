@@ -33,13 +33,13 @@ public interface BillLayoutSettingsRepository extends JpaRepository<BillLayoutSe
 	@Override
 	public List<BillLayoutSettings> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#setting.organization.abbreviation)")
+	@PreAuthorize("hasRole('ADMIN'+#settings.organization.abbreviation)")
 	@Override
 	public <S extends BillLayoutSettings> S save(@Param("settings") S settings);
 
-	@PreAuthorize("hasRole('ADMIN'+#setting.organization.abbreviation)")
+	@PreAuthorize("hasRole('ADMIN'+#settings.organization.abbreviation)")
 	@Override
-	public void delete(@Param("setting") BillLayoutSettings setting);
+	public void delete(@Param("settings") BillLayoutSettings setting);
 
 	/*
 	 * Search functions
