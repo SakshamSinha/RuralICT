@@ -85,6 +85,9 @@
 					</li>
 					<li><a href="#broadcast-default-settings" data-toggle="tab">Broadcast
 							Default Settings</a></li>
+					<!-- TODO to do this in future -->
+					<li th:if="${organization.organizationId == 'as'}"><a href="#system-configuration-settings" data-toggle="tab">System Configuration</a>
+					</li>
 				</ul>
 				<!--system settings tab content-->
 				<div class="tab-content">
@@ -119,16 +122,23 @@
 								</tr>
 
 								<tr>
-									<td>Upload New Welcome Message File :</td>
+									<td>Record New Welcome Message File :</td>
 									<td>
 										<button class="btn btn-success" onclick="recordFile.init()"
 											id="voice-record" data-toggle="modal" data-title="Record"
 											data-target="#welcome-message-record-modal" align="center">Record</button>
-										<br> <input type="file" name="myFile" file-model="myFile"
-										id="welcome_message">
+									<td>
+								</tr>
+								<tr>
+									<td>Choose the Audio File :<br>(Please upload wav audio file only)</td>
+									<td>
+										<label class="custom-file-upload btn btn-success btn-small" role="button">
+											<input id="welcome-message-file" type="file" size = "4" name="myFile" file-model="myFile" />
+											<i class="icon-folder-open icon-white"></i> Choose Audio
+										</label>
+										<span id="welcome-message-url"></span>
 									</td>
 								</tr>
-
 							</table>
 							<div class="form-actions">
 								<div class="row">
@@ -309,6 +319,31 @@
 									value="Save Details" />
 							</div>
 						</div>
+					</div>
+					<!-- TODO to do this in future -->
+					<div th:if="${organization.organizationId == 'as'}" id="system-configuration-settings" class="tab-pane">
+						<div class="row-fluid">
+							<div class="span2" style="text-align:center;">Organization</div>
+							<div class="span2" style="text-align:center;">Only Inbox(No Billing)</div>
+							<div class="span2" style="text-align:center;">Incoming Feedback</div>
+							<div class="span2" style="text-align:center;">Incoming Response</div>
+							<div class="span2" style="text-align:center;">Text Message Respones</div>
+							<div class="span2" style="text-align:center;">Bill</div>
+						</div>
+						<div id="organization-row" th:each="organization,organizationStat : ${organizations}" class="row-fluid">
+							
+								<div id="organization-name" class="span2" th:text="${organization.name}" th:attr="organizationId=${organization.organizationId}" style="text-align:center;">Organization</div>
+								<div id="only-inbox" class="span2" style="text-align:center;"><input type="checkbox"></div>
+								<div id="feedback" class="span2" style="text-align:center;"><input type="checkbox"></div>
+								<div id="response" class="span2" style="text-align:center;"><input type="checkbox"></div>
+								<div id="text-message-response" class="span2" style="text-align:center;"><input type="checkbox"></div>
+								<div id="bill" class="span2" style="text-align:center;"><input type="checkbox"></div>
+												
+						</div>
+						<br>
+						<input style="float: center" type="submit"
+											class="btn btn-success" ng-click="saveConfiguration()"
+											value="Save Configuration" />
 					</div>
 				</div>
 			</div>
