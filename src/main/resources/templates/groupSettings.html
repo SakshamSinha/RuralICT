@@ -13,7 +13,7 @@
 				<label class="control-label" for="groupName">Group Name</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge" id="changeGroupName"
-						th:value="${group.name}" />
+						th:value="${group.name}" th:attr="disabled=${parentGroup.groupId == group.groupId}"/>
 				</div>
 			</div>
 			
@@ -23,9 +23,10 @@
 					<button class="btn btn-warning" id="#delete-group-confirmation" data-title="View" data-toggle="modal" data-target="#delete-group-confirmation-modal">Delete</button>
 				</div>
 			</div>
-	
-			<div class="form-actions">
-				<input type="submit" class="btn btn-success" value="Save Details" id="submitGroupSettings" />
+			<div th:if="${parentGroup.groupId != group.groupId}" class="control-group">
+				<div class="form-actions">
+					<input type="submit" class="btn btn-success" value="Save Details" id="submitGroupSettings" />
+				</div>
 			</div>
 		</fieldset>
 	</form>

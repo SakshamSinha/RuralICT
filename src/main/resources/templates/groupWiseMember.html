@@ -45,7 +45,6 @@
 					              <li><a href="#" th:attr="data-value=${userView.user.userId}"  class="add-group-user-phone-number" data-toggle="modal" data-title="Add new user" data-target="#add-group-user-phone-number-modal"><i class="icon-plus-sign"></i> Add a Number</a></li>
 					              <li th:if="${parentGroup.groupId != groupId}"><a href="#" th:attr="data-value=${userView.user.userId}"  class="change-user-group" data-toggle="modal" data-title="Add new user" data-target="#change-user-group-modal"><i class="icon-edit"></i> Move to Group</a></li>
 					              <li><a href="#" th:attr="data-value=${userView.user.userId}" class="add-group-user-to-new-group" data-toggle="modal" data-title="Add new user" data-target="#add-group-user-to-new-group-modal"><i class="icon-plus-sign"></i> Add to Group</a></li>
-					              <li><a href="#" th:attr="data-value=${userView.user.userId}"  class="show-user-groups" data-toggle="modal" data-title="Add new user" data-target="#show-user-groups-modal"><i class="icon-eye-open"></i> Show Groups</a></li>
 					              <li th:if="${parentGroup.groupId != groupId}"><a href="#" th:attr="data-value=${userView.user.userId}"  class="remove-group-user" data-toggle="modal" data-title="Add new user" data-target="#remove-group-user-modal"><i class="icon-remove"></i> Remove</a></li>
 					              					              
 	           					</ul>
