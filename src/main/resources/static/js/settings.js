@@ -270,6 +270,35 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			createAlert("Error Uploading File","There was some error in response from the server.");
 		});
 	};
+	
+
+	$scope.updateBillLayoutSetting=function(){
+		
+		var name =$.trim($('#orgName').val());
+		var address =$.trim($('#address').val());
+		var contact =$.trim($('#contact').val());
+		var header =$.trim($('#header').val());
+		var footer =$.trim($('#footer').val());
+		console.log(name);
+		console.log(footer);
+		var profileSettingDetails = {};
+		profileSettingDetails.name = $.trim($('#orgName').val());
+		profileSettingDetails.address =  $.trim($('#address').val());
+		profileSettingDetails.contact = $.trim($('#contact').val());
+		profileSettingDetails.header =  $.trim($('#header').val());
+		profileSettingDetails.footer =  $.trim($('#footer').val());
+		
+		$http.post( API_ADDR + 'web/' + abbr + '/billLayout', profileSettingDetails).
+		success(function(data, status, headers, config) {
+			createAlert("Settings Saved","Your Settings have been saved.")
+			
+		}).
+		error(function(data, status, headers, config) {
+			createAlert("Error Saving Settings","There was some error in response from the remote server.");
+		});
+		
+	}
+	
 	$scope.updateSetting= function(){
 
 		var name = $.trim($('#name').val());

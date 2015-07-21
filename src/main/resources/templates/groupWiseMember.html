@@ -32,7 +32,7 @@
 								<span th:if="${groups.group.organization == organization}" th:text="${groups.group.name}"></span>
 							</span>
 							<span th:if="${itrStatus.count == 3}">
-								, <a href="#" th:attr="data-value=${userView.user.userId}"  class="show-user-groups" data-toggle="modal" data-title="Add new user" data-target="#show-user-groups-modal">See more</a>			
+								 ,<a href="#" th:attr="data-value=${userView.user.userId}"  class="show-user-groups" data-toggle="modal" data-title="Add new user" data-target="#show-user-groups-modal">See more</a>			
 							</span>
 						</span>
 						</td>
@@ -250,7 +250,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="list-users" ng-repeat="group in groupList">
+						<tr class="list-users"   ng-repeat="group in groupList">
 							<td>{{group.id}}</td>
 							<td>{{group.name}}</td>
 						</tr>

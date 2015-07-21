@@ -40,7 +40,9 @@
             </div>
             <div class="span6">
                 <div class="area">
-					THIS IS A TEMPORARY FILE!
+					<div th:each="organizationMembership: ${organizationMemberships}">
+						<div><a th:href="'/app/web/' + ${organizationMembership.organization.abbreviation}"><div th:text="${organizationMembership.organization.name}">Organization</div></a></div>
+					</div>
                 </div>
                 
             </div>
