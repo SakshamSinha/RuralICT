@@ -49,10 +49,9 @@ public class GroupsListController {
 	class GroupNameComparator implements Comparator<Group>
 	{
 		@Override
-		public int compare(Group o1, Group o2) {
-			int i=o1.getName().compareTo(o2.getName());
+		public int compare(Group firstgroup, Group secondgroup) {
+			int i=firstgroup.getName().compareTo(secondgroup.getName());
 			return i;
 		}
-		
 	}
 }
