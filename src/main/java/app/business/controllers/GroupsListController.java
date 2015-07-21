@@ -1,6 +1,7 @@
 package app.business.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class GroupsListController {
 	public String groupsList(@PathVariable String org, Model model) {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		ArrayList<Group> childOrganizaitionsList = new ArrayList<Group> (organizationService.getOrganizationGroupList(organization));
-		childOrganizaitionsList.sort(new GroupNameComparator());
+		Collections.sort(childOrganizaitionsList, new GroupNameComparator());
 		int i = 0;
 		Group parentGroup=null;
 		for (Group group:childOrganizaitionsList)
