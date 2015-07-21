@@ -268,12 +268,30 @@ public class SettingsController {
 			return "-1";
 		}
 	}
-	
+	/*
+	 * This part would be implemented in beta version
 	@RequestMapping(value="/updateOrganizationConfiguration", method=RequestMethod.POST)
 	@Transactional
-	public void updateOrganizationConfiguration(HttpServletRequest request){
-		System.out.println(request.getParameter("organizationData"));
-		
+	public @ResponseBody int updateOrganizationConfiguration(@RequestBody List<Map<String,String>> organizationsConfiguration){
 
-	}
+		for(Map<String,String> organizationCon : organizationsConfiguration){
+			int organizationId = Integer.parseInt(organizationCon.get("organizationId")); 
+			boolean hasOnlyInbox = (organizationCon.get("hasOnlyInbox") == "true");
+			boolean hasFeedback = (organizationCon.get("hasFeedback") == "true");
+			boolean hasResponse = (organizationCon.get("hasResponse") == "true");
+			boolean hasTextMessageResponse = organizationCon.get("hasTextMessageResponse") == "true";
+			boolean hasBill = organizationCon.get("hasBill") == "true";
+			Organization organization = organizationService.getOrganizationById(organizationId);
+			organization.setHasOnlyInbox(hasOnlyInbox);
+			organization.setHasFeedback(hasFeedback);
+			organization.setHasResponse(hasResponse);
+			organization.setHasTextMessageResponse(hasTextMessageResponse);
+			organization.setHasBill(hasBill);
+			//addOrganization has save function which updates the organization as well
+			organizationService.addOrganization(organization);
+		}
+		
+		
+		return 1;
+	}*/
 }

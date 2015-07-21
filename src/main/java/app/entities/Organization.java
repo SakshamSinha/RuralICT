@@ -95,7 +95,68 @@ public class Organization implements Serializable {
 	private String ivrNumber;
 
 	private String name;
+	/*
+	 * These columns will be added to Beta version
+	@Column(name="has_only_inbox")
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean hasOnlyInbox;
+	
+	@Column(name="has_feedback")
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean hasFeedback;
+	
+	@Column(name="has_response")
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean hasResponse;
+	
+	@Column(name="has_text_message_response")
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean hasTextMessageResponse;
+	
+	@Column(name="has_bill")
+	@Type(type="org.hibernate.type.NumericBooleanType")
+	private boolean hasBill;
+	
+	public boolean isHasOnlyInbox() {
+		return hasOnlyInbox;
+	}
 
+	public void setHasOnlyInbox(boolean hasOnlyInbox) {
+		this.hasOnlyInbox = hasOnlyInbox;
+	}
+
+	public boolean isHasFeedback() {
+		return hasFeedback;
+	}
+
+	public void setHasFeedback(boolean hasFeedback) {
+		this.hasFeedback = hasFeedback;
+	}
+
+	public boolean isHasResponse() {
+		return hasResponse;
+	}
+
+	public void setHasResponse(boolean hasResponse) {
+		this.hasResponse = hasResponse;
+	}
+
+	public boolean isHasTextMessageResponse() {
+		return hasTextMessageResponse;
+	}
+
+	public void setHasTextMessageResponse(boolean hasTextMessageResponse) {
+		this.hasTextMessageResponse = hasTextMessageResponse;
+	}
+
+	public boolean isHasBill() {
+		return hasBill;
+	}
+
+	public void setHasBill(boolean hasBill) {
+		this.hasBill = hasBill;
+	}
+	*/
 	//bi-directional many-to-one association to Broadcast
 	@OneToMany(mappedBy="organization")
 	private List<Broadcast> broadcasts;
@@ -144,7 +205,7 @@ public class Organization implements Serializable {
 	//bi-directional many-to-one association to LatestRecordedVoice
 	@OneToMany(mappedBy="organization")
 	private List<LatestRecordedVoice> latestRecordedVoices;
-
+	
 	public Organization() {
 	}
 
@@ -321,47 +382,7 @@ public class Organization implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public boolean isHasOnlyInbox() {
-		return hasOnlyInbox;
-	}
 
-	public void setHasOnlyInbox(boolean hasOnlyInbox) {
-		this.hasOnlyInbox = hasOnlyInbox;
-	}
-
-	public boolean isHasFeedback() {
-		return hasFeedback;
-	}
-
-	public void setHasFeedback(boolean hasFeedback) {
-		this.hasFeedback = hasFeedback;
-	}
-
-	public boolean isHasResponse() {
-		return hasResponse;
-	}
-
-	public void setHasResponse(boolean hasResponse) {
-		this.hasResponse = hasResponse;
-	}
-
-	public boolean isHasTextMessageResponse() {
-		return hasTextMessageResponse;
-	}
-
-	public void setHasTextMessageResponse(boolean hasTextMessageResponse) {
-		this.hasTextMessageResponse = hasTextMessageResponse;
-	}
-
-	public boolean isHasBill() {
-		return hasBill;
-	}
-
-	public void setHasBill(boolean hasBill) {
-		this.hasBill = hasBill;
-	}
-	
 	public List<Broadcast> getBroadcasts() {
 		return this.broadcasts;
 	}
