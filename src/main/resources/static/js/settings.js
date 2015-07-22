@@ -253,11 +253,11 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			}
 			else if(data == "-2")
 			{
-				createAlert("Error Uploading File","Please Upload a File less than 10MB");
+				createAlert("Error Uploading File","Please Upload a File less than 5MB");
 			}
 			else if(data == "-3")
 			{
-				createAlert("Error Uploading File","The File you have uploaded is not a audio file");
+				createAlert("Error Uploading File","The File you have uploaded is not wav audio file");
 			}
 			else
 			{
@@ -369,6 +369,59 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			createAlert("Error Reseting Welcome Message","There was some error in response from the remote server.");
 		});
 	}
+	
+	//Below part in angular controller would be implemented in beta version
+	$scope.organizationData = [];
+	$scope.saveConfiguration = function(){
+		var updateOrganizationSettings = new FormData();
+		$("#system-configuration-settings > #organization-row").each(function(){
+			
+			
+			dataObject = {};
+			var orgid = $("#organization-name",this).attr("organizationId");
+			dataObject.organizationId = orgid;
+			dataObject.hasOnlyInbox = false;
+			dataObject.hasFeedback = false;
+			dataObject.hasResponse = false;
+			dataObject.hasTextMessageResponse = false;
+			dataObject.hasBill = false;
+			if ($("#only-inbox > input",this).is(":checked"))
+			{
+				dataObject.hasOnlyInbox = true;
+			}
+			if ($("#feedback > input",this).is(":checked"))
+			{
+				dataObject.hasFeedback = true;
+			}
+			if ($("#response > input",this).is(":checked"))
+			{
+				dataObject.hasResponse = true;
+			}
+			if ($("#text-message-response > input",this).is(":checked"))
+			{
+				console.log(orgid + "text message response is set to be true");
+				dataObject.hasTextMessageResponse = true;
+			} 
+			if ($("#bill > input",this).is(":checked"))
+			{
+				console.log(orgid + "bill is set to be true");
+				dataObject.hasBill = true;
+			}
+			
+			$scope.organizationData.push(dataObject);
+			console.log("Organization Id is :" + orgid);
+		});
+		var myjsonstring = JSON.stringify($scope.organizationData);
+		console.log(myjsonstring);
+		updateOrganizationSettings.append("organizationData",$scope.organizationData);
+		$http.post(API_ADDR + 'web/'+abbr+'/updateOrganizationConfiguration',myjsonstring)
+		.success(function(data,status,header,config){
+			console.log(data);
+		})
+		.error(function(data,status,header,config){
+			console.log(data);
+		});
+	}
 
 });
 
@@ -391,4 +444,16 @@ $("#page-content").on("change","#select-welcome-message-language",function(e){
 	{
 		changeAudioSource(myScope.languageUrl[0]);
 	}
+});
+
+$("#page-content").on("click","welcome-message-file",function(e){
+	//In order to set the value of file as null
+	this.value = null;
+});
+
+$("#page-content").on("change","#welcome-message-file",function(e){
+	//get the filename set by the fileModel angular directive
+	var filename = angular.element('#settings-page-ids').scope().myFile.name;
+	//set the filename to be seen in UI
+	$("#welcome-message-url").text(filename);
 });

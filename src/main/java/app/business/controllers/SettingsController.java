@@ -76,12 +76,13 @@ public class SettingsController {
 	public String settingsPage(@PathVariable String org, Model model) {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		BillLayoutSettings billLayout =billLayoutSettingsService.getBillLayoutSettings(billLayoutSettingsService.getBillLayoutSettingsByOrganization(organization).getBillLayoutSettingsId());
-		
+		List<Organization> organizations = organizationService.getAllOrganizationList();
 		User user = userService.getCurrentUser();
 		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
 		model.addAttribute("billLayout" , billLayout);
 		model.addAttribute("user",user);
 		model.addAttribute("organization", organization);
+		model.addAttribute("organizations", organizations);
 		model.addAttribute("userPhoneNumber",userPhoneNumber);
 		return "settings";
 	}
@@ -123,7 +124,7 @@ public class SettingsController {
 		voices.add(englishMessage.getVoice().getUrl());
 		voices.add(marathiMessage.getVoice().getUrl());
 		voices.add(hindiMessage.getVoice().getUrl());
-
+		
 		return voices;
 	}
 
@@ -203,7 +204,7 @@ public class SettingsController {
 		MultipartHttpServletRequest mRequest;
 		mRequest = (MultipartHttpServletRequest) request;
 
-		String[] supportedAudioFiletypes = new String[]{"audio/wav","audio/mp3","audio/m4a","audio/wma","audio/ogg"};
+		String[] supportedAudioFiletypes = new String[]{"audio/wav"};
 
 		// Get Parameters passed from AngularJS using FormData
 		int organizationid = Integer.parseInt(request.getParameter("orgid"));
@@ -229,8 +230,9 @@ public class SettingsController {
 				return "-3";
 			}
 
-			//Check if the File Size is greater than 10MB
-			if(uploadedAudioFile.getSize() > 10000000)
+			//Check if the File Size is greater than 5MB
+			// As if we upload a audio file much greater in size, kuckoo takes a long time to load
+			if(uploadedAudioFile.getSize() > 5000000)
 			{
 				return "-2";
 			}
@@ -295,4 +297,30 @@ public class SettingsController {
 			return "-1";
 		}
 	}
+	/*
+	 * This part would be implemented in beta version
+	@RequestMapping(value="/updateOrganizationConfiguration", method=RequestMethod.POST)
+	@Transactional
+	public @ResponseBody int updateOrganizationConfiguration(@RequestBody List<Map<String,String>> organizationsConfiguration){
+
+		for(Map<String,String> organizationCon : organizationsConfiguration){
+			int organizationId = Integer.parseInt(organizationCon.get("organizationId")); 
+			boolean hasOnlyInbox = (organizationCon.get("hasOnlyInbox") == "true");
+			boolean hasFeedback = (organizationCon.get("hasFeedback") == "true");
+			boolean hasResponse = (organizationCon.get("hasResponse") == "true");
+			boolean hasTextMessageResponse = organizationCon.get("hasTextMessageResponse") == "true";
+			boolean hasBill = organizationCon.get("hasBill") == "true";
+			Organization organization = organizationService.getOrganizationById(organizationId);
+			organization.setHasOnlyInbox(hasOnlyInbox);
+			organization.setHasFeedback(hasFeedback);
+			organization.setHasResponse(hasResponse);
+			organization.setHasTextMessageResponse(hasTextMessageResponse);
+			organization.setHasBill(hasBill);
+			//addOrganization has save function which updates the organization as well
+			organizationService.addOrganization(organization);
+		}
+		
+		
+		return 1;
+	}*/
 }

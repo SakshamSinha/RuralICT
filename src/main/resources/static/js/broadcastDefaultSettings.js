@@ -1,5 +1,5 @@
 
-website.controller("BroadcastDefaultSettingsController",function($window, $scope, $resource, $location, UpdateBroadcastDefaultSettings){
+website.controller("BroadcastDefaultSettingsController",function($window, $scope, $resource, $location, UpdateBroadcastDefaultSettings, BroadcastDefaultSettingsCreate){
 	
 	var orgid = $('#organizationId').val();
 	console.log(orgid);
@@ -9,16 +9,37 @@ website.controller("BroadcastDefaultSettingsController",function($window, $scope
 			"response" : false
 	};    
 	
-	var outboundcall = UpdateBroadcastDefaultSettings.get({
-		id: orgid
-	}, function() {
+	var outboundcall = UpdateBroadcastDefaultSettings.get(
+		{id: orgid},
+		function() {
 		
 		//intialize 'checkbox' elements from outgoing call settings
 		$scope.outgoingCheckBoxOptions.order = outboundcall.askOrder;
 		$scope.outgoingCheckBoxOptions.feedback = outboundcall.askFeedback;
 		$scope.outgoingCheckBoxOptions.response = outboundcall.askResponse;
 
-	});
+		},
+		function(error){
+			if(error.status == "404")
+				{
+					$scope.broadcastDefaultSettings = new BroadcastDefaultSettingsCreate();
+					$scope.broadcastDefaultSettings.askOrder = 0;
+					$scope.broadcastDefaultSettings.askFeedback = 0;
+					$scope.broadcastDefaultSettings.askResponse = 0;
+					$scope.broadcastDefaultSettings.organizationId = orgid;
+					//broadcast default settings is not with respect to group. It is for whole organization.
+					$scope.broadcastDefaultSettings.groupId = null;
+					console.log($scope.broadcastDefaultSettings);
+					BroadcastDefaultSettingsCreate.save($scope.broadcastDefaultSettings,function(){
+						console.log("saved i dont know");
+					},
+					function(error){
+						console.log("Error in saving.")
+						console.log(error);
+					});
+					
+				}
+		});
 
 	//click function for 'save details' button in outgoing call settings
 	$scope.updateOutgoingCallOpt = function() {
