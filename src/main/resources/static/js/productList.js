@@ -97,9 +97,11 @@ $("#page-content").on("click","#delete-product",function(e){
 $("#page-content").on("click", "#btn-edit", function () {
 	productId = $(this).attr("productId");
 	productName = $(this).attr("productName");
+	productPrice = $(this).attr("productPrice");
 	angular.element(this).scope().setId(productId);
 	$(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
 	$(".modal-body #update-product-input").html(productName);
+	$("#update-price-input").val(productPrice);
 });
 
 //update the product on clicking the update button in edit modal

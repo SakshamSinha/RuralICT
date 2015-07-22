@@ -97,9 +97,11 @@ $("#page-content").on("click","#delete-qty",function(e){
 $("#page-content").on("click", "#btn-qty-edit", function () {
 	presetQuantityId = $(this).attr("presetQuantityId");
 	presetQuantityType = $(this).attr("presetQuantityType");
+	presetQuantity = $(this).attr("presetQuantity");
 	angular.element(this).scope().setId(presetQuantityId);
 	$(".modal-header #HeadingEdit").html("Edit "+presetQuantityType+"preset quantity");
 	$(".modal-body #update-quantity-input").html(presetQuantityType);
+	$("#edit-qty-modal #update-quantity-input").val(presetQuantity);
 	
 });
 //update quantity on clicking the update button
