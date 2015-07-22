@@ -261,7 +261,6 @@ website.factory("AddUserPhoneNumber",['$resource',function($resource){
 
 /* Resources for UserView */
 website.factory("AddUserView",['$resource',function($resource){
-	console.log(API_ADDR + "api/userViews/add/:groupId");
 	return $resource(API_ADDR + "api/userViews/add/:groupId", {groupId: "@groupId", userView: "@userView"}, {
 		save: {
 			method: "POST"
