@@ -285,7 +285,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 									$('#edit-user-modal').modal('hide');
 									
 									// Display modal conveying that the user details have been changed successfully
-									createAlert("Success","The user details were successfully changed.");
+									createAlert("Success","The user details were changed successfully.");
 									
 									// clear the contents of scope variables
 									$scope.editUserName = '';
@@ -313,7 +313,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 							$('#edit-user-modal').modal('hide');
 							
 							// Display modal conveying that the user details have been changed successfully
-							createAlert("Success","The user details were successfully changed.");
+							createAlert("Success","The user details were changed successfully.");
 							
 							// clear the contents of scope variables
 							$scope.editUserName = '';
