@@ -253,11 +253,11 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			}
 			else if(data == "-2")
 			{
-				createAlert("Error Uploading File","Please Upload a File less than 10MB");
+				createAlert("Error Uploading File","Please Upload a File less than 5MB");
 			}
 			else if(data == "-3")
 			{
-				createAlert("Error Uploading File","The File you have uploaded is not a audio file");
+				createAlert("Error Uploading File","The File you have uploaded is not wav audio file");
 			}
 			else
 			{

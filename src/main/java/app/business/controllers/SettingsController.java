@@ -174,7 +174,7 @@ public class SettingsController {
 		MultipartHttpServletRequest mRequest;
 		mRequest = (MultipartHttpServletRequest) request;
 
-		String[] supportedAudioFiletypes = new String[]{"audio/wav","audio/mp3","audio/m4a","audio/wma","audio/ogg"};
+		String[] supportedAudioFiletypes = new String[]{"audio/wav"};
 
 		// Get Parameters passed from AngularJS using FormData
 		int organizationid = Integer.parseInt(request.getParameter("orgid"));
@@ -200,8 +200,9 @@ public class SettingsController {
 				return "-3";
 			}
 
-			//Check if the File Size is greater than 10MB
-			if(uploadedAudioFile.getSize() > 10000000)
+			//Check if the File Size is greater than 5MB
+			// As if we upload a audio file much greater in size, kuckoo takes a long time to load
+			if(uploadedAudioFile.getSize() > 5000000)
 			{
 				return "-2";
 			}
