@@ -261,7 +261,7 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			}
 			else if(data == "-4")
 			{
-				createAlert("File not found","The File was not found on server. (Maybe you are on localhost) !!");
+				createAlert("File not found","The File was not found on server. (Maybe you are on localhost)!");
 			}
 			else
 			{
