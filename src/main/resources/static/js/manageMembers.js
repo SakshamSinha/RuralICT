@@ -284,7 +284,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 									// Hide the edit user modal dialog box after successful operation
 									$('#edit-user-modal').modal('hide');
 									
-									// Display modal conveying that the new user has been successfully added
+									// Display modal conveying that the user details have been changed successfully
 									createAlert("Success","The user details were successfully changed.");
 									
 									// clear the contents of scope variables
@@ -312,7 +312,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 							// Hide the edit user modal dialog box after successful operation
 							$('#edit-user-modal').modal('hide');
 							
-							// Display modal conveying that the new user has been successfully added
+							// Display modal conveying that the user details have been changed successfully
 							createAlert("Success","The user details were successfully changed.");
 							
 							// clear the contents of scope variables
