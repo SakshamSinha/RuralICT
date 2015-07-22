@@ -7,7 +7,16 @@ website.factory("InboundCallReports", function($resource) {
 });
 
 website.controller('ManageInboundCallsController', function($scope, $route, InboundCallReports) {
-	
+	$('#fromInboundReportsDate').datepicker({
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true
+	});
+	$('#toInboundReportsDate').datepicker({
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true
+	});
       $scope.callReports = function(data){
       	$scope.incomingCallReports =  InboundCallReports.get(data);
 	};
@@ -19,8 +28,8 @@ website.controller('ManageInboundCallsController', function($scope, $route, Inbo
       
 $("#page-content").on("click", "#submitBut", function(e) {
     e.preventDefault();
-    var from= $('#fromDate').val();
-    var to= $('#toDate').val();
+    var from= $('#fromInboundReportsDate').val();
+    var to= $('#toInboundReportsDate').val();
     if(from=="") createAlert("Invalid Input","Please select(type) a valid From date in yyyy-mm-dd format");
     else if(to=="") createAlert("Invalid Input","Please select(type) a valid To date in yyyy-mm-dd format");
     else if(validatedate(from)==false)	createAlert("Invalid Input","Please select(type) a valid From date in yyyy-mm-dd format");

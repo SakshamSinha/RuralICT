@@ -3,8 +3,8 @@
 		<h2>Outgoing Calls</h2><p hidden id="orgAbbrevation" th:text="${orgAbbrevation}">text</p></br>
 			<form ng-submit="submit()" class="simple-form">
 				
-	  			From: <input type="date" id="fromDate2" name="From" ng-model="fromDate" placeholder="yyyy-mm-dd">
-	  			To: <input type="date" id="toDate2" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
+	  			From: <input id="fromOutboundReportsDate" name="From" ng-model="fromDate" placeholder="yyyy-mm-dd">
+	  			To: <input id="toOutboundReportsDate" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
 	    		<input type="submit" id="submitBut2" value="Submit" />
 	  		</form>
 	  	<table class="table table-striped table-bordered table-condensed" id="t01">

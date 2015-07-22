@@ -8,6 +8,16 @@ website.factory("OutboundCallReports", function($resource) {
 });
 
 website.controller("ManageOutboundCallsController", function($scope, $http, $routeParams,OutboundCallReports) {
+	$('#fromOutboundReportsDate').datepicker({
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true
+	});
+	$('#toOutboundReportsDate').datepicker({
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true
+	});
 	$scope.outgoingCallRows = [];
 	
 	$scope.mySplit = function(string, nb) {
@@ -18,8 +28,8 @@ website.controller("ManageOutboundCallsController", function($scope, $http, $rou
 	$scope.submit = function(){
 		var dat={};
 		dat.grp = $('#groupId').val();
-		var from= $('#fromDate2').val();
-		var to= $('#toDate2').val();
+		var from= $('#fromOutboundReportsDate').val();
+		var to= $('#toOutboundReportsDate').val();
 		if(from=="") createAlert("Invalid Input","Please select(type) a valid From date in yyyy-mm-dd format");
 		else if(to=="") createAlert("Invalid Input","Please select(type) a valid To date in yyyy-mm-dd format");
 		else if(validatedate(from)==false)	createAlert("Invalid Input","Please select(type) a valid From date in yyyy-mm-dd format");
