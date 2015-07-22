@@ -83,6 +83,15 @@ website.factory("GetGroupMembershipsByUser", function($resource) {
 	});
 });
 
+/*Resources for InboundCall Reports*/
+website.factory("InboundCallReports", function($resource) {
+	return $resource(API_ADDR+"api/inboundCalls/search/getInboundCalls", {org:"@org", fromDate:"@fromDate", toDate:"@toDate"}, {
+		update: {
+			method: 'GET'
+		}
+	});
+});
+
 /* Resources for Messages */
 website.factory("UpdateMessage", function($resource) {
 	return $resource(API_ADDR + "api/messages/:id", {id: '@id'}, {
@@ -187,6 +196,16 @@ website.factory("GetGroupMembershipsByUser", function($resource) {
 	});
 });
 
+/* Resources for OutboundCall Reports*/
+website.factory("OutboundCallReports", function($resource) {
+	return $resource(API_ADDR+'api/manageReportsOutboundCalls/getOutboundCallsList',{grp:"@grp"}, {
+		update: {
+			method: 'GET',
+			isArray: true
+		}
+	});
+});
+
 /* Resources for Products */
 website.factory("ProductCreate",function($resource){
 	return $resource(API_ADDR + "api/products",{
@@ -261,7 +280,6 @@ website.factory("AddUserPhoneNumber",['$resource',function($resource){
 
 /* Resources for UserView */
 website.factory("AddUserView",['$resource',function($resource){
-	console.log(API_ADDR + "api/userViews/add/:groupId");
 	return $resource(API_ADDR + "api/userViews/add/:groupId", {groupId: "@groupId", userView: "@userView"}, {
 		save: {
 			method: "POST"

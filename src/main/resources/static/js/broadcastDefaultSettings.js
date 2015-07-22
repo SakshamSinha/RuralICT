@@ -2,7 +2,6 @@
 website.controller("BroadcastDefaultSettingsController",function($window, $scope, $resource, $location, UpdateBroadcastDefaultSettings, BroadcastDefaultSettingsCreate){
 	
 	var orgid = $('#organizationId').val();
-	console.log(orgid);
 	$scope.outgoingCheckBoxOptions = {
 			"order" : false,
 			"feedback" : false,
