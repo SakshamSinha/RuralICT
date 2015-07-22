@@ -1,6 +1,7 @@
 package app.business.controllers;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -268,6 +269,11 @@ public class SettingsController {
 		{
 			return "-1";
 		}
+		catch(IOException e)
+		{
+		   return  "-4";	
+		}
+		
 	}
 	/*
 	 * This part would be implemented in beta version
