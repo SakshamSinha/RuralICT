@@ -83,6 +83,15 @@ website.factory("GetGroupMembershipsByUser", function($resource) {
 	});
 });
 
+/*Resources for InboundCall Reports*/
+website.factory("InboundCallReports", function($resource) {
+	return $resource(API_ADDR+"api/inboundCalls/search/getInboundCalls", {org:"@org", fromDate:"@fromDate", toDate:"@toDate"}, {
+		update: {
+			method: 'GET'
+		}
+	});
+});
+
 /* Resources for Messages */
 website.factory("UpdateMessage", function($resource) {
 	return $resource(API_ADDR + "api/messages/:id", {id: '@id'}, {
@@ -183,6 +192,16 @@ website.factory("GetGroupMembershipsByUser", function($resource) {
 	return $resource(API_ADDR + "api/groupMemberships/search/findByUserAndGroup_Organization", {user:"@user", organization:"@organization"}, {
 		update: {
 			method: 'GET'
+		}
+	});
+});
+
+/* Resources for OutboundCall Reports*/
+website.factory("OutboundCallReports", function($resource) {
+	return $resource(API_ADDR+'api/manageReportsOutboundCalls/getOutboundCallsList',{grp:"@grp"}, {
+		update: {
+			method: 'GET',
+			isArray: true
 		}
 	});
 });
