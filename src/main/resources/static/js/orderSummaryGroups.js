@@ -24,8 +24,6 @@ website.controller('OrderSummaryGroupsController', function($scope, $route, Show
 $("#page-content").on("click", "#submitGroups", function(e) {
     e.preventDefault();
     var group= $.trim($('#selectedGroup').val());
-    console.log(group);
-    console.log("Value:"+group+"this");
     var from= $.trim($('#fromGroupsDate').val());
     var to= $.trim($('#toGroupsDate').val());
     if(from=="") createAlert("Invalid Input","Please select(type) a valid From date in yyyy-mm-dd format");
