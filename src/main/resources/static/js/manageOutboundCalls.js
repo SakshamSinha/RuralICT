@@ -1,12 +1,3 @@
-website.factory("OutboundCallReports", function($resource) {
-	return $resource(API_ADDR+'api/manageReportsOutboundCalls/getOutboundCallsList',{grp:"@grp"}, {
-		update: {
-			method: 'GET',
-			isArray: true
-		}
-	});
-});
-
 website.controller("ManageOutboundCallsController", function($scope, $http, $routeParams,OutboundCallReports) {
 	$('#fromOutboundReportsDate').datepicker({
 		dateFormat: 'yy-mm-dd',
