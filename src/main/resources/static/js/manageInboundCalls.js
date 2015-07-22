@@ -1,11 +1,3 @@
-website.factory("InboundCallReports", function($resource) {
-	return $resource(API_ADDR+"/api/inboundCalls/search/getInboundCalls", {org:"@org", fromDate:"@fromDate", toDate:"@toDate"}, {
-		update: {
-			method: 'GET'
-		}
-	});
-});
-
 website.controller('ManageInboundCallsController', function($scope, $route, InboundCallReports) {
 	$('#fromInboundReportsDate').datepicker({
 		dateFormat: 'yy-mm-dd',
