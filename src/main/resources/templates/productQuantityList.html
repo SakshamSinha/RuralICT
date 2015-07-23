@@ -114,7 +114,7 @@
 		  <div class="control-group">
 			<div class="controls">
 			 <select id="new-presetqty-product-type-input">
-				  <option>-Select-</option>
+				  <option value='' disabled selected="selected" style='display:none;'>-Select-</option>
 				  <option th:each="productType : ${productTypes}" th:value="'productTypes/' + ${productType.productTypeId}" th:text="${productType.name}">Product type</option>
 				</select>
 			</div>
