@@ -61,12 +61,17 @@ $("#page-content").on("click", "#producttable #checkall", function () {
 //adding new product on pressing the 'Add new product' button
 $("#page-content").on("click", "#add-new-quantity", function(e) {
 	var quantity = $.trim($('#new-quantity-input').val());
+	var productType = $.trim($('#new-presetqty-product-type-input').val());
+	console.log(productType);
 	if(! $.isNumeric(quantity)){
-		createAlert("Invalid Input","Enter valid quantity input as numerical value.");
+		createAlert("Invalid Input","Enter valid Quantity input as numerical value.");
+	}
+	else if(productType == ""){
+		createAlert("Invalid Input","Please select one of the Product Type(s)");
 	}
 	else
 	{
-		var productType = $('#new-presetqty-product-type-input').val();
+		
 		var organizationId= $('#product-quantity').attr('organizationId');
 		var organization = "organizations/"+organizationId;
 		console.log("Receiving quantity: "+ quantity);

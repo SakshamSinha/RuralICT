@@ -5,6 +5,7 @@
 	    	</br></br></br>
 	    	Product Name: 
 	    	<select placeholder="Choose product" id="product" ng-model="name">
+	    		<option value='' disabled selected style='display:none;'>-Select-</option>
 	    		<option th:each="product : ${products}" th:value="${product.productId}">
 	    			<p th:text="${product.name}">text</p>
 	    		</option>

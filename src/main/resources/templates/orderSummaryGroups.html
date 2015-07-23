@@ -4,6 +4,7 @@
 			<form class="simple-form">
 				Group Name: 
 				<select id="selectedGroup" ng-model="name">
+					<option value='' disabled selected style='display:none;'>-Select-</option>
 					<option th:each="group : ${groups}" th:value="${group.groupId}">
 	    					<p th:text="${group.name}">text</p>
 	    			</option>
