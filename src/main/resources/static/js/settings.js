@@ -259,6 +259,10 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 			{
 				createAlert("Error Uploading File","The File you have uploaded is not wav audio file");
 			}
+			else if(data == "-4")
+			{
+				createAlert("File not found","The File was not found on server. (Maybe you are on localhost)!");
+			}
 			else
 			{
 				$scope.languageUrl[localeIndex] = data;
