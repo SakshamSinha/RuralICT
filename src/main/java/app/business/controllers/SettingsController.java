@@ -296,6 +296,11 @@ public class SettingsController {
 		{
 			return "-1";
 		}
+		catch(IOException e)
+		{
+		   return  "-4";	
+		}
+		
 	}
 	/*
 	 * This part would be implemented in beta version
