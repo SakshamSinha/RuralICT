@@ -28,7 +28,7 @@
           
           <td>
             <p data-placement="top" data-toggle="tooltip" title="Edit">
-              <button id="btn-qty-edit" class="open-edit-modal btn btn-primary btn-xs" th:attr="presetQuantityId=${presetQuantity.presetQuantityId},presetQuantityType=${presetQuantity.productType.name}"data-title="Edit"  data-toggle="modal" data-price="50" data-target="#edit-qty-modal" >
+              <button id="btn-qty-edit" class="open-edit-modal btn btn-primary btn-xs" th:attr="presetQuantityId=${presetQuantity.presetQuantityId},presetQuantityType=${presetQuantity.productType.name},presetQuantity=${presetQuantity.quantity}"data-title="Edit"  data-toggle="modal" data-price="50" data-target="#edit-qty-modal" >
               <i class="icon-white icon-pencil"></i> Edit</button>
             </p>
           </td>
@@ -42,15 +42,15 @@
       </tbody>
     </table>
     <div class="clearfix"></div>
-    <ul class="pagination pull-left">
-      <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-      <li class="active"><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-    </ul>
+<!--     <ul class="pagination pull-left"> -->
+<!--       <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li> -->
+<!--       <li class="active"><a href="#">1</a></li> -->
+<!--       <li><a href="#">2</a></li> -->
+<!--       <li><a href="#">3</a></li> -->
+<!--       <li><a href="#">4</a></li> -->
+<!--       <li><a href="#">5</a></li> -->
+<!--       <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li> -->
+<!--     </ul> -->
   </div>
 </div>
 <div class="modal fade" id="edit-qty-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">

@@ -70,6 +70,9 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 							// Hide the modal dialog box after successful operation
 							$('#add-new-user-modal').modal('hide');
 							
+							// Display modal conveying that the new user has been successfully added
+							createAlert("Success","The new user was sucessfully added.");
+							
 							// Clear the contents of scope variables
 							$scope.inputUserName = '';
 							$scope.inputUserEmail = '';
@@ -281,6 +284,9 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 									// Hide the edit user modal dialog box after successful operation
 									$('#edit-user-modal').modal('hide');
 									
+									// Display modal conveying that the user details have been changed successfully
+									createAlert("Success","The user details were changed successfully.");
+									
 									// clear the contents of scope variables
 									$scope.editUserName = '';
 									$scope.editUserEmail = '';
@@ -305,6 +311,9 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 	
 							// Hide the edit user modal dialog box after successful operation
 							$('#edit-user-modal').modal('hide');
+							
+							// Display modal conveying that the user details have been changed successfully
+							createAlert("Success","The user details were changed successfully.");
 							
 							// clear the contents of scope variables
 							$scope.editUserName = '';
