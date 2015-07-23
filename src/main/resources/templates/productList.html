@@ -107,7 +107,7 @@
 		    <label class="control-label" for="new-product-type-input">Product Type</label>
 			<div class="controls">
 				<select id="new-product-type-input">
-				  <option>-Select-</option>
+				  <option value='' disabled selected="selected" style='display:none;'>-Select-</option>
 				  <option th:each="productType : ${productTypes}" th:value="'productTypes/' + ${productType.productTypeId}" th:text="${productType.name}">Product type</option>
 				</select>
 			</div>

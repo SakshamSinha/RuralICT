@@ -64,13 +64,19 @@ $("#page-content").on("click", "#producttable #checkall", function () {
 $("#page-content").on("click", "#add-new-product", function(e) {
 	e.preventDefault();
 	var price = $.trim($('#new-price-input').val());
+	var productType = $.trim($('#new-product-type-input').val());
+	var product = $.trim($('#new-product-input').val());
 	if(! $.isNumeric(price)){
-		createAlert("Invalid Input","Enter valid price input as numerical value.");
+		createAlert("Invalid Input","Please enter valid price input as numerical value.");
+	}
+	else if(product == ''){
+		createAlert("Invalid Input","Please enter a name for Product");
+	}
+	else if(productType == ""){
+		createAlert("Invalid Input","Please select one of the Product Type(s)");
 	}
 	else
 	{
-		var product = $.trim($('#new-product-input').val());
-		var productType = $('#new-product-type-input').val();
 		var data = {};
 		data.name = product;
 		data.unitRate = price;
@@ -115,7 +121,7 @@ $("#page-content").on("click", "#btn-edit", function () {
 $("#page-content").on("click","#update-product",function(e){
 	value = $.trim($('#update-price-input').val());
 	if(! $.isNumeric(value)){
-		createAlert("Invalid Input","Enter valid price input as numerical value.");
+		createAlert("Invalid Input","Enter valid Price input as numerical value.");
 	}
 	else
 	{
