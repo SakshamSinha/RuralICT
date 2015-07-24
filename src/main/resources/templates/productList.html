@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="edit-product-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
+<div class="modal fade" id="edit-product-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingEdit" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove" aria-hidden="true"></i></button>
@@ -89,7 +89,7 @@
   </div>
   <!-- /.modal-dialog --> 
 </div>
-<div class="modal fade" id="add-product-modal" tabindex="-1" role="dialog" aria-labelledby="HeadingAdd" aria-hidden="true">
+<div class="modal fade" id="add-product-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAdd" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> </button>
@@ -107,7 +107,7 @@
 		    <label class="control-label" for="new-product-type-input">Product Type</label>
 			<div class="controls">
 				<select id="new-product-type-input">
-				  <option>-Select-</option>
+				  <option value='' disabled selected="selected" style='display:none;'>-Select-</option>
 				  <option th:each="productType : ${productTypes}" th:value="'productTypes/' + ${productType.productTypeId}" th:text="${productType.name}">Product type</option>
 				</select>
 			</div>

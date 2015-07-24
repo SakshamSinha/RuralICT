@@ -31,7 +31,7 @@ $("#page-content").on("click", "#submitProducts", function(e) {
     else if(validatedate(from)==false)	createAlert("Invalid Input","Please select(type) a valid From date in yyyy-mm-dd format");
     else if(validatedate(to)==false)	createAlert("Invalid Input","Please select(type) a valid To date in yyyy-mm-dd format");
     else if(to<from)	createAlert("Invalid Input","To date should be ahead of From date!");
-    else if(product == "? undefined:undefined ?") createAlert("Invalid Input","Please select a product from Product Name!");
+    else if(product == "") createAlert("Invalid Input","Please select a product from Product Name!");
     else{
     	var data={};
 	    data.product=product;

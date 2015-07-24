@@ -61,22 +61,33 @@ $("#page-content").on("click", "#producttable #checkall", function () {
 //adding new product on pressing the 'Add new product' button
 $("#page-content").on("click", "#add-new-quantity", function(e) {
 	var quantity = $.trim($('#new-quantity-input').val());
-	var productType = $('#new-presetqty-product-type-input').val();
-	var organizationId= $('#product-quantity').attr('organizationId');
-	var organization = "organizations/"+organizationId;
-	console.log("Receiving quantity: "+ quantity);
-	var data = {};
-	data.quantity = quantity;
-	data.productType = productType;
-	data.organization = organization;
-	angular.element($('#add-new-quantity')).scope().savePresetQuantity(data);
-	$('#add-qty-modal').modal('toggle');
-	$('#new-quantity-input').val("");
-	$('#new-presetqty-product-type-input').val("");
-	//TODO Eliminating this function doing hard refresh
-	angular.element($('#add-new-quantity')).scope().reload();
+	var productType = $.trim($('#new-presetqty-product-type-input').val());
+	console.log(productType);
+	if(! $.isNumeric(quantity)){
+		createAlert("Invalid Input","Enter valid Quantity input as numerical value.");
+	}
+	else if(productType == ""){
+		createAlert("Invalid Input","Please select one of the Product Type(s)");
+	}
+	else
+	{
+		
+		var organizationId= $('#product-quantity').attr('organizationId');
+		var organization = "organizations/"+organizationId;
+		console.log("Receiving quantity: "+ quantity);
+		var data = {};
+		data.quantity = quantity;
+		data.productType = productType;
+		data.organization = organization;
+		angular.element($('#add-new-quantity')).scope().savePresetQuantity(data);
+		$('#add-qty-modal').modal('toggle');
+		$('#new-quantity-input').val("");
+		$('#new-presetqty-product-type-input').val("");
+		//TODO Eliminating this function doing hard refresh
+		angular.element($('#add-new-quantity')).scope().reload();
+	}	
+	
 });
-
 
 //capturing the preset quantity id on pressing the delete button
 $("#page-content").on("click", "#btn-qty-delete", function(e) {  
@@ -104,13 +115,20 @@ $("#page-content").on("click", "#btn-qty-edit", function () {
 	$("#edit-qty-modal #update-quantity-input").val(presetQuantity);
 	
 });
+
 //update quantity on clicking the update button
 $("#page-content").on("click","#update-qty",function(e){
 	e.preventDefault();
 	value = $.trim($('.controls #update-quantity-input').val());
-	angular.element(this).scope().editPresetQuantity(value);
-	$("#edit-qty-modal").modal('toggle');
-	$('.controls #update-quantity-input').val("");
-	//TODO Eliminating this function doing hard refresh
-	angular.element(this).scope().reload();
+	if(! $.isNumeric(value)){
+		createAlert("Invalid Input","Enter valid quantity input as numerical value.");
+	}
+	else
+	{
+		angular.element(this).scope().editPresetQuantity(value);
+		$("#edit-qty-modal").modal('toggle');
+		$('.controls #update-quantity-input').val("");
+		//TODO Eliminating this function doing hard refresh
+		angular.element(this).scope().reload();
+	}
 });

@@ -63,19 +63,31 @@ $("#page-content").on("click", "#producttable #checkall", function () {
 //add new product on clicking the add button
 $("#page-content").on("click", "#add-new-product", function(e) {
 	e.preventDefault();
-	var product = $.trim($('#new-product-input').val());
 	var price = $.trim($('#new-price-input').val());
-	var productType = $('#new-product-type-input').val();
-	var data = {};
-	data.name = product;
-	data.unitRate = price;
-	data.productType = productType;
-	angular.element($('#add-new-product')).scope().saveProduct(data);
-	$('#add-product-modal').modal('toggle');
-	$('#new-product-input').val("");
-	$('#new-product-type-input').val("");
-	$('#new-price-input').val("");
-	angular.element($('#add-new-product')).scope().reload();
+	var productType = $.trim($('#new-product-type-input').val());
+	var product = $.trim($('#new-product-input').val());
+	if(! $.isNumeric(price)){
+		createAlert("Invalid Input","Please enter valid price input as numerical value.");
+	}
+	else if(product == ''){
+		createAlert("Invalid Input","Please enter a name for Product");
+	}
+	else if(productType == ""){
+		createAlert("Invalid Input","Please select one of the Product Type(s)");
+	}
+	else
+	{
+		var data = {};
+		data.name = product;
+		data.unitRate = price;
+		data.productType = productType;
+		angular.element($('#add-new-product')).scope().saveProduct(data);
+		$('#add-product-modal').modal('toggle');
+		$('#new-product-input').val("");
+		$('#new-product-type-input').val("");
+		$('#new-price-input').val("");
+		angular.element($('#add-new-product')).scope().reload();
+	}	
 });
 
 //capture the id of product on clicking the delete button
@@ -102,14 +114,21 @@ $("#page-content").on("click", "#btn-edit", function () {
 	$(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
 	$(".modal-body #update-product-input").html(productName);
 	$("#update-price-input").val(productPrice);
+	
 });
 
 //update the product on clicking the update button in edit modal
 $("#page-content").on("click","#update-product",function(e){
 	value = $.trim($('#update-price-input').val());
-	angular.element(this).scope().editProduct(value);
-	$("#edit-product-modal").modal('toggle');
-	$('#update-price-input').val("");
-	//TODO Eliminating this function doing hard refresh
-	angular.element(this).scope().reload();
+	if(! $.isNumeric(value)){
+		createAlert("Invalid Input","Enter valid Price input as numerical value.");
+	}
+	else
+	{
+		angular.element(this).scope().editProduct(value);
+		$("#edit-product-modal").modal('toggle');
+		$('#update-price-input').val("");
+		//TODO Eliminating this function doing hard refresh
+		angular.element(this).scope().reload();
+	}	
 });
