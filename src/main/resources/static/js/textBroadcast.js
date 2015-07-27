@@ -6,16 +6,12 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 	var abbr = $('#organizationAbbr').val();
 	var groupid = document.getElementById("broadcast-text-ids").getAttribute("data-groupid");
 	var publisherid = document.getElementById("broadcast-text-ids").getAttribute("data-publisherid");
-	
+
 	// Initialize the values for radio-buttons
 	$scope.radioOptions = [false,false,false,false];
 	
 	// Function called when 'Send SMS' button is clicked
-	$scope.saveTextBroadcastBtn = function() {
-		
-		// Set the currently selected value in radio button as true
-		var currentValue =  $scope.radioValues;
-		$scope.radioOptions[currentValue]=true;
+	$scope.saveTextBroadcast = function() {
 		
 		// Create TextBroadcast object
 		$scope.broadcast = new TextBroadcast();
@@ -36,7 +32,7 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 		
 		// Get the checked users in the checkboxes
 		var userIds = '';
-		$("#user-text-list input:checked").each(function(){
+		$("#text-broadcast-user-list input:checked").each(function(){
 			userIds = userIds + this.value + ',';
 		});
 		
@@ -60,8 +56,6 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 		.error(function(data,status,header,config){
 			
 		})
-		
-		$scope.radioOptions[currentValue]=false;
 		
 	};
 });

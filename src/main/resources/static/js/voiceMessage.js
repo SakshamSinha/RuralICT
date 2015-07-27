@@ -244,7 +244,7 @@ $("#page-content").on("click", "#add-inbox-voice-order-items", function () {
 		productQuantity = $.trim($("#inboxVoiceCustomQuantity").val());
 	}
 	if(! $.isNumeric(productQuantity)){
-		alert("Enter valid quantity.")
+		createAlert("Quantity","Enter valid quantity.")
 		return;
 	}
 	
@@ -418,7 +418,7 @@ $("#page-content").on("click", "#add-saved-voice-order-items", function () {
 		productQuantity = $.trim($("#savedVoiceCustomQuantity").val());
 	}
 	if(! $.isNumeric(productQuantity)){
-		alert("Enter valid quantity.")
+		createAlert("Quantity","Enter valid quantity.")
 		return;
 	}
 	var orderId = $.trim($("#savedVoiceOrderId").val());
@@ -509,7 +509,7 @@ $("#page-content").on("click", ".feedbackVoiceMessageSaveButton", function (e) {
 	/* Remove order item from the queue */
 	angular.element($("#feedbackVoiceMessageComment" + id)).scope().updateVoiceComment(id,comment);
 	
-	alert("Comment has been updated");
+	createAlert("Feedback Update Message","Comment has been updated");
 	
 });
 

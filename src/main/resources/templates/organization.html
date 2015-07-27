@@ -1,0 +1,77 @@
+<div id="organization-page-ids" ng-controller="OrganizationCtrl">
+
+	<div class="row-fluid">
+		<div class="page-header">
+			<h1>
+				For New Organization <small>Edit</small>
+			</h1>
+		</div>
+	</div>
+	
+	
+		<div id="organization-settings" class="tab-pane">
+			<br> <br>
+			<form class="form-horizontal">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="name">Organization Name</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="name"
+								 />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="abbreviation">Organization Abbreviation</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" 
+								id="abbreviation" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="address">Organization Address
+							</label>
+						<div class="controls">
+							<input type="password" class="input-xlarge" id="address" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="contact">Contact
+							</label>
+						<div class="controls">
+							<input type="password" class="input-xlarge" id="contact" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="pnohe">Phone</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="phone"
+								 />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="city">City</label>
+						<div class="controls">
+							<input type="text" class="input-xlarge" id="city"
+								 />
+						</div>
+					</div>
+					
+					<div class="control-group">
+					<label class="control-label" for="order">Order for incoming call</label>
+					<div class="controls">
+					<select id='order' ng-model=order
+										ng-options="option.value as option.name for option in test"
+										class="table-input-1" name='order'>
+									</select>
+									</div>
+					</div>
+					<div class="form-actions">
+						<input type="submit" ng-click="CreateOrganization()"
+							class="btn btn-success" value="Save Details" /> <a class="btn"
+							href="#/organization">Cancel</a>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		
+</div>

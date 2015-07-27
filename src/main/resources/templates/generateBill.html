@@ -29,6 +29,7 @@
 									</b>
 									<div th:text="${organization.address}"></div>
 									<div th:text=${organization.contact}></div>
+									<div th:text="${billLayout.headerContent}"></div>
 								</td>
 							</tr>
 						</thead>
@@ -89,7 +90,7 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<div style="text-align:center">***Thank You***</div>
+									<div style="text-align:center" th:text="${billLayout.footerContent}"></div>
 								</td>
 							</tr>
 						</tbody>
