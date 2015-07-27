@@ -38,8 +38,8 @@ function normalizePhoneNumber(phoneNumber){
 	// strip all non numeric data
 	phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
 	
-	// check if there are atleast 10 digits and also not more than 12 digits
-	if(phoneNumber.length < 10 || phoneNumber.length > 12)
+	// check if there are atleast 10 digits
+	if(phoneNumber.length < 10)
 		return false;
 	else
 	{
