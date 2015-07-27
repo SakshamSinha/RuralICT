@@ -61,9 +61,7 @@ public class UserViewRestController {
 			{
 				// if phone number doesn't exist, add the user and his phone number to database
 				userView = userViewService.addUserView(userView);
-				phone = userPhoneNumberService.getUserPhoneNumber(userView.getPhone().getPhoneNumber());
-				// will have to test in new organization
-				
+				phone = userPhoneNumberService.getUserPhoneNumber(userView.getPhone().getPhoneNumber());	
 			}
 			
 			// else if his phone number exists
