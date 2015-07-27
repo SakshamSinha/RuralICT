@@ -59,7 +59,7 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 						
 						if(!data)
 						{
-							createAlert("Invalid Input","The Entered Phone Number already exists in the database");
+							createAlert("Invalid Input","The Entered Phone Number already exists for another user. Please Enter a different phone number.");
 						}
 						else
 						{

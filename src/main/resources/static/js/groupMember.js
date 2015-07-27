@@ -1,4 +1,4 @@
-website.controller("UserCtrl", function($window, $resource, $scope, $route, AddUserView, GetUser, RemoveUserView, AddGroupMembership, RemoveGroupMembership, GetGroupMembershipByUserAndGroup, GetGroupMembershipsByUser, AddUserPhoneNumber) {
+website.controller("UserCtrl", function($window, $resource, $scope, $http, $route, AddUserView, GetUser, RemoveUserView, AddGroupMembership, RemoveGroupMembership, GetGroupMembershipByUserAndGroup, GetGroupMembershipsByUser, AddUserPhoneNumber) {
 	$scope.addUserView = function(user, userPhoneNumber) {
 
 		$scope.userView = new AddUserView();
@@ -7,12 +7,25 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 		$scope.userView.role = "";
 
 		$scope.groupId = $("#groupId").val();
-		$scope.status = AddUserView.save({groupId: $scope.groupId}, $scope.userView, function(userObject) {
-			$scope.reload();
-		}, function(error){
-			createAlert("Error Adding Member","Member could not be added.")
-
-		}); 
+		var abbr = $('#organizationAbbr').val();
+		
+		$http.post( API_ADDR + 'api/userViews/add/' + abbr + '/' + $scope.groupId, $scope.userView).
+			success(function(data, status, headers, config) {
+				
+				if(data === false)
+				{
+					createAlert("Invalid Input","The Entered Phone Number already exists for another user. Please Enter a different phone number.");
+				}
+				else
+				{
+					createAlert("Success","Member was successfully added to the group.");
+					$scope.reload();
+				}
+			}).
+			error(function(data, status, headers, config) {
+				createAlert("Error Adding Member","There was some error in response from the remote server.");
+			});
+		
 	};
 
 	$scope.removeMemberFromGroup = function(data){
