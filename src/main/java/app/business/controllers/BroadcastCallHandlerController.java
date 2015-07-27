@@ -128,7 +128,7 @@ public class BroadcastCallHandlerController  implements IVRSessionFactory {
 		printParameterMap(request.getParameterMap());
 		String status = request.getParameter("status");
 		String statusDetails = request.getParameter("status_details");
-		RuralictSession ruralictSession = (RuralictSession) request.getSession().getAttribute("telephony");
+		RuralictSession ruralictSession = (RuralictSession) request.getSession();
 		OutboundCall outboundCall = ruralictSession.getOutboundCall();
 		outboundCall.setStatus(status);
 		outboundCall.setStatusDetail(statusDetails);

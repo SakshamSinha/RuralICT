@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import app.data.repositories.GroupRepository;
 import app.data.repositories.OrganizationRepository;
 import app.data.repositories.WelcomeMessageRepository;
+import app.entities.BillLayoutSettings;
 import app.entities.Group;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
@@ -50,6 +51,12 @@ public class OrganizationService {
 	public void updateParentOrganization(Organization organization,Organization newParentOrganization){
 		organization.getParentOrganization().removeSubOrganization(organization);
 		newParentOrganization.addSubOrganization(organization);
+	}	
+	public Organization updateOrganization(Organization organization, String address , String name , String contact){
+		organization.setAddress(address);
+		organization.setName(name);
+		organization.setContact(contact);
+		return organizationRepository.save(organization);
 	}
 	
 	public Organization getOrganizationById(int organizationId){

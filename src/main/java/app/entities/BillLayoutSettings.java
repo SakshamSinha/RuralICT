@@ -23,7 +23,7 @@ public class BillLayoutSettings implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="bill_layoout_settings_id")
+	@Column(name="bill_layout_settings_id")
 	private int billLayoutSettingsId;
 
 	@Column(name="header_content")

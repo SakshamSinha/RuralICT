@@ -28,12 +28,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import app.business.services.BillLayoutSettingsService;
 import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.VoiceService;
 import app.business.services.WelcomeMessageService;
+import app.entities.BillLayoutSettings;
 import app.entities.Organization;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
@@ -56,7 +58,7 @@ public class SettingsController {
 
 	@Autowired
 	UserService userService;
-
+	
 	@Autowired
 	UserPhoneNumberService userPhoneNumberService;
 
@@ -65,19 +67,45 @@ public class SettingsController {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	BillLayoutSettingsService billLayoutSettingsService;
 
 	@RequestMapping(value="/settingsPage")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String settingsPage(@PathVariable String org, Model model) {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		BillLayoutSettings billLayout =billLayoutSettingsService.getBillLayoutSettings(billLayoutSettingsService.getBillLayoutSettingsByOrganization(organization).getBillLayoutSettingsId());
 		List<Organization> organizations = organizationService.getAllOrganizationList();
 		User user = userService.getCurrentUser();
 		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+		model.addAttribute("billLayout" , billLayout);
 		model.addAttribute("user",user);
 		model.addAttribute("organization", organization);
 		model.addAttribute("organizations", organizations);
 		model.addAttribute("userPhoneNumber",userPhoneNumber);
 		return "settings";
+	}
+	
+	
+	
+	@RequestMapping(value="/billLayout" , method=RequestMethod.POST)
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	@Transactional
+	@ResponseBody
+	public void billLayout(@PathVariable String org, @RequestBody Map<String,String> profileSettingDetails){
+		
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		BillLayoutSettings billLayout = billLayoutSettingsService.getBillLayoutSettingsByOrganization(organization);
+		String name = profileSettingDetails.get("name");
+		String address = profileSettingDetails.get("address");
+		String contact = profileSettingDetails.get("contact");
+		String header = profileSettingDetails.get("header");
+		String footer = profileSettingDetails.get("footer");
+		organization = organizationService.updateOrganization(organization, address, name, contact);
+		billLayout = billLayoutSettingsService.updateBillLayoutSettingsFooterContent(billLayout, footer);
+		billLayout = billLayoutSettingsService.updateBillLayoutSettingsHeaderContent(billLayout, header);
+		
 	}
 
 	@RequestMapping(value="/getwelcomeMessageUrl", method=RequestMethod.POST)
