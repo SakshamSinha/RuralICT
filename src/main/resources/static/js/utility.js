@@ -34,20 +34,52 @@ function createAlert(heading, message){
 }
 
 function normalizePhoneNumber(phoneNumber){
-	
 	// strip all non numeric data
 	phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
-	
-	// check if there are atleast 10 digits
+	//check if the number of digits is less than 10.
 	if(phoneNumber.length < 10)
 		return false;
-	else
+	//check whether the number consist of either just 10 digits or various combinations of 91 with 10 digits.
+	//if yes the number is acceptable(can be both mobile and landline) and extract the main 10 digits and store it.
+	else if(/^(?:(?:\+|0{0,2})91|[0]?)?[789]\d{9}$/.test(phoneNumber))
 	{
 		// get the last 10 digits of the phone number
 		phoneNumber = phoneNumber.substr(phoneNumber.length - 10);
 		phoneNumber = "91" + phoneNumber;
 		return phoneNumber;
 	}
+	else if(phoneNumber.length == 10 && /^[^7-9]$/.test(phoneNumber.substr(0,1)))
+		return false;
+	//if not the number is more than 12 digits than invalid number create alert
+	else if(phoneNumber.length > 12)
+		return false;
+	//else it can be a landline number starting with 0. 
+	else if(phoneNumber.length == 11)
+	{
+		if(phoneNumber[0] == '0')
+		{
+			// get the last 10 digits of the phone number
+			phoneNumber = phoneNumber.substr(phoneNumber.length - 10);
+			phoneNumber = "91" + phoneNumber;
+			return phoneNumber;
+		}
+		else
+			return false;
+	}
+	//If this number has 12 digits then its invalid as all the valid 12 digits numbers have been accepted in the first if statement. 
+	else if(phoneNumber.length == 12)
+		return false;
+		
+	// check if there are atleast 10 digits
+//	if(phoneNumber.length < 10)
+//		return false;
+//	else
+//	{
+//		// get the last 10 digits of the phone number
+//		phoneNumber = phoneNumber.substr(phoneNumber.length - 10);
+//		phoneNumber = "91" + phoneNumber;
+//		return phoneNumber;
+//	}
 }
 
 function validatedate(inputText){
