@@ -33,6 +33,21 @@ function createAlert(heading, message){
 	$('#message-modal').modal("toggle");
 }
 
+function validateEmail(email){
+	if(email)
+	{
+		var emailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+		if(email.match(emailRegex))
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+	else
+		return true;
+}
+
 function normalizePhoneNumber(phoneNumber){
 	
 	// strip all non numeric data

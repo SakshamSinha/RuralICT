@@ -24,7 +24,6 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 
 	// Click event handler for the 'Add' Modal Button
 	$scope.addNewUserModalButton = function() {
-
 		// Check if required text fields are blank or not
 		if(!$scope.inputUserName)
 		{
@@ -33,6 +32,10 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		else if(!$scope.inputUserPhone)
 		{
 			createAlert("Invalid Input","Please Enter a Phone Number !");
+		}
+		else if(!validateEmail($scope.inputUserEmail))
+		{
+			createAlert("Invalid Input","Invalid Email ID !");
 		}
 		else
 		{
@@ -243,6 +246,10 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 			else if(!$scope.editUserPhone)
 			{
 				createAlert("Invalid Input","Please Enter a Phone Number !");
+			}
+			else if(!validateEmail($scope.editUserEmail))
+			{
+				createAlert("Invalid Input","Invalid Email ID !");
 			}
 			else
 			{

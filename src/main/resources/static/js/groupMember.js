@@ -122,13 +122,13 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	/* Get values to generate orderItem objects from modal */
 	var userName = $.trim($("#newGroupUserName").val());
 	var userEmail = $.trim($("#newGroupUserEmail").val());
-	if(userEmail.indexOf("@")==-1 && userEmail != ""){
-		createAlert("Invalid Input","Invalid Email Id");
-		return;
+	
+	// validate email id
+	if(!validateEmail(userEmail))
+	{
+		createAlert("Invalid Input","Invalid Email ID !");
 	}
-	else if (userEmail == ""){
-		userEmail = null;
-	}
+	
 	var userAddress = $("#newGroupUserAddress").val();
 	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 
