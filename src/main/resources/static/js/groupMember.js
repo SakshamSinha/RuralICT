@@ -124,12 +124,20 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	var userEmail = $.trim($("#newGroupUserEmail").val());
 	var userAddress = $("#newGroupUserAddress").val();
 	
-	// First Validate phone number
+	
 	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 	
+	// first check if username is empty
+	if(userName == ""){
+		createAlert("Invalid Input","Enter User Name !");
+		return;
+	}
+	
 	userPrimaryPhoneNumber = normalizePhoneNumber(userPrimaryPhoneNumber);
+	
+	// then validate phone number
 	if(userPrimaryPhoneNumber == false){
-		createAlert("Invalid Input","Invalid phone number.");
+		createAlert("Invalid Input","Invalid phone number !.");
 		return;
 	}
 	
@@ -146,15 +154,8 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	{
 		userEmail = null;
 	}
-	
-	if(userName == ""){
-		createAlert("Invalid Input","Enter User Name");
-		return;
-	}
 
-	/* Create and add new row element for user */
-
-	/* Create order item element and push it in the queue */
+	// Create user and userphoneNumber objects
 	var user={};
 	user.name = userName;
 	user.email = userEmail;
