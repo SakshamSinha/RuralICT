@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import app.business.services.BillLayoutSettingsService;
 import app.business.services.OrderService;
 import app.business.services.OrganizationService;
+import app.entities.BillLayoutSettings;
 import app.entities.Order;
 import app.entities.OrderItem;
 import app.entities.Organization;
@@ -26,6 +28,9 @@ public class BillController {
 	@Autowired
 	OrganizationService organizationService;
 	
+	@Autowired
+	BillLayoutSettingsService billLayoutSettingsService;
+	
 	@RequestMapping(value="/generateBill/{orderId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
@@ -39,7 +44,9 @@ public class BillController {
 		for(OrderItem orderItem : order.getOrderItems()) {
 			totalCost += orderItem.getUnitRate() * orderItem.getQuantity();
 		}
+		BillLayoutSettings billLayoutSetting = billLayoutSettingsService.getBillLayoutSettingsByOrganization(organization);
 		
+		model.addAttribute("billLayout",billLayoutSetting);
 		model.addAttribute("organization", organization);
 		model.addAttribute("message", message);
 		model.addAttribute("order", order);
