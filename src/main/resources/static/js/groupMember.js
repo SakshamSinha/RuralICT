@@ -122,33 +122,33 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	/* Get values to generate orderItem objects from modal */
 	var userName = $.trim($("#newGroupUserName").val());
 	var userEmail = $.trim($("#newGroupUserEmail").val());
+	var userAddress = $("#newGroupUserAddress").val();
 	
-	console.log(userEmail);
+	// First Validate phone number
+	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 	
-	// validate email id
+	userPrimaryPhoneNumber = normalizePhoneNumber(userPrimaryPhoneNumber);
+	if(userPrimaryPhoneNumber == false){
+		createAlert("Invalid Input","Invalid phone number.");
+		return;
+	}
+	
+	// Then validate other user data
+	//  first validate email id
 	if(!validateEmail(userEmail))
 	{
 		createAlert("Invalid Input","Invalid Email ID !");
 		return;
 	}
 	
+	// if email id is an empty string, set it as null so as to avoid unique constraint error in database
 	if(userEmail == "")
 	{
 		userEmail = null;
 	}
 	
-	var userAddress = $("#newGroupUserAddress").val();
-	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
-
-
 	if(userName == ""){
 		createAlert("Invalid Input","Enter User Name");
-		return;
-	}
-
-	userPrimaryPhoneNumber = normalizePhoneNumber(userPrimaryPhoneNumber);
-	if(userPrimaryPhoneNumber == false){
-		createAlert("Invalid Input","Invalid phone number.");
 		return;
 	}
 
