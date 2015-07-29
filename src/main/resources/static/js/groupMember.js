@@ -123,10 +123,18 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	var userName = $.trim($("#newGroupUserName").val());
 	var userEmail = $.trim($("#newGroupUserEmail").val());
 	
+	console.log(userEmail);
+	
 	// validate email id
 	if(!validateEmail(userEmail))
 	{
 		createAlert("Invalid Input","Invalid Email ID !");
+		return;
+	}
+	
+	if(userEmail == "")
+	{
+		userEmail = null;
 	}
 	
 	var userAddress = $("#newGroupUserAddress").val();
