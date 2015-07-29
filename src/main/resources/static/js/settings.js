@@ -277,12 +277,33 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 	
 
 	$scope.updateBillLayoutSetting=function(){
-		
+	
 		var name =$.trim($('#orgName').val());
 		var address =$.trim($('#address').val());
 		var contact =$.trim($('#contact').val());
 		var header =$.trim($('#header').val());
 		var footer =$.trim($('#footer').val());
+		if(!name)
+		{
+			createAlert("Invalid Input","Please Enter a Name for the Organization !");
+		}
+		else if(!contact)
+		{
+			createAlert("Invalid Input","Please Enter a Phone Number !");
+		}
+		else if(!address)
+		{
+			createAlert("Invalid Input","Please Enter a Address !");
+		}
+		else if(!header){
+			createAlert("Invalid Input","Please Enter a Header!");
+		}
+		else if(!footer){
+			createAlert("Invalid Input","Please Enter a Footer!");
+		}
+		
+		else {
+		
 		console.log(name);
 		console.log(footer);
 		var profileSettingDetails = {};
@@ -291,6 +312,15 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 		profileSettingDetails.contact = $.trim($('#contact').val());
 		profileSettingDetails.header =  $.trim($('#header').val());
 		profileSettingDetails.footer =  $.trim($('#footer').val());
+		if(normalizePhoneNumber(profileSettingDetails.contact) == false)
+		{
+			createAlert("Invalid Input","Please enter a valid phone number !");
+		}
+		else
+		{
+			// Normalize the phone number to database format
+			profileSettingDetails.contact = normalizePhoneNumber(profileSettingDetails.contact);
+			
 		
 		$http.post( API_ADDR + 'web/' + abbr + '/billLayout', profileSettingDetails).
 		success(function(data, status, headers, config) {
@@ -300,7 +330,8 @@ website.controller("SettingsCtrl", function($scope, $http, $routeParams, $window
 		error(function(data, status, headers, config) {
 			createAlert("Error Saving Settings","There was some error in response from the remote server.");
 		});
-		
+		}
+		}
 	}
 	
 	$scope.updateSetting= function(){
