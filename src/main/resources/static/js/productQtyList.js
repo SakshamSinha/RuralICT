@@ -63,8 +63,8 @@ $("#page-content").on("click", "#add-new-quantity", function(e) {
 	var quantity = $.trim($('#new-quantity-input').val());
 	var productType = $.trim($('#new-presetqty-product-type-input').val());
 	console.log(productType);
-	if(! $.isNumeric(quantity)){
-		createAlert("Invalid Input","Enter valid Quantity input as numerical value.");
+	if(! $.isNumeric(quantity)||quantity<0){
+		createAlert("Invalid Input","Enter valid Quantity input as positive numerical value.");
 	}
 	else if(productType == ""){
 		createAlert("Invalid Input","Please select one of the Product Type(s)");
@@ -120,8 +120,8 @@ $("#page-content").on("click", "#btn-qty-edit", function () {
 $("#page-content").on("click","#update-qty",function(e){
 	e.preventDefault();
 	value = $.trim($('.controls #update-quantity-input').val());
-	if(! $.isNumeric(value)){
-		createAlert("Invalid Input","Enter valid quantity input as numerical value.");
+	if(! $.isNumeric(value)||value<0){
+		createAlert("Invalid Input","Enter valid quantity input as positive numerical value.");
 	}
 	else
 	{

@@ -66,8 +66,8 @@ $("#page-content").on("click", "#add-new-product", function(e) {
 	var price = $.trim($('#new-price-input').val());
 	var productType = $.trim($('#new-product-type-input').val());
 	var product = $.trim($('#new-product-input').val());
-	if(! $.isNumeric(price)){
-		createAlert("Invalid Input","Please enter valid price input as numerical value.");
+	if(! $.isNumeric(price)||price<0){
+		createAlert("Invalid Input","Please enter valid price input as positive numerical value.");
 	}
 	else if(product == ''){
 		createAlert("Invalid Input","Please enter a name for Product");
@@ -120,8 +120,12 @@ $("#page-content").on("click", "#btn-edit", function () {
 //update the product on clicking the update button in edit modal
 $("#page-content").on("click","#update-product",function(e){
 	value = $.trim($('#update-price-input').val());
-	if(! $.isNumeric(value)){
+	if(! $.isNumeric(value) ){
 		createAlert("Invalid Input","Enter valid Price input as numerical value.");
+	}
+	else if(value<0)
+	{
+		createAlert("Negative Input not allowed.");
 	}
 	else
 	{
