@@ -69,17 +69,7 @@ function normalizePhoneNumber(phoneNumber){
 	//If this number has 12 digits then its invalid as all the valid 12 digits numbers have been accepted in the first if statement. 
 	else if(phoneNumber.length == 12)
 		return false;
-		
-	// check if there are atleast 10 digits
-//	if(phoneNumber.length < 10)
-//		return false;
-//	else
-//	{
-//		// get the last 10 digits of the phone number
-//		phoneNumber = phoneNumber.substr(phoneNumber.length - 10);
-//		phoneNumber = "91" + phoneNumber;
-//		return phoneNumber;
-//	}
+
 }
 
 function validatedate(inputText){
