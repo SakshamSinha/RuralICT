@@ -6,9 +6,12 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup)
 		$scope.group.name = data.name;
 		$scope.group.parentGroup = data.parentGroup;
 		AddGroup.save($scope.group, function(group) {
-
 			$scope.groupName = group.name;
+<<<<<<< Updated upstream
 			createAlert("Group Added", "New group has been added successfully.")
+=======
+			createAlert("Group Added", "New group has been added successfully.");
+>>>>>>> Stashed changes
 			$('#add-new-group-modal').modal('toggle');
 			angular.element($('#add-new-group')).scope().reload();
 		}, function(error) {
@@ -33,7 +36,6 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup)
 //add new group from index.html
 $("#add-new-group").click(function() {  
 	var name = $.trim($('#new-group-name-input').val());
-
 	// for getting parent group ID of current organization 
 	var parentGroupId = $("#parentGroupId").val();
 	var parentGroup = "parentGroup/" + parentGroupId;
@@ -44,5 +46,8 @@ $("#add-new-group").click(function() {
 	data.organization = "organization/" + $("#organizationId").val();
 	data.parentGroup = parentGroup;
 	angular.element($('#add-new-group')).scope().addGroup(data);
+<<<<<<< Updated upstream
+=======
 
+>>>>>>> Stashed changes
 });
