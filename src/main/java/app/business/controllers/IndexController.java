@@ -25,9 +25,13 @@ public class IndexController {
 		
 		Organization organization= organizationService.getOrganizationByAbbreviation(org);
 		Group parentGroup = organizationService.getParentGroup(organization);
+		String IvrNumber = organization.getIvrNumber();
+		String ModifiedIvrNumber = "+91-"+IvrNumber.substring(2,5) +" " + IvrNumber.substring(5,8) + " " + IvrNumber.substring(8);
+		model.addAttribute("ivrnumber", ModifiedIvrNumber);
 		model.addAttribute("parentGroup", parentGroup);
 		model.addAttribute("organization", organization);
 		return "index";
 	}
 
 }
+
