@@ -9,6 +9,7 @@ website.controller("GroupsCtrl", function($scope, $route, AddGroup, RemoveGroup)
 
 			$scope.groupName = group.name;
 			createAlert("Group Added", "New group has been added successfully.")
+			$('#add-new-group-modal').modal('toggle');
 			angular.element($('#add-new-group')).scope().reload();
 		}, function(error) {
 			$scope.failure = error.data;
@@ -43,9 +44,5 @@ $("#add-new-group").click(function() {
 	data.organization = "organization/" + $("#organizationId").val();
 	data.parentGroup = parentGroup;
 	angular.element($('#add-new-group')).scope().addGroup(data);
-
-	$('#add-new-group-modal').modal('toggle');
-
-
 
 });

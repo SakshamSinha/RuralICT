@@ -20,6 +20,9 @@ public class GroupMembershipService {
 	
 	@Autowired
 	OrganizationService organizationService;
+	
+	@Autowired
+	UserPhoneNumberService userPhoneNumberService;
 		
 	public GroupMembership getUserGroupMembership(User user, Group group){
 		return groupMembershipRepository.findByUserAndGroup(user,group);
@@ -52,7 +55,13 @@ public class GroupMembershipService {
 			/**
 			 * This mimicks the event handler for groupMemberships
 			 */
-			this.addGroupMembership(new GroupMembership(groupMembership.getGroup().getParentGroup(), groupMembership.getUser()));
+			GroupMembership parentgroupMembership = groupMembershipRepository.findByUserAndGroup(groupMembership.getUser(),groupMembership.getGroup().getParentGroup());
+			
+			// Add parent group membership only if user is not present in the parent group
+			if(parentgroupMembership == null)
+			{
+				this.addGroupMembership(new GroupMembership(groupMembership.getGroup().getParentGroup(), groupMembership.getUser()));
+			}
 		}
 	}
 	

@@ -1,4 +1,4 @@
-website.controller("UserCtrl", function($window, $resource, $scope, $route, AddUserView, GetUser, RemoveUserView, AddGroupMembership, RemoveGroupMembership, GetGroupMembershipByUserAndGroup, GetGroupMembershipsByUser, AddUserPhoneNumber) {
+website.controller("UserCtrl", function($window, $resource, $scope, $http, $route, AddUserView, GetUser, RemoveUserView, AddGroupMembership, RemoveGroupMembership, GetGroupMembershipByUserAndGroup, GetGroupMembershipsByUser, AddUserPhoneNumber) {
 	$scope.addUserView = function(user, userPhoneNumber) {
 
 		$scope.userView = new AddUserView();
@@ -7,12 +7,25 @@ website.controller("UserCtrl", function($window, $resource, $scope, $route, AddU
 		$scope.userView.role = "";
 
 		$scope.groupId = $("#groupId").val();
-		$scope.status = AddUserView.save({groupId: $scope.groupId}, $scope.userView, function(userObject) {
-			$scope.reload();
-		}, function(error){
-			createAlert("Error Adding Member","Member could not be added.")
-
-		}); 
+		var abbr = $('#organizationAbbr').val();
+		
+		$http.post( API_ADDR + 'api/userViews/add/' + abbr + '/' + $scope.groupId, $scope.userView).
+			success(function(data, status, headers, config) {
+				
+				if(data === false)
+				{
+					createAlert("Invalid Input","The Entered Phone Number already exists for another user. Please Enter a different phone number.");
+				}
+				else
+				{
+					createAlert("Success","Member was successfully added to the group.");
+					$scope.reload();
+				}
+			}).
+			error(function(data, status, headers, config) {
+				createAlert("Error Adding Member","There was some error in response from the remote server.");
+			});
+		
 	};
 
 	$scope.removeMemberFromGroup = function(data){
@@ -109,31 +122,40 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	/* Get values to generate orderItem objects from modal */
 	var userName = $.trim($("#newGroupUserName").val());
 	var userEmail = $.trim($("#newGroupUserEmail").val());
-	if(userEmail.indexOf("@")==-1 && userEmail != ""){
-		createAlert("Invalid Input","Invalid Email Id");
+	var userAddress = $("#newGroupUserAddress").val();
+	
+	
+	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
+	
+	// first check if username is empty
+	if(userName == ""){
+		createAlert("Invalid Input","Enter User Name !");
 		return;
 	}
-	else if (userEmail == ""){
+	
+	userPrimaryPhoneNumber = normalizePhoneNumber(userPrimaryPhoneNumber);
+	
+	// then validate phone number
+	if(userPrimaryPhoneNumber == false){
+		createAlert("Invalid Input","Invalid phone number !.");
+		return;
+	}
+	
+	// Then validate other user data
+	//  first validate email id
+	if(!validateEmail(userEmail))
+	{
+		createAlert("Invalid Input","Invalid Email ID !");
+		return;
+	}
+	
+	// if email id is an empty string, set it as null so as to avoid unique constraint error in database
+	if(userEmail == "")
+	{
 		userEmail = null;
 	}
-	var userAddress = $("#newGroupUserAddress").val();
-	var userPrimaryPhoneNumber = $("#newGroupUserPrimaryPhoneNumber").val();
 
-
-	if(userName == ""){
-		createAlert("Invalid Input","Enter User Name");
-		return;
-	}
-
-	userPrimaryPhoneNumber = normalizePhoneNumber(userPrimaryPhoneNumber);
-	if(userPrimaryPhoneNumber == false){
-		createAlert("Invalid Input","Invalid phone number.");
-		return;
-	}
-
-	/* Create and add new row element for user */
-
-	/* Create order item element and push it in the queue */
+	// Create user and userphoneNumber objects
 	var user={};
 	user.name = userName;
 	user.email = userEmail;
