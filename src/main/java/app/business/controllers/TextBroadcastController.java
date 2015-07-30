@@ -56,6 +56,8 @@ public class TextBroadcastController {
 	
 	@Autowired
 	GroupMembershipService groupMembershipService;
+
+	private int sendSMS;
 	
 	@RequestMapping(value="/textBroadcast/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
@@ -115,7 +117,7 @@ public class TextBroadcastController {
 			// Call the SendSMS function from IVRUtils
 			try {
 				IVRUtils.sendSMS(userPhoneNumber.getPhoneNumber(), textContent, organization.getIncomingSmsCode(), null);
-			} 
+				} 
 			catch (Exception e) {
 				e.printStackTrace();
 				return -1;

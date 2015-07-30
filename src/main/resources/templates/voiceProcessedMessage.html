@@ -13,7 +13,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="list-users" th:each="voiceMessage : ${message} ">
+				<tr class="list-process" th:each="voiceMessage : ${message} ">
 
 					<td th:text="${voiceMessage.order.orderId}">Message Id</td>
 					<td th:text="${voiceMessage.user.name}">Name</td>
