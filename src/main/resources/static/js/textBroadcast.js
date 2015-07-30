@@ -37,26 +37,35 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 		});
 		
 		$scope.broadcast.userIds = userIds;
-		
-		// Create a new textbroadcast object by sending 'POST' request to controller
-		$http.post(API_ADDR + 'web/' + abbr + '/textBroadcast/create/' + groupid, $scope.broadcast)
-		.success(function(data,status,header,config){
-			console.log("TextBroadcast controller called successfully from backend");
-			
-			if(data === 0)
-			{
-				createAlert("SMS Sent","The SMS has been sent successfully");
-			}
-			else
-			{
-				createAlert("Error Sending Message","There was some problem in the server !");
-			}
-			
-		})
-		.error(function(data,status,header,config){
-			
-		})
-		
+		if($scope.textContent==null||$scope.textContent=='')
+		{
+			createAlert("Warning!!","There is no text to broadcast");
+		}
+		else if(userIds=='')
+		{
+			createAlert("Warning!!","No users selected");
+		}
+		else
+		{
+			// Create a new textbroadcast object by sending 'POST' request to controller
+			$http.post(API_ADDR + 'web/' + abbr + '/textBroadcast/create/' + groupid, $scope.broadcast)
+			.success(function(data,status,header,config){
+				console.log("TextBroadcast controller called successfully from backend");
+				
+				if(data === 0)
+				{
+					createAlert("SMS Sent","The SMS has been sent successfully");
+				}
+				else
+				{
+					createAlert("Error Sending Message","There was some problem in the server !");
+				}
+				
+			})
+			.error(function(data,status,header,config){
+				
+			})
+		}
 	};
 });
 

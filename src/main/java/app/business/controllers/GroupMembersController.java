@@ -1,5 +1,6 @@
 package app.business.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import app.business.services.OrganizationService;
 import app.business.services.UserViewService;
 import app.business.services.UserViewService.UserView;
 import app.entities.Group;
+import app.entities.GroupMembership;
 import app.entities.Organization;
 
 @Controller
@@ -36,6 +38,19 @@ public class GroupMembersController {
 		List<UserView> userViewList = userViewService.getUserViewListByGroup(groupId);
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		List<Group> groupList = groupService.getGroupListByOrganization(organization);
+		for (UserView user:userViewList)
+		{
+			List<GroupMembership> groupMembershipList = user.getUser().getGroupMemberships();
+			List<GroupMembership> removeGroupMemberShipList = new ArrayList<GroupMembership>();
+			for(int i=0;i<groupMembershipList.size();i++)
+			{
+				if(groupMembershipList.get(i).getGroup().getOrganization().getName()!=organization.getName())
+				{
+					removeGroupMemberShipList.add(groupMembershipList.get(i));
+				}
+			}
+			groupMembershipList.removeAll(removeGroupMemberShipList);
+		}
 		Group parentGroup = organizationService.getParentGroup(organization);
 		model.addAttribute("organization", organization);
 		model.addAttribute("userViews", userViewList);
