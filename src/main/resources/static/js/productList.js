@@ -14,9 +14,10 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			});
 		}
 		//function to edit product
-		$scope.editProduct = function(value){
+		$scope.editProduct = function(product){
 			$scope.product = ProductEdit.get({id:$scope.id},function(){
-				$scope.product.unitRate = value;
+				$scope.product.unitRate = product.price;
+				$scope.product.name = product.name;
 				$scope.product.$update({id:$scope.id},function(){
 				});
 			});
@@ -111,27 +112,33 @@ $("#page-content").on("click", "#btn-edit", function () {
 	productName = $(this).attr("productName");
 	productPrice = $(this).attr("productPrice");
 	angular.element(this).scope().setId(productId);
-	$(".modal-header #HeadingEdit").html("Edit "+productName+"'s price");
-	$(".modal-body #update-product-input").html(productName);
+	$(".modal-header #HeadingEdit").html("Edit Product");
+	$(".modal-body #update-product-input").html("Price");
+	$(".modal-body #update-product-list-input-name").html("Name");
+	$("#update-product-name-input").val(productName);
 	$("#update-price-input").val(productPrice);
 	
 });
 
 //update the product on clicking the update button in edit modal
 $("#page-content").on("click","#update-product",function(e){
-	value = $.trim($('#update-price-input').val());
-	if(! $.isNumeric(value) ){
+	var product = {};
+	product.price = $.trim($('#update-price-input').val());
+	product.name = $.trim($('#update-product-name-input').val());
+	console.log("productname" + product.name);
+	if(! $.isNumeric(product.price) ){
 		createAlert("Invalid Input","Enter valid Price input as numerical value.");
 	}
-	else if(value<0)
+	else if(product.price < 0)
 	{
 		createAlert("Negative Input not allowed.");
 	}
 	else
 	{
-		angular.element(this).scope().editProduct(value);
+		angular.element(this).scope().editProduct(product);
 		$("#edit-product-modal").modal('toggle');
 		$('#update-price-input').val("");
+		$('#update-product-name-input').val("");
 		//TODO Eliminating this function doing hard refresh
 		angular.element(this).scope().reload();
 	}	
