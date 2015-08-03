@@ -22,7 +22,7 @@
       </thead>
       <tbody>
       
-        <tr id="list" th:each="product : ${products}">
+        <tr class="list-product" id="list" th:each="product : ${products}">
           <!--<td><input type="checkbox" class="checkthis" /></td>-->
           <td th:attr= "id='productName' + ${product.productId}" th:text="${product.name}">Cabbage</td>
           <td th:text="${product.unitRate}">50</td>

@@ -35,55 +35,57 @@ import app.entities.broadcast.TextBroadcast;
 @Controller
 @RequestMapping("/web/{org}")
 public class TextBroadcastController {
-	
+
 	@Autowired
 	BroadcastRecipientService broadcastRecipientService;
-	
+
 	@Autowired
 	BroadcastService broadcastService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	UserPhoneNumberService userPhoneNumberService;
-	
+
 	@Autowired
 	OrganizationService organizationService;
-	
+
 	@Autowired
 	GroupService groupService;
-	
+
 	@Autowired
 	GroupMembershipService groupMembershipService;
-	
+
+	private int sendSMS;
+
 	@RequestMapping(value="/textBroadcast/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String groupPage(@PathVariable String org, @PathVariable int groupId, Model model) {
 		Group group = groupService.getGroup(groupId);
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		User user = userService.getCurrentUser();
-		
+
 		List<GroupMembership> groupMembershipList = new ArrayList<GroupMembership>(groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group));
-		
+
 		List<User> users = new ArrayList<User>();
 		for(GroupMembership groupMembership : groupMembershipList) {
 			users.add(groupMembership.getUser());
 		}
-		
+
 		model.addAttribute("users",users);
 		model.addAttribute("publisher",user);
 		model.addAttribute("group", group);
 		model.addAttribute("organization", organization);
-		
+
 		return "textBroadcast";
 	}
-	
+
 	@RequestMapping(value = "/textBroadcast/create/{groupId}", method = {RequestMethod.POST})
 	@ResponseBody
 	@Transactional
 	public int createBroadcast(@RequestBody Map<String,String> body) {
-		
+
 		// Get the required variables from the Broadcast JSON object passed through Angular JS
 		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organization")));
 		Group group = groupService.getGroup(Integer.parseInt(body.get("group")));
@@ -94,16 +96,16 @@ public class TextBroadcastController {
 		boolean askResponse = Boolean.parseBoolean(body.get("askResponse"));
 		boolean appOnly = Boolean.parseBoolean(body.get("appOnly"));
 		String textContent = body.get("textContent");
-		
-		
+
+
 		// Create a new Text Broadcast and add it to the database
 		TextBroadcast broadcast = new TextBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, textContent);
 		broadcastService.addBroadcast(broadcast);
-		 
+
 		// Get the Broadcast Recipients
 		String userIdString = body.get("userIds");
 		String[] userIdList = userIdString.split(",");
-		
+
 		// Parse the string containing User Id of the Recipients and send SMS to them
 		for(int i=0 ; i<userIdList.length;i++)
 		{	
@@ -111,7 +113,7 @@ public class TextBroadcastController {
 			BroadcastRecipient recipientUser = new BroadcastRecipient(broadcast, user);
 			broadcastRecipientService.addBroadcastRecipient(recipientUser);
 			UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
-			
+
 			// Call the SendSMS function from IVRUtils
 			try {
 				IVRUtils.sendSMS(userPhoneNumber.getPhoneNumber(), textContent, organization.getIncomingSmsCode(), null);
@@ -121,15 +123,15 @@ public class TextBroadcastController {
 				return -1;
 			}
 		}
-		
+
 		// Get the current Timestamp
 		java.util.Date date = new java.util.Date();
 		java.sql.Timestamp timestamp = new java.sql.Timestamp(date.getTime());  
-		 
+
 		// Set the Timestamp in the broadcast table after sending SMS to all the recipients
 		broadcastService.setBroadcastTime(timestamp, broadcast);
-		
+
 		return 0;
-		
+
 	}
 }
