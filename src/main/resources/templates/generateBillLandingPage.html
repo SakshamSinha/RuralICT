@@ -1,0 +1,30 @@
+<div class="row-fluid">
+  <div class="page-header">
+  	<h1>
+  		Generate Bill
+  	</h1>
+  </div>
+  <div id="groupBills">
+  	<table class="table table-bordred table-striped">
+  		<thead>
+  			<th>
+  				Group Name
+  			</th>
+  			<th>
+  				Bill
+  			</th>
+  		</thead>
+  		<tbody>
+  		<tr th:each="group: ${groups}">
+	  		<td th:text="${group.name}">
+	  		</td>
+	  		<td>
+	  			<a class="btn btn-primary" target="_blank" th:href="'generateBillGroup/'+${group.groupId}">
+					<i class="icon-white  icon-file"></i> View
+				</a>
+	  		</td>
+  		</tr>
+  		</tbody>
+  	</table>
+  </div>
+</div>

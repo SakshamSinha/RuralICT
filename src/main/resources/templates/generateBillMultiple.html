@@ -1,0 +1,104 @@
+ <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Bill</title>
+		<meta charset="utf-8">
+		<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<title ng-bind="title">RuralIVRS - Welcome</title>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport">
+		<meta content="Rural IVRS Web application." name="description">
+		<meta content="IIT Bombay" name="author">
+		<style>
+			table, th, td {
+    			border: 1px solid black;
+    			border-collapse: collapse;
+			}
+		</style>
+	
+<style type="text/css"></style></head>
+<body style="font-family:Times New Roman; font-size:7">
+	<div class="container-fluid">
+		<div class="row-fluid col-xs-12" style="text-align:center">
+			<div class="table-responsive col-xs-6"  th:each="order: ${orders}">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<td colspan="2" style="text-align:center">
+									<b>
+										<div th:text="${order.organization.name}">IITBombay</div>
+									</b>
+									<div th:text="${order.organization.address}">new address</div>
+									<div th:text="${order.organization.contact}">919867898765</div>
+									<div th:text="${billLayout.headerContent}">AFC Pune</div>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div><b>Member: </b></div>
+									<div th:text="${order.message.user.name}"></div>
+									
+								</td>
+								<td>
+									<div><b>Group Name: </b></div>
+									<div th:text="${order.message.group.name}"></div>			
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div><b>Order Id: </b></div>
+									<div th:text="'#' + ${order.orderId}">#150</div>
+									
+								</td>
+								<td>
+									<div><b>Time: </b></div>
+									<div th:text="${order.message.time}">2015-07-30 14:55:28.0</div>			
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<table class="col-xs-12">
+										<thead>
+											<tr><th>Product</th>
+											<th>Quantity</th>
+											<th>Rate (In Dollars)</th>
+											<th>Cost (In ₹)</th>
+										
+										</tr></thead><tbody>
+											<tr th:each="orderItem : ${order.orderItems}">
+												<td th:text="${orderItem.product.name}"></td>
+												<td style="text-align:right" th:text="${orderItem.quantity}"></td>
+												<td style="text-align:right" th:text="${orderItem.unitRate}"></td>
+												<td style="text-align:right" th:text="${orderItem.quantity * orderItem.unitRate}"></td>
+											</tr>
+										</tbody>
+									</table>			
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<table width="100%">
+										<tbody>
+											<tr>
+												<th>Total</th>
+												<td style="text-align:right" th:text="${total[orderStat.index]}">57.5</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div style="text-align:center" th:text="${billLayout.footerContent}" >Thank you</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				
+			</div>
+		</div>
+	</div>
+			
+
+</body>

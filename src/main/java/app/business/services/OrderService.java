@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.data.repositories.OrderRepository;
+import app.entities.Group;
 import app.entities.Order;
 import app.entities.Organization;
 import app.entities.User;
@@ -22,6 +23,11 @@ public class OrderService {
 	 */
 	public List<Order> getOrderByOrganization(Organization organization) {
 		return orderRepository.findByOrganization(organization);
+	}
+
+	public List<Order> getOrderByGroup(Group group)
+	{
+		return orderRepository.findByMessage_group(group);
 	}
 	
 	/*
