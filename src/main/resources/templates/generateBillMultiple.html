@@ -19,7 +19,8 @@
 <body style="font-family:Times New Roman; font-size:7">
 	<div class="container-fluid">
 		<div class="row-fluid col-xs-12" style="text-align:center">
-			<div class="table-responsive col-xs-6"  th:each="order: ${orders}">
+			<div th: if="${orders !=null}">	
+				<div class="table-responsive col-xs-6"  th:each="order: ${orders}">
 					<table class="table table-striped">
 						<thead>
 							<tr>
@@ -97,6 +98,10 @@
 					</table>
 				
 			</div>
+			</div>
+			<div th:if="${orders.size() == 0}"> 
+				<h1>No Orders </h1>
+			</div> 
 		</div>
 	</div>
 			

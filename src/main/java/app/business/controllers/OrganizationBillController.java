@@ -50,7 +50,7 @@ public class OrganizationBillController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String generateBill(@PathVariable String org, Model model) {
-		List<Order> orderList = orderservice.getOrderByOrganization(organizationservice.getOrganizationByAbbreviation(org));
+		List<Order> orderList = orderservice.getOrderByOrganizationProcessed(organizationservice.getOrganizationByAbbreviation(org));
 		//Removing orders with No message associated to it.
 		List<Order> nullOrders=new ArrayList<Order>();
 		List<Float> totalCost= new ArrayList<Float>();
@@ -88,7 +88,7 @@ public class OrganizationBillController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String generateBillGroup(@PathVariable String org, @PathVariable Integer groupId,Model model) {
-		List<Order> orderList = orderservice.getOrderByGroup(groupservice.getGroup(groupId));
+		List<Order> orderList = orderservice.getOrderByGroupProcessed(groupservice.getGroup(groupId));
 		//Removing orders with No message associated to it.
 		List<Order> nullOrders=new ArrayList<Order>();
 		List<Float> totalCost= new ArrayList<Float>(0);

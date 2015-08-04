@@ -21,13 +21,13 @@ public class OrderService {
 	/*
 	 * Returns list of Orders by an Organization  
 	 */
-	public List<Order> getOrderByOrganization(Organization organization) {
-		return orderRepository.findByOrganization(organization);
+	public List<Order> getOrderByOrganizationProcessed(Organization organization) {
+		return orderRepository.findByOrganizationAndStatus(organization, "processed");
 	}
 
-	public List<Order> getOrderByGroup(Group group)
+	public List<Order> getOrderByGroupProcessed(Group group)
 	{
-		return orderRepository.findByMessage_group(group);
+		return orderRepository.findByMessage_groupAndStatus(group,"processed");
 	}
 	
 	/*

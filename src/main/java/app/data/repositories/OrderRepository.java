@@ -44,5 +44,10 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
      
 	public List<Order> findByOrganization(Organization organization);
 	
+	public List<Order> findByOrganizationAndStatus(Organization organization,String status);
+	
 	public List<Order> findByMessage_group(Group group);
+	
+	public List<Order> findByMessage_groupAndStatus(Group group,String status);
+	
 }
