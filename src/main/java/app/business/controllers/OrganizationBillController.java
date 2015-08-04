@@ -68,12 +68,6 @@ public class OrganizationBillController {
 		
 		BillLayoutSettings billLayoutSetting = billLayoutSettingsService.getBillLayoutSettingsByOrganization(organizationservice.getOrganizationByAbbreviation(org));
 		model.addAttribute("billLayout",billLayoutSetting);
-		for(Order order:orderList){
-			System.out.println("Status:"+order.getStatus());
-			System.out.println("OrderId:"+order.getOrderId());
-			System.out.println(order.getMessage());
-		}
-	
 		List<Integer> indexes= new ArrayList<Integer>(orderList.size());
 		for(int index=0;index<orderList.size();index++)
 		{
@@ -108,12 +102,6 @@ public class OrganizationBillController {
 		
 		BillLayoutSettings billLayoutSetting = billLayoutSettingsService.getBillLayoutSettingsByOrganization(organizationservice.getOrganizationByAbbreviation(org));
 		model.addAttribute("billLayout",billLayoutSetting);
-		for(Order order:orderList){
-			System.out.println("Status:"+order.getStatus());
-			System.out.println("OrderId:"+order.getOrderId());
-			System.out.println(order.getMessage());
-		}
-	
 		List<Integer> indexes= new ArrayList<Integer>(orderList.size());
 		for(int index=0;index<orderList.size();index++)
 		{
@@ -127,10 +115,8 @@ public class OrganizationBillController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String generateBillPage(@PathVariable String org,Model model) {
-		System.out.println("Bill Page");
 		Organization organization=organizationservice.getOrganizationByAbbreviation(org);
 		List<Group> groupList = organization.getGroups();
-		
 		model.addAttribute("groups", groupList);
 		return "generateBillLandingPage";
 	}
