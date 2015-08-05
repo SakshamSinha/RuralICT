@@ -1,4 +1,4 @@
-website.controller('OrderSummaryGroupsController', function($scope, $route, ShowOrderSummaryGroups) {
+website.controller('OrderSummaryGroupsController', function($scope, $route, ShowOrderSummaryGroups, ShowOrderSummaryOrg) {
 	$('#fromGroupsDate').datepicker({
 		dateFormat: 'yy-mm-dd',
 		changeMonth: true,
@@ -10,15 +10,25 @@ website.controller('OrderSummaryGroupsController', function($scope, $route, Show
 		changeYear: true
 	});
 	$scope.orderSummaries = function(data){
-	document.getElementById("totalGroups").innerHTML=0;
+	document.getElementById("totalAmount").innerHTML=0;
 	$scope.orderSummariesGroup =  ShowOrderSummaryGroups.update(data, function(orderSummaries){
 			var locTotal=0;
 			for(var i=0; i<orderSummaries.length; i++){
 				locTotal+=((parseFloat(orderSummaries[i].collection)));
 			}
-			document.getElementById("totalGroups").innerHTML="₹ " + locTotal;
+			document.getElementById("totalAmount").innerHTML="₹ " + locTotal;
 	  	});
 	};
+	$scope.orderSummariesByOrg = function(data){
+		document.getElementById("totalAmount").innerHTML=0;
+		$scope.orderSummariesGroup =  ShowOrderSummaryOrg.update(data, function(orderSummariesByOrg){
+				var locTotal=0;
+				for(var i=0; i<orderSummariesByOrg.length; i++){
+					locTotal+=((parseFloat(orderSummariesByOrg[i].collection)));
+				}
+				document.getElementById("totalAmount").innerHTML="₹ " + locTotal;
+		  	});
+		};
 });
       
 $("#page-content").on("click", "#submitGroups", function(e) {
@@ -37,6 +47,13 @@ $("#page-content").on("click", "#submitGroups", function(e) {
 	    data.group=group;
 	    data.fromDate=from;
 	    data.toDate=to;
-	    angular.element($('#submitGroups')).scope().orderSummaries(data);
+	    if(group=="All Groups")
+	    {
+	    	data.organization=$('#OrderSummaryGroup').attr('organizationId');
+	    	//console.log(data.group);
+	    	angular.element($('#submitGroups')).scope().orderSummariesByOrg(data);
+	    }
+	    else
+	    	angular.element($('#submitGroups')).scope().orderSummaries(data);
     }
    });
