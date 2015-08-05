@@ -111,7 +111,7 @@ span.user-actions, td div.btn-group {
 table {
   background-color: #fdfdfd;
 }
-tr.pending-user:hover span.user-actions, tr.list-users:hover td div.btn-group, tr.list-roles:hover td div.btn-group {
+tr.pending-user:hover span.user-actions, tr.list-manageMember:hover td div.btn-group,tr.list-member:hover td div.btn-group, tr.list-roles:hover td div.btn-group {
   visibility:visible;
 }
 
