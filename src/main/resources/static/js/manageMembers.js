@@ -8,8 +8,6 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 	// Get Organization Abbreviation from Thymeleaf
 	var abbr = $('#organizationAbbr').val();
 	
-	console.log("usernameproperty: " + $scope.userpropertysearch);
-	
 	// By Default display all members
 	$scope.selectedRole = "";
 	
