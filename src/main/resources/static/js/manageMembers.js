@@ -8,6 +8,8 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 	// Get Organization Abbreviation from Thymeleaf
 	var abbr = $('#organizationAbbr').val();
 	
+	console.log("usernameproperty: " + $scope.userpropertysearch);
+	
 	// By Default display all members
 	$scope.selectedRole = "";
 	
@@ -21,6 +23,23 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		error(function(data, status, headers, config) {
 			createAlert("Error Fetching Data","There was some error in response from the remote server.");
 		});
+	
+	$scope.userPropertySearchQuery = function (manageUserItem){
+		    
+			if(!$scope.userpropertysearch)
+			{
+				return true;
+			}
+			else if($scope.userpropertysearch) 
+			{
+				if (manageUserItem.name.toLowerCase().indexOf($scope.userpropertysearch.toLowerCase())!=-1 || manageUserItem.phone.indexOf($scope.userpropertysearch)!=-1) {
+					return true;
+				}
+				else
+					return false;
+			}
+	        
+	};
 
 	// Click event handler for the 'Add' Modal Button
 	$scope.addNewUserModalButton = function() {

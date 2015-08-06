@@ -10,8 +10,8 @@
 				data-title="Add new user" data-target="#add-new-user-modal">
 				<i class="icon-white icon-plus-sign"></i> Add new Organization Member</button>
 				<div style="float: right;">
-					<label style="float:left;margin-top:4px;" class="control-label" for="usernamesearch">Search by User Name:&nbsp;&nbsp;</label>
-					<input style="float:left;" id="usernamesearch" type="text" ng-model="usernameQuery.name">
+					<label style="float:left;margin-top:4px;" class="control-label" for="usernamesearch">Search :&nbsp;&nbsp;</label>
+					<input style="float:left;" id="usernamesearch" type="text" ng-model="userpropertysearch">
 				</div>
 			</form>
 			
@@ -39,7 +39,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="list-manageMember" dir-paginate="manageUserItem in manageUserItems | filter:selectedRole | filter:usernameQuery | orderBy:'name' | itemsPerPage: 10">
+				<tr class="list-manageMember" dir-paginate="manageUserItem in manageUserItems | filter:selectedRole | filter: userPropertySearchQuery | orderBy:'name' | itemsPerPage: 10">
 					
 					<td>{{ manageUserItem.manageUserID }}</td>
 					<td>{{ manageUserItem.name }}</td>
