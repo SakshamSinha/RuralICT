@@ -157,6 +157,15 @@ website.factory("ShowOrderSummaryGroups", function($resource) {
 		}
 	});
 });
+
+website.factory("ShowOrderSummaryOrg", function($resource) {
+	return $resource(API_ADDR + "api/orderSummaries/orgwise", {organization:"@organization", fromDate:"@fromDate", toDate:"@toDate"}, {
+		update: {
+			method: 'GET',
+			isArray: true
+		}
+	});
+});
 	
 website.factory("ShowOrderSummaryProducts", function($resource) {
 	return $resource(API_ADDR + "api/orderSummaries/productwise", {product:"@product", fromDate:"@fromDate", toDate:"@toDate"}, {

@@ -1,5 +1,5 @@
 <div ng-controller="OrderSummaryGroupsController">
-	<div class="row-fluid">
+	<div id="OrderSummaryGroup" class="row-fluid" th:attr="organizationId=${organization.organizationId}">
 		<h2>Order Summary(Group wise)</h2><p hidden id="orgAbbrevation" th:text="${orgAbbrevation}">text</p></br>
 			<form class="simple-form">
 				Group Name: 
@@ -8,6 +8,7 @@
 					<option th:each="group : ${groups}" th:value="${group.groupId}">
 	    					<p th:text="${group.name}">text</p>
 	    			</option>
+	    			<option>All Groups</option>
 	  			</select>
 	  			From: <input id="fromGroupsDate" name="From" ng-model="fromDate" placeholder="yyyy-mm-dd">
 	  			To: <input id="toGroupsDate" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
@@ -29,7 +30,7 @@
 	  			<td colspan="2">
 	  				Total Amount
 	  			</td>
-	  			<td id="totalGroups">
+	  			<td id="totalAmount">
 	  				0
 	  			</td>
 	  		</tr>

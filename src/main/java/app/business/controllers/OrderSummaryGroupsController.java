@@ -30,6 +30,7 @@ public class OrderSummaryGroupsController {
 		List<Group> groups = organizationService.getOrganizationGroupList(organization);		
 		model.addAttribute("groups", groups);
 		model.addAttribute("orgAbbrevation", org);
+		model.addAttribute("organization",organization);
 		return "orderSummaryGroups";
 	}
 }
