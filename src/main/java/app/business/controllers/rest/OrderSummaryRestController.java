@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.business.services.GroupService;
 import app.business.services.OrderSummaryService;
+import app.business.services.OrganizationService;
 import app.business.services.OrderSummaryService.OrderSummary;
 import app.business.services.ProductService;
 
@@ -28,9 +29,18 @@ public class OrderSummaryRestController {
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	OrganizationService OrganizationService;
+	
 	@RequestMapping(value="/groupwise", method=RequestMethod.GET)
 	public @ResponseBody List<OrderSummary> getOrderSummaryGroupwise(int group, @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate, @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate) {
 		List<OrderSummary> orderSummaryList = orderSummaryService.getOrderSummaryListForGroup(groupService.getGroup(group), fromDate, toDate);
+		return orderSummaryList;
+	}
+	
+	@RequestMapping(value="/orgwise", method=RequestMethod.GET)
+	public @ResponseBody List<OrderSummary> getOrderSummaryOrgwise(int organization, @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate, @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate) {
+		List<OrderSummary> orderSummaryList = orderSummaryService.getOrderSummaryListForOrganization(OrganizationService.getOrganizationById(organization), fromDate, toDate);
 		return orderSummaryList;
 	}
 	
