@@ -12,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="list-users" th:each="textMessage : ${message} ">
+				<tr class="list-message" th:each="textMessage : ${message} ">
 	
 					<td th:attr="id='inboxTextMessageTime'+${textMessage.messageId}" th:text="${textMessage.Time}">Time</td>
 					<td th:attr="id='inboxTextMessageName'+${textMessage.messageId}" th:text="${textMessage.user.name}">User Name</td>

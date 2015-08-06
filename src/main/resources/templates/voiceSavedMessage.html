@@ -15,7 +15,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="list-users" th:each="voiceMessage : ${message} ">
+					<tr class="list-inbox" th:each="voiceMessage : ${message} ">
 	
 						<td th:text="${voiceMessage.order.orderId}">Order Id</td>
 						<td th:attr="id='savedVoiceMessageTime'+${voiceMessage.messageId}" th:text="${voiceMessage.Time}">Time</td>

@@ -20,8 +20,8 @@
        <!--  <th>Price</th> -->
       </thead>
       <tbody>
-      <tr >
-          <tr th:each="presetQuantity : ${presetQuantities}">
+      <tr>
+          <tr class="list-quantity" th:each="presetQuantity : ${presetQuantities}">
           <!--<td><input type="checkbox" class="checkthis" /></td>-->
           <td th:text="${presetQuantity.productType.name}">productType</td>
           <td th:text="${presetQuantity.quantity}">quantity</td>
