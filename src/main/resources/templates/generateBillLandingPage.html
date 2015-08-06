@@ -5,7 +5,8 @@
   	</h1>
   </div>
   <div id="groupBills">
-  	<table class="table table-bordred table-striped">
+  	<!-- Code For Representing in a tabular format -->
+  	<!-- <table class="table table-bordred table-striped">
   		<thead>
   			<th>
   				Group Name
@@ -25,6 +26,16 @@
 	  		</td>
   		</tr>
   		</tbody>
-  	</table>
+  	</table> -->
+  	<div class="form-inline">
+  		<select id="groupDropDownList" >
+  		<option th:value="${group.groupId}" th:text="${group.name}" th:each="group:${groups}" selected="selected"></option>
+  		</select>
+  		&nbsp
+  		&nbsp
+  		&nbsp
+  		<button class="btn btn-default" onClick="redirectForGenerateBill()"><i class="icon-white  icon-file"></i>View</button>
+  	</div>
   </div>
+  
 </div>
