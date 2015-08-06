@@ -228,8 +228,20 @@ website.factory("ProductDelete",function($resource){
 });
 
 website.factory("ProductListGet",function($resource){
-	return $resorce(API_ADDR + "api/products",{
-		query: {method: "GET", isArray: true}
+	return $resource(API_ADDR + "api/products",{
+		query: {method: "GET", isArray: false}
+	});
+});
+
+website.factory("GetMetaProductList",function($resource){
+	return $resource(API_ADDR+"api/products/search/findByproductType_organization_abbreviationMETA",{abbr:'@abbr',page:'@page',size:'@size',sort:'@sort'},{
+		query: {method: "GET"}
+	});
+});
+
+website.factory("GetProductList",function($resource){
+	return $resource(API_ADDR+"api/products/search/findByproductType_organization_abbreviation",{abbr:'@abbr',page:'@page',size:'@size',sort:'@sort'},{
+		query: {method: "GET"}
 	});
 });
 
