@@ -1,4 +1,4 @@
-website.controller("ProductsCtrl",function($window, $scope, $http, $route, $location, ProductCreate, ProductListGet, ProductEdit, ProductDelete) {
+website.controller("ProductsCtrl",function($window, $scope, $http, $route, $location, ProductCreate, ProductEdit, ProductDelete) {
 		
 		var id;
 		

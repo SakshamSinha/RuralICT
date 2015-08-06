@@ -242,18 +242,6 @@ website.factory("ProductListGet",function($resource){
 	});
 });
 
-website.factory("GetMetaProductList",function($resource){
-	return $resource(API_ADDR+"api/products/search/findByproductType_organization_abbreviationMETA",{abbr:'@abbr',page:'@page',size:'@size',sort:'@sort'},{
-		query: {method: "GET"}
-	});
-});
-
-website.factory("GetProductList",function($resource){
-	return $resource(API_ADDR+"api/products/search/findByproductType_organization_abbreviation",{abbr:'@abbr',page:'@page',size:'@size',sort:'@sort'},{
-		query: {method: "GET"}
-	});
-});
-
 /* Resources for Preset Quantities */
 website.factory("PresetQuantityCreate",function($resource){
 	return $resource(API_ADDR + "api/presetQuantities");
