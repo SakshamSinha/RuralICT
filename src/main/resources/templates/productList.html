@@ -1,5 +1,5 @@
 <div ng-controller="ProductsCtrl">
-<div class="row-fluid">
+<div id="ProductLists" class="row-fluid" th:attr="org=${organization.abbreviation}">
   <div class="page-header">
     <h1>Product List <small>Edit items</small></h1>
     <span>{{organization}}</span>
@@ -17,6 +17,7 @@
     <table id="producttable" class="table table-bordred table-striped">
       <thead>
         <!--<th><input type="checkbox" id="checkall" /></th>-->
+        <th>Product Image</th>
         <th>Product Name</th>
         <th>Price(Per Kg)</th>
       </thead>
@@ -24,6 +25,7 @@
       
         <tr class="list-product" id="list" th:each="product : ${products}">
           <!--<td><input type="checkbox" class="checkthis" /></td>-->
+          <td><img  th:attr="src=@{${product.imageUrl}}" style="width: 25; height: 25;" onmouseover="this.width='100';this.height='100'" onmouseout="this.width='25';this.height='25'" /></td>
           <td th:attr= "id='productName' + ${product.productId}" th:text="${product.name}">Cabbage</td>
           <td th:text="${product.unitRate}">50</td>
           <td>
@@ -118,6 +120,16 @@
 			  <input type="text" class="input-large" id="new-price-input" placeholder="45"/>
 			</div>
 		  </div>
+		  <div class="control-group">
+		  	<div id="pictureBox">
+		  		<img id="productImage" style='float:right;' src="#" alt="your image" />
+		  	</div>
+		    <label class="custom-file-upload btn btn-info btn-small" role="button">
+		    		<input id="product-image-file" type="file" size = "4" onchange="readURL(this);" name="myProductImage" file-model="myProductImage" />
+					<i class="icon-folder-open icon-white"></i> Choose Product Image
+			</label>
+			<span id="product-image-name"></span>
+		 </div>
 	  </form>
     </div>
   </div>

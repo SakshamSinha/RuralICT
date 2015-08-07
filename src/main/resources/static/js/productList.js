@@ -1,18 +1,57 @@
 website.controller("ProductsCtrl",function($window, $scope, $http, $route, $location, ProductCreate, ProductEdit, ProductDelete) {
 		
 		var id;
+		var org;
+		var url1;
 		//function to save product
-		$scope.saveProduct = function(data){
+		$scope.saveProduct = function(data1){
+			
 			$scope.product = new ProductCreate();
-			$scope.product.name = data.name;
-			$scope.product.unitRate = data.unitRate;
-		    $scope.product.productType = data.productType;
-			ProductCreate.save($scope.product,function(){
+			$scope.product.name = data1.name;
+			$scope.product.unitRate = data1.unitRate;
+		    $scope.product.productType = data1.productType;
+		    $scope.product.imageUrl= url1;
+		   	ProductCreate.save($scope.product,function(){
 			},function(error){
 				if (error.status == "409")
 					createAlert("Error Adding Product","Product already added. Add a different product");
 			});
 		}
+		
+		$scope.uploadFile = function(data){
+			if ($scope.myProductImage == undefined)
+			{
+				createAlert("Error Uploading File","No file added. Please choose a file of '.jpg' image format");
+			}
+			else if ($scope.myProductImage.type != "image/jpeg")
+			{
+				createAlert("Error Uploading File","Invalid File!! Please choose again. You can only choose a file of '.jpg' image format");
+			}
+			else
+			{
+				var formData=new FormData();
+				formData.append("file",$scope.myProductImage); //myFile.files[0] will take the file and append in formData since the name is myFile.
+				$http({
+					method: 'POST',
+					url: API_ADDR + 'web/'+data.organization+'/uploadpicture', // The URL to Post.
+					headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
+					data: formData,
+					transformRequest: function(data, headersGetterFunction) {
+						return data;
+					}
+				})
+				.success(function(data, status) {
+					console.log("Image successfully uploaded.");
+					url1=data;
+					})
+				.error(function(data, status) {
+					createAlert("Error Uploading File","error "+status);
+					if (status == "500")
+						createAlert("Error Uploading File","File already present. Choose a different file before uploading.");
+				});
+			}
+		}
+		
 		//function to edit product
 		$scope.editProduct = function(value){
 			$scope.product = ProductEdit.get({id:$scope.id},function(){
@@ -42,11 +81,50 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			  }); 
 		}
 		
+		$("#page-content").on("click", "#add-new-product", function(e) {
+			e.preventDefault();
+			var price = $.trim($('#new-price-input').val());
+			var productType = $.trim($('#new-product-type-input').val());
+			var product = $.trim($('#new-product-input').val());
+			org=$('#ProductLists').attr('org');
+			if(! $.isNumeric(price)||price<0){
+				createAlert("Invalid Input","Please enter valid price input as positive numerical value.");
+			}
+			else if(product == ''){
+				createAlert("Invalid Input","Please enter a name for Product");
+			}
+			else if(productType == ""){
+				createAlert("Invalid Input","Please select one of the Product Type(s)");
+			}
+			else
+			{
+				var data = {};
+				data.name = product;
+				data.unitRate = price;
+				data.productType = productType;
+				data.organization= org;
+				console.log(data.organization);
+				angular.element($('#add-new-product')).scope().uploadFile(data);
+				setTimeout(function(){
+					console.log(url1);
+					angular.element($('#add-new-product')).scope().saveProduct(data);
+					},150);
+				$('#add-product-modal').modal('toggle');
+				$('#new-product-input').val("");
+				$('#new-product-type-input').val("");
+				$('#new-price-input').val("");
+				angular.element($('#add-new-product')).scope().reload();
+			}	
+		});
+		
+		
 		//TODO hard refresh has to be eliminated
 		$scope.reload = function(){
 			setTimeout($window.location.reload.bind(window.location),2000);
 		}
 });
+
+
 
 $("#page-content").on("click", "#producttable #checkall", function () {
 	if ($("#producttable #checkall").is(':checked')) {
@@ -61,34 +139,7 @@ $("#page-content").on("click", "#producttable #checkall", function () {
 });
 
 //add new product on clicking the add button
-$("#page-content").on("click", "#add-new-product", function(e) {
-	e.preventDefault();
-	var price = $.trim($('#new-price-input').val());
-	var productType = $.trim($('#new-product-type-input').val());
-	var product = $.trim($('#new-product-input').val());
-	if(! $.isNumeric(price)||price<0){
-		createAlert("Invalid Input","Please enter valid price input as positive numerical value.");
-	}
-	else if(product == ''){
-		createAlert("Invalid Input","Please enter a name for Product");
-	}
-	else if(productType == ""){
-		createAlert("Invalid Input","Please select one of the Product Type(s)");
-	}
-	else
-	{
-		var data = {};
-		data.name = product;
-		data.unitRate = price;
-		data.productType = productType;
-		angular.element($('#add-new-product')).scope().saveProduct(data);
-		$('#add-product-modal').modal('toggle');
-		$('#new-product-input').val("");
-		$('#new-product-type-input').val("");
-		$('#new-price-input').val("");
-		angular.element($('#add-new-product')).scope().reload();
-	}	
-});
+
 
 //capture the id of product on clicking the delete button
 $("#page-content").on("click", "#btn-delete", function(e) {  
@@ -136,3 +187,27 @@ $("#page-content").on("click","#update-product",function(e){
 		angular.element(this).scope().reload();
 	}	
 });
+
+$("#page-content").on("change","#product-image-file",function(e){
+	//get the filename set by the fileModel angular directive
+	console.log(angular.element($('#product-image-file')).scope().myProductImage);
+	var filename = angular.element($('#product-image-file')).scope().myProductImage.name;
+	//set the filename to be seen in UI
+	$("#product-image-name").text(filename);
+	//$("#product-image-display").HTMLImageElement()
+});
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#productImage')
+                .attr('src', e.target.result)
+                .width(50)
+                .height(50);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
