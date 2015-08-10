@@ -83,7 +83,6 @@ public class ProductsController {
 			}
 			catch (IOException e) {
 				e.printStackTrace();
-				System.out.println("Error!!!");
 				flag=1;
 			}
 		}while(flag==0);

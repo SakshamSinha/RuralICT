@@ -2,15 +2,15 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 		
 		var id;
 		var org;
-		var url1;
+		var image_url;
 		//function to save product
-		$scope.saveProduct = function(data1){
+		$scope.saveProduct = function(data){
 			
 			$scope.product = new ProductCreate();
-			$scope.product.name = data1.name;
-			$scope.product.unitRate = data1.unitRate;
-			$scope.product.productType = data1.productType;
-			$scope.product.imageUrl= url1;
+			$scope.product.name = data.name;
+			$scope.product.unitRate = data.unitRate;
+			$scope.product.productType = data.productType;
+			$scope.product.imageUrl= image_url;
 			ProductCreate.save($scope.product,function(){
 			},function(error){
 				if (error.status == "409")
@@ -42,7 +42,7 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 				})
 				.success(function(data, status) {
 					console.log("Image successfully uploaded.");
-					url1=data;
+					image_url=data;
 					})
 				.error(function(data, status) {
 					createAlert("Error Uploading File","error "+status);
@@ -103,12 +103,10 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 				data.unitRate = price;
 				data.productType = productType;
 				data.organization= org;
-				console.log(data.organization);
 				angular.element($('#add-new-product')).scope().uploadFile(data);
 				setTimeout(function(){
-					console.log(url1);
 					angular.element($('#add-new-product')).scope().saveProduct(data);
-					},150);
+					},200);
 				$('#add-product-modal').modal('toggle');
 				$('#new-product-input').val("");
 				$('#new-product-type-input').val("");
