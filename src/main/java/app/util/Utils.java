@@ -95,7 +95,6 @@ public class Utils {
 				return temp;
 			} catch(Exception e) {
 				e.printStackTrace();
-				System.out.println("Error occured.");
 				return null;
 			}
 		}
