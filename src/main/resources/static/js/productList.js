@@ -9,9 +9,9 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			$scope.product = new ProductCreate();
 			$scope.product.name = data1.name;
 			$scope.product.unitRate = data1.unitRate;
-		    $scope.product.productType = data1.productType;
-		    $scope.product.imageUrl= url1;
-		   	ProductCreate.save($scope.product,function(){
+			$scope.product.productType = data1.productType;
+			$scope.product.imageUrl= url1;
+			ProductCreate.save($scope.product,function(){
 			},function(error){
 				if (error.status == "409")
 					createAlert("Error Adding Product","Product already added. Add a different product");
