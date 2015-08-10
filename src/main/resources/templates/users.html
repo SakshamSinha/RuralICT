@@ -1,14 +1,19 @@
 <div id="user-controller-page" ng-controller="UsersCtrl"
 	th:attr="organizationabbr=${organization.abbreviation}">
-	<div class="row-fluid">
 		<div class="page-header">
 			<h1>Manage Members</h1>
 		</div>
-		<button class="btn btn-success" id="add_new_user" data-toggle="modal"
-			data-title="Add new user" data-target="#add-new-user-modal">
-			<i class="icon-white icon-plus-sign"></i> Add new Organization Member
-		</button>
-		<br> <br>
+			
+			<form class="form-inline">
+				<button class="btn btn-success" id="add_new_user" data-toggle="modal"
+				data-title="Add new user" data-target="#add-new-user-modal">
+				<i class="icon-white icon-plus-sign"></i> Add new Organization Member</button>
+				<div style="float: right;">
+					<label style="float:left;margin-top:4px;" class="control-label" for="usernamesearch">Search :&nbsp;&nbsp;</label>
+					<input style="float:left;" id="usernamesearch" type="text" ng-model="userpropertysearch">
+				</div>
+			</form>
+			
 		<form role="form">
 			<input type="radio" ng-model="selectedRole" id=roleradio1 value="">&nbsp;Display
 			All Members &nbsp; <input type="radio" ng-model="selectedRole"
@@ -33,9 +38,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="list-manageMember"
-					dir-paginate="manageUserItem in manageUserItems | filter:selectedRole | orderBy:'name' | itemsPerPage: 10">
-
+				<tr class="list-manageMember" dir-paginate="manageUserItem in manageUserItems | filter:selectedRole | filter: userPropertySearchQuery | orderBy:'name' | itemsPerPage: 10">
+					
 					<td>{{ manageUserItem.manageUserID }}</td>
 					<td>{{ manageUserItem.name }}</td>
 					<td>{{ manageUserItem.email }}</td>
@@ -82,7 +86,6 @@
 		<dir-pagination-controls id="pagination-manage-users"
 			boundary-links="true"
 			th:attr='template-url=@{/static/js/dirPagination.tpl.html}'></dir-pagination-controls>
-	</div>
 
 
 	<!--  Modal dialog to add a new user -->
