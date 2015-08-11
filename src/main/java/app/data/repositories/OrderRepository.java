@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Group;
 import app.entities.Order;
 import app.entities.Organization;
 
@@ -42,4 +43,11 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	 */
      
 	public List<Order> findByOrganization(Organization organization);
+	
+	public List<Order> findByOrganizationAndStatus(Organization organization,String status);
+	
+	public List<Order> findByMessage_group(Group group);
+	
+	public List<Order> findByMessage_groupAndStatus(Group group,String status);
+	
 }
