@@ -20,6 +20,7 @@
     <table id="producttable" class="table table-bordred table-striped">
       <thead>
       	<tr>
+      	<th>Product Image</th>
         <th>Product Name</th>
         <th>Price(Per Kg)</th>
         <th>Edit Product</th>
@@ -29,6 +30,7 @@
       <tbody>
       
         <tr id="list" dir-paginate="product in products | orderBy:'name'| filter:productsearch | itemsPerPage: 10">
+		<td><img  src="{{product.imageUrl}}" style="width: 25; height: 25;" onmouseover="this.width='100';this.height='100'" onmouseout="this.width='25';this.height='25'" /></td> 
 		<td>{{ product.name }}</td>
         <td>{{ product.unitRate }}</td>
         <td>
@@ -130,6 +132,16 @@
 			  <input type="text" class="input-large" id="new-price-input" placeholder="45"/>
 			</div>
 		  </div>
+		  <div class="control-group">
+		  	<div id="pictureBox">
+		  		<img id="productImage" style='float:right;' src="#" alt="your image" />
+		  	</div>
+		    <label class="custom-file-upload btn btn-info btn-small" role="button">
+		    		<input id="product-image-file" type="file" size = "4" onchange="readURL(this);" name="myProductImage" file-model="myProductImage" />
+					<i class="icon-folder-open icon-white"></i> Choose Product Image
+			</label>
+			<span id="product-image-name"></span>
+		 </div>
 	  </form>
     </div>
   </div>

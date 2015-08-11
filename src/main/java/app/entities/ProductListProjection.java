@@ -9,4 +9,5 @@ public interface ProductListProjection {
 	String getName();
 	int getQuantity();
 	float getUnitRate();
+	public String getImageUrl();
 }
