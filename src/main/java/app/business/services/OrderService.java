@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.data.repositories.OrderRepository;
+import app.entities.Group;
 import app.entities.Order;
 import app.entities.Organization;
 import app.entities.User;
@@ -20,8 +21,13 @@ public class OrderService {
 	/*
 	 * Returns list of Orders by an Organization  
 	 */
-	public List<Order> getOrderByOrganization(Organization organization) {
-		return orderRepository.findByOrganization(organization);
+	public List<Order> getOrderByOrganizationProcessed(Organization organization) {
+		return orderRepository.findByOrganizationAndStatus(organization, "processed");
+	}
+
+	public List<Order> getOrderByGroupProcessed(Group group)
+	{
+		return orderRepository.findByMessage_groupAndStatus(group,"processed");
 	}
 	
 	/*

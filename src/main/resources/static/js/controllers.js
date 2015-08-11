@@ -12,6 +12,7 @@ website.config(['$routeProvider', '$provide', '$httpProvider', 'cfpLoadingBarPro
 		.when('/orderSummaryGroups', {templateUrl: 'orderSummaryGroupPage', title: "Order Summary(groups)"})
 		.when('/users', {templateUrl: 'usersPage', title: "Users"})
 		.when('/settings', {templateUrl: 'settingsPage', title: "Settings"})
+		.when('/generateBill',{templateUrl:'generateBill',title:'GenerateBill'})
 		.when('/group/:groupId', {templateUrl: function(params){ return 'groupPage/' + params.groupId; }, title: "Group Operations"})
 		.otherwise({redirectTo: '/home'});
     
