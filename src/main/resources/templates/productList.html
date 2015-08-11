@@ -30,7 +30,7 @@
       <tbody>
       
         <tr id="list" dir-paginate="product in products | orderBy:'name'| filter:productsearch | itemsPerPage: 10">
-		<td><img  src="{{product.imageUrl}}" style="width: 25; height: 25;" onmouseover="this.width='100';this.height='100'" onmouseout="this.width='25';this.height='25'" /></td> 
+		<td><img  src="{{product.imageUrl}}" width=25 height=25 onmouseover="this.width='100';this.height='100'" onmouseout="this.width='25';this.height='25'" /></td> 
 		<td>{{ product.name }}</td>
         <td>{{ product.unitRate }}</td>
         <td>
