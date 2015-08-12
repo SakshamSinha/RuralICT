@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,19 +19,19 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	 * Default functions
 	 */
 
-	@PostAuthorize("hasRole('ADMIN'+returnObject.productType.organization.abbreviation)")
+	//@PostAuthorize("hasRole('ADMIN'+returnObject.productType.organization.abbreviation)")
 	@Override
 	public Product findOne(Integer id);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
+	//@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
 	@Override
 	public List<Product> findAll();
 	
-	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
+	//@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
 	@Override
 	public Page<Product> findAll(Pageable pageable);
 
-	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
+	//@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
 	@Override
 	public List<Product> findAll(Sort sort);
 
@@ -47,5 +48,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	 */
 	//Is there a need to add preauthorize here
 	public List<Product> findAllByOrderByNameAsc();
+	
+	@RestResource(path="/productlist")
+	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
+	public List<Product> findByproductType_organization_abbreviation(@Param("abbr")String abbr,Pageable pageable);
+	
+	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
+	public List<Product> findByproductType_organization_abbreviationAllIgnoreCase(@Param("abbr")String abbr);
 
 }

@@ -237,8 +237,8 @@ website.factory("ProductDelete",function($resource){
 });
 
 website.factory("ProductListGet",function($resource){
-	return $resorce(API_ADDR + "api/products",{
-		query: {method: "GET", isArray: true}
+	return $resource(API_ADDR + "api/products",{
+		query: {method: "GET", isArray: false}
 	});
 });
 

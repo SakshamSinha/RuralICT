@@ -21,6 +21,23 @@ website.controller("UsersCtrl", function($scope, $http, $routeParams) {
 		error(function(data, status, headers, config) {
 			createAlert("Error Fetching Data","There was some error in response from the remote server.");
 		});
+	
+	$scope.userPropertySearchQuery = function (manageUserItem){
+		    
+			if(!$scope.userpropertysearch)
+			{
+				return true;
+			}
+			else if($scope.userpropertysearch) 
+			{
+				if (manageUserItem.name.toLowerCase().indexOf($scope.userpropertysearch.toLowerCase())!=-1 || manageUserItem.phone.indexOf($scope.userpropertysearch)!=-1) {
+					return true;
+				}
+				else
+					return false;
+			}
+	        
+	};
 
 	// Click event handler for the 'Add' Modal Button
 	$scope.addNewUserModalButton = function() {
