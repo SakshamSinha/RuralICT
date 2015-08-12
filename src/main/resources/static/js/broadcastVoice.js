@@ -15,6 +15,8 @@ website.directive('fileModel', ['$parse',function ($parse) {
 
 website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $http, $route, $location, BroadcastCreate){
 	var latestBroadcastableVoiceIds;
+	
+	$scope.broadcastsleft=0;
 	//function to save product
 	$scope.saveBroadcast = function(data){
 		$scope.broadcast = data;
@@ -28,7 +30,22 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 		{
 			$http.post(API_ADDR + 'web/'+data.abbr+'/broadcastVoiceMessages/'+data.groupId,$scope.broadcast)
 			.success(function(data,status,header,config){
-				createAlert("Call Placed",'Call has been placed.')
+				if(data.status=="error")
+				{
+					if(data.cause=="BroadcastExhausted")
+						{
+						createAlert("Limit exhausted.","Limit exhausted..Broadcast Failed. Contact Provider.");
+						}
+					else if(data.cause="LimitExceeded")
+						{
+						createAlert("Broadcast Recipients exceeded","Broadcast Recipients exceeded.Contact Provider.");
+						}
+				}
+				else if(data.status=="success")
+				{
+					createAlert("Broadcast Successful.",'Call has been placed.')
+				}
+				$scope.getMetadata();
 				console.log('broadcast data posted. Users called.');
 			})
 			.error(function(data,status,header,config){
@@ -83,12 +100,29 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 	$scope.reload = function(){
 		setTimeout($window.location.reload.bind(window.location),2000);
 	}
+	
+	$scope.getMetadata=function(){
+		console.log("Getting metadata");
+		var abbr = $('#organizationAbbr').val();
+		$http.get('/web/'+abbr+'/voicebroadcastsleft').
+		  then(function(response) {
+			  console.log(response);
+			$scope.broadcastsleft=response.data;
+			console.log($scope.broadcastsleft)
+		    // this callback will be called asynchronously
+		    // when the response is available
+		  }, function(response) {
+		    // called asynchronously if an error occurs
+		    // or server returns response with an error status.
+		  });
+	}
+	$scope.getMetadata();
     
 });
 
-$("#page-content").on("click","#select-all",function(e){
+$("#page-content").on("click","#unselect-all",function(e){
 	$("#user-list input[type=checkbox]").each(function(){
-		$(this).prop("checked",true);
+		$(this).prop("checked",false);
 	});
 });
 

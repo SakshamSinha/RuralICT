@@ -4,8 +4,11 @@ import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +32,7 @@ import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.VoiceService;
 import app.business.services.broadcast.BroadcastService;
+import app.data.repositories.UserRepository;
 import app.entities.BroadcastDefaultSettings;
 import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
@@ -41,6 +45,7 @@ import app.entities.UserPhoneNumber;
 import app.entities.Voice;
 import app.entities.broadcast.VoiceBroadcast;
 import app.telephony.config.Configs;
+import app.util.Utils;
 
 
 @Controller
@@ -69,6 +74,9 @@ public class BroadcastVoiceController {
 	BroadcastDefaultSettingsService broadcastDefaultSettingService;
 	@Autowired
 	LatestRecordedVoiceService latestRecordedVoiceService;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	@RequestMapping(value="/broadcastVoiceMessages/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
@@ -116,12 +124,61 @@ public class BroadcastVoiceController {
 		return "broadcastDefaultSettings";
 	}
 	
-	@RequestMapping(value = "/broadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/broadcastVoiceMessages/{groupId}", method = RequestMethod.POST,produces="application/json")
 	@ResponseBody
-	public void logs(@RequestBody Map<String,String> body) {
+	public HashMap<String,String> logs(@RequestBody Map<String,String> body) {
 		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
 		Group group = groupService.getGroup(Integer.parseInt(body.get("groupId")));
 		User publisher = userService.getUser(Integer.parseInt(body.get("publisherId")));
+		System.out.println("Publisher is as follows:"+publisher.getName());
+		/*int broadcastRecipentsLimit=publisher.getBroadcastRecipentsLimit();
+		if(publisher.getBroadcastlimit()!=-1)
+		{
+			if(publisher.getBroadcastlimit()==0)
+			{
+				System.out.println("Limit exhausted..Broadcast Failed");
+				return "Limit exhausted. Broadcast failed";
+			}
+			else
+			{
+				//Check for BroadcastRecipentsLimit
+				String[] broadcastRecipentsPrior=body.get("userIds").split(",");
+				if(broadcastRecipentsPrior.length>broadcastRecipentsLimit&&broadcastRecipentsLimit!=-1)
+				{
+					System.out.println("No of Broadcast Recipients Exceeded");
+					return "Broadcast Recipients exceeded";
+				}
+				else
+				{
+						publisher.setBroadcastlimit(publisher.getBroadcastlimit()-1);
+						userRepository.save(publisher);
+				}
+			}
+		}
+		*/
+		
+		HashMap<String,String> response= new HashMap<String,String>();
+		int voicebroadcastlimit=publisher.getVoicebroadcastlimit();
+		String[] broadcastRecipentsPrior=body.get("userIds").split(",");
+		if(voicebroadcastlimit>=0)
+		{
+			if(voicebroadcastlimit==0)
+			{
+				response.put("status", "error");
+				response.put("cause","BroadcastExhausted");
+				return response;
+			}
+			else if(broadcastRecipentsPrior.length>voicebroadcastlimit)
+			{
+				response.put("status", "error");
+				response.put("cause","LimitExceeded");
+				response.put("broadcast", Integer.toString(voicebroadcastlimit));
+				return response;
+			}
+		}
+		response.put("status", "success");
+		response.put("cause","Broadcast Successful");
+		publisher.setVoicebroadcastlimit(publisher.getVoicebroadcastlimit()-broadcastRecipentsPrior.length);
 		String mode = body.get("mode");
 		//Converting string to integer and converting to boolean
 		boolean askOrder = (Integer.parseInt(body.get("askOrder")) !=0);
@@ -143,7 +200,6 @@ public class BroadcastVoiceController {
 		//Adding Broadcast to the Broadcast table
 		VoiceBroadcast broadcast = new VoiceBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, voice, voiceBroadcastDraft);
 		broadcastService.addBroadcast(broadcast);
-		
 		//Adding Broadcast Recipient to Broadcast Recipients table
 		String userIdString = body.get("userIds");
 		String[] userIdList = userIdString.split(",");
@@ -190,7 +246,10 @@ public class BroadcastVoiceController {
 //				}
 //			}
 		}
-	    
+		userRepository.save(publisher);
+		System.out.println("Broadcast Success");
+		return response;
+		//return "Broadcast Successful";
 	}
 	
 	@RequestMapping(value = "/latestBroadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
@@ -202,5 +261,17 @@ public class BroadcastVoiceController {
 		
 		latestRecordedVoiceService.updateLatestRecordedVoice(organization, voice);
 	}
-
+	
+	@RequestMapping(value="/voicebroadcastsleft",method=RequestMethod.GET,produces="text/plain")
+	@ResponseBody
+	public String voicebroadcastsLeft() {
+		User publisher = Utils.getCurrentUser(userRepository);
+		int voicebroadcastlimit=publisher.getVoicebroadcastlimit();
+		if(voicebroadcastlimit==-1)
+		{
+			return "Unlimited";
+		}
+		return new Integer(voicebroadcastlimit).toString();
+	}
+	
 }

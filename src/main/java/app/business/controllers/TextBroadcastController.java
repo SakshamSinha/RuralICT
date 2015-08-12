@@ -3,6 +3,7 @@ package app.business.controllers;
 import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
 import app.business.services.broadcast.BroadcastService;
+import app.data.repositories.UserRepository;
 import app.entities.BroadcastRecipient;
 import app.entities.Group;
 import app.entities.GroupMembership;
@@ -31,6 +33,7 @@ import app.entities.Organization;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
 import app.entities.broadcast.TextBroadcast;
+import app.util.Utils;
 
 @Controller
 @RequestMapping("/web/{org}")
@@ -57,6 +60,9 @@ public class TextBroadcastController {
 	@Autowired
 	GroupMembershipService groupMembershipService;
 	
+	@Autowired
+	UserRepository userRepository;
+	
 	@RequestMapping(value="/textBroadcast/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String groupPage(@PathVariable String org, @PathVariable int groupId, Model model) {
@@ -82,7 +88,7 @@ public class TextBroadcastController {
 	@RequestMapping(value = "/textBroadcast/create/{groupId}", method = {RequestMethod.POST})
 	@ResponseBody
 	@Transactional
-	public int createBroadcast(@RequestBody Map<String,String> body) {
+	public HashMap<String, String> createBroadcast(@RequestBody Map<String,String> body) {
 		
 		// Get the required variables from the Broadcast JSON object passed through Angular JS
 		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organization")));
@@ -95,6 +101,28 @@ public class TextBroadcastController {
 		boolean appOnly = Boolean.parseBoolean(body.get("appOnly"));
 		String textContent = body.get("textContent");
 		
+		HashMap<String,String> response= new HashMap<String,String>();
+		int textbroadcastlimit=publisher.getTextbroadcastlimit();
+		String[] broadcastRecipentsPrior=body.get("userIds").split(",");
+		if(textbroadcastlimit>=0)
+		{
+			if(textbroadcastlimit==0)
+			{
+				response.put("status", "error");
+				response.put("cause","BroadcastExhausted");
+				return response;
+			}
+			else if(broadcastRecipentsPrior.length>textbroadcastlimit)
+			{
+				response.put("status", "error");
+				response.put("cause","LimitExceeded");
+				response.put("broadcast", Integer.toString(textbroadcastlimit));
+				return response;
+			}
+		}
+		response.put("status", "success");
+		response.put("cause","Broadcast Successful");
+		publisher.setTextbroadcastlimit(publisher.getTextbroadcastlimit()-broadcastRecipentsPrior.length);
 		
 		// Create a new Text Broadcast and add it to the database
 		TextBroadcast broadcast = new TextBroadcast(organization, group, publisher, mode, askFeedback,  askOrder, askResponse, appOnly, textContent);
@@ -118,7 +146,7 @@ public class TextBroadcastController {
 			} 
 			catch (Exception e) {
 				e.printStackTrace();
-				return -1;
+				//return -1;
 			}
 		}
 		
@@ -128,8 +156,21 @@ public class TextBroadcastController {
 		 
 		// Set the Timestamp in the broadcast table after sending SMS to all the recipients
 		broadcastService.setBroadcastTime(timestamp, broadcast);
+		userRepository.save(publisher);
 		
-		return 0;
+		return response;
+		//return 0;
 		
+	}
+	
+	@RequestMapping(value="/textbroadcastsleft",method=RequestMethod.GET,produces="text/plain")
+	@ResponseBody
+	public String voicebroadcastsLeft() {
+		User publisher = Utils.getCurrentUser(userRepository);
+		int textbroadcastlimit=publisher.getTextbroadcastlimit();
+		
+		if(textbroadcastlimit==-1)
+			return "Unlimited";
+		return new Integer(textbroadcastlimit).toString();
 	}
 }
