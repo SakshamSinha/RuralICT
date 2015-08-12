@@ -59,10 +59,12 @@ public class TextBroadcastController {
 	
 	@Autowired
 	GroupMembershipService groupMembershipService;
+
+	private int sendSMS;
 	
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@RequestMapping(value="/textBroadcast/{groupId}")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String groupPage(@PathVariable String org, @PathVariable int groupId, Model model) {
