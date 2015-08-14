@@ -7,6 +7,9 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 	var groupid = document.getElementById("broadcast-text-ids").getAttribute("data-groupid");
 	var publisherid = document.getElementById("broadcast-text-ids").getAttribute("data-publisherid");
 
+	$scope.broadcastsleft=0;
+	
+	
 	// Initialize the values for radio-buttons
 	$scope.radioOptions = [false,false,false,false];
 	
@@ -51,22 +54,42 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 			$http.post(API_ADDR + 'web/' + abbr + '/textBroadcast/create/' + groupid, $scope.broadcast)
 			.success(function(data,status,header,config){
 				console.log("TextBroadcast controller called successfully from backend");
-				
-				if(data === 0)
-				{
+				console.log(data);
+				if(data.status="success")
 					createAlert("SMS Sent","The SMS has been sent successfully");
-				}
-				else
+				else if(data.status=="error")
 				{
-					createAlert("Error Sending Message","There was some problem in the server !");
+					if(data.cause=="BroadcastExhausted")
+						{
+						createAlert("Limit exhausted.","Limit exhausted..Broadcast Failed. Contact Provider.");
+						}
+					else if(data.cause="LimitExceeded")
+						{
+						createAlert("Broadcast Recipients exceeded","Broadcast Recipients exceeded.Contact Provider.");
+						}
 				}
-				
+					
+				$scope.getMetadata();
 			})
 			.error(function(data,status,header,config){
 				
 			})
 		}
 	};
+	
+	$scope.getMetadata=function(){
+		console.log("Getting metadata");
+		var abbr = $('#organizationAbbr').val();
+		$http.get('/web/'+abbr+'/textbroadcastsleft').
+		  then(function(response) {
+			  console.log(response);
+			$scope.broadcastsleft=response.data;
+			console.log($scope.broadcastsleft)
+		  }, function(response) {
+		  });
+	}
+	
+	$scope.getMetadata();
 });
 
 $("#page-content").on("click","#text-broadcast-select-all",function(e){
