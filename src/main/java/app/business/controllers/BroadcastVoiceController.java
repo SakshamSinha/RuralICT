@@ -130,33 +130,6 @@ public class BroadcastVoiceController {
 		Organization organization = organizationService.getOrganizationById(Integer.parseInt(body.get("organizationId")));
 		Group group = groupService.getGroup(Integer.parseInt(body.get("groupId")));
 		User publisher = userService.getUser(Integer.parseInt(body.get("publisherId")));
-		System.out.println("Publisher is as follows:"+publisher.getName());
-		/*int broadcastRecipentsLimit=publisher.getBroadcastRecipentsLimit();
-		if(publisher.getBroadcastlimit()!=-1)
-		{
-			if(publisher.getBroadcastlimit()==0)
-			{
-				System.out.println("Limit exhausted..Broadcast Failed");
-				return "Limit exhausted. Broadcast failed";
-			}
-			else
-			{
-				//Check for BroadcastRecipentsLimit
-				String[] broadcastRecipentsPrior=body.get("userIds").split(",");
-				if(broadcastRecipentsPrior.length>broadcastRecipentsLimit&&broadcastRecipentsLimit!=-1)
-				{
-					System.out.println("No of Broadcast Recipients Exceeded");
-					return "Broadcast Recipients exceeded";
-				}
-				else
-				{
-						publisher.setBroadcastlimit(publisher.getBroadcastlimit()-1);
-						userRepository.save(publisher);
-				}
-			}
-		}
-		*/
-		
 		HashMap<String,String> response= new HashMap<String,String>();
 		int voicebroadcastlimit=publisher.getVoicebroadcastlimit();
 		String[] broadcastRecipentsPrior=body.get("userIds").split(",");
@@ -247,9 +220,7 @@ public class BroadcastVoiceController {
 //			}
 		}
 		userRepository.save(publisher);
-		System.out.println("Broadcast Success");
 		return response;
-		//return "Broadcast Successful";
 	}
 	
 	@RequestMapping(value = "/latestBroadcastVoiceMessages/{groupId}", method = RequestMethod.POST)
