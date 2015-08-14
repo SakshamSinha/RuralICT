@@ -43,7 +43,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 				}
 				else if(data.status=="success")
 				{
-					createAlert("Broadcast Successful.",'Call has been placed.')
+					createAlert("Broadcast Successful.",'Call has been placed. Reach of call is dependent upon many factors like Network Coverage and DND Exclusion.')
 				}
 				$scope.getMetadata();
 				console.log('broadcast data posted. Users called.');
