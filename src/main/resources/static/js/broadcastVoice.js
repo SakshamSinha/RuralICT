@@ -109,11 +109,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 			  console.log(response);
 			$scope.broadcastsleft=response.data;
 			console.log($scope.broadcastsleft)
-		    // this callback will be called asynchronously
-		    // when the response is available
 		  }, function(response) {
-		    // called asynchronously if an error occurs
-		    // or server returns response with an error status.
 		  });
 	}
 	$scope.getMetadata();

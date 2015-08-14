@@ -55,15 +55,6 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 			.success(function(data,status,header,config){
 				console.log("TextBroadcast controller called successfully from backend");
 				console.log(data);
-//				if(data === 0)
-//				{
-//					createAlert("SMS Sent","The SMS has been sent successfully");
-//				}
-//				else
-//				{
-//					createAlert("Error Sending Message","There was some problem in the server !");
-//				}
-		
 				if(data.status="success")
 					createAlert("SMS Sent","The SMS has been sent successfully");
 				else if(data.status=="error")
@@ -94,11 +85,7 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 			  console.log(response);
 			$scope.broadcastsleft=response.data;
 			console.log($scope.broadcastsleft)
-		    // this callback will be called asynchronously
-		    // when the response is available
 		  }, function(response) {
-		    // called asynchronously if an error occurs
-		    // or server returns response with an error status.
 		  });
 	}
 	
