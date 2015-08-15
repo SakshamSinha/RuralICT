@@ -29,4 +29,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	List<User> findByEmail(@Param("email") String email);
 	
+	
+	
+	
 }

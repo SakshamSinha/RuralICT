@@ -50,10 +50,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	public List<Product> findAllByOrderByNameAsc();
 	
 	@RestResource(path="/productlist")
-	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
 	public List<Product> findByproductType_organization_abbreviation(@Param("abbr")String abbr,Pageable pageable);
 	
-	@PostFilter("hasRole('ADMIN'+filterObject.productType.organization.abbreviation)")
-	public List<Product> findByproductType_organization_abbreviationAllIgnoreCase(@Param("abbr")String abbr);
-
 }

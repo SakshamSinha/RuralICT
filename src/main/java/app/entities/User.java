@@ -45,6 +45,28 @@ public class User implements Serializable {
 
 	@Column(name="web_locale")
 	private String webLocale;
+	
+	@Column(name="voicebroadcastlimit")
+	private Integer voicebroadcastlimit;
+	
+	@Column(name="textbroadcastlimit")
+	private Integer textbroadcastlimit;
+
+	public Integer getVoicebroadcastlimit() {
+		return voicebroadcastlimit;
+	}
+
+	public void setVoicebroadcastlimit(Integer voicebroadcastlimit) {
+		this.voicebroadcastlimit = voicebroadcastlimit;
+	}
+
+	public Integer getTextbroadcastlimit() {
+		return textbroadcastlimit;
+	}
+
+	public void setTextbroadcastlimit(Integer textbroadcastlimit) {
+		this.textbroadcastlimit = textbroadcastlimit;
+	}
 
 	//bi-directional many-to-one association to Broadcast
 	@OneToMany(mappedBy="publisher")

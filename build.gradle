@@ -33,6 +33,7 @@ repositories {
 
 configurations {
 	providedRuntime
+	runtime.exclude module: "log4j-over-slf4j"
 }
 
 dependencies {
