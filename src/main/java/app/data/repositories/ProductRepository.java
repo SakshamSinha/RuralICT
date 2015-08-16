@@ -51,5 +51,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@RestResource(path="/productlist")
 	public List<Product> findByproductType_organization_abbreviation(@Param("abbr")String abbr,Pageable pageable);
+
+	public Product findByName(String name);
 	
 }

@@ -1,6 +1,7 @@
 package app.entities;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -290,6 +291,32 @@ public class User implements Serializable {
 		userPhoneNumber.setUser(null);
 
 		return userPhoneNumber;
+	}
+	
+	public HashMap<String,HashMap<String,String>> getMembership()
+	{
+		System.out.println("User Name:"+getName());
+		/*
+		 * Response is of the format: organizationName:{ group1Id : group1Name ....} 
+		 */
+		HashMap<String,HashMap<String,String>> response=  new HashMap<String, HashMap<String,String>>();
+		for (OrganizationMembership membership:organizationMemberships)
+		{
+			Organization organization=membership.getOrganization();
+			System.out.println("Organization name:"+organization.getName());
+			HashMap<String,String> organizationMap = new HashMap<String, String>();
+			for (GroupMembership groupMembership: groupMemberships)
+			{
+				Group group=groupMembership.getGroup();
+				System.out.println("Group name:"+group.getName());
+				if( organization.containsGroup(group))
+				{
+					organizationMap.put(new Integer(group.getGroupId()).toString(), group.getName());
+				}
+			}
+			response.put(organization.getName(), organizationMap);//Adding groups of the organization to response
+		}
+		return response;
 	}
 
 }

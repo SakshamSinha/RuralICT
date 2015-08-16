@@ -40,7 +40,7 @@ public interface OrganizationMembershipRepository extends JpaRepository<Organiza
 	@Override
 	public List<OrganizationMembership> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#membership.organization.abbreviation)")
+	//@PreAuthorize("hasRole('ADMIN'+#membership.organization.abbreviation)")
 	@Override
 	public <S extends OrganizationMembership> S save(@Param("membership") S membership);
 

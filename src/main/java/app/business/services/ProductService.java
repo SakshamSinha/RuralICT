@@ -55,4 +55,8 @@ public class ProductService {
 		return productRepository.findAllByOrderByNameAsc();
 	}
 	
+	public Product getProductByName(String name)
+	{
+		return productRepository.findByName(name);
+	}
 }

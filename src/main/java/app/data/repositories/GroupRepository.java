@@ -46,4 +46,6 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 	public Group findByOrganizationAndParentGroup(Organization organization, Group parentGroup);
 	
 	public List<Group> findByOrganization(Organization organization);
+	
+	public Group findByNameAndOrganization(String name,Organization organization);
 }
