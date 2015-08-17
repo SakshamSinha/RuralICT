@@ -80,7 +80,7 @@ website.controller("textBroadcastCtrl", function($scope, $http, $routeParams, Te
 	$scope.getMetadata=function(){
 		console.log("Getting metadata");
 		var abbr = $('#organizationAbbr').val();
-		$http.get('/web/'+abbr+'/textbroadcastsleft').
+		$http.get(API_ADDR +'web/'+abbr+'/textbroadcastsleft').
 		  then(function(response) {
 			  console.log(response);
 			$scope.broadcastsleft=response.data;
