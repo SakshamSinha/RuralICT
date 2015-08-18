@@ -353,20 +353,19 @@ public class RestAuthenticationController {
 			response.put("Error","No user with the phone number:"+phonenumber+" exists.");
 			return response;
 		}
-		AuthenticatedUser authuser=Utils.getSecurityPrincipal();
-		if(authuser.getUserId()==user.getUserId())
-		{	
-			password=passwordEncoder.encode(password);
-			user.setSha256Password(password);
-			userRepository.save(user);
-			response.put("Status","Success");
-			return response;
-		}
-		else
-		{
-			response.put("Authorization","Failed");
-			return response;
-		}
+		//AuthenticatedUser authuser=Utils.getSecurityPrincipal();
+		
+		password=passwordEncoder.encode(password);
+		user.setSha256Password(password);
+		userRepository.save(user);
+		response.put("Status","Success");
+		return response;
+//		}
+//		else
+//		{
+//			response.put("Authorization","Failed");
+//			return response;
+//		}
 	}
 	
 	
