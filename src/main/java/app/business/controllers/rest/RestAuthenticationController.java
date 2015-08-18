@@ -148,6 +148,41 @@ public class RestAuthenticationController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		/*
+		 * Check if exists 
+		*/
+		User usercheck = userRepository.findByuserPhoneNumbers_phoneNumber(phonenumber);
+		if(usercheck!=null)
+		{
+			response.put("Status", "Failure");
+			response.put("Error", "Number Exists");
+			return response;
+		}
+		List<User> userCheckList = userRepository.findByEmail(email);
+		if(userCheckList.size()>0)
+		{
+			response.put("Status", "Failure");
+			response.put("Error", "Email Exists");
+			return response;
+		}
+		for (int i=0;i<orgListJsonArray.length();i++)
+		{
+			 try {
+				JSONObject org = orgListJsonArray.getJSONObject(i);
+				int org_id=org.getInt("org_id");
+				//Adding organization
+				Organization organization= organizationRepository.findOne(org_id);
+				if(organization==null)
+				{
+					response.put("Status", "Failure");
+					response.put("Error", "Organization with Id "+org_id+" does not exists");
+					return response;
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		user.setAddress(address);
 		user.setCallLocale("en");
 		user.setEmail(email);
@@ -163,6 +198,12 @@ public class RestAuthenticationController {
 				int org_id=org.getInt("org_id");
 				//Adding organization
 				Organization organization= organizationRepository.findOne(org_id);
+				if(organization==null)
+				{
+					response.put("Status", "Failure");
+					response.put("Error", "Organization with Id "+org_id+" does not exists");
+					return response;
+				}
 				OrganizationMembership organizationMembership = new OrganizationMembership();
 				organizationMembership.setOrganization(organization);
 				organizationMembership.setUser(user);
@@ -193,7 +234,7 @@ public class RestAuthenticationController {
 		userPhoneNumbers.add(userPhoneNumber);
 		user.setUserPhoneNumbers(userPhoneNumbers);
 		userRepository.save(user);
-		response.put("Success","true");
+		response.put("Status","Success");
 		return response;
 	}
 	
