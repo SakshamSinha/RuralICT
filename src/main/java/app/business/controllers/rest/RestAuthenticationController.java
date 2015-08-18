@@ -2,20 +2,16 @@ package app.business.controllers.rest;
 
 import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import javax.xml.bind.DatatypeConverter;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,6 +31,8 @@ import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
+import app.security.AuthenticatedUser;
+import app.util.Utils;
 
 
 @RestController
@@ -292,9 +290,11 @@ public class RestAuthenticationController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		if(password!=null)
+		
+		User user = userRepository.findByuserPhoneNumbers_phoneNumber(phonenumber);
+		
+		if(user!=null)
 		{
-			User user = userRepository.findByuserPhoneNumbers_phoneNumber(phonenumber);
 			if(passwordEncoder.matches(password, user.getSha256Password()))
 			{
 				try 
@@ -311,22 +311,64 @@ public class RestAuthenticationController {
 			{
 				try {
 					responseJsonObject.put("Authentication", "failure");
+					responseJsonObject.put("registered", "true");
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				return responseJsonObject.toString();
 			}
 		}
-		else{
-			
+		else
+		{
 			try {
 				responseJsonObject.put("Authentication", "failure");
+				responseJsonObject.put("registered", "false");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			return responseJsonObject.toString();
 		}
+	
 	}
+	
+	
+	@RequestMapping(value = "/changepassword",method = RequestMethod.POST )
+	public HashMap<String,String> changePassword(@RequestBody String requestBody)
+	{
+		HashMap<String,String> response = new HashMap<String, String>();
+		JSONObject jsonObject=null;
+		String password = null;
+		String phonenumber=null;
+		try {
+			jsonObject = new JSONObject(requestBody);
+			phonenumber=jsonObject.getString("phonenumber");
+			password=jsonObject.getString("password");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		User user = userRepository.findByuserPhoneNumbers_phoneNumber(phonenumber);
+		if(user==null)
+		{
+			response.put("Status","Error");
+			response.put("Error","No user with the phone number:"+phonenumber+" exists.");
+			return response;
+		}
+		AuthenticatedUser authuser=Utils.getSecurityPrincipal();
+		if(authuser.getUserId()==user.getUserId())
+		{	
+			password=passwordEncoder.encode(password);
+			user.setSha256Password(password);
+			userRepository.save(user);
+			response.put("Status","Success");
+			return response;
+		}
+		else
+		{
+			response.put("Authorization","Failed");
+			return response;
+		}
+	}
+	
 	
 	//Util functions
 	static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

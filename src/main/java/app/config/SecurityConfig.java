@@ -124,6 +124,9 @@ public class SecurityConfig extends GlobalAuthenticationConfigurerAdapter {
 					.disable() // This disables CSRF protection for everything, including the web part!
 					           // I couldn't figure out how to do it only for the REST part. If someone figures
 					           // this out, please do it.  --Ankit
+				
+				.antMatcher("/app/changepassword").authorizeRequests().anyRequest().authenticated().and().httpBasic()
+				.and()
 				.authorizeRequests() 
 					.antMatchers("/static/**", "/CallHandler","/OutboundCallHandler","/BroadcastCallHandler","/IncomingSMSHandler","/app/**").permitAll()
 					.anyRequest().authenticated()
