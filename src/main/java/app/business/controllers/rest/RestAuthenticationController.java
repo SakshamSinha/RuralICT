@@ -64,7 +64,6 @@ public class RestAuthenticationController {
 	public String otp(@RequestBody String requestBody)
 	{
 		JSONObject responseJsonObject = new JSONObject();
-		JSONObject orgListJsonObject = new JSONObject();
 		HashMap<String,String> response= new HashMap<String, String>();
 		JSONObject jsonObject=null;
 		String phonenumber = null;
@@ -76,22 +75,19 @@ public class RestAuthenticationController {
 		}
 		UserPhoneNumber userPhoneNumber=userPhoneNumberRepository.findByPhoneNumber(phonenumber);
 		List<Organization> orglist = organizationRepository.findAll();
-		Integer i =new Integer(0);
+		JSONArray orgArray=new JSONArray();
 		for(Organization organization: orglist)
 		{
-			JSONObject orgObj = new JSONObject();
 			try {
-				
-				orgObj.put("name", organization.getName());
-				orgObj.put("org_id", organization.getOrganizationId());
-				orgObj.put("abbr", organization.getAbbreviation());		
-				orgListJsonObject.put(i.toString(), orgObj);
+				JSONObject org= new JSONObject();
+				org.put("name", organization.getName());
+				org.put("org_id", organization.getOrganizationId());
+				org.put("abbr", organization.getAbbreviation());	
+				orgArray.put(org);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}	
-			i++;
 		}
-		
 		if(userPhoneNumber==null)
 		{
 			String otp=randomString(4);
@@ -99,7 +95,7 @@ public class RestAuthenticationController {
 			response.put("otp",otp);
 			try {
 				responseJsonObject.put("otp", otp);
-				responseJsonObject.put("organizations",orgListJsonObject);
+				responseJsonObject.put("organizations",orgArray);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -293,15 +289,60 @@ public class RestAuthenticationController {
 		
 		User user = userRepository.findByuserPhoneNumbers_phoneNumber(phonenumber);
 		
+		
 		if(user!=null)
 		{
+			if(password==null)
+			{
+				try {
+					responseJsonObject.put("Status", "Error");
+					responseJsonObject.put("Error", "Password is null.");
+					responseJsonObject.put("Authentication", "failure");
+					responseJsonObject.put("registered", "true");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				return responseJsonObject.toString();
+			}
+			if(user.getSha256Password()==null)
+			{
+				try {
+					responseJsonObject.put("Status", "Error");
+					responseJsonObject.put("Error", "User Password is null. Set the password");
+					responseJsonObject.put("Authentication", "failure");
+					responseJsonObject.put("registered", "true");
+				} catch (JSONException e) {
+					
+					e.printStackTrace();
+				}
+				return responseJsonObject.toString();
+			}
 			if(passwordEncoder.matches(password, user.getSha256Password()))
 			{
+				List<OrganizationMembership> organizationMemberships = user.getOrganizationMemberships();
+				List<Organization> organizationList=new ArrayList<Organization>();
+				for(OrganizationMembership organizationMembership: organizationMemberships)
+				{
+					organizationList.add(organizationMembership.getOrganization());
+				}
+				JSONArray orgArray= new JSONArray();
+				for(Organization organization: organizationList)
+				{
+					try {
+						JSONObject org= new JSONObject();
+						org.put("name", organization.getName());
+						org.put("org_id", organization.getOrganizationId());
+						org.put("abbr", organization.getAbbreviation());	
+						orgArray.put(org);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}	
+				}
 				try 
 				{
 					responseJsonObject.put("Authentication", "success");	
 					responseJsonObject.put("email", user.getEmail());
-					
+					responseJsonObject.put("organizations", orgArray);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
