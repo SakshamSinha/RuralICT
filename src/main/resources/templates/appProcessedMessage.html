@@ -1,0 +1,38 @@
+<div class="row-fluid">
+
+	<div th :if="${message !=null}">
+		<table class="table table-striped table-bordered table-condensed"
+			id="usertable">
+			<thead>
+				<tr>
+					<th>Order ID</th>
+					<th>User Name </th>
+					<th>Comment</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="list-process" th:each="appMessage : ${message} ">
+
+					<td th:text="${appMessage.order.orderId}">Message Id</td>
+					<td th:text="${appMessage.user.name}">Name</td>
+					<td	th:text="${appMessage.comments}">Comments</td>
+					<td>
+						<a th:href="'generateBill/'+${appMessage.order.orderId}" target="_blank" class="btn btn-primary">
+								<i class="icon-white  icon-file"></i> View
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div th:if="${message == null}">
+		<B>No New Message </B>
+
+	</div>
+</div>
+
+
+<!-- /.modal-content -->
+<!-- /.modal-dialog -->

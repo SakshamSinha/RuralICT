@@ -103,6 +103,7 @@ public class OrderRestController {
 		binaryMessageRepository.save(bmessage);
 		order.setMessage(bmessage);
 		orderRepository.save(order);
+		response.put("orderId",new Integer(order.getOrderId()).toString());
 		response.put("Status", "Success");
 		return response;
 	}
