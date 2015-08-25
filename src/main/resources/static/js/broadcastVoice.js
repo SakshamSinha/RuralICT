@@ -34,7 +34,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 				{
 					if(data.cause=="BroadcastExhausted")
 						{
-						createAlert("Limit exhausted.","Limit exhausted..Broadcast Failed. Contact Provider.");
+						createAlert("Limit exhausted.","Limit exhausted.Broadcast Failed. Contact Provider.");
 						}
 					else if(data.cause="LimitExceeded")
 						{
@@ -104,7 +104,7 @@ website.controller("BroadcastVoiceCtrl",function($window, $scope, $resource, $ht
 	$scope.getMetadata=function(){
 		console.log("Getting metadata");
 		var abbr = $('#organizationAbbr').val();
-		$http.get('/web/'+abbr+'/voicebroadcastsleft').
+		$http.get(API_ADDR +'web/'+abbr+'/voicebroadcastsleft').
 		  then(function(response) {
 			  console.log(response);
 			$scope.broadcastsleft=response.data;

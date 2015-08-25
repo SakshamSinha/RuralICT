@@ -46,14 +46,18 @@ public class OrganizationMembership implements Serializable {
 	@JoinColumn(name="organization_id")
 	private Organization organization;
 
+	@Column(name="status")
+	private int status;
+	
 	public OrganizationMembership() {
 	}
 
-	public OrganizationMembership(Organization organization, User user, boolean isAdmin, boolean isPublisher) {
+	public OrganizationMembership(Organization organization, User user, boolean isAdmin, boolean isPublisher, int status) {
 		this.organization = organization;
 		this.user = user;
 		this.isAdmin = isAdmin;
 		this.isPublisher = isPublisher;
+		this.status = status;
 	}
 
 	public int getOrganizationMembershipId() {
@@ -64,6 +68,14 @@ public class OrganizationMembership implements Serializable {
 		this.organizationMembershipId = organizationMembershipId;
 	}
 
+	public int getStatus() {
+		return this.status;
+	}
+	
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
 	public boolean getIsAdmin() {
 		return this.isAdmin;
 	}

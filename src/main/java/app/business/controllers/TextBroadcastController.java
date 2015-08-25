@@ -171,7 +171,7 @@ public class TextBroadcastController {
 		User publisher = Utils.getCurrentUser(userRepository);
 		int textbroadcastlimit=publisher.getTextbroadcastlimit();
 		
-		if(textbroadcastlimit==-1)
+		if(textbroadcastlimit<=-1)
 			return "Unlimited";
 		return new Integer(textbroadcastlimit).toString();
 	}

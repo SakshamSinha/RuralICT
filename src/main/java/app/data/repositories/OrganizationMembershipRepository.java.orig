@@ -30,10 +30,10 @@ public interface OrganizationMembershipRepository extends JpaRepository<Organiza
 	@Override
 	public List<OrganizationMembership> findAll();
 
-	@PostFilter("principal.userId == filterObject.user.userId or "
-			+ "hasRole('ADMIN'+filterObject.organization.abbreviation)")
-	@Override
-	public Page<OrganizationMembership> findAll(Pageable pageable);
+//	@PostFilter("principal.userId == filterObject.user.userId or "
+//			+ "hasRole('ADMIN'+filterObject.organization.abbreviation)")
+//	@Override
+//	public Page<OrganizationMembership> findAll(Pageable pageable);
 
 	@PostFilter("principal.userId == filterObject.user.userId or "
 			+ "hasRole('ADMIN'+filterObject.organization.abbreviation)")
@@ -53,7 +53,16 @@ public interface OrganizationMembershipRepository extends JpaRepository<Organiza
 	 */
 	public OrganizationMembership findByUserAndOrganization(User user, Organization organization);
 
+	
+	
+	
 	public List<OrganizationMembership> findByOrganization(Organization organization);
+<<<<<<< HEAD
+	
+	
+||||||| merged common ancestors
+=======
 	
 	public List<OrganizationMembership> findByOrganizationAndStatus(Organization organization, int status);
+>>>>>>> upstream/apprestend
 }

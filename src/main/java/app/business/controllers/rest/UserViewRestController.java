@@ -81,7 +81,7 @@ public class UserViewRestController {
 			// this is useful when adding an user through a new organization
 			if(organizationMembership == null)
 			{
-				organizationMembershipService.addOrganizationMembership(new OrganizationMembership(group.getOrganization(),phone.getUser(), false, false));
+				organizationMembershipService.addOrganizationMembership(new OrganizationMembership(group.getOrganization(),phone.getUser(), false, false, 1));
 			}
 			
 		}

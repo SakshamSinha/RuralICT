@@ -237,9 +237,11 @@ public class BroadcastVoiceController {
 	@ResponseBody
 	public String voicebroadcastsLeft() {
 		User publisher = Utils.getCurrentUser(userRepository);
+		
 		int voicebroadcastlimit=publisher.getVoicebroadcastlimit();
-		if(voicebroadcastlimit==-1)
+		if(voicebroadcastlimit<=-1)
 		{
+			System.out.println("Returning unlimited");
 			return "Unlimited";
 		}
 		return new Integer(voicebroadcastlimit).toString();
