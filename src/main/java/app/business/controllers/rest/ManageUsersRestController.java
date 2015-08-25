@@ -63,7 +63,8 @@ public class ManageUsersRestController {
 
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 
-		List<OrganizationMembership> membershipList = organizationMembershipService.getOrganizationMembershipList(organization);
+		//List<OrganizationMembership> membershipList = organizationMembershipService.getOrganizationMembershipList(organization);
+		List<OrganizationMembership> membershipList = organizationMembershipService.getOrganizationMembershipListByStatus(organization, 1);
 
 		for(OrganizationMembership membership : membershipList)
 		{
@@ -92,6 +93,42 @@ public class ManageUsersRestController {
 		return userrows;
 	}
 
+	@RequestMapping(value="/getUserApprovalList", method=RequestMethod.GET, produces = "application/json")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	public List<UserManage> getUserApprovalList(@PathVariable String org) {
+
+		List<UserManage> userrows = new ArrayList<UserManage>();
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		System.out.println("mapped 1");
+		List<OrganizationMembership> membershipList = organizationMembershipService.getOrganizationMembershipListByStatus(organization, 0);
+		System.out.println("mapped 2");
+		for(OrganizationMembership membership : membershipList)
+		{
+
+			User user = membership.getUser();
+			//System.out.println(user.getUserId()+user.getName()+user.getEmail()+userService.getUserRole(user, organization));
+			try
+			{
+				// Get required attributes for each user
+				int manageUserID = user.getUserId();
+				String name = user.getName();
+				String email = user.getEmail();
+				String phone = userPhoneNumberService.getUserPrimaryPhoneNumber(user).getPhoneNumber();
+				String role  = userService.getUserRole(user, organization);
+				String address = user.getAddress();
+				
+				// Create the UserManage Object and add it to the list
+				UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address);
+				userrows.add(userrow);
+			}
+			catch(NullPointerException e)
+			{
+				System.out.println("User name not having his phone number is: " + user.getName() + " having userID: " + user.getUserId());
+			}
+		}
+		return userrows;
+	}
+	
 	// Method to add a new user according to the details entered in the Modal Dialog Box
 	@RequestMapping(value="/addNewUser", method = RequestMethod.POST, produces = "application/json")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
@@ -126,7 +163,7 @@ public class ManageUsersRestController {
 		userPhoneNumberService.addUserPhoneNumber(primaryPhoneNumber);
 
 		// Add the Organization Membership for the user in the Database
-		OrganizationMembership membership = new OrganizationMembership(organization, user, isAdmin, isPublisher);
+		OrganizationMembership membership = new OrganizationMembership(organization, user, isAdmin, isPublisher, 1);
 		organizationMembershipService.addOrganizationMembership(membership);
 
 		// By Default Add the new user to parent group

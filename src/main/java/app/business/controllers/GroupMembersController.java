@@ -35,7 +35,7 @@ public class GroupMembersController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public String settingsPage(@PathVariable String org, @PathVariable int groupId, Model model) {
 		
-		List<UserView> userViewList = userViewService.getUserViewListByGroup(groupId);
+		List<UserView> userViewList = userViewService.getUserViewListByGroup(groupId,org);
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		List<Group> groupList = groupService.getGroupListByOrganization(organization);
 		for (UserView user:userViewList)
