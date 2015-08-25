@@ -53,7 +53,7 @@ public class UserViewService {
 	public static class UserView {
 		private User user;
 		private UserPhoneNumber phone;
-
+		private Organization organization;
 		private String role;
 		public String getRole() {
 			return role;
@@ -91,7 +91,7 @@ public class UserViewService {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		String role=null;
 		
-		List<OrganizationMembership> membershipList = organizationService.getOrganizationMembershipList(organization);
+		List<OrganizationMembership> membershipList = organizationMembershipService.getOrganizationMembershipListByStatus(organization, 1);
 		
 		List<UserView> rows = new ArrayList<UserView>();
 		
@@ -108,10 +108,11 @@ public class UserViewService {
 		return rows;
 	}
 	
-	public List<UserView> getUserViewListByGroup(int groupId){
+	public List<UserView> getUserViewListByGroup(int groupId,String org){
 		
 		Group group = groupService.getGroup(groupId);
 		String role=null;
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		
 		List<GroupMembership> membershipList = groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group);
 		
@@ -119,11 +120,13 @@ public class UserViewService {
 		
 		for (GroupMembership groupMembership : membershipList) {
 			User user = groupMembership.getUser();
-			UserPhoneNumber phoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
-			role = userService.getUserRole(user,group.getOrganization());
-			
-			UserView row = new UserView(groupMembership.getUser(), phoneNumber , role );
-			rows.add(row);
+			if(organizationMembershipService.getOrganizationMembershipStatus(user, organization)!=0)
+			{
+				UserPhoneNumber phoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
+				role = userService.getUserRole(user,group.getOrganization());
+				UserView row = new UserView(groupMembership.getUser(), phoneNumber , role );
+				rows.add(row);
+			}
 		}
 		
 		

@@ -512,7 +512,7 @@ public class Organization implements Serializable {
 	public OrganizationMembership addOrganizationMembership(OrganizationMembership organizationMembership) {
 		getOrganizationMemberships().add(organizationMembership);
 		organizationMembership.setOrganization(this);
-
+		//organizationMembership.setStatus(1);
 		return organizationMembership;
 	}
 
