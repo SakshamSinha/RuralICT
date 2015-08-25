@@ -203,15 +203,10 @@ public class RestAuthenticationController {
 				organizationMembership.setUser(user);
 				organizationMembership.setIsAdmin(false);
 				organizationMembership.setIsPublisher(false);
+				organizationMembership.setStatus(0);
 				organizationMembership=organizationMemberRepository.save(organizationMembership);
 				organizationMemberships.add(organizationMembership);
 				//Get GroupMembership
-				Group group = groupRepository.findByNameAndOrganization("Parent Group", organization);
-				GroupMembership groupMembership= new GroupMembership();
-				groupMembership.setGroup(group);
-				groupMembership.setUser(user);
-				groupMembership=groupMembershipRepository.save(groupMembership);
-				groupMemberships.add(groupMembership);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -292,6 +287,10 @@ public class RestAuthenticationController {
 		
 		if(user!=null)
 		{
+			/*
+			 * Check if the user is approved
+			 * 
+			 */
 			if(password==null)
 			{
 				try {
@@ -323,8 +322,25 @@ public class RestAuthenticationController {
 				List<Organization> organizationList=new ArrayList<Organization>();
 				for(OrganizationMembership organizationMembership: organizationMemberships)
 				{
+					if(organizationMembership.getStatus()==1)
 					organizationList.add(organizationMembership.getOrganization());
 				}
+				if(organizationList.size()==0)
+				{
+					try{
+						responseJsonObject.put("Authentication", "success");	
+						responseJsonObject.put("email", user.getEmail());
+						responseJsonObject.put("Error", "No organization has accepted the user");
+						responseJsonObject.put("organizations", "null");
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
+					return responseJsonObject.toString();
+				}
+				
+				
 				JSONArray orgArray= new JSONArray();
 				for(Organization organization: organizationList)
 				{
