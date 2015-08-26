@@ -1,8 +1,13 @@
 package app.telephony.fsm.guards;
 
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
+import app.business.services.OrganizationMembershipService;
+import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.springcontext.SpringContextBridge;
+import app.entities.Organization;
+import app.entities.OrganizationMembership;
+import app.entities.User;
 import app.entities.UserPhoneNumber;
 
 import com.continuent.tungsten.commons.patterns.fsm.Event;
@@ -26,8 +31,15 @@ public class OnIsUnRegisteredUser implements Guard<IVRSession, Object> {
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		String userNumber = session.getUserNumber();
 		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(userNumber);
+		User user= userPhoneNumber.getUser();
+		String ivrs =session.getIvrNumber();
+		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
+		Organization organization= organizationService.getOrganizationByIVRS(ivrs);
+		OrganizationMembershipService membershipService= SpringContextBridge.services().getOrganizationMembershipService();
+		OrganizationMembership membership= membershipService.getUserOrganizationMembership(user, organization);
+
 		
-		if(userPhoneNumber == null){
+		if(userPhoneNumber == null || membership.getStatus()==0){
 
 			return (allow);
 		}
