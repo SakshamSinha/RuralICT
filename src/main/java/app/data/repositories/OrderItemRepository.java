@@ -33,9 +33,9 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	@Override
 	public List<OrderItem> findAll();
 
-	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.abbreviation)")
-	@Override
-	public Page<OrderItem> findAll(Pageable pageable);
+//	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.abbreviation)")
+//	@Override
+//	public Page<OrderItem> findAll(Pageable pageable);
 
 	@PostFilter("hasRole('ADMIN'+filterObject.order.organization.abbreviation)")
 	@Override

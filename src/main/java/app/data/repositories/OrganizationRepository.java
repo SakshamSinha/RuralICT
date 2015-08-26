@@ -36,4 +36,6 @@ public interface OrganizationRepository extends JpaRepository<Organization, Inte
 	
 	public Organization findByIvrNumber(@Param("ivr_number") String ivrNumber);
 	
+	public List<Organization> findByOrganizationMemberships_user_userPhoneNumbers_phoneNumber(@Param("phonenumber") String phonenumber);
+	
 }

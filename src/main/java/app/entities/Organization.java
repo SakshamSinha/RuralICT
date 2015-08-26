@@ -633,4 +633,12 @@ public class Organization implements Serializable {
 		return latestRecordedVoice;
 	}
 
+	public boolean containsGroup(Group group)
+	{
+		if(groups.contains(group))
+		{
+			return true;
+		}
+		return false;
+	}
 }

@@ -12,6 +12,8 @@
 		<!--top level tabs-->
 		<li class="active"><a href="#voice-message-response"
 			data-toggle="tab">Voice Message Response</a></li>
+		<li ><a href="#app-message-response"
+			data-toggle="tab">App</a></li>
 		<li th:if="${organization.enableSms}"><a
 			href="#text-message-response" data-toggle="tab">Text Message
 				Response</a></li>
@@ -91,7 +93,30 @@
 		</div>
 
 
-
+		<div id="app-message-response" class="tab-pane">
+			<ul class="nav nav-tabs bottom-tab-bar" id="all_tabs">
+				<li class="active"><a href="#app-message-response-saved" data-toggle="tab">Saved</a></li>
+				<li><a href="#app-message-response-processed"
+					data-toggle="tab">Processed</a></li>
+				<li><a href="#app-message-response-cancelled" data-toggle="tab">Cancelled</a></li>
+			</ul>
+			<!--all tab content-->
+			<div class="tab-content">
+				<div id="app-message-response-saved" class="tab-pane ">
+					<ng-include
+						th:attr="src='\'appMessage/'+ saved+'/'+ ${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="app-message-response-processed" class="tab-pane">
+					<ng-include
+						th:attr="src='\'appMessage/'+ processed+'/'+ ${group.groupId}+'\''"></ng-include>
+				</div>
+				<div id="app-message-response-cancelled" class="tab-pane">
+					<ng-include
+						th:attr="src='\'appMessage/'+ cancelled+'/' +${group.groupId}+'\''"></ng-include>
+				</div>
+			</div>
+		</div>
+		
 
 
 		<!--Text Message Response tab menu-->

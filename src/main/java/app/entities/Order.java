@@ -2,6 +2,8 @@ package app.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -127,6 +129,24 @@ public class Order implements Serializable {
 		orderItem.setOrder(null);
 
 		return orderItem;
+	}
+	
+	public List<HashMap<String,String>> getOrderItemsHashMap()
+	{
+		/*Marshalling the order items in a string hashmap since included version of the spring data rest doesnt support 
+		 * nested projection in collection containers. Upgrading to newer version requires rework in code.
+		 * */
+		List<HashMap<String,String>> response= new ArrayList<HashMap<String,String>>();
+		for(OrderItem orderItem:orderItems)
+		{
+			HashMap<String, String> temp = new HashMap<String, String>();
+			temp.put("quantity",Float.toString(orderItem.getQuantity()));
+			temp.put("unitrate",Float.toString(orderItem.getUnitRate()));
+			temp.put("productname",orderItem.getProduct().getName());
+			temp.put("productId", Integer.toString(orderItem.getProduct().getProductId()));
+			response.add(temp);
+		}
+		return response;
 	}
 
 }

@@ -41,7 +41,7 @@ public interface GroupMembershipRepository extends JpaRepository<GroupMembership
 	@Override
 	public List<GroupMembership> findAll(Sort sort);
 
-	@PreAuthorize("hasRole('ADMIN'+#membership.group.organization.abbreviation)")
+	//@PreAuthorize("hasRole('ADMIN'+#membership.group.organization.abbreviation)")
 	@Override
 	public <S extends GroupMembership> S save(@Param("membership") S membership);
 
