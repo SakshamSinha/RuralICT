@@ -31,16 +31,17 @@ public class OnIsUnRegisteredUser implements Guard<IVRSession, Object> {
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		String userNumber = session.getUserNumber();
 		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(userNumber);
+		if(userPhoneNumber == null )
+		{
+			return allow;
+		}
 		User user= userPhoneNumber.getUser();
 		String ivrs =session.getIvrNumber();
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 		Organization organization= organizationService.getOrganizationByIVRS(ivrs);
 		OrganizationMembershipService membershipService= SpringContextBridge.services().getOrganizationMembershipService();
 		OrganizationMembership membership= membershipService.getUserOrganizationMembership(user, organization);
-
-		
-		if(userPhoneNumber == null || membership.getStatus()==0){
-
+		if(membership.getStatus()==0){
 			return (allow);
 		}
 
