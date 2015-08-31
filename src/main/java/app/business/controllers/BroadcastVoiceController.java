@@ -27,6 +27,7 @@ import app.business.services.BroadcastScheduleService;
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
 import app.business.services.LatestRecordedVoiceService;
+import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
@@ -54,6 +55,8 @@ public class BroadcastVoiceController {
 
 	@Autowired
 	OrganizationService organizationService;
+	@Autowired
+	OrganizationMembershipService organizationMembershipService;	
 	@Autowired
 	GroupService groupService;
 	@Autowired
@@ -96,7 +99,10 @@ public class BroadcastVoiceController {
 		
 		List<User> users = new ArrayList<User>();
 		for(GroupMembership groupMembership : groupMembershipList) {
-			users.add(groupMembership.getUser());
+			User user=groupMembership.getUser();
+			int status=organizationMembershipService.getOrganizationMembershipStatus(user, organization);
+			if(status==1)
+				users.add(groupMembership.getUser());
 		}
 		
 		BroadcastDefaultSettings broadcastDefaultSettings = broadcastDefaultSettingService.getBroadcastDefaultSettingByOrganization(organization);
