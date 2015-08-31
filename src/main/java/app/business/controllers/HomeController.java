@@ -58,7 +58,7 @@ public class HomeController {
 		OrganizationMembership membership= organizationMembershipService.getUserOrganizationMembership(user, organization);
 		membership.setStatus(1);
 		organizationMembershipService.addOrganizationMembership(membership);
-		IVRUtils.sendSMS(phoneno, "Congratualtions!!! You have been approved by the organization.",null,null);
+		IVRUtils.sendSMS(phoneno, "Congratualtions!!! You have been approved by "+organization.getName()+" organization.",null,null);
 	}
 	
 	@RequestMapping(value="/homePage/reject", method = RequestMethod.POST)
