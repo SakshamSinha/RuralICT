@@ -1,5 +1,7 @@
 package app.business.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -59,8 +61,8 @@ public class VoiceMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String voicePositiveResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-		List<Message> voiceResponseMessageList=voiceMessageService.getPositiveResponseList(groupService.getGroup(groupId),"voice");
-		model.addAttribute("message",voiceResponseMessageList);
+		HashMap<String,ArrayList<Message>> voiceResponseMessageMap=voiceMessageService.getPositiveResponseList(groupService.getGroup(groupId),"voice");
+		model.addAttribute("messagemap",voiceResponseMessageMap);
 		return "voicePositiveResponseMessage";
 	}
 	
@@ -68,8 +70,8 @@ public class VoiceMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String textNegativeResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-		List<Message> voiceResponseMessageList=voiceMessageService.getNegativeResponseList(groupService.getGroup(groupId),"voice");
-		model.addAttribute("message",voiceResponseMessageList);
+		HashMap<String,ArrayList<Message>> voiceResponseMessageMap=voiceMessageService.getNegativeResponseList(groupService.getGroup(groupId),"voice");
+		model.addAttribute("messagemap",voiceResponseMessageMap);
 		return "voiceNegativeResponseMessage";
 	}
 	
@@ -77,8 +79,8 @@ public class VoiceMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String textAllResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-		List<Message> voiceResponseMessageList = voiceMessageService.getResponseList(groupService.getGroup(groupId),"voice");
-		model.addAttribute("message",voiceResponseMessageList);
+		HashMap<String,ArrayList<Message>> voiceResponseMessageMap = voiceMessageService.getResponseList(groupService.getGroup(groupId),"voice");
+		model.addAttribute("messagemap",voiceResponseMessageMap);
 		return "voiceAllResponseMessage";
 	}
 	
