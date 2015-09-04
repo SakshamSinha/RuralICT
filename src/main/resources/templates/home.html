@@ -1,3 +1,4 @@
+<div ng-controller="HomeCtrl" th:attr="organizationabbr=${organization.abbreviation}">
 <div class="well hero-unit">
   <h1>Welcome, Admin</h1>
   <p><a class="btn btn-success btn-large" href="#/users">Manage Members &raquo;</a></p>
@@ -39,26 +40,26 @@
 			</tr>
 		</thead> -->
 		<tbody>
-		<tr class="pending-user">
-			<td>564</td>
-			<td>John S. Schwab</td>
-			<td>johnschwab@provider.com</td>
-			<td>402-xxx-xxxx</td>
-			<td>Bassett, NE</td>
-			<td>User</td>
+		<tr class="list-users" dir-paginate="userApprovalItem in userApprovalItems | orderBy:'name' | itemsPerPage: 5">
+			<td>{{ userApprovalItem.manageUserID }}</td>
+			<td>{{ userApprovalItem.name }}</td>
+			<td>{{ userApprovalItem.email }}</td>
+			<td>{{ userApprovalItem.phone }}</td>
+			<td>{{ userApprovalItem.address }}</td>
 			<td><span class="label label-important">Inactive</span></td>
-			<td><span class="user-actions"><a href="javascript:void(0);" class="label label-success">Approve</a> <a href="javascript:void(0);" class="label label-important">Reject</a></span></td>
-		</tr>
-		<tr class="pending-user">
-			<td>565</td>
-			<td>Juliana M. Sheffield</td>
-			<td>julianasheffield@provider.com</td>
-			<td>803-xxx-xxxx</td>
-			<td>Columbia, SC</td>
-			<td>User</td>
-			<td><span class="label label-important">Inactive</span></td>
-			<td><span class="user-actions"><a href="javascript:void(0);" class="label label-success">Approve</a> <a href="javascript:void(0);" class="label label-important">Reject</a></span></td>
+			<td><button type="button" class="btn btn-success"
+				ng-click="approveButton()" id="approve-user">
+				<i class="icon-white icon-ok"></i> Approve
+			</button> 
+			<button type="button" class="btn btn-warning"
+				ng-click="rejectButton()" id="reject-user">
+				<i class="icon-white icon-remove"></i> Reject
+			</button></td>
 		</tr>
 		</tbody>
 	</table>
+	<dir-pagination-controls id="pagination-approval-users"
+			boundary-links="true"
+			th:attr='template-url=@{/static/js/dirPagination.tpl.html}'></dir-pagination-controls>
+</div>
 </div>

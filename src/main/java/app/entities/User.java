@@ -259,7 +259,6 @@ public class User implements Serializable {
 	public OrganizationMembership addOrganizationMembership(OrganizationMembership organizationMembership) {
 		getOrganizationMemberships().add(organizationMembership);
 		organizationMembership.setUser(this);
-
 		return organizationMembership;
 	}
 

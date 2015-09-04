@@ -54,4 +54,14 @@ public class OrganizationMembershipService {
 		
 		return origanizationMembershipRepository.findOne(organizationMembershipId);
 	}
+	
+	public List<OrganizationMembership> getOrganizationMembershipListByStatus(Organization organization, int status){
+		
+		return origanizationMembershipRepository.findByOrganizationAndStatus(organization, status);
+	}
+	public int getOrganizationMembershipStatus(User user,Organization organization){
+		
+		OrganizationMembership organizationMembership= origanizationMembershipRepository.findByUserAndOrganization(user, organization);
+		return organizationMembership.getStatus();
+	}
 }
