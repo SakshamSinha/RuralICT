@@ -34,7 +34,7 @@ public class MessageService {
 			{
 				temp=map1.get(url);
 				temp.add(m1);
-				map1.replace(url, temp);
+				map1.put(url, temp);
 			}
 			else
 			{
@@ -59,7 +59,7 @@ public class MessageService {
 			{
 				temp=map1.get(url);
 				temp.add(m1);
-				map1.replace(url, temp);
+				map1.put(url, temp);
 			}
 			else
 			{
@@ -84,7 +84,7 @@ public class MessageService {
 			{
 				temp=map1.get(url);
 				temp.add(m1);
-				map1.replace(url, temp);
+				map1.put(url, temp);
 			}
 			else
 			{
