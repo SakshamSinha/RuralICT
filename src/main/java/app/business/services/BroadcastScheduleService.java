@@ -25,6 +25,10 @@ public class BroadcastScheduleService {
 		return broadcastScheduleRepository.findOne(broadcastScheduleId);
 	}
 	
+	public BroadcastSchedule getBroadcastScheduleByBroadcastId(Broadcast broadcast, Timestamp time){
+		return broadcastScheduleRepository.findByBroadcastAndTime(broadcast, time);
+	}
+	
 	public List<BroadcastSchedule> getAllBroadcastScheduleList(){
 		return broadcastScheduleRepository.findAll();
 	}

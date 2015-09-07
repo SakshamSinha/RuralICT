@@ -35,4 +35,8 @@ public class BroadcastRecipientService {
 	public BroadcastRecipient getBroadcastRecipientByUserAndBroadcast(User user, Broadcast broadcast) {
 		return broadcastRecipientRepository.findByUserAndBroadcast(user, broadcast);
 	}
+	
+	public BroadcastRecipient getBroadcastRecipientByBroadcast(Broadcast broadcast) {
+		return broadcastRecipientRepository.findByBroadcast(broadcast);
+	}
 }

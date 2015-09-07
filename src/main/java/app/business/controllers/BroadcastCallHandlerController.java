@@ -3,6 +3,7 @@ package app.business.controllers;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.IVRSessionFactory;
 import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
+//import scala.annotation.meta.getter;
 
 import java.io.IOException;
 import java.util.Map;
@@ -11,16 +12,21 @@ import java.util.Map.Entry;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import app.business.services.BroadcastRecipientService;
+import app.business.services.BroadcastScheduleService;
 import app.business.services.OutboundCallService;
+import app.business.services.broadcast.BroadcastService;
 import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
 import app.entities.OutboundCall;
+import app.entities.broadcast.Broadcast;
 import app.telephony.RuralictSession;
 
 @Controller
@@ -29,6 +35,15 @@ public class BroadcastCallHandlerController  implements IVRSessionFactory {
 
 	@Autowired
 	OutboundCallService outboundCallService;
+	
+	@Autowired
+	BroadcastScheduleService broadcastscheduleservice;
+	
+	@Autowired
+	BroadcastRecipientService broadcastrecipientservice;
+	
+	@Autowired
+	BroadcastService broadcastService;
 
 	/**
 	 * Create a new IVR session.
@@ -125,15 +140,34 @@ public class BroadcastCallHandlerController  implements IVRSessionFactory {
 	@RequestMapping(value="/BroadcastCallHandler", method=RequestMethod.POST)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		try{
 		printParameterMap(request.getParameterMap());
+		String kookoo_id=request.getParameter("sid");
 		String status = request.getParameter("status");
 		String statusDetails = request.getParameter("status_details");
-		RuralictSession ruralictSession = (RuralictSession) request.getSession();
-		OutboundCall outboundCall = ruralictSession.getOutboundCall();
+		//RuralictSession ruralictSession = (RuralictSession) request.getSession();
+		//HttpSession session = request.getSession();
+		//OutboundCall outboundCall = ruralictSession.getOutboundCall();
+		//OutboundCall outboundCall = (OutboundCall) session.getAttribute("outboundCall");
+		OutboundCall outboundCall=new OutboundCall();
+		Broadcast broadcast= broadcastService.getLastBroadcast();
+		BroadcastRecipient broadcastrcpt=broadcastrecipientservice.getBroadcastRecipientByBroadcast(broadcast);
+		BroadcastSchedule broadcastsch=broadcastscheduleservice.getBroadcastScheduleByBroadcastId(broadcast, broadcast.getBroadcastedTime());
+		System.out.println(outboundCall.getDuration()+" "+outboundCall.getOutboundCallId());
+		outboundCall.setBroadcastSchedule(broadcastsch);
+		outboundCall.setBroadcastRecipient(broadcastrcpt);
+		outboundCall.setKookoo_id(kookoo_id);
 		outboundCall.setStatus(status);
 		outboundCall.setStatusDetail(statusDetails);
+		outboundCall.setDuration(Integer.parseInt(request.getParameter("duration")));
+		System.out.println(broadcastrcpt.getBroadcastRecipientId()+ " "+ broadcastsch.getBroadcastScheduleId()); 
 		outboundCallService.addOutboundCall(outboundCall);
-
+		}
+		catch(NullPointerException e)
+		{
+			
+			System.out.println("broadcast time: ");
+		}
 	}
 
 
