@@ -35,8 +35,10 @@
                    <li>Receiving orders through phone</li>
                    <li>App for Android users</li>
                    </ul>
-                   <p><a class="btn btn-success btn-large" href="http://ruralict.cse.iitb.ac.in/AFC/Document.jsp#no-back-button" target="_blank">User Guide &raquo;</a></p>
-                   </div>
+<!--                    <p><a class="btn btn-success btn-large" href="http://ruralict.cse.iitb.ac.in/RuralIvrs/userGuide" target="_blank">User Guide &raquo;</a></p>
+ -->               	    <button class= "btn btn-success btn-large" id = "user-guide" data-toggle="modal" data-title="User Guide" data-target="#user-guide-modal">User Guide</button>
+    
+ 					</div>
                 </div>
             </div>
             <div class="span4" style="padding-top: 10px;">
@@ -110,7 +112,41 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="user-guide-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingDelete" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+           <h4 class="modal-title custom_align" id="HeadingDelete">Delete this entry</h4>
+      </div>
+      <div class="modal-body">
+        	<div class="container-inner-document" style="text-align: center;">
+				<b>Contact-Number - 022-33578383</b><br><br><br/>
+				<a href = "http://ruralict.cse.iitb.ac.in/Downloads/Admin Guide (updated.docx" target="_blank" style="color:black;">Admin Guide</a>
+				<br><br/>
+				<a href = "http://ruralict.cse.iitb.ac.in/Downloads/User guide for Rural IVRS for Publisher.pdf" target="_blank" style="color:black;" >User Guide for Rural IVRS for Publisher</a>
+				<br><br/>		
+				<a href = "http://ruralict.cse.iitb.ac.in/Downloads/User Guide for Rural IVRS for customers.pdf" target="_blank" style="color:black;">User Guide for Rural IVRS for Customer</a>
+				<br><br/>
+				<a href = "http://ruralict.cse.iitb.ac.in/Downloads/rural ivrs in yuva pune newspaper.png" target="_blank" style="color:black;">Article of newspaper</a>
+				<br><br/>
+				<a href = "http://ruralict.cse.iitb.ac.in/Downloads/Bodke_1.m4v" target="_blank" style="color:black;">Video</a>
+				<br>		
+			</div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-success" onclick="okButtonClick()" id="userguideOK" ><i class="icon-white icon-ok"></i> OK</button>
+        <script>
+        	function okButtonClick()
+        	{
+        		$("#user-guide-modal").modal('toggle');
+        	}
+        </script>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
 <script th:src="@{/static/js/libs/jquery.js}"></script>
 <script th:src="@{/static/js/libs/bootstrap.min.js}"></script>
 
