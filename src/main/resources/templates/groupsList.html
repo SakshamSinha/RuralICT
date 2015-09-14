@@ -7,7 +7,7 @@
 		</button></li>
 <!-- 		<li><hr></li> -->
 		
-	<li th:each="group : ${groups}">
+	<li th:each="group : ${groups}" class="notranslate">
 		<a th:href="@{#/group/} + ${group.groupId}" th:text="${group.name}">Group name</a>
 	</li>
 </ul>

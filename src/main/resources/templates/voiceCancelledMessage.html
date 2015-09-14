@@ -16,7 +16,7 @@
 	
 						<td th:text="${voiceMessage.order.orderId}">Order Id</td>
 						<td th:attr="id='savedVoiceMessageTime'+${voiceMessage.messageId}" th:text="${voiceMessage.Time}">Time</td>
-						<td th:attr="id='savedVoiceMessageName'+${voiceMessage.messageId}" th:text="${voiceMessage.user.name}">Name</td>						
+						<td th:attr="id='savedVoiceMessageName'+${voiceMessage.messageId}" th:text="${voiceMessage.user.name}" class="notranslate">Name</td>						
 					</tr>
 				</tbody>
 			</table>

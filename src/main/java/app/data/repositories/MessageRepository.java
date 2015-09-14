@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
@@ -51,4 +52,7 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	public List<Message> findByGroupAndFormatAndOrder_Status(Group group,String format,String status,Sort sort);
 	public List<Message> findByGroupAndResponseAndTypeAndFormat(Group group, boolean response,String type, String format, Sort sort);
 	public List<Message> findByGroup(Group group);
+	
+	@Query(value = "SELECT count(response),url FROM message,voice where group_id=?1 and response=?2 and type=?3 and format=?4 and voice.voice_id=(select voice_id from broadcast where broadcast_id=message.source_broadcast_id) group by (select url from voice where voice.voice_id=(select voice_id from broadcast where broadcast_id=message.source_broadcast_id))", nativeQuery = true)
+	public List<Object[]> countByGroupAndResponseAndTypeAndFormat(int groupid,boolean b,String type,String format);
 }

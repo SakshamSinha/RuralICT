@@ -16,9 +16,9 @@
 				<tr class="list-inbox" th:each="voiceMessage : ${message} ">
 					<td th:attr="id='inboxVoiceOrderId'+${voiceMessage.order.orderId}" th:text="${voiceMessage.order.orderId}">Order ID</td>
 					<td th:attr="id='inboxVoiceMessageTime'+${voiceMessage.messageId}" th:text="${voiceMessage.Time}">Time</td>
-					<td th:attr="id='inboxVoiceMessageName'+${voiceMessage.messageId}" th:text="${voiceMessage.user.name}">User Name</td>
+					<td th:attr="id='inboxVoiceMessageName'+${voiceMessage.messageId}" th:text="${voiceMessage.user.name}" class="notranslate">User Name</td>
 					<td>
-						<a th:href="${voiceMessage.voice.url}" target="_blank">Play Voice Message</a>
+						<a th:href="${voiceMessage.voice.url}" target="_blank">Listen Voice Message</a>
 					</td>
 					<td>
 						<span>
@@ -59,7 +59,7 @@
 		      			<div><b>Time: </b></div>
 		      			<div id="inboxVoiceTime"></div>
 	      			</div>	
-	      			<div class="span3">
+	      			<div class="span3 notranslate">
 	      				<div><b>Name: </b></div>
 	      				<div id="inboxVoiceName"></div>
 	      			</div>

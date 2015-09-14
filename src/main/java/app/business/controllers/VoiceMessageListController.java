@@ -62,7 +62,10 @@ public class VoiceMessageListController {
 	@Transactional
 	public String voicePositiveResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
 		HashMap<String,ArrayList<Message>> voiceResponseMessageMap=voiceMessageService.getPositiveResponseList(groupService.getGroup(groupId),"voice");
+		HashMap<String,Integer> responseCount=voiceMessageService.getPositiveResponseListCount(groupService.getGroup(groupId), "voice");
+		System.out.println("VMs: "+ responseCount.get("http://ruralict.cse.iitb.ac.in/Downloads/voices/2015-08-05T05-00-16.523Z.wav"));
 		model.addAttribute("messagemap",voiceResponseMessageMap);
+		model.addAttribute("responseCount",responseCount);
 		return "voicePositiveResponseMessage";
 	}
 	
@@ -71,7 +74,9 @@ public class VoiceMessageListController {
 	@Transactional
 	public String textNegativeResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
 		HashMap<String,ArrayList<Message>> voiceResponseMessageMap=voiceMessageService.getNegativeResponseList(groupService.getGroup(groupId),"voice");
+		HashMap<String,Integer> responseCount=voiceMessageService.getNegativeResponseListCount(groupService.getGroup(groupId), "voice");
 		model.addAttribute("messagemap",voiceResponseMessageMap);
+		model.addAttribute("responseCount",responseCount);
 		return "voiceNegativeResponseMessage";
 	}
 	
@@ -80,6 +85,10 @@ public class VoiceMessageListController {
 	@Transactional
 	public String textAllResponseMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
 		HashMap<String,ArrayList<Message>> voiceResponseMessageMap = voiceMessageService.getResponseList(groupService.getGroup(groupId),"voice");
+		HashMap<String,Integer> responseCountYes=voiceMessageService.getPositiveResponseListCount(groupService.getGroup(groupId), "voice");
+		HashMap<String,Integer> responseCountNo=voiceMessageService.getNegativeResponseListCount(groupService.getGroup(groupId), "voice");
+		model.addAttribute("responseCountYes",responseCountYes);
+		model.addAttribute("responseCountNo",responseCountNo);
 		model.addAttribute("messagemap",voiceResponseMessageMap);
 		return "voiceAllResponseMessage";
 	}

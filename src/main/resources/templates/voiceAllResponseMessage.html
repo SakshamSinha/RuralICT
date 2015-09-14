@@ -1,7 +1,7 @@
 <div ng-controller="VoiceMessageCtrl">
 	<div class="row-fluid">
-	<div th: if="${messagemap !=null}" th:each="map :${messagemap}">
-		<center>Broadcast : <a th:href="${map.key}" target="_blank">Play Voice Message</a></center>
+	<div th: if="${messagemap !=null}" th:each="map :${messagemap}" th:with="yes=0" th:with="no=0">
+		<center>Broadcast : <a th:href="${map.key}" target="_blank">Listen Voice Message</a></center>
 		<table class="table table-striped table-bordered table-condensed"
 			id="usertable">
 			<thead>
@@ -9,11 +9,11 @@
 					<th>Time</th>
 					<!-- <th>Broadcast</th> -->
 					<th>User Name</th>
-					<th>Response</th>
+					<th>Response Total Yes: <span th:text="${responseCountYes.get('__${map.key}__')} ? ${responseCountYes.get('__${map.key}__')} : '0'">Yes</span> No: <span th:text="${responseCountNo.get('__${map.key}__')} ? ${responseCountNo.get('__${map.key}__')} : '0'">No</span></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="list-response" th:each="voiceMessage : ${map.value} ">
+				<tr class="list-response notranslate" th:each="voiceMessage : ${map.value} ">
 					<td th:text="${voiceMessage.broadcast.broadcastedTime}">Time</td>
 					<!-- <td>
 						<a th:href="${voiceMessage.broadcast.voice.url}" target="_blank">Play Voice Message</a>
@@ -29,9 +29,9 @@
 				</tr>
 			</tbody>
 		</table>
+		
 	</div>
-
-
+	
 	<div th:if="${messagemap == null}">
 		<B>No New Message </B>
 

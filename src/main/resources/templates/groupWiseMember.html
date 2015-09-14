@@ -23,8 +23,8 @@
 				<tbody>
 					<tr class="list-member" th:each="userView, iterationStatus : ${userViews} ">
 						<td th:text="${iterationStatus.count}">1</td>
-						<td th:text="${userView.user.name}">Member Name</td>
-						<td>
+						<td th:text="${userView.user.name}" class="notranslate">Member Name</td>
+						<td class="notranslate">
 						<span th:each="groups,itrStatus : ${userView.user.groupMemberships}">
 							<span th:if="${itrStatus.count < 3}">
 															
@@ -37,7 +37,7 @@
 						</span>
 						</td>
 						<td th:text="${userView.phone.phoneNumber}">Member PhoneNumber</td>
-						<td th:text="${userView.user.email}">Member EmailId</td>
+						<td th:text="${userView.user.email}" class="notranslate">Member EmailId</td>
 						<td>
 	          				<div class="btn-group">
 	            				<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>

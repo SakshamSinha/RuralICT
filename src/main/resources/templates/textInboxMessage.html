@@ -15,8 +15,8 @@
 				<tr class="list-message" th:each="textMessage : ${message} ">
 	
 					<td th:attr="id='inboxTextMessageTime'+${textMessage.messageId}" th:text="${textMessage.Time}">Time</td>
-					<td th:attr="id='inboxTextMessageName'+${textMessage.messageId}" th:text="${textMessage.user.name}">User Name</td>
-					<td th:attr="id='inboxTextMessageContent'+${textMessage.messageId}" th:text="${textMessage.textContent}">User Name</td>
+					<td th:attr="id='inboxTextMessageName'+${textMessage.messageId}" th:text="${textMessage.user.name}" class="notranslate">User Name</td>
+					<td th:attr="id='inboxTextMessageContent'+${textMessage.messageId}" th:text="${textMessage.textContent}" class="notranslate">User Name</td>
 					<td>
 						<span>
 							<input type="text" th:attr="id='inboxTextMessageComment'+${textMessage.messageId}" th:value="${textMessage.comments}">
@@ -55,7 +55,7 @@
 		      			<div><b>Time: </b></div>
 		      			<div id="inboxTextTime"></div>
 	      			</div>	
-	      			<div class="span3">
+	      			<div class="span3 notranslate">
 	      				<div><b>Name: </b></div>
 	      				<div id="inboxTextName"></div>
 	      			</div>

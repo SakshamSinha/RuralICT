@@ -10,11 +10,11 @@
 	    			<p th:text="${product.name}">text</p>
 	    		</option>
 	  		</select>
-	  		From: <input id="fromProductsDate" name="From" ng-model="fromDate" placeholder="yyyy-mm-dd">
-	  		To:<input id="toProductsDate" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
+	  		From: <input id="fromProductsDate" class="notranslate" name="From" ng-model="fromDate" placeholder="yyyy-mm-dd">
+	  		To:<input id="toProductsDate" class="notranslate" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
 	    	<input type="submit" id="submitProducts" value="Submit" />
 	  	</form>
-	  	<table class="table table-striped table-bordered table-condensed" id="t01">
+	  	<table class="table table-striped table-bordered table-condensed notranslate" id="t01">
 	    	<tr>
 	    		<th>Group</th>
 	    		<th>Quantity</th>

@@ -16,10 +16,10 @@
 				<tbody>
 					<tr class="list-message" th:each="voiceMessage : ${message} ">
 						<td th:text="${voiceMessage.time}">Time</td>
-						<td th:text="${voiceMessage.user.name}">User name</td>
+						<td th:text="${voiceMessage.user.name}" class="notranslate">User name</td>
 						<!-- 	<td th:text="${voiceMessage.voice.url}">Message Url</td> -->
 						<td>
-							<a th:href="${voiceMessage.voice.url}" target="_blank">Play Voice Message</a>
+							<a th:href="${voiceMessage.voice.url}" target="_blank">Listen Voice Message</a>
 						</td>
 						<td>
 							<span>

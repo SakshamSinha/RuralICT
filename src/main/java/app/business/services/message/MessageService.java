@@ -1,6 +1,7 @@
 package app.business.services.message;
 
 import java.util.List;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -45,7 +46,22 @@ public class MessageService {
 		}
 		return map1;
 	}
-
+	public HashMap<String, Integer> getPositiveResponseListCount(Group group, String format)
+	{
+		List<Object[]> response= messageRepository.countByGroupAndResponseAndTypeAndFormat(group.getGroupId(), true, "response", format);
+		HashMap<String,Integer> map1 = new HashMap<String,Integer>();
+		for(int i=0;i<response.size();i++)
+			map1.put(response.get(i)[1].toString(),Integer.parseInt(response.get(i)[0].toString()));
+		return map1;
+	}
+	public HashMap<String, Integer> getNegativeResponseListCount(Group group, String format)
+	{
+		List<Object[]> response= messageRepository.countByGroupAndResponseAndTypeAndFormat(group.getGroupId(), false, "response", format);
+		HashMap<String,Integer> map1 = new HashMap<String,Integer>();
+		for(int i=0;i<response.size();i++)
+			map1.put(response.get(i)[1].toString(),Integer.parseInt(response.get(i)[0].toString()));
+		return map1;
+	}
 	/*
 	 * Returns messages with 'No' Response for a group  
 	 */
