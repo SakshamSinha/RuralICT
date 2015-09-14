@@ -3,7 +3,6 @@ package app.business.controllers;
 import in.ac.iitb.ivrs.telephony.base.IVRSession;
 import in.ac.iitb.ivrs.telephony.base.IVRSessionFactory;
 import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
-//import scala.annotation.meta.getter;
 
 import java.io.IOException;
 import java.util.Map;
@@ -12,8 +11,6 @@ import java.util.Map.Entry;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -145,10 +142,6 @@ public class BroadcastCallHandlerController  implements IVRSessionFactory {
 		String kookoo_id=request.getParameter("sid");
 		String status = request.getParameter("status");
 		String statusDetails = request.getParameter("status_details");
-		//RuralictSession ruralictSession = (RuralictSession) request.getSession();
-		//HttpSession session = request.getSession();
-		//OutboundCall outboundCall = ruralictSession.getOutboundCall();
-		//OutboundCall outboundCall = (OutboundCall) session.getAttribute("outboundCall");
 		OutboundCall outboundCall=new OutboundCall();
 		Broadcast broadcast= broadcastService.getLastBroadcast();
 		BroadcastRecipient broadcastrcpt=broadcastrecipientservice.getBroadcastRecipientByBroadcast(broadcast);
