@@ -24,8 +24,7 @@
 				value="Admin Publisher">&nbsp;Display All Admin Publishers
 
 		</form>
-		<table class="table table-striped table-bordered table-condensed notranslate"
-			id="usertable">
+		<table class="table table-striped table-bordered table-condensed" id="usertable">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -41,12 +40,12 @@
 				<tr class="list-manageMember" dir-paginate="manageUserItem in manageUserItems | filter:selectedRole | filter: userPropertySearchQuery | orderBy:'name' | itemsPerPage: 10">
 					
 					<td>{{ manageUserItem.manageUserID }}</td>
-					<td>{{ manageUserItem.name }}</td>
-					<td>{{ manageUserItem.email }}</td>
+					<td class="notranslate">{{ manageUserItem.name }}</td>
+					<td class="notranslate">{{ manageUserItem.email }}</td>
 					<td>{{ manageUserItem.phone }}</td>
 					<td><span class="label label-success">{{
 							manageUserItem.role }}</span></td>
-					<td>{{ manageUserItem.address }}</td>
+					<td class="notranslate">{{ manageUserItem.address }}</td>
 
 					<td>
 						<div class="btn-group">
