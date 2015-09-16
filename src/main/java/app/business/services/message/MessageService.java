@@ -1,6 +1,11 @@
 package app.business.services.message;
 
 import java.util.List;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -8,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import app.data.repositories.MessageRepository;
 import app.entities.Group;
+import app.entities.broadcast.VoiceBroadcast;
 import app.entities.message.Message;
 
 @Service
@@ -19,22 +25,91 @@ public class MessageService {
 	/*
 	 * Returns messages with 'Yes' Response for a group  
 	 */
-	public List<Message> getPositiveResponseList(Group group, String format) {
-		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, true, "response", format, new Sort(Direction.DESC, "time"));
+	public HashMap<String,ArrayList<Message>> getPositiveResponseList(Group group, String format) {
+		ArrayList<Message> message= (ArrayList<Message>) messageRepository.findByGroupAndResponseAndTypeAndFormat(group, true, "response", format, new Sort(Direction.DESC, "time"));
+		HashMap<String, ArrayList<Message>> map1 = new HashMap<String, ArrayList<Message>>();
+		ArrayList<Message> temp = new ArrayList<Message>();
+		for(Message m1 : message){
+			String url=((VoiceBroadcast)m1.getBroadcast()).getVoice().getUrl();
+			if(map1.containsKey(url))
+			{
+				temp=map1.get(url);
+				temp.add(m1);
+				map1.put(url, temp);
+			}
+			else
+			{
+				temp.add(m1);
+				map1.put(url, temp);
+			}
+			temp=new ArrayList<Message>();
+		}
+		return map1;
 	}
-
+	public HashMap<String, Integer> getPositiveResponseListCount(Group group, String format)
+	{
+		List<Object[]> response= messageRepository.countByGroupAndResponseAndTypeAndFormat(group.getGroupId(), true, "response", format);
+		HashMap<String,Integer> map1 = new HashMap<String,Integer>();
+		for(int i=0;i<response.size();i++)
+			map1.put(response.get(i)[1].toString(),Integer.parseInt(response.get(i)[0].toString()));
+		return map1;
+	}
+	public HashMap<String, Integer> getNegativeResponseListCount(Group group, String format)
+	{
+		List<Object[]> response= messageRepository.countByGroupAndResponseAndTypeAndFormat(group.getGroupId(), false, "response", format);
+		HashMap<String,Integer> map1 = new HashMap<String,Integer>();
+		for(int i=0;i<response.size();i++)
+			map1.put(response.get(i)[1].toString(),Integer.parseInt(response.get(i)[0].toString()));
+		return map1;
+	}
 	/*
 	 * Returns messages with 'No' Response for a group  
 	 */
-	public List<Message> getNegativeResponseList(Group group, String format) {
-		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, false, "response", format, new Sort(Direction.DESC, "time"));
+	public HashMap<String,ArrayList<Message>> getNegativeResponseList(Group group, String format) {
+		ArrayList<Message> message= (ArrayList<Message>) messageRepository.findByGroupAndResponseAndTypeAndFormat(group, false, "response", format, new Sort(Direction.DESC, "time"));
+		HashMap<String, ArrayList<Message>> map1 = new HashMap<String, ArrayList<Message>>();
+		ArrayList<Message> temp = new ArrayList<Message>();
+		for(Message m1 : message){
+			String url=((VoiceBroadcast)m1.getBroadcast()).getVoice().getUrl();
+			if(map1.containsKey(url))
+			{
+				temp=map1.get(url);
+				temp.add(m1);
+				map1.put(url, temp);
+			}
+			else
+			{
+				temp.add(m1);
+				map1.put(url, temp);
+			}
+			temp=new ArrayList<Message>();
+		}
+		return map1;
 	}
 
 	/*
 	 * Returns messages which are of type 'response' for a group
 	 */
-	public List<Message> getResponseList(Group group, String format) {
-		return messageRepository.findByGroupAndTypeAndFormat(group, "response", format, new Sort(Direction.DESC, "time"));
+	public HashMap<String,ArrayList<Message>> getResponseList(Group group, String format) {
+		ArrayList<Message> message= (ArrayList<Message>) messageRepository.findByGroupAndTypeAndFormat(group, "response", format, new Sort(Direction.DESC, "time"));
+		HashMap<String, ArrayList<Message>> map1 = new HashMap<String, ArrayList<Message>>();
+		ArrayList<Message> temp = new ArrayList<Message>();
+		for(Message m1 : message){
+			String url=((VoiceBroadcast)m1.getBroadcast()).getVoice().getUrl();
+			if(map1.containsKey(url))
+			{
+				temp=map1.get(url);
+				temp.add(m1);
+				map1.put(url, temp);
+			}
+			else
+			{
+				temp.add(m1);
+				map1.put(url, temp);
+			}
+			temp=new ArrayList<Message>();
+		}
+		return map1;
 	}
 
 	/*

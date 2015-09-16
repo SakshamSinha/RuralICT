@@ -15,8 +15,8 @@
 				<tr class="list-users" th:each="textMessage : ${message} ">
 
 					<td th:text="${textMessage.Time}">Message Id</td>
-					<td th:text="${textMessage.user.name}">Name</td>
-					<td th:text="${textMessage.textContent}">Text Content</td>
+					<td th:text="${textMessage.user.name}" class="notranslate">Name</td>
+					<td th:text="${textMessage.textContent}" class="notranslate">Text Content</td>
 					<td th:text="${textMessage.comments}"></td>
 					
 				</tr>

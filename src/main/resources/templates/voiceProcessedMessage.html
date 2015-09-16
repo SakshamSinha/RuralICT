@@ -16,11 +16,11 @@
 				<tr class="list-process" th:each="voiceMessage : ${message} ">
 
 					<td th:text="${voiceMessage.order.orderId}">Message Id</td>
-					<td th:text="${voiceMessage.user.name}">Name</td>
+					<td th:text="${voiceMessage.user.name}" class="notranslate">Name</td>
 					<td>
-						<a th:href="${voiceMessage.voice.url}" target="_blank">Play Voice Message</a>
+						<a th:href="${voiceMessage.voice.url}" target="_blank">Listen Voice Message</a>
 					</td>
-					<td	th:text="${voiceMessage.comments}">Comments</td>
+					<td	th:text="${voiceMessage.comments}" class="notranslate">Comments</td>
 					<td>
 						<a th:href="'generateBill/'+${voiceMessage.order.orderId}" target="_blank" class="btn btn-primary">
 								<i class="icon-white  icon-file"></i> View

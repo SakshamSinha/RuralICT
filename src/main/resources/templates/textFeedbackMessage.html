@@ -16,8 +16,8 @@
 				<tbody>
 					<tr class="list-messages" th:each="textMessage : ${message} ">
 						<td th:text="${textMessage.messageId}">Id</td>
-						<td th:text="${textMessage.user.name}">User name</td>
-						<td th:text="${textMessage.textContent}">User name</td>
+						<td th:text="${textMessage.user.name}" class="notranslate">User name</td>
+						<td th:text="${textMessage.textContent}" class="notranslate">User name</td>
 						<td>
 							<span>
 								<input type="text" th:attr="id='feedbackTextMessageComment'+${textMessage.messageId}" th:value="${textMessage.comments}">

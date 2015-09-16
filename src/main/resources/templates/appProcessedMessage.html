@@ -15,8 +15,8 @@
 				<tr class="list-process" th:each="appMessage : ${message} ">
 
 					<td th:text="${appMessage.order.orderId}">Message Id</td>
-					<td th:text="${appMessage.user.name}">Name</td>
-					<td	th:text="${appMessage.comments}">Comments</td>
+					<td th:text="${appMessage.user.name}" class="notranslate">Name</td>
+					<td	th:text="${appMessage.comments}" class="notranslate">Comments</td>
 					<td>
 						<a th:href="'generateBill/'+${appMessage.order.orderId}" target="_blank" class="btn btn-primary">
 								<i class="icon-white  icon-file"></i> View

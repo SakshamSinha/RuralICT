@@ -26,7 +26,7 @@
 		th:value="${organization.abbreviation}">
 	<input type="hidden" id="parentGroupId"
 		th:value="${parentGroup.groupId}">
-	<div class="navbar navbar-fixed-top">
+	<div class="navbar navbar-static-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
 				<a class="btn btn-navbar" data-toggle="collapse"
@@ -34,7 +34,6 @@
 					class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a id="organization" class="brand" href="#/home"
 					th:text="${organization.name}">Organization Name</a>
-
 				<div class="btn-group pull-right">
 					<a class="btn" href="#"><i class="icon-user"></i> <span
 						sec:authentication="name">Admin</span></a> <a
@@ -47,6 +46,7 @@
 						<li><a th:href="@{/logout}">Logout</a></li>
 					</ul>
 				</div>
+				
 				<div class="nav-collapse">
 					<ul class="nav">
 						<li><a href="#/home">Home</a></li>
@@ -60,13 +60,20 @@
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Order Summary<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="#/orderSummaryProducts">Product wise</a></li>
+								<li><a href="#/orderSummaryProducts">According to products</a></li>
 								<li class="divider"></li>
-								<li><a href="#/orderSummaryGroups">Group wise</a></li>
+								<li><a href="#/orderSummaryGroups">According to groups</a></li>
 							</ul></li>
 						<li><a href="#/users">Manage Members</a></li>
 						<li><a href="#/settings">Settings</a></li>
 						<li><a href="#/generateBill">Generate Bill</a></li>
+						<li>
+						<div id="google_translate_element" style="float: right;  height: 10px;"></div><script type="text/javascript">
+						function googleTranslateElementInit() {
+  						new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,hi,mr', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+						}
+						</script>
+						<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script></li>
 					</ul>
 				</div>
 			</div>

@@ -14,7 +14,7 @@
 				<tbody>
 					<tr class="list-messages" th:each="textMessage : ${message} ">
 						<td th:text="${textMessage.messageId}">Id</td>
-						<td th:text="${textMessage.user.name}">User name</td>
+						<td th:text="${textMessage.user.name}" class="notranslate">User name</td>
 						<!-- 	<td th:text="${voiceMessage.voice.url}">Message Url</td> -->
 						<td th:if="${textMessage.response == true}">
 							Yes

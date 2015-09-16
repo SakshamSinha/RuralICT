@@ -19,10 +19,15 @@ public class OutboundCall implements Serializable {
 	@Column(name="outbound_call_id")
 	private int outboundCallId;
 
+	@Column(name="duration")
 	private int duration;
 
+	@Column(name="status")
 	private String status;
 
+	@Column(name="kookoo_id")
+	private String kookoo_id;
+	
 	@Column(name="status_detail")
 	private String statusDetail;
 
@@ -56,7 +61,15 @@ public class OutboundCall implements Serializable {
 	public void setOutboundCallId(int outboundCallId) {
 		this.outboundCallId = outboundCallId;
 	}
-
+	
+	public void setKookoo_id(String kookoo_id) {
+		this.kookoo_id = kookoo_id;
+	}
+	
+	public String getKookoo_id() {
+		return this.kookoo_id;
+	}
+	
 	public int getDuration() {
 		return this.duration;
 	}

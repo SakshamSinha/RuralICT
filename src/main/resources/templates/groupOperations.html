@@ -57,8 +57,8 @@
 				<li><a href="#voice-message-response-processed"
 					data-toggle="tab">Processed</a></li>
 				<li><a href="#voice-message-response-cancelled" data-toggle="tab">Cancelled</a></li>
-				<li th:if="${organization.enableFeedbacks}"><a
-					href="#voice-message-response-feedback" data-toggle="tab">Feedback</a></li>
+				<li th:if="${organization.enableFeedbacks}" class="notranslate"><a
+					href="#voice-message-response-feedback" data-toggle="tab">Feedback(प्रतिपुष्टि)</a></li>
 				<li th:if="${organization.enableResponses}"><a
 					href="#voice-message-response-response" data-toggle="tab">Response</a>
 			</ul>

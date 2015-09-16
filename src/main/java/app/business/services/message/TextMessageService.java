@@ -1,8 +1,12 @@
 package app.business.services.message;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import app.data.repositories.MessageRepository;
@@ -34,5 +38,17 @@ public class TextMessageService extends MessageService {
 	 */
 	public List<Message> getAcceptedTextMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "text", "accepted");
+	}
+	
+	public List<Message> getTextPositiveResponseList(Group group, String format) {
+		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, true, "response", format, new Sort(Direction.DESC, "time"));
+	}
+	
+	public List<Message> getTextNegativeResponseList(Group group, String format) {
+		return messageRepository.findByGroupAndResponseAndTypeAndFormat(group, false, "response", format, new Sort(Direction.DESC, "time"));
+	}
+	
+	public List<Message> getTextResponseList(Group group, String format) {
+		return messageRepository.findByGroupAndTypeAndFormat(group, "response", format, new Sort(Direction.DESC, "time"));
 	}
 }

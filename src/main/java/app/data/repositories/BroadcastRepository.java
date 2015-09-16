@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
@@ -19,7 +20,10 @@ public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
 	/*
 	 * Default functions
 	 */
-
+	/*public final static String FIND_LAST = "SELECT b " + 
+            "FROM broadcast b " +
+            "ORDER BY broadcast_id LIMIT 1";*/
+	
 	@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.organization.abbreviation)")
 	@Override
 	public Broadcast findOne(Integer id);
@@ -49,7 +53,8 @@ public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
 	
 	List<Broadcast> findByGroupAndFormat(Group group, String format);
 	
-
 	Broadcast findTopByGroupInAndOrganizationAndFormat(List<Group> groupList, Organization organization, String format, Sort sort);
 
+	//@Query(FIND_LAST)
+	Broadcast findFirstByOrderByBroadcastIdDesc();
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
@@ -21,6 +22,9 @@ public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSche
 	/*
 	 * Default functions
 	 */
+	public final static String FIND_BY_BROADCASTID_QUERY = "SELECT bs " + 
+            "FROM broadcast_schedule bs " +
+            "order by broadcast_schedule_id DESC LIMIT 1";
 
 	//TODO
 	//@PostAuthorize("hasRole('ADMIN_OR_PUBLISHER'+returnObject.broadcast.organization.abbreviation)")
@@ -54,7 +58,8 @@ public interface BroadcastScheduleRepository extends JpaRepository<BroadcastSche
 	public List<BroadcastSchedule> findByBroadcastOrderByTimeAsc(Broadcast broadcast);
 	public List<BroadcastSchedule> findByBroadcastAndSendToAllTrueAndTimeGreaterThanOrderByTimeAsc(Broadcast broadcast, Timestamp time);
 	public List<BroadcastSchedule> findByBroadcastAndTimeGreaterThanOrderByTimeAsc(Broadcast broadcast, Timestamp time);
-
 	public List<BroadcastSchedule> findByBroadcast(Broadcast broadcast);
-
+	public BroadcastSchedule findByBroadcastAndTime(Broadcast broadcast, Timestamp time);
+	/*@Query(FIND_BY_BROADCASTID_QUERY)
+	public BroadcastSchedule findLast();*/
 }

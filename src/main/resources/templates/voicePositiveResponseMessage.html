@@ -1,21 +1,22 @@
 <div class="row-fluid">
-	<div th: if="${message !=null}">
+	<div th: if="${messagemap !=null}" th:each="map :${messagemap}">
+		<center>Broadcast : <a th:href="${map.key}" target="_blank">Listen Voice Message</a></center>
 		<table class="table table-striped table-bordered table-condensed"
 			id="usertable">
 			<thead>
 				<tr>
 					<th>Time</th>
-					<th>Broadcast</th>
+					<!-- <th>Broadcast</th> -->
 					<th>User Name</th>
-					<th>Response</th>
+					<th>Response Total "Yes": <span th:text="${responseCount.get('__${map.key}__')}">Yes</span></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="list-response" th:each="voiceMessage : ${message} ">
+				<tr class="list-response notranslate" th:each="voiceMessage : ${map.value} ">
 					<td th:text="${voiceMessage.broadcast.broadcastedTime}">Time</td>
-					<td>
+					<!-- <td>
 						<a th:href="${voiceMessage.broadcast.voice.url}" target="_blank">Play Voice Message</a>
-					</td>
+					</td> -->
 					<td th:text="${voiceMessage.user.name}">User name</td>
 					<!-- 	<td th:text="${voiceMessage.voice.url}">Message Url</td> -->
 					<td th:if="${voiceMessage.response == true}">
@@ -30,7 +31,7 @@
 	</div>
 
 
-	<div th:if="${message == null}">
+	<div th:if="${messagemap == null}">
 		<B>No New Message </B>
 
 	</div>
