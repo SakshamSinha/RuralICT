@@ -1,6 +1,7 @@
 package app.entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +41,9 @@ public class User implements Serializable {
 	private String email;
 
 	private String name;
+	
+	@Column(name="time")
+	private Timestamp time;
 
 	@Column(name="sha256_password")
 	private String sha256Password;
@@ -132,6 +136,14 @@ public class User implements Serializable {
 		return this.email;
 	}
 
+	public Timestamp getTime() {
+		return this.time;
+	}
+	
+	public void setTime(Timestamp Time) {
+		this.time = Time;
+	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}

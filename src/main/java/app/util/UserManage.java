@@ -2,6 +2,8 @@
 
 package app.util;
 
+import java.sql.Timestamp;
+
 public class UserManage{
 
 	private int manageUserID;
@@ -10,8 +12,9 @@ public class UserManage{
 	private String phone;
 	private String role;
 	private String address;
+	private Timestamp time;
 
-	public UserManage(int manageUserID, String name, String email, String phone, String role, String address)
+	public UserManage(int manageUserID, String name, String email, String phone, String role, String address, Timestamp time)
 	{
 		this.manageUserID = manageUserID;
 		this.name = name;
@@ -19,6 +22,7 @@ public class UserManage{
 		this.phone = phone;
 		this.role = role;
 		this.address = address;
+		this.time = time;
 	}
 
 	public int getmanageUserID()
@@ -30,7 +34,15 @@ public class UserManage{
 	{
 		return name;
 	}
-
+	
+	public Timestamp getTime() {
+		return this.time;
+	}
+	
+	public void setTime(Timestamp Time) {
+		this.time = Time;
+	}
+	
 	public String getEmail()
 	{
 		return email;
