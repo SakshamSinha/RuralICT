@@ -40,7 +40,7 @@
 			</tr>
 		</thead> -->
 		<tbody>
-		<tr class="list-users notranslate" dir-paginate="userApprovalItem in userApprovalItems | orderBy:'name' | itemsPerPage: 5">
+		<tr class="list-users notranslate" dir-paginate="userApprovalItem in userApprovalItems | orderBy:'-time'| itemsPerPage: 5">
 			<td>{{ userApprovalItem.manageUserID }}</td>
 			<td>{{ userApprovalItem.name }}</td>
 			<td>{{ userApprovalItem.email }}</td>

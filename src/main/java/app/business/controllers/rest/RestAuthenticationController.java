@@ -2,6 +2,7 @@ package app.business.controllers.rest;
 
 import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -182,6 +183,9 @@ public class RestAuthenticationController {
 		user.setEmail(email);
 		user.setSha256Password(passwordEncoder.encode(password));
 		user.setName(name);
+		java.util.Date date= new java.util.Date();
+		Timestamp currentTimestamp= new Timestamp(date.getTime());
+		user.setTime(currentTimestamp);
 		user=userRepository.save(user);
 		List<OrganizationMembership>  organizationMemberships= new ArrayList<OrganizationMembership>();
 		List<GroupMembership>  groupMemberships= new ArrayList<GroupMembership>();

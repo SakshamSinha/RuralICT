@@ -1,5 +1,6 @@
 package app.business.controllers.rest;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,9 +81,10 @@ public class ManageUsersRestController {
 				String phone = userPhoneNumberService.getUserPrimaryPhoneNumber(user).getPhoneNumber();
 				String role  = userService.getUserRole(user, organization);
 				String address = user.getAddress();
+				Timestamp time= user.getTime();
 
 				// Create the UserManage Object and add it to the list
-				UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address);
+				UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address, time);
 				userrows.add(userrow);
 			}
 			catch(NullPointerException e)
@@ -116,9 +118,10 @@ public class ManageUsersRestController {
 				String phone = userPhoneNumberService.getUserPrimaryPhoneNumber(user).getPhoneNumber();
 				String role  = userService.getUserRole(user, organization);
 				String address = user.getAddress();
+				Timestamp time = user.getTime();
 				
 				// Create the UserManage Object and add it to the list
-				UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address);
+				UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address, time);
 				userrows.add(userrow);
 			}
 			catch(NullPointerException e)
@@ -157,7 +160,11 @@ public class ManageUsersRestController {
 
 		// Add the new User to database
 		User user = new User(name, address, "en", "en", email);
+		java.util.Date date= new java.util.Date();
+		Timestamp currentTimestamp= new Timestamp(date.getTime());
+		user.setTime(currentTimestamp);
 		userService.addUser(user);
+		System.out.println("user timestamp is: "+user.getTime());
 
 		UserPhoneNumber primaryPhoneNumber = new UserPhoneNumber(user, phone, true);
 		userPhoneNumberService.addUserPhoneNumber(primaryPhoneNumber);
@@ -172,7 +179,7 @@ public class ManageUsersRestController {
 		// Create the UserManage Object
 		int manageUserID = user.getUserId();
 
-		UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address);
+		UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address, currentTimestamp);
 
 		// Finally return it as a JSON response body
 		return userrow;
