@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.business.services.GroupMembershipService;
+import app.business.services.GroupService;
 import app.data.repositories.GroupMembershipRepository;
 import app.data.repositories.GroupRepository;
 import app.data.repositories.OrganizationMembershipRepository;
@@ -57,6 +59,9 @@ public class RestAuthenticationController {
 	
 	@Autowired
 	GroupRepository groupRepository;
+	
+	@Autowired
+	GroupMembershipService groupMembershipService;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -178,6 +183,7 @@ public class RestAuthenticationController {
 			}
 		}
 		
+		Organization organization=new Organization();
 		user.setAddress(address);
 		user.setCallLocale("en");
 		user.setEmail(email);
@@ -195,7 +201,7 @@ public class RestAuthenticationController {
 				JSONObject org = orgListJsonArray.getJSONObject(i);
 				int org_id=org.getInt("org_id");
 				//Adding organization
-				Organization organization= organizationRepository.findOne(org_id);
+				organization= organizationRepository.findOne(org_id);
 				if(organization==null)
 				{
 					response.put("Status", "Failure");
@@ -210,12 +216,11 @@ public class RestAuthenticationController {
 				organizationMembership.setStatus(0);
 				organizationMembership=organizationMemberRepository.save(organizationMembership);
 				organizationMemberships.add(organizationMembership);
-				//Get GroupMembership
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
-		user.setGroupMemberships(groupMemberships);
+		//user.setGroupMemberships(groupMemberships);
 		user.setOrganizationMemberships(organizationMemberships);
 		user.setTextbroadcastlimit(0);
 		user.setVoicebroadcastlimit(0);
@@ -227,6 +232,7 @@ public class RestAuthenticationController {
 		userPhoneNumbers.add(userPhoneNumber);
 		user.setUserPhoneNumbers(userPhoneNumbers);
 		userRepository.save(user);
+		groupMembershipService.addParentGroupMembership(organization, user);
 		response.put("Status","Success");
 		return response;
 	}
