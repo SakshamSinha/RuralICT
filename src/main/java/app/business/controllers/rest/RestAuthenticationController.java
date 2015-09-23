@@ -85,11 +85,15 @@ public class RestAuthenticationController {
 		for(Organization organization: orglist)
 		{
 			try {
-				JSONObject org= new JSONObject();
-				org.put("name", organization.getName());
-				org.put("org_id", organization.getOrganizationId());
-				org.put("abbr", organization.getAbbreviation());	
-				orgArray.put(org);
+				if(!organization.getName().equals("Testing") && !organization.getName().equals("TestOrg1") && !organization.getName().equals("Testorg3"))
+				{
+					JSONObject org= new JSONObject();
+					org.put("name", organization.getName());
+					org.put("org_id", organization.getOrganizationId());
+					org.put("abbr", organization.getAbbreviation());	
+					org.put("ph_no", organization.getIvrNumber());
+					orgArray.put(org);
+				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}	
@@ -137,6 +141,7 @@ public class RestAuthenticationController {
 		User user = new User();
 		UserPhoneNumber userPhoneNumber= new UserPhoneNumber();
 		List<UserPhoneNumber> userPhoneNumbers= new ArrayList<UserPhoneNumber>();
+		List<Organization> orgList= new ArrayList<Organization>();
 		try {
 			jsonObject = new JSONObject(requestBody);
 			phonenumber=jsonObject.getString("phonenumber");
@@ -208,6 +213,7 @@ public class RestAuthenticationController {
 					response.put("Error", "Organization with Id "+org_id+" does not exists");
 					return response;
 				}
+				orgList.add(organization);
 				OrganizationMembership organizationMembership = new OrganizationMembership();
 				organizationMembership.setOrganization(organization);
 				organizationMembership.setUser(user);
@@ -232,7 +238,10 @@ public class RestAuthenticationController {
 		userPhoneNumbers.add(userPhoneNumber);
 		user.setUserPhoneNumbers(userPhoneNumbers);
 		userRepository.save(user);
-		groupMembershipService.addParentGroupMembership(organization, user);
+		for(Organization org: orgList)
+		{
+			groupMembershipService.addParentGroupMembership(org, user);
+		}
 		response.put("Status","Success");
 		return response;
 	}
@@ -355,11 +364,15 @@ public class RestAuthenticationController {
 				for(Organization organization: organizationList)
 				{
 					try {
-						JSONObject org= new JSONObject();
-						org.put("name", organization.getName());
-						org.put("org_id", organization.getOrganizationId());
-						org.put("abbr", organization.getAbbreviation());	
-						orgArray.put(org);
+						if(!organization.getName().equals("Testing") && !organization.getName().equals("TestOrg1") && !organization.getName().equals("Testorg3"))
+						{
+							JSONObject org= new JSONObject();
+							org.put("name", organization.getName());
+							org.put("org_id", organization.getOrganizationId());
+							org.put("abbr", organization.getAbbreviation());	
+							org.put("ph_no", organization.getIvrNumber());
+							orgArray.put(org);
+						}
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}	
