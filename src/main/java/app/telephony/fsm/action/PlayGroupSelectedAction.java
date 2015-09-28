@@ -41,7 +41,7 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 		Organization organization = SpringContextBridge.services().getOrganizationService().getOrganizationByIVRS(session.getIvrNumber());
 		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
 		String messageURL = ruralictSession.getMessageURL();
-		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
+		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".mp3";
 		Voice voice=new Voice(url,false);
 		voice = voiceService.addVoice(voice);
 		VoiceBroadcast voicebroadcast = new VoiceBroadcast(

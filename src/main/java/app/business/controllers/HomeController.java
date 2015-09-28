@@ -71,7 +71,8 @@ public class HomeController {
 		String phoneno= userDetails.get("phno");
 		User user = userService.getUser(userId);
 		for(GroupMembership groupMembership: user.getGroupMemberships()) {
-			groupMembershipService.removeGroupMembership(groupMembership);
+			if(groupMembership.getGroup().getOrganization().getName().equals(organization.getName()))
+				groupMembershipService.removeGroupMembership(groupMembership);
 		}
 		OrganizationMembership organizationMembership= organizationMembershipService.getUserOrganizationMembership(user, organization);
 		organizationMembershipService.removeOrganizationMembership(organizationMembership);

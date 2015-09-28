@@ -65,7 +65,7 @@ public class PlayWelcomeMessageAction implements Action<IVRSession> {
 			}
 			
 			if((broadcast.getAskOrder()==false)&(broadcast.getAskFeedback()==false)&(broadcast.getAskResponse()==false)){
-				response.addPlayAudio(Configs.Voice.VOICE_DIR + "/thankYou_"+userLang+".wav");
+				response.addPlayAudio(Configs.Voice.VOICE_DIR + "/thankYou_"+userLang+".mp3");
 				response.addHangup();
 				
 			}

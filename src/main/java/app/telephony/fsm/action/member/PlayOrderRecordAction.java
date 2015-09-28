@@ -23,7 +23,7 @@ public class PlayOrderRecordAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		RuralictSession ruralictSession = (RuralictSession) session;
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageRecordAfterBeep_"+ruralictSession.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/orderMessageRecordAfterBeep_"+ruralictSession.getLanguage()+".mp3");
 		Record record = new Record();
 		String recordName = "message" + Calendar.getInstance().getTimeInMillis() + ((new Random()).nextInt(90000) + 10000);
 		record.setFileName(recordName);
@@ -32,7 +32,7 @@ public class PlayOrderRecordAction implements Action<IVRSession> {
 		ruralictSession.setMessageURL(recordName);
 		ruralictSession.setPublisher(false);
 		response.addRecord(record);
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordingDone_"+ruralictSession.getLanguage()+".wav");		
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordingDone_"+ruralictSession.getLanguage()+".mp3");		
 	}
 
 }

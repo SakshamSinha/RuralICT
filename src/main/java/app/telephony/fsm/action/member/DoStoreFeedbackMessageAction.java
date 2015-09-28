@@ -62,7 +62,7 @@ public class DoStoreFeedbackMessageAction implements Action<IVRSession> {
 			telephonyService.addVoiceMessage(session.getUserNumber(), null, group, mode , type , false ,feedbackUrl, inboundCall,null);
 		}
 
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordingDone_"+ruralictSession.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/recordingDone_"+ruralictSession.getLanguage()+".mp3");
 	}
 
 

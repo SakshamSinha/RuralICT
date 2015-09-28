@@ -17,7 +17,7 @@ public class PlayInvalidGroupAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidGroupEnterAgain.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidGroupEnterAgain.mp3");
 
 	}
 

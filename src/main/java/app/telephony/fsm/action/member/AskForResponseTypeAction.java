@@ -37,13 +37,13 @@ public class AskForResponseTypeAction implements Action<IVRSession> {
 
 				if(language.equalsIgnoreCase("en"))
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+responseType+"_"+language+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+(i)+"_"+language+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+responseType+"_"+language+".mp3"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+(i)+"_"+language+".mp3"); //Press
 				}
 				else
 				{
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+responseType+"_"+language+".wav"); //For
-					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+(i)+"_"+language+".wav"); //Press
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/for_"+responseType+"_"+language+".mp3"); //For
+					response.addPlayAudio(Configs.Voice.VOICE_DIR+"/press_"+(i)+"_"+language+".mp3"); //Press
 				}
 				RuralictStateMachine.tempResponseMap.put(i.toString(),responseType);
 				i++;

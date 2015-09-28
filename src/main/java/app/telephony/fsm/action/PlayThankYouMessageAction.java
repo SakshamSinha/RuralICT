@@ -25,11 +25,11 @@ public class PlayThankYouMessageAction implements Action<IVRSession> {
         	language = "hi";
 
 		if(session.getInvalidTries()>=5){
-			response.addPlayAudio(Configs.Voice.VOICE_DIR+"/invalidTriesExceeded_"+language+".wav");	
+			response.addPlayAudio(Configs.Voice.VOICE_DIR+"/invalidTriesExceeded_"+language+".mp3");	
 		}
 		
 		else {
-			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/thankYou_"+language+".wav");
+			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/thankYou_"+language+".mp3");
 		}
 		
 		response.addHangup();

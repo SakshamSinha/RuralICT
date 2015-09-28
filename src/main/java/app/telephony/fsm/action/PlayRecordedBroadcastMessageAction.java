@@ -19,7 +19,7 @@ public class PlayRecordedBroadcastMessageAction implements Action<IVRSession> {
 
 		RuralictSession ruralictSession = (RuralictSession) session;
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourBroadcastMessageIs.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/yourBroadcastMessageIs.mp3");
 		response.addPlayAudio(ruralictSession.getVoiceMessage().getUrl());
 	}
 

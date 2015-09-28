@@ -21,7 +21,7 @@ public class DoRecordMessageAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		RuralictSession ruralictSession = (RuralictSession) session;
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/broadcastMessageRecordAfterBeep.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/broadcastMessageRecordAfterBeep.mp3");
 		Record record = new Record();
 		String recordName = "message" + Calendar.getInstance().getTimeInMillis() + ((new Random()).nextInt(90000) + 10000);
 		record.setFileName(recordName);

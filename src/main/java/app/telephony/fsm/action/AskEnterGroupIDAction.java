@@ -19,7 +19,7 @@ public class AskEnterGroupIDAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/pleaseEnterGroupID.wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/pleaseEnterGroupID.mp3");
 		cd.setMaxDigits(3);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

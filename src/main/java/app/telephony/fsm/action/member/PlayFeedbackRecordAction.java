@@ -26,7 +26,7 @@ public class PlayFeedbackRecordAction implements Action<IVRSession> {
 		RuralictSession ruralictSession = (RuralictSession) session;
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageRecordAfterBeep_"+ruralictSession.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/feedbackMessageRecordAfterBeep_"+ruralictSession.getLanguage()+".mp3");
 		Record record = new Record();
 		String recordName = "message" + Calendar.getInstance().getTimeInMillis() + ((new Random()).nextInt(90000) + 10000);
 		record.setFileName(recordName);

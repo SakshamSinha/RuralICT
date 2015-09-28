@@ -17,7 +17,7 @@ public class PlayMessageConfirmedAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/broadcastMessageConfirmed.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/broadcastMessageConfirmed.mp3");
 	}
 
 }

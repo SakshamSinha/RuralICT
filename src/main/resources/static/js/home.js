@@ -1,22 +1,48 @@
 website.controller("HomeCtrl", function($scope, $http, $routeParams) {
 	// Initialize the table
 	var abbr = $('#organizationAbbr').val();
-	
+	var count;
 	$http.get( API_ADDR + 'api/' + abbr + '/manageUsers/getUserApprovalList').
 		success(function(data, status, headers, config) {
 
 			// Store the data into Angular scope model variable
 			$scope.userApprovalItems = data;
+			$http.get( API_ADDR + 'api/' + abbr + '/manageUsers/countUserList').
+			success(function(data1, status, headers, config) {
+
+				// Store the data into Angular scope model variable
+				count = data1;
+				console.log(count);
+				document.getElementById("totalUsers").innerHTML=count[0];
+				document.getElementById("pendingUsers").innerHTML=count[1];
+				document.getElementById("todayUsers").innerHTML=count[2];
+			}).
+			error(function(data1, status, headers, config) {
+				createAlert("Error Fetching Data","There was some error in response from the remote server.");
+			})
 		}).
 		error(function(data, status, headers, config) {
 			createAlert("Error Fetching Data","There was some error in response from the remote server.");
 		});
+	//setTimeout(function(){},500);
 	$scope.reload = function(){
 		setTimeout(function(){$http.get( API_ADDR + 'api/' + abbr + '/manageUsers/getUserApprovalList').
 			success(function(data, status, headers, config) {
 
 				// Store the data into Angular scope model variable
 				$scope.userApprovalItems = data;
+				$http.get( API_ADDR + 'api/' + abbr + '/manageUsers/countUserList').
+				success(function(data1, status, headers, config) {
+
+					// Store the data into Angular scope model variable
+					$scope.count = data1;
+					document.getElementById("totalUsers").innerHTML=count[0];
+					document.getElementById("pendingUsers").innerHTML=count[1];
+					document.getElementById("todayUsers").innerHTML=count[2];
+				}).
+				error(function(data1, status, headers, config) {
+					createAlert("Error Fetching Data","There was some error in response from the remote server.");
+				})
 			}).
 			error(function(data, status, headers, config) {
 				createAlert("Error Fetching Data","There was some error in response from the remote server.");

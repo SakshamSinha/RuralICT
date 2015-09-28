@@ -17,7 +17,7 @@ public class PlayUnRegisterMessageAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR+"/contactOrganization.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR+"/contactOrganization.mp3");
 		
 	}
 

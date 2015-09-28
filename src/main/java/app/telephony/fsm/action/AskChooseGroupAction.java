@@ -19,8 +19,8 @@ public class AskChooseGroupAction implements Action<IVRSession> {
 		
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToEnterGroupID.wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToListenGroupIDs.wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToEnterGroupID.mp3");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToListenGroupIDs.mp3");
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);
