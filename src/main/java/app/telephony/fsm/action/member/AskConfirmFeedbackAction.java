@@ -21,8 +21,9 @@ public class AskConfirmFeedbackAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirmFeedback_"+ruralictSession.getLanguage()+".wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecordFeedback_"+ruralictSession.getLanguage()+".wav");
+		//change noted
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirmFeedback_"+ruralictSession.getLanguage()+".mp3");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecordFeedback_"+ruralictSession.getLanguage()+".mp3");
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

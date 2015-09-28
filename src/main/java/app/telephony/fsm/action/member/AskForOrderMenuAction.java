@@ -21,8 +21,8 @@ public class AskForOrderMenuAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForPlaceOrder_"+ruralictSession.getLanguage()+".wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForCancelOrder_"+ruralictSession.getLanguage()+".wav");	
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForPlaceOrder_"+ruralictSession.getLanguage()+".mp3");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForCancelOrder_"+ruralictSession.getLanguage()+".mp3");	
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

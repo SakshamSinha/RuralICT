@@ -21,8 +21,8 @@ public class AskForResponseAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForYes_"+ruralictSession.getLanguage()+".wav");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForNo_"+ruralictSession.getLanguage()+".wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ForYes_"+ruralictSession.getLanguage()+".mp3");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ForNo_"+ruralictSession.getLanguage()+".mp3");
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

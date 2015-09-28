@@ -25,7 +25,7 @@ public class PlayGroupIDsAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/theGroupIDsAre.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/theGroupIDsAre.mp3");
 		GroupService groupService = SpringContextBridge.services().getGroupService();
 		OrganizationService organizationService = SpringContextBridge.services().getOrganizationService();
 		HashMap<Integer,String> groups = new HashMap<Integer, String>();

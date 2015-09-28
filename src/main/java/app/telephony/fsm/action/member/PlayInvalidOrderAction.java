@@ -19,7 +19,7 @@ public class PlayInvalidOrderAction implements Action<IVRSession> {
 		RuralictSession ruralictSession = (RuralictSession) session;
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidOrderId_"+ruralictSession.getLanguage()+".wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidOrderId_"+ruralictSession.getLanguage()+".mp3");
 				
 	}
 

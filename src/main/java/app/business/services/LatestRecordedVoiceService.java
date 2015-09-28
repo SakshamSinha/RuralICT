@@ -32,7 +32,7 @@ public class LatestRecordedVoiceService {
 	
 	public void updateLatestRecordedVoice(Organization organization, Voice voice) {
 		LatestRecordedVoice latestRecordedVoice = getLatestRecordedVoiceByOrganization(organization);
-		if (latestRecordedVoice.equals(null))
+		if (latestRecordedVoice==null)
 		{
 			latestRecordedVoice = new LatestRecordedVoice(organization,voice);
 		}

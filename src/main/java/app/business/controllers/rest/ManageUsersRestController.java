@@ -1,7 +1,11 @@
 package app.business.controllers.rest;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,6 +134,60 @@ public class ManageUsersRestController {
 			}
 		}
 		return userrows;
+	}
+	
+	@RequestMapping(value="/countUserList", method=RequestMethod.GET, produces = "application/json")
+	@PreAuthorize("hasRole('ADMIN'+#org)")
+	public List<Integer> countUserList(@PathVariable String org) {
+
+		List<Integer> count = new ArrayList<Integer>();
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		List<OrganizationMembership> membershipListpending = organizationMembershipService.getOrganizationMembershipListByStatus(organization, 0);
+		List<OrganizationMembership> membershipListapproved = organizationMembershipService.getOrganizationMembershipListByStatus(organization, 1);
+		int totUsers=membershipListpending.size()+membershipListapproved.size();
+		int todayUsers=0;
+		int pendingUsers=membershipListpending.size();
+		for(OrganizationMembership membership : membershipListpending)
+		{
+
+			User user = membership.getUser();
+			//System.out.println(user.getUserId()+user.getName()+user.getEmail()+userService.getUserRole(user, organization));
+			try
+			{
+				// Get required attributes for each user
+				int manageUserID = user.getUserId();
+				String name = user.getName();
+				String email = user.getEmail();
+				String phone = userPhoneNumberService.getUserPrimaryPhoneNumber(user).getPhoneNumber();
+				String role  = userService.getUserRole(user, organization);
+				String address = user.getAddress();
+				Timestamp time = user.getTime();
+				
+				// Create the UserManage Object and add it to the list
+				UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address, time);
+				Calendar cal= Calendar.getInstance();
+				cal.clear(Calendar.HOUR_OF_DAY);
+				cal.clear(Calendar.AM_PM);
+				cal.clear(Calendar.MINUTE);
+				cal.clear(Calendar.SECOND);
+				cal.clear(Calendar.MILLISECOND);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");      
+			    java.util.Date dateWithoutTime = sdf.parse(sdf.format(new java.util.Date()));
+				if(time.after(dateWithoutTime))
+				{
+					todayUsers=todayUsers+1;
+				}
+				//userrows.add(userrow);
+			}
+			catch(NullPointerException | ParseException e)
+			{
+				System.out.println("User name not having his phone number is: " + user.getName() + " having userID: " + user.getUserId());
+			}
+		}
+		count.add(totUsers);
+		count.add(pendingUsers);
+		count.add(todayUsers);
+		return count;
 	}
 	
 	// Method to add a new user according to the details entered in the Modal Dialog Box

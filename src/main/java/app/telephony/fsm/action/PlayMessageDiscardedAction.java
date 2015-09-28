@@ -17,7 +17,7 @@ public class PlayMessageDiscardedAction implements Action<IVRSession> {
 			throws TransitionRollbackException, TransitionFailureException {
 
 		Response response = session.getResponse();
-		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/broadcastMessageDiscared.wav");
+		response.addPlayAudio(Configs.Voice.VOICE_DIR + "/broadcastMessageDiscared.mp3");
 	}
 
 }

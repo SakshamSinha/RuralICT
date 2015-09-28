@@ -20,9 +20,9 @@ public class DoInvalidInputAction implements Action<IVRSession> {
 		RuralictSession ruralictSession = (RuralictSession) session;
 		session.addInvalidTry();
 		if(ruralictSession.getLanguage()!=null)
-			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput_"+ruralictSession.getLanguage()+".wav");
+			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput_"+ruralictSession.getLanguage()+".mp3");
 		else
-			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput"+".wav");
+			response.addPlayAudio(Configs.Voice.VOICE_DIR + "/invalidInput"+".mp3");
 		
 	}
 
