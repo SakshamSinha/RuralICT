@@ -79,8 +79,8 @@ public class OrderRestController {
 				JSONObject row = orderItemsJSON.getJSONObject(i);
 			    String productname=row.getString("name");
 			    float productQuantity =(float)row.getDouble("quantity");
-			    Product product=productService.getProductByName(productname);
-			    orderItem.setProduct(productService.getProductByName(productname));
+			    Product product=productService.getProductByNameAndOrg(productname,organization);
+			    orderItem.setProduct(product);
 			    orderItem.setQuantity(productQuantity);	
 			    orderItem.setUnitRate(product.getUnitRate());
 			    orderItem.setOrder(order);
@@ -151,10 +151,10 @@ public class OrderRestController {
 				for (int i = 0; i < orderItemsJSON.length(); i++) {
 				    OrderItem orderItem= new OrderItem();
 					JSONObject row = orderItemsJSON.getJSONObject(i);
-				    String productname=row.getString("name");
+				    String productId=row.getString("id");
 				    float productQuantity =(float)row.getDouble("quantity");
-				    Product product=productService.getProductByName(productname);
-				    orderItem.setProduct(productService.getProductByName(productname));
+				    Product product=productService.getProductById(Integer.parseInt(productId));
+				    orderItem.setProduct(product);
 				    orderItem.setQuantity(productQuantity);	
 				    orderItem.setUnitRate(product.getUnitRate());
 				    orderItem.setOrder(order);

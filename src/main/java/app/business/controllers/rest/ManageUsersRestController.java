@@ -221,6 +221,8 @@ public class ManageUsersRestController {
 		java.util.Date date= new java.util.Date();
 		Timestamp currentTimestamp= new Timestamp(date.getTime());
 		user.setTime(currentTimestamp);
+		user.setTextbroadcastlimit(0);
+		user.setVoicebroadcastlimit(0);
 		userService.addUser(user);
 		System.out.println("user timestamp is: "+user.getTime());
 
@@ -260,10 +262,16 @@ public class ManageUsersRestController {
 		if(addRole.equals("Admin"))
 		{
 			membership.setIsAdmin(true);
+			user.setTextbroadcastlimit(-1);
+			user.setVoicebroadcastlimit(-1);
+			userService.addUser(user);
 		}
 		else if(addRole.equals("Publisher"))
 		{
 			membership.setIsPublisher(true);
+			user.setTextbroadcastlimit(-1);
+			user.setVoicebroadcastlimit(-1);
+			userService.addUser(user);
 		}
 		else if(addRole.equals("Member"))
 		{
@@ -290,10 +298,16 @@ public class ManageUsersRestController {
 		if(removeRole.equals("Admin"))
 		{
 			membership.setIsAdmin(false);
+			user.setTextbroadcastlimit(0);
+			user.setVoicebroadcastlimit(0);
+			userService.addUser(user);
 		}
 		else if(removeRole.equals("Publisher"))
 		{
 			membership.setIsPublisher(false);
+			user.setTextbroadcastlimit(0);
+			user.setVoicebroadcastlimit(0);
+			userService.addUser(user);
 		}
 
 		// Finally make changes in the database

@@ -44,6 +44,10 @@ public class ProductService {
 		return productRepository.findOne(productId);
 	}
 	
+	public Product getProductByNameAndOrg(String productName, Organization org){
+		 return productRepository.findByNameAndProductType_Organization(productName,org);
+	}
+	
 	public List<Product> getAllProductList(){
 		return productRepository.findAll();
 	}
