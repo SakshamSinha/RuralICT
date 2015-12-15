@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import app.business.services.BroadcastRecipientService;
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
+import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
 import app.business.services.UserService;
@@ -59,6 +60,9 @@ public class TextBroadcastController {
 	
 	@Autowired
 	GroupMembershipService groupMembershipService;
+	
+	@Autowired
+	OrganizationMembershipService organizationMembershipService;
 
 	private int sendSMS;
 	
@@ -70,17 +74,20 @@ public class TextBroadcastController {
 	public String groupPage(@PathVariable String org, @PathVariable int groupId, Model model) {
 		Group group = groupService.getGroup(groupId);
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
-		User user = userService.getCurrentUser();
+		User pubuser = userService.getCurrentUser();
 		
 		List<GroupMembership> groupMembershipList = new ArrayList<GroupMembership>(groupMembershipService.getGroupMembershipListByGroupSortedByUserName(group));
 		
 		List<User> users = new ArrayList<User>();
 		for(GroupMembership groupMembership : groupMembershipList) {
-			users.add(groupMembership.getUser());
+			User user=groupMembership.getUser();
+			int status=organizationMembershipService.getOrganizationMembershipStatus(user, organization);
+			if(status==1)
+				users.add(groupMembership.getUser());
 		}
 		
 		model.addAttribute("users",users);
-		model.addAttribute("publisher",user);
+		model.addAttribute("publisher",pubuser);
 		model.addAttribute("group", group);
 		model.addAttribute("organization", organization);
 		

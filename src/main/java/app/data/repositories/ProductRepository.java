@@ -53,7 +53,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@RestResource(path="/productlist")
 	public List<Product> findByproductType_organization_abbreviation(@Param("abbr")String abbr);
 
-	public Product findByName(String name);
+	public List<Product> findByName(String name);
 	
 	public Product findByNameAndProductType_Organization(String name,Organization organization);
 	

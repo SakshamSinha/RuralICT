@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.Produces;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -209,21 +207,9 @@ public class BroadcastVoiceController {
 		{
 			User user=recipient.getUser();
 			System.out.println("Broadcast Recipient:"+user.getName());
-			//TODO use the user's primary phone number.
 			UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPrimaryPhoneNumber(user);
-			String phoneNumber = "0" + userPhoneNumber.getPhoneNumber().substring(2);
-			IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL);
-			
-//			List<UserPhoneNumber> phoneNumbers=user.getUserPhoneNumbers();
-//			for(UserPhoneNumber no:phoneNumbers)
-//			{	
-//				//Outbound call has to be appended with a zero after removing 91 
-//				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
-//				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL));
-//				{
-//					break;
-//				}
-//			}
+			String phoneNumber = userPhoneNumber.getPhoneNumber().substring(2);
+			IVRUtils.makeOutboundCall(phoneNumber, organization.getIvrNumber(), Configs.Telephony.OUTBOUND_APP_URL);
 		}
 		userRepository.save(publisher);
 		return response;
@@ -247,7 +233,7 @@ public class BroadcastVoiceController {
 		int voicebroadcastlimit=publisher.getVoicebroadcastlimit();
 		if(voicebroadcastlimit<=-1)
 		{
-			System.out.println("Returning unlimited");
+			System.out.println("Returning unlimited voicebroadcastsleft");
 			return "Unlimited";
 		}
 		return new Integer(voicebroadcastlimit).toString();

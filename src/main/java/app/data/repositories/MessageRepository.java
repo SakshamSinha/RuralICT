@@ -46,6 +46,7 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	
 	public List<Message> findByGroupAndTypeAndFormat(Group group,String type,String format, Sort sort);
 	public List<Message> findByGroupAndFormat(Group group,String format);
+	public List<Message> findByGroupAndModeAndFormat(Group group,String mode,String format);
 	//These are commented because these may be required if our function with sort would not work....
 	//public List<Message> findByGroupAndFormatAndOrder_Status(Group group,String format,String status);
 	//public List<Message> findByGroupAndFormatAndOrder_StatusOrderByTime(Group group,String format,String status);

@@ -19,8 +19,8 @@ public class AskConfirmBroadcastMessageAction implements Action<IVRSession> {
 
 		Response response = session.getResponse();
 		CollectDtmf cd = new CollectDtmf();
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirm.mp3");
-		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecord.mp3");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press1ToConfirm.wav");
+		cd.addPlayAudio(Configs.Voice.VOICE_DIR + "/press2ToRerecord.wav");
 		cd.setMaxDigits(1);
 		cd.setTimeOut(Configs.Telephony.DTMF_TIMEOUT);
 		response.addCollectDtmf(cd);

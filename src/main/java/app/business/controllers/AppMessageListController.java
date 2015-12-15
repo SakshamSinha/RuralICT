@@ -47,7 +47,7 @@ public class AppMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String voiceProcessedMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-		List<Message> appProcessedMessageList=binaryMessageService.getProcessedVoiceMessageList(groupService.getGroup(groupId));		
+		List<Message> appProcessedMessageList=binaryMessageService.getProcessedBinaryMessageList(groupService.getGroup(groupId));		
 		model.addAttribute("message",appProcessedMessageList);
 		return "appProcessedMessage";
 	}
@@ -56,7 +56,7 @@ public class AppMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String voiceSavedMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-		List<Message> appSavedMessageList= binaryMessageService.getSavedVoiceMessageList(groupService.getGroup(groupId));
+		List<Message> appSavedMessageList= binaryMessageService.getSavedBinaryMessageList(groupService.getGroup(groupId));
 		List<Product> productList= productService.getProductList(organizationService.getOrganizationByAbbreviation(org));
 		List<PresetQuantity> presetQuantityList= presetQuantityService.getPresetQuantityList(organizationService.getOrganizationByAbbreviation(org));
 		model.addAttribute("products", productList);
@@ -69,7 +69,7 @@ public class AppMessageListController {
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	@Transactional
 	public String voiceCancelledMessage(@PathVariable String org, @PathVariable int groupId, Model model) {
-		List<Message> appCancelledMessageList = binaryMessageService.getCancelledVoiceMessageList(groupService.getGroup(groupId));
+		List<Message> appCancelledMessageList = binaryMessageService.getCancelledBinaryMessageList(groupService.getGroup(groupId));
 		model.addAttribute("message",appCancelledMessageList);
 		return "appCancelledMessage";
 	}

@@ -30,6 +30,8 @@ public class OnIsUnRegisteredUser implements Guard<IVRSession, Object> {
 
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
 		String userNumber = session.getUserNumber();
+		System.out.println("userNumber "+userNumber);
+		//userNumber="91"+userNumber;
 		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(userNumber);
 		if(userPhoneNumber == null )
 		{
@@ -41,10 +43,11 @@ public class OnIsUnRegisteredUser implements Guard<IVRSession, Object> {
 		Organization organization= organizationService.getOrganizationByIVRS(ivrs);
 		OrganizationMembershipService membershipService= SpringContextBridge.services().getOrganizationMembershipService();
 		OrganizationMembership membership= membershipService.getUserOrganizationMembership(user, organization);
+		if(membership==null)
+			return (allow);
 		if(membership.getStatus()==0){
 			return (allow);
 		}
-
 		return (!allow);
 	}
 

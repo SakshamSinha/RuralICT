@@ -56,7 +56,7 @@ website.controller("HomeCtrl", function($scope, $http, $routeParams) {
 		userDetails.phno = this.userApprovalItem.phone;
 		$http.post( API_ADDR + 'web/' + abbr + '/homePage/approve', userDetails).
 		success(function(data, status, headers, config) {
-			createAlert("Approved","User approved, sms sent");
+			createAlert("Approved","User approved, email sent");
 		}).
 		error(function(data, status, headers, config) {
 			createAlert("Error Updating Member","There was some error in response from the remote server.");

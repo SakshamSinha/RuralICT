@@ -32,25 +32,25 @@ public class BinaryMessageService extends MessageService {
 	/*
 	 * Returns saved binary messages for a group  
 	 */
-	public List<Message> getSavedVoiceMessageList(Group group) {
+	public List<Message> getSavedBinaryMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "binary", "saved");
 	}
 	
 	/*
 	 * Returns processed binary messages for a group  
 	 */
-	public List<Message> getProcessedVoiceMessageList(Group group) {
+	public List<Message> getProcessedBinaryMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "binary", "processed");
 	}
 	
 	/*
 	 * Returns rejected binary messages for a group  
 	 */
-	public List<Message> getRejectedVoiceMessageList(Group group) {
+	public List<Message> getRejectedBinaryMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "binary", "rejected");
 	}
 	
-	public List<Message> getCancelledVoiceMessageList(Group group) {
+	public List<Message> getCancelledBinaryMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "binary", "cancelled");
 	}
 }

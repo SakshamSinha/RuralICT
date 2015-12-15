@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Organization;
 import app.entities.ProductType;
 
 public interface ProductTypeRepository extends JpaRepository<ProductType, Integer> {
@@ -46,5 +47,9 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Intege
 	 * Search functions
 	 */
 	public List<ProductType> findAllByOrderByNameAsc();
+	
+	public List<ProductType> findByorganization_abbreviationIgnoreCase(@Param("abbr") String abbr);
+	
+	public ProductType findByNameAndOrganization(String name, Organization organization);
 
 }

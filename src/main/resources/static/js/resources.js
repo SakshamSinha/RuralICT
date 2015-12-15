@@ -215,6 +215,15 @@ website.factory("OutboundCallReports", function($resource) {
 	});
 });
 
+//Resource to generate logs
+website.factory("GenerateLogs", function($resource) {
+	return $resource(API_ADDR + "api/generateLogs/logsGenerate", {org:"@org", fromTime:"@fromDate", toTime:"@toDate"}, {
+		update: {
+			method: 'GET',
+		}
+	});
+});
+
 /* Resources for Products */
 website.factory("ProductCreate",function($resource){
 	return $resource(API_ADDR + "api/products",{
@@ -258,6 +267,28 @@ website.factory("PresetQuantityEdit",function($resource){
 website.factory("PresetQuantityDelete",function($resource){
 	return $resource(API_ADDR + "api/presetQuantities/:id",{id:'@id'},{
 		query: { method: "GET", isArray: false },
+		update: {method: "DELETE",params: {id: '@id'}}
+	});
+});
+
+/* Resources for Product Types */
+
+website.factory("ProductTypeCreate",function($resource){
+	return $resource(API_ADDR + "api/productTypes",{
+		query: {method: "GET", isArray: false}
+	});
+});
+
+website.factory("ProductTypeEdit",function($resource){
+	return $resource(API_ADDR + "api/productTypes/:id", {id: '@id'}, {
+		query: { method: "GET", isArray: false },
+		update: {method: "PATCH",params: {id: '@id'}}
+	});
+});
+
+website.factory("ProductTypeDelete",function($resource){
+	return $resource(API_ADDR + "api/productTypes/:id", {id:'@id'}, {
+		query: { method: "GET", isArray: true },
 		update: {method: "DELETE",params: {id: '@id'}}
 	});
 });

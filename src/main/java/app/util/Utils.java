@@ -38,6 +38,8 @@ public class Utils {
 	private final static String DOWNLOAD_VOICE_DIR = "Downloads/voices/";
 	private final static String IMAGE_DIR = "/home/ruralivrs/Ruralict/apache-tomcat-7.0.42/webapps/Downloads/images";	
 	private final static String DOWNLOAD_IMAGE_DIR = "Downloads/images/";
+	private final static String LOG_DIR = "/home/ruralivrs/Ruralict/apache-tomcat-7.0.42/webapps/Downloads/ruralictLogs/";
+	private final static String DOWNLOAD_LOG_DIR = "Downloads/ruralictLogs/";
 	private final static String WEBSITE_ADDRESS = "http://ruralict.cse.iitb.ac.in/";
 	
 
@@ -56,6 +58,14 @@ public class Utils {
 	
 	public static String getImageDirURL() {
 		return WEBSITE_ADDRESS + DOWNLOAD_IMAGE_DIR;
+	}
+	
+	public static String getLogDir() {
+		return LOG_DIR;
+	}
+	
+	public static String getLogDirURL() {
+		return WEBSITE_ADDRESS + DOWNLOAD_LOG_DIR;
 	}
 	/**
 	 * Returns the UserDetails object set during authentication for the currently logged in user. No database lookup is

@@ -59,6 +59,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	
 	@PostFilter("hasRole('MEMBER'+filterObject.organization.abbreviation)")
 	@RestResource(rel="getOrdersForMember", path="getOrdersForMember")
-	public List<Order> findByMessage_formatAndStatusAndOrganization_abbreviationAndMessage_user_userPhoneNumbers_phoneNumber(@Param("format") String format,@Param("status") String status,@Param("abbr") String abbr,@Param("phonenumber")String phonenumber,Pageable pageable);
+	public List<Order> findByMessage_formatAndStatusAndOrganization_abbreviationAndMessage_user_userPhoneNumbers_phoneNumber(@Param("format") String format,@Param("status") String status,@Param("abbr") String abbr,@Param("phonenumber")String phonenumber);
 	
 }
