@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import app.entities.Organization;
 import app.entities.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
@@ -52,6 +53,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@RestResource(path="/productlist")
 	public List<Product> findByproductType_organization_abbreviation(@Param("abbr")String abbr);
 
-	public Product findByName(String name);
+	public List<Product> findByName(String name);
+	
+	public Product findByNameAndProductType_Organization(String name,Organization organization);
 	
 }

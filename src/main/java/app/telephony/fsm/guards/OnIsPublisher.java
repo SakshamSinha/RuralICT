@@ -24,7 +24,7 @@ public class OnIsPublisher implements Guard<IVRSession,Object>{
 
 	@Override
 	public boolean accept(Event<Object> event, IVRSession session, State<?> state) {
-
+		
 		OrganizationService orgService = SpringContextBridge.services().getOrganizationService();
 		UserService userService =SpringContextBridge.services().getUserService();
 		UserPhoneNumberService userPhoneNumberService = SpringContextBridge.services().getUserPhoneNumberService();
@@ -37,18 +37,15 @@ public class OnIsPublisher implements Guard<IVRSession,Object>{
 			return (!allow);
 		}
 		else {
-
 			String userRole= userService.getUserRole(userPhoneNumber.getUser(), organization);
 			if(ruralictSession.isOutbound()){
 				return (!allow);
 			}
 
 			if(userRole.contains("Publisher")){
-				
 				return (allow);
 
 			}
-          
 			return (!allow);
 		}
 	}

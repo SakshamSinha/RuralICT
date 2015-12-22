@@ -5,6 +5,7 @@ import in.ac.iitb.ivrs.telephony.base.IVRSessionFactory;
 import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -142,24 +143,25 @@ public class BroadcastCallHandlerController  implements IVRSessionFactory {
 		String kookoo_id=request.getParameter("sid");
 		String status = request.getParameter("status");
 		String statusDetails = request.getParameter("status_details");
-		OutboundCall outboundCall=new OutboundCall();
+		//OutboundCall outboundCall=new OutboundCall();
 		Broadcast broadcast= broadcastService.getLastBroadcast();
-		BroadcastRecipient broadcastrcpt=broadcastrecipientservice.getBroadcastRecipientByBroadcast(broadcast);
+		List<BroadcastRecipient> broadcastrcpts=broadcastrecipientservice.getBroadcastRecipientByBroadcast(broadcast);
 		BroadcastSchedule broadcastsch=broadcastscheduleservice.getBroadcastScheduleByBroadcastId(broadcast, broadcast.getBroadcastedTime());
-		System.out.println(outboundCall.getDuration()+" "+outboundCall.getOutboundCallId());
+		for (BroadcastRecipient broadcastrcpt: broadcastrcpts)
+		{	
+			OutboundCall outboundCall=new OutboundCall();
 		outboundCall.setBroadcastSchedule(broadcastsch);
 		outboundCall.setBroadcastRecipient(broadcastrcpt);
 		outboundCall.setKookoo_id(kookoo_id);
 		outboundCall.setStatus(status);
 		outboundCall.setStatusDetail(statusDetails);
-		outboundCall.setDuration(Integer.parseInt(request.getParameter("duration")));
-		System.out.println(broadcastrcpt.getBroadcastRecipientId()+ " "+ broadcastsch.getBroadcastScheduleId()); 
+		outboundCall.setDuration(Integer.parseInt(request.getParameter("duration"))); 
 		outboundCallService.addOutboundCall(outboundCall);
+		}
 		}
 		catch(NullPointerException e)
 		{
-			
-			System.out.println("broadcast time: ");
+			System.out.println("Null pointer exception occured in BroadcastCallHandlerController ");
 		}
 	}
 

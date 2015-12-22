@@ -46,6 +46,21 @@ public class MessageService {
 		}
 		return map1;
 	}
+	public List<Message> getPositiveResponseListType(Group group, String format) {
+		List<Message> message= (ArrayList<Message>) messageRepository.findByGroupAndResponseAndTypeAndFormat(group, true, "response", format, new Sort(Direction.DESC, "time"));
+		return message;
+	}
+	
+	public List<Message> getNegativeResponseListType(Group group, String format) {
+		List<Message> message= (ArrayList<Message>) messageRepository.findByGroupAndResponseAndTypeAndFormat(group, false, "response", format, new Sort(Direction.DESC, "time"));
+		return message;
+	}
+	
+	public List<Message> getResponseListType(Group group, String format) {
+		List<Message> message= (ArrayList<Message>) messageRepository.findByGroupAndTypeAndFormat(group, "response", format, new Sort(Direction.DESC, "time"));
+		return message;
+	}
+	
 	public HashMap<String, Integer> getPositiveResponseListCount(Group group, String format)
 	{
 		List<Object[]> response= messageRepository.countByGroupAndResponseAndTypeAndFormat(group.getGroupId(), true, "response", format);
@@ -166,6 +181,10 @@ public class MessageService {
 		return messageRepository.findByGroupAndFormat(group, format);
 	}
 
+	public List<Message> getMessageListByModeAndFormat(Group group, String mode,String format){
+		return messageRepository.findByGroupAndModeAndFormat(group, mode, format);
+	}
+	
 	/*
 	 * Returns messages of a given order status for a group 
 	 */

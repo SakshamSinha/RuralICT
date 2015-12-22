@@ -36,7 +36,8 @@ public class BroadcastRecipientService {
 		return broadcastRecipientRepository.findByUserAndBroadcast(user, broadcast);
 	}
 	
-	public BroadcastRecipient getBroadcastRecipientByBroadcast(Broadcast broadcast) {
+	public List<BroadcastRecipient> getBroadcastRecipientByBroadcast(Broadcast broadcast) {
+		System.out.println("broadcast id is: "+ broadcast.getBroadcastId());
 		return broadcastRecipientRepository.findByBroadcast(broadcast);
 	}
 }

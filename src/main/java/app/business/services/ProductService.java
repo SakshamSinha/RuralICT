@@ -9,6 +9,7 @@ import app.data.repositories.ProductRepository;
 import app.entities.Organization;
 import app.entities.Product;
 import app.entities.ProductType;
+import app.entities.projections.ProductProjection;
 
 @Service
 public class ProductService {
@@ -44,6 +45,10 @@ public class ProductService {
 		return productRepository.findOne(productId);
 	}
 	
+	public Product getProductByNameAndOrg(String productName, Organization org){
+		 return productRepository.findByNameAndProductType_Organization(productName,org);
+	}
+	
 	public List<Product> getAllProductList(){
 		return productRepository.findAll();
 	}
@@ -55,7 +60,7 @@ public class ProductService {
 		return productRepository.findAllByOrderByNameAsc();
 	}
 	
-	public Product getProductByName(String name)
+	public List<Product> getProductByName(String name)
 	{
 		return productRepository.findByName(name);
 	}

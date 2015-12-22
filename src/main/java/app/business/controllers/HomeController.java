@@ -22,6 +22,7 @@ import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
+import app.util.SendMail;
 
 @Controller
 @RequestMapping("/web/{org}")
@@ -58,7 +59,12 @@ public class HomeController {
 		OrganizationMembership membership= organizationMembershipService.getUserOrganizationMembership(user, organization);
 		membership.setStatus(1);
 		organizationMembershipService.addOrganizationMembership(membership);
-		IVRUtils.sendSMS(phoneno, "Congratualtions!!! You have been approved by "+organization.getName()+" organization.",null,null);
+		if(organization.getName().equalsIgnoreCase("Nature's Gram"))
+			SendMail.sendMail(user.getEmail(), "Cottage Industry app Organization Approval" , "Congratualtions!!! You have been approved by "+organization.getName()+" organization.\n\nThank You for being part of our community. You are now ready to place an order.\n\nWishing you Health and Happiness always.\n\nFor support call : 9930332255\nOr mail us at : vishal@naturesgram.com\n\nThanks & Regards\nVishal V Ghodke\nFounder - Natures Gram\nwww.naturesgram.com\nfacebook.com/naturesgram" );
+		else
+			SendMail.sendMail(user.getEmail(), "Cottage Industry app Organization Approval" , "Congratualtions!!! You have been approved by "+organization.getName()+" organization.\n\nThank You for being part of our community. You are now ready to place an order.\n\nWishing you Health and Happiness always.");
+			
+		//IVRUtils.sendSMS(phoneno, "Congratualtions!!! You have been approved by "+organization.getName()+" organization.",null,null);
 	}
 	
 	@RequestMapping(value="/homePage/reject", method = RequestMethod.POST)

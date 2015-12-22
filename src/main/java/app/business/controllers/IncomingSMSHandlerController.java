@@ -46,6 +46,7 @@ public class IncomingSMSHandlerController {
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		//Needs to be changed if implemented in future. Change is checking on organization membership.
 		if(user!=null){
 
 			telephonyService.addTextMessage(user, null, group, "web","text" ,false, message,currentTimestamp);

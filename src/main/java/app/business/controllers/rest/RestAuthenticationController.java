@@ -4,9 +4,20 @@ import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
+import app.business.services.OrganizationMembershipService;
+import app.business.services.OrganizationService;
 import app.data.repositories.GroupMembershipRepository;
 import app.data.repositories.GroupRepository;
 import app.data.repositories.OrganizationMembershipRepository;
@@ -35,6 +48,7 @@ import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
 import app.security.AuthenticatedUser;
+import app.util.SendMail;
 import app.util.Utils;
 
 
@@ -66,16 +80,24 @@ public class RestAuthenticationController {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	OrganizationService organizationService;
+	
+	@Autowired
+	OrganizationMembershipService organizationMembershipService;
+	
 	@RequestMapping(value = "/otp",method = RequestMethod.POST )
-	public String otp(@RequestBody String requestBody)
+	public String otp(@RequestBody String requestBody) throws Exception
 	{
 		JSONObject responseJsonObject = new JSONObject();
 		HashMap<String,String> response= new HashMap<String, String>();
 		JSONObject jsonObject=null;
 		String phonenumber = null;
+		String email = null;
 		try {
 			jsonObject = new JSONObject(requestBody);
 			phonenumber=jsonObject.getString("phonenumber");
+			email=jsonObject.getString("email");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -98,14 +120,20 @@ public class RestAuthenticationController {
 				e.printStackTrace();
 			}	
 		}
+				
 		if(userPhoneNumber==null)
 		{
 			String otp=randomString(4);
-			IVRUtils.sendSMS(phonenumber, otp, null , null);
+			int status=0;
+			if((status=SendMail.sendMail(email, "Cottage Industry App OTP" , "Your OTP is: " + otp ))==1)
+				response.put("text", "Otp has been sent to your email");
+			//IVRUtils.sendSMS(phonenumber, otp, null , null);
 			response.put("otp",otp);
 			try {
 				responseJsonObject.put("otp", otp);
 				responseJsonObject.put("organizations",orgArray);
+				if(status==1)
+					responseJsonObject.put("text", "Otp has been sent to your email");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -121,6 +149,8 @@ public class RestAuthenticationController {
 			}
 			return responseJsonObject.toString();
 		}
+		
+		
 	}
 	
 	@RequestMapping(value = "/register",method = RequestMethod.POST ,produces="application/json")
@@ -141,7 +171,7 @@ public class RestAuthenticationController {
 		User user = new User();
 		UserPhoneNumber userPhoneNumber= new UserPhoneNumber();
 		List<UserPhoneNumber> userPhoneNumbers= new ArrayList<UserPhoneNumber>();
-		List<Organization> orgList= new ArrayList<Organization>();
+		//List<Organization> orgList= new ArrayList<Organization>();
 		try {
 			jsonObject = new JSONObject(requestBody);
 			phonenumber=jsonObject.getString("phonenumber");
@@ -149,7 +179,7 @@ public class RestAuthenticationController {
 			password=jsonObject.getString("password");
 			name=jsonObject.getString("name");
 			email=jsonObject.getString("email");
-			orgListJsonArray=jsonObject.getJSONArray("orglist");
+			//orgListJsonArray=jsonObject.getJSONArray("orglist");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -168,6 +198,127 @@ public class RestAuthenticationController {
 		{
 			response.put("Status", "Failure");
 			response.put("Error", "Email Exists");
+			return response;
+		}
+		/*for (int i=0;i<orgListJsonArray.length();i++)
+		{
+			 try {
+				JSONObject org = orgListJsonArray.getJSONObject(i);
+				int org_id=org.getInt("org_id");
+				//Adding organization
+				Organization organization= organizationRepository.findOne(org_id);
+				if(organization==null)
+				{
+					response.put("Status", "Failure");
+					response.put("Error", "Organization with Id "+org_id+" does not exists");
+					return response;
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}*/
+		
+		//Organization organization=new Organization();
+		user.setAddress(address);
+		user.setCallLocale("en");
+		user.setEmail(email);
+		user.setSha256Password(passwordEncoder.encode(password));
+		user.setName(name);
+//		java.util.Date date= new java.util.Date();
+//		Timestamp currentTimestamp= new Timestamp(date.getTime());
+//		user.setTime(currentTimestamp);
+		user=userRepository.save(user);
+		/*List<OrganizationMembership>  organizationMemberships= new ArrayList<OrganizationMembership>();
+		List<GroupMembership>  groupMemberships= new ArrayList<GroupMembership>();
+		for (int i=0;i<orgListJsonArray.length();i++)
+		{
+			 try {
+				JSONObject org = orgListJsonArray.getJSONObject(i);
+				int org_id=org.getInt("org_id");
+				//Adding organization
+				organization= organizationRepository.findOne(org_id);
+				if(organization==null)
+				{
+					response.put("Status", "Failure");
+					response.put("Error", "Organization with Id "+org_id+" does not exists");
+					return response;
+				}
+				orgList.add(organization);
+				OrganizationMembership organizationMembership = new OrganizationMembership();
+				organizationMembership.setOrganization(organization);
+				organizationMembership.setUser(user);
+				organizationMembership.setIsAdmin(false);
+				organizationMembership.setIsPublisher(false);
+				organizationMembership.setStatus(0);
+				organizationMembership=organizationMemberRepository.save(organizationMembership);
+				organizationMemberships.add(organizationMembership);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}*/
+		//user.setGroupMemberships(groupMemberships);
+		//user.setOrganizationMemberships(organizationMemberships);
+		user.setTextbroadcastlimit(0);
+		user.setVoicebroadcastlimit(0);
+		user=userRepository.save(user);
+		System.out.println("User phone number is being saved");
+		phonenumber="91"+phonenumber;
+		userPhoneNumber.setPhoneNumber(phonenumber);
+		userPhoneNumber.setPrimary(true);
+		userPhoneNumber.setUser(user);
+		userPhoneNumber=userPhoneNumberRepository.save(userPhoneNumber);
+		userPhoneNumbers.add(userPhoneNumber);
+		user.setUserPhoneNumbers(userPhoneNumbers);
+		System.out.println("User phone number is  saved");
+		userRepository.save(user);
+//		for(Organization org: orgList)
+//		{
+//			groupMembershipService.addParentGroupMembership(org, user);
+//		}
+		response.put("Status","Success");
+		return response;
+	}
+	
+	@RequestMapping(value = "/orgsave",method = RequestMethod.POST ,produces="application/json")
+	@Transactional
+	public HashMap<String,String> orgselection(@RequestBody String requestBody)
+	{
+		/*
+		 * Add organization membership, user, organization
+		 */
+		HashMap<String,String> response= new HashMap<String, String>();
+		JSONObject jsonObject=null;
+		String phonenumber = null;
+		String email=null;
+		JSONArray orgListJsonArray = null;
+		List<Organization> orgList= new ArrayList<Organization>();
+		try {
+			jsonObject = new JSONObject(requestBody);
+			phonenumber="91"+jsonObject.getString("phonenumber");
+//			address=jsonObject.getString("address");
+//			password=jsonObject.getString("password");
+//			name=jsonObject.getString("name");
+//			email=jsonObject.getString("email");
+			orgListJsonArray=jsonObject.getJSONArray("orglist");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		/*
+		 * Check if exists 
+		*/
+		System.out.println("User phone no is: "+phonenumber);
+		User user = userRepository.findByuserPhoneNumbers_phoneNumber(phonenumber);
+		if(user==null)
+		{
+			response.put("Status", "Failure");
+			response.put("Error", "Number doesn't Exists");
+			return response;
+		}
+		List<User> userCheckList = userRepository.findByEmail(email);
+		if(userCheckList.size()==0)
+		{
+			response.put("Status", "Failure");
+			response.put("Error", "Email doesn't exist Exists");
 			return response;
 		}
 		for (int i=0;i<orgListJsonArray.length();i++)
@@ -189,11 +340,11 @@ public class RestAuthenticationController {
 		}
 		
 		Organization organization=new Organization();
-		user.setAddress(address);
-		user.setCallLocale("en");
-		user.setEmail(email);
-		user.setSha256Password(passwordEncoder.encode(password));
-		user.setName(name);
+//		user.setAddress(address);
+//		user.setCallLocale("en");
+//		user.setEmail(email);
+//		user.setSha256Password(passwordEncoder.encode(password));
+//		user.setName(name);
 		java.util.Date date= new java.util.Date();
 		Timestamp currentTimestamp= new Timestamp(date.getTime());
 		user.setTime(currentTimestamp);
@@ -228,15 +379,16 @@ public class RestAuthenticationController {
 		}
 		//user.setGroupMemberships(groupMemberships);
 		user.setOrganizationMemberships(organizationMemberships);
-		user.setTextbroadcastlimit(0);
-		user.setVoicebroadcastlimit(0);
-		user=userRepository.save(user);
-		userPhoneNumber.setPhoneNumber(phonenumber);
-		userPhoneNumber.setPrimary(true);
-		userPhoneNumber.setUser(user);
-		userPhoneNumber=userPhoneNumberRepository.save(userPhoneNumber);
-		userPhoneNumbers.add(userPhoneNumber);
-		user.setUserPhoneNumbers(userPhoneNumbers);
+//		user.setTextbroadcastlimit(0);
+//		user.setVoicebroadcastlimit(0);
+//		user=userRepository.save(user);
+//		phonenumber="91"+phonenumber;
+//		userPhoneNumber.setPhoneNumber(phonenumber);
+//		userPhoneNumber.setPrimary(true);
+//		userPhoneNumber.setUser(user);
+//		userPhoneNumber=userPhoneNumberRepository.save(userPhoneNumber);
+//		userPhoneNumbers.add(userPhoneNumber);
+//		user.setUserPhoneNumbers(userPhoneNumbers);
 		userRepository.save(user);
 		for(Organization org: orgList)
 		{
@@ -263,10 +415,16 @@ public class RestAuthenticationController {
 		if(userPhoneNumber!=null)
 		{
 			String otp=randomString(4);
-			IVRUtils.sendSMS(phonenumber, otp, null , null);
+			int status=0;
+			String email=userPhoneNumber.getUser().getEmail();
+			if((status=SendMail.sendMail(email, "Cottage Industry App OTP" , "Your OTP is: " + otp ))==1)
+				response.put("text", "Otp has been sent to your email");
+			//IVRUtils.sendSMS(phonenumber, otp, null , null);
 			response.put("otp",otp);
 			try {
 				responseJsonObject.put("otp", otp);
+				if(status==1)
+				responseJsonObject.put("text", "Otp has been sent to your email");	
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -338,12 +496,7 @@ public class RestAuthenticationController {
 			if(passwordEncoder.matches(password, user.getSha256Password()))
 			{
 				List<OrganizationMembership> organizationMemberships = user.getOrganizationMemberships();
-				List<Organization> organizationList=new ArrayList<Organization>();
-				for(OrganizationMembership organizationMembership: organizationMemberships)
-				{
-					if(organizationMembership.getStatus()==1)
-					organizationList.add(organizationMembership.getOrganization());
-				}
+				List<Organization> organizationList=organizationService.getAllOrganizationList();
 				if(organizationList.size()==0)
 				{
 					try{
@@ -366,11 +519,25 @@ public class RestAuthenticationController {
 					try {
 						if(!organization.getName().equals("Testing") && !organization.getName().equals("TestOrg1") && !organization.getName().equals("Testorg3"))
 						{
+							
 							JSONObject org= new JSONObject();
 							org.put("name", organization.getName());
 							org.put("org_id", organization.getOrganizationId());
 							org.put("abbr", organization.getAbbreviation());	
 							org.put("ph_no", organization.getIvrNumber());
+							if(organizationMembershipService.getUserOrganizationMembership(user, organization)==null)
+							{
+								org.put("status", "Rejected");
+								orgArray.put(org);
+								continue;
+							}
+							if(organizationMembershipService.getOrganizationMembershipStatus(user, organization)==1)
+								org.put("status", "Accepted");
+							//organizationList.add(organizationMembership.getOrganization());
+							else if(organizationMembershipService.getOrganizationMembershipStatus(user, organization)==0)
+								org.put("status", "Pending");
+							else
+								org.put("status", "Rejected");
 							orgArray.put(org);
 						}
 					} catch (JSONException e) {
@@ -440,12 +607,6 @@ public class RestAuthenticationController {
 		userRepository.save(user);
 		response.put("Status","Success");
 		return response;
-//		}
-//		else
-//		{
-//			response.put("Authorization","Failed");
-//			return response;
-//		}
 	}
 	
 	

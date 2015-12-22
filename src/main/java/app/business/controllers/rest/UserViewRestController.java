@@ -1,5 +1,7 @@
 package app.business.controllers.rest;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,7 +58,11 @@ public class UserViewRestController {
 		try {
 			
 			UserPhoneNumber phone = userPhoneNumberService.getUserPhoneNumber(userView.getPhone().getPhoneNumber());
-			
+			userView.getUser().setTextbroadcastlimit(0);
+			userView.getUser().setVoicebroadcastlimit(0);
+			java.util.Date date= new java.util.Date();
+			Timestamp currentTimestamp= new Timestamp(date.getTime());
+			userView.getUser().setTime(currentTimestamp);
 			if(userPhoneNumberService.findPreExistingPhoneNumber(userView.getPhone().getPhoneNumber()))
 			{
 				// if phone number doesn't exist, add the user and his phone number to database

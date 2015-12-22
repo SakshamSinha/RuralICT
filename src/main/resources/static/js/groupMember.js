@@ -162,7 +162,7 @@ $("#page-content").on("click", "#add-new-group-user", function (e) {
 	user.address = userAddress;
 	user.webLocale = "";
 	user.callLocale = "";
-
+	console.log(user.time);
 	userPhoneNumber = {};
 	userPhoneNumber.phoneNumber = userPrimaryPhoneNumber;
 	userPhoneNumber.primary = true;

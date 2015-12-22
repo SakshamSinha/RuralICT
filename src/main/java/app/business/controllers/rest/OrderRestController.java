@@ -26,6 +26,7 @@ import app.entities.OrderItem;
 import app.entities.Organization;
 import app.entities.Product;
 import app.entities.message.BinaryMessage;
+import app.util.SendMail;
 
 @RestController
 @RequestMapping("/api")
@@ -54,7 +55,6 @@ public class OrderRestController {
 	
 	@RequestMapping(value = "/orders/add",method = RequestMethod.POST )
 	public HashMap<String,String> addOrders(@RequestBody String requestBody){
-		System.out.println("Inside custom add orders");
 		HashMap<String,String> response= new HashMap<String, String>();
 		JSONObject jsonObject = null;
 		String organizationabbr = null;
@@ -79,8 +79,8 @@ public class OrderRestController {
 				JSONObject row = orderItemsJSON.getJSONObject(i);
 			    String productname=row.getString("name");
 			    float productQuantity =(float)row.getDouble("quantity");
-			    Product product=productService.getProductByName(productname);
-			    orderItem.setProduct(productService.getProductByName(productname));
+			    Product product=productService.getProductByNameAndOrg(productname,organization);
+			    orderItem.setProduct(product);
 			    orderItem.setQuantity(productQuantity);	
 			    orderItem.setUnitRate(product.getUnitRate());
 			    orderItem.setOrder(order);
@@ -105,6 +105,8 @@ public class OrderRestController {
 		orderRepository.save(order);
 		response.put("orderId",new Integer(order.getOrderId()).toString());
 		response.put("Status", "Success");
+		String email=order.getMessage().getUser().getEmail();
+		SendMail.sendMail(email, "Cottage Industry App: Order Placed Successfully" , "Your Order id is: " + new Integer(order.getOrderId()).toString());
 		return response;
 	}
 
@@ -151,10 +153,10 @@ public class OrderRestController {
 				for (int i = 0; i < orderItemsJSON.length(); i++) {
 				    OrderItem orderItem= new OrderItem();
 					JSONObject row = orderItemsJSON.getJSONObject(i);
-				    String productname=row.getString("name");
+				    String productId=row.getString("id");
 				    float productQuantity =(float)row.getDouble("quantity");
-				    Product product=productService.getProductByName(productname);
-				    orderItem.setProduct(productService.getProductByName(productname));
+				    Product product=productService.getProductById(Integer.parseInt(productId));
+				    orderItem.setProduct(product);
 				    orderItem.setQuantity(productQuantity);	
 				    orderItem.setUnitRate(product.getUnitRate());
 				    orderItem.setOrder(order);

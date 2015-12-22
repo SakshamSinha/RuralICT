@@ -41,7 +41,7 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 		Organization organization = SpringContextBridge.services().getOrganizationService().getOrganizationByIVRS(session.getIvrNumber());
 		VoiceService voiceService = SpringContextBridge.services().getVoiceService();
 		String messageURL = ruralictSession.getMessageURL();
-		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".mp3";
+		String url = "http://recordings.kookoo.in/vishwajeet/"+messageURL+".wav";
 		Voice voice=new Voice(url,false);
 		voice = voiceService.addVoice(voice);
 		VoiceBroadcast voicebroadcast = new VoiceBroadcast(
@@ -94,7 +94,7 @@ public class PlayGroupSelectedAction implements Action<IVRSession> {
 			{        
 				//Outbound call has to be appended with a zero after removing 91 
 				String phoneNumber = "0" + no.getPhoneNumber().substring(2);
-				if(IVRUtils.makeOutboundCall(phoneNumber, Configs.Telephony.IVR_NUMBER, Configs.Telephony.OUTBOUND_APP_URL))
+				if(IVRUtils.makeOutboundCall(phoneNumber, organization.getIvrNumber(), Configs.Telephony.OUTBOUND_APP_URL))
 				{
 					break;
 				}

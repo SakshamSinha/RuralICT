@@ -67,7 +67,7 @@ public class OrderService {
 	}
 	
 	/*
-	 * Return List of messages for a particular order
+	 * Return message for a particular order
 	 */
 	public Message getMessageByOrder(Order order)
 	{

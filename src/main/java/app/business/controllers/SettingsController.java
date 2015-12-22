@@ -302,6 +302,7 @@ public class SettingsController {
 		}
 		
 	}
+	
 	/*
 	 * This part would be implemented in beta version
 	@RequestMapping(value="/updateOrganizationConfiguration", method=RequestMethod.POST)

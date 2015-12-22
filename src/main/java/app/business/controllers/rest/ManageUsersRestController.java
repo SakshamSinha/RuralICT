@@ -68,7 +68,6 @@ public class ManageUsersRestController {
 
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 
-		//List<OrganizationMembership> membershipList = organizationMembershipService.getOrganizationMembershipList(organization);
 		List<OrganizationMembership> membershipList = organizationMembershipService.getOrganizationMembershipListByStatus(organization, 1);
 
 		for(OrganizationMembership membership : membershipList)
@@ -98,21 +97,17 @@ public class ManageUsersRestController {
 		}
 		return userrows;
 	}
-
 	@RequestMapping(value="/getUserApprovalList", method=RequestMethod.GET, produces = "application/json")
 	@PreAuthorize("hasRole('ADMIN'+#org)")
 	public List<UserManage> getUserApprovalList(@PathVariable String org) {
-
 		List<UserManage> userrows = new ArrayList<UserManage>();
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
-		System.out.println("mapped 1");
 		List<OrganizationMembership> membershipList = organizationMembershipService.getOrganizationMembershipListByStatus(organization, 0);
-		System.out.println("mapped 2");
 		for(OrganizationMembership membership : membershipList)
 		{
 
 			User user = membership.getUser();
-			//System.out.println(user.getUserId()+user.getName()+user.getEmail()+userService.getUserRole(user, organization));
+			
 			try
 			{
 				// Get required attributes for each user
@@ -123,7 +118,6 @@ public class ManageUsersRestController {
 				String role  = userService.getUserRole(user, organization);
 				String address = user.getAddress();
 				Timestamp time = user.getTime();
-				
 				// Create the UserManage Object and add it to the list
 				UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address, time);
 				userrows.add(userrow);
@@ -151,7 +145,7 @@ public class ManageUsersRestController {
 		{
 
 			User user = membership.getUser();
-			//System.out.println(user.getUserId()+user.getName()+user.getEmail()+userService.getUserRole(user, organization));
+		
 			try
 			{
 				// Get required attributes for each user
@@ -177,7 +171,6 @@ public class ManageUsersRestController {
 				{
 					todayUsers=todayUsers+1;
 				}
-				//userrows.add(userrow);
 			}
 			catch(NullPointerException | ParseException e)
 			{
@@ -221,6 +214,8 @@ public class ManageUsersRestController {
 		java.util.Date date= new java.util.Date();
 		Timestamp currentTimestamp= new Timestamp(date.getTime());
 		user.setTime(currentTimestamp);
+		user.setTextbroadcastlimit(0);
+		user.setVoicebroadcastlimit(0);
 		userService.addUser(user);
 		System.out.println("user timestamp is: "+user.getTime());
 
@@ -260,10 +255,16 @@ public class ManageUsersRestController {
 		if(addRole.equals("Admin"))
 		{
 			membership.setIsAdmin(true);
+			user.setTextbroadcastlimit(-1);
+			user.setVoicebroadcastlimit(-1);
+			userService.addUser(user);
 		}
 		else if(addRole.equals("Publisher"))
 		{
 			membership.setIsPublisher(true);
+			user.setTextbroadcastlimit(-1);
+			user.setVoicebroadcastlimit(-1);
+			userService.addUser(user);
 		}
 		else if(addRole.equals("Member"))
 		{
@@ -290,10 +291,16 @@ public class ManageUsersRestController {
 		if(removeRole.equals("Admin"))
 		{
 			membership.setIsAdmin(false);
+			user.setTextbroadcastlimit(0);
+			user.setVoicebroadcastlimit(0);
+			userService.addUser(user);
 		}
 		else if(removeRole.equals("Publisher"))
 		{
 			membership.setIsPublisher(false);
+			user.setTextbroadcastlimit(0);
+			user.setVoicebroadcastlimit(0);
+			userService.addUser(user);
 		}
 
 		// Finally make changes in the database

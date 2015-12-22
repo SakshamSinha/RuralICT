@@ -14,7 +14,7 @@ public class Configs extends IVRConfigs {
 		/**
 		 * KooKoo application URL for Outbound Calls.
 		 */
-		public static final String OUTBOUND_APP_URL = "http://ruralict.cse.iitb.ac.in/ruralict/BroadcastCallHandler";
+		public static final String OUTBOUND_APP_URL = "http://ruralict.cse.iitb.ac.in/RuralIvrs/BroadcastCallHandler";
 		/**
 		 * KooKoo application URL.
 		 */

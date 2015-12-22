@@ -1,0 +1,17 @@
+<div ng-controller="GenerateLogController">
+	<div id="GenerateLogsDiv" class="row-fluid" th:attr="organizationId=${organization.organizationId}">
+		<h2>Generate Logs</h2><p hidden id="orgAbbrevation" th:text="${orgAbbrevation}">text</p></br>
+			<form class="simple-form">
+				Generate Log: 
+	  			From: <input id="fromLogsDate" name="From" ng-model="fromDate" placeholder="yyyy-mm-dd">
+	  			To: <input id="toLogsDate" name="To" ng-model="toDate" placeholder="yyyy-mm-dd">
+	    		<input type="submit" id="submitLogs" value="Submit" />
+	  		</form>
+	</div>
+	<div>
+		<p id="text"></p>
+		<a id="logButton" class="btn btn-info btn-small" role="button" th:attr="href=${url}" style="text-align:right;margin-bottom:25px;margin-left:10px;visibility:hidden;" download>
+				<i class="icon-white icon-download-alt"></i> Download Log
+		</a>
+	</div>
+</div>	

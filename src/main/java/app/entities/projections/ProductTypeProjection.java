@@ -8,10 +8,10 @@ import org.springframework.data.rest.core.config.Projection;
 import app.entities.PresetQuantity;
 import app.entities.ProductType;
 
-@Projection(name="default",types = { ProductType.class })
+@Projection(name="producttype",types = { ProductType.class })
 public interface ProductTypeProjection {
 
-	int getProductTypeId();
-	
-	String getDescription();
+	public int getProductTypeId();
+	public String getName();
+	public String getDescription();
 }
