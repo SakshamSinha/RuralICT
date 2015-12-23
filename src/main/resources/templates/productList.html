@@ -25,6 +25,7 @@
         <th>Price(Per Kg)</th>
         <th>Edit Product</th>
         <th>Delete Product</th>
+        <th>Product Status</th>
         </tr>
       </thead>
       <tbody>
@@ -43,6 +44,11 @@
             <p data-placement="top" data-toggle="tooltip" title="Delete">
               <button  id="btn-delete" ng-click="deleteCurrentProduct(product)" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete-product-modal" >
               <i class="icon-white icon-trash"></i> Delete</button>
+            </p>
+       </td>
+       <td>
+            <p data-placement="top" data-toggle="tooltip" title="Enable/Disable">
+              <button  id="btn-delete" ng-click="enableDisableCurrentProduct(product)" ng-class="{'btn btn-danger btn-xs': product.status, 'btn btn-success': !product.status}" data-title="displayStatus()" data-toggle="modal">{{ displayStatus() }}</button>
             </p>
        </td>
         </tr>
@@ -77,6 +83,7 @@
 	  </div>
     </div>
   <div class="modal-footer ">
+    <button type="button" id = "toggle-product" ng-style= "statusMod" ng-click="toggleCurrentProduct()" class="btn btn-warning"><i class="icon-white icon-pencil"></i>  </button>
     <button type="button" id = "update-product" ng-click="updateEditCurrentProduct()" class="btn btn-warning"><i class="icon-white icon-pencil"></i>  Update</button>
     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
   </div>
@@ -152,6 +159,23 @@
 </div>
 <!-- /.modal-content --> 
 <!-- /.modal-dialog -->
+<div class="modal fade" id="add-multiple-product-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAdd" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> </button>
+      <h4 class="modal-title custom_align" id="HeadingEdit">Add New Product</h4>
+    </div>
+    <div class="modal-body">
+    <div id='spreadsheet'></div> 
+    </div>
+    </div>
+    <div class="modal-footer ">
+    <button type="button" class="btn btn-success" id="add-new-product-multi" ><i class="icon-white icon-ok"></i> Add</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
+    </div>
+</div>
+<!-- /.modal-content --> 
+<!-- /.modal-dialog -->
 
 <div class="modal fade" id="product-add-failed-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAddFailed" aria-hidden="true">
   <div class="modal-dialog">
@@ -193,3 +217,49 @@
 </div>
 
 </div>
+<script>
+var stuff = [[]];
+var container = document.getElementById('spreadsheet');
+var hot,prodData;
+var names = [];
+var orgid = $('#organizationId').val();
+console.log("Org ID:"+orgid);
+var abbr = $('#organizationAbbr').val();
+console.log("Org Abbr:" +abbr);
+$.get("http://localhost:8080/web/"+abbr+"/prodtypes", {}, function(results){
+	console.log("Works");
+	prodData = JSON.parse(results);
+	console.log("parsed");
+	console.log(prodData.products[0].name);
+	console.log(prodData.products.length);
+	for (var i=0;i<prodData.products.length;++i)
+		{
+		names[i]=prodData.products[i].name;
+		}
+	hot = new Handsontable(container, {
+		  data: stuff,
+		  minRows: 10,
+		  minCols: 4,
+		  minSpareRows: 1,
+		  rowHeaders: false,
+		  colHeaders: ['Product Name','Price (Per Unit)', 'Product Type','Quantity'],
+		  columns: [
+		            {},
+		            {type: 'numeric'},
+		            {
+		              type: 'dropdown',
+		              source: names
+		            },
+		            {type: 'numeric'}
+		            
+		          ],
+		  contextMenu: true,
+		  colWidths :120
+		  
+		}); 
+	
+})
+.fail(function() {
+    console.log( "error" );
+  });
+</script>
