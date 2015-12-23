@@ -34,12 +34,10 @@ public class Product implements Serializable {
 	private String imageUrl;
 
 	private String name;
-
+	private int quantity;
+	
 	@Column(name="status")
 	private int status;
-
-
-	private int quantity;
 
 	@Column(name="unit_rate")
 	private float unitRate;
@@ -66,7 +64,7 @@ public class Product implements Serializable {
 		this.description = description;
 		this.imageUrl = imageUrl;
 	}
-	
+
 	public int getStatus(){
 		return this.status;
 	}
@@ -74,8 +72,8 @@ public class Product implements Serializable {
 	public void setStatus(int status){
 		this.status = status;
 	}
-
-
+	
+	
 	public int getProductId() {
 		return this.productId;
 	}

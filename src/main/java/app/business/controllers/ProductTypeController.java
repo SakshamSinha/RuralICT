@@ -48,7 +48,6 @@ public class ProductTypeController
 	@PreAuthorize("hasRole('ADMIN'+#org)") 
 	@RequestMapping(value="/prodtypes",method = RequestMethod.GET)
 	public @ResponseBody String productList(@PathVariable String org) {
-
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
 		List<ProductType> prod= productTypeService.getAllByOrganisation(organization);
 		Iterator<ProductType> iterator = prod.iterator();

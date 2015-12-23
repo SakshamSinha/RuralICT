@@ -23,6 +23,7 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			$scope.newproduct.unitRate = data.unitRate;
 		    $scope.newproduct.productType = data.productType;
 		    $scope.newproduct.imageUrl= image_url;
+		    $scope.newproduct.quantity = data.quantity;
 		    console.log(image_url);
 			ProductCreate.save($scope.newproduct,function(){
 				$scope.products.push($scope.newproduct);
@@ -74,6 +75,8 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			var price = $.trim($('#new-price-input').val());
 			var productType = $.trim($('#new-product-type-input').val());
 			var product = $.trim($('#new-product-input').val());
+			var quantity = $.trim($('#new-quantity-input').val());
+			console.log("qty: "+quantity);
 			//org=$('#ProductLists').attr('org');
 			if(! $.isNumeric(price)||price<0){
 				createAlert("Invalid Input","Please enter valid price input as positive numerical value.");
@@ -84,12 +87,16 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			else if(productType == ""){
 				createAlert("Invalid Input","Please select one of the Product Type(s)");
 			}
+			else if (! $.isNumeric(quantity)||quantity<0){
+				createAlert("Invalid Input","Please enter valid quantity as positive numerical value.");
+			}
 			else
 			{
 				var data = {};
 				data.name = product;
 				data.unitRate = price;
 				data.productType = productType;
+				data.quantity = quantity;
 				//data.organization= org;
 				angular.element($('#add-new-product')).scope().uploadFile(data);
 				setTimeout(function(){
@@ -99,18 +106,108 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 				$('#new-product-input').val("");
 				$('#new-product-type-input').val("");
 				$('#new-price-input').val("");
+				$('#new-quantity-input').val("");
 				angular.element($('#add-new-product')).scope().reload();
 			}	
 		});
+		$("#page-content").on("click", "#add-new-product-multi", function (e) {
+			e.preventDefault();
+			console.log("called");
+			var gridData = hot.getData();
+			var flag=0;
+			console.log(gridData);
+			console.log("length: "+gridData.length);
+			for (var i =0; i < gridData.length-1;++i)
+			{
+				var product = $.trim(gridData[i][0]);
+				var price = $.trim(gridData[i][1]);
+				var prodName = $.trim(gridData[i][2]);
+				var quantity = $.trim(gridData[i][3]);
+				var prodType;
+				for (var x =0; x < prodData.products.length;++x)
+					{
+					if (prodData.products[x].name == prodName)
+						{
+						prodType = prodData.products[x].id;
+						}
+					
+					
+					}
+				console.log("name: "+product);
+				console.log("price: "+price);
+				console.log("type: "+prodType);
+				console.log("quantity: "+quantity);
+				if (product && price && prodType && quantity)
+				{
+					if(! $.isNumeric(price)||price<0){
+					//	createAlert("Invalid Input","Please enter valid price input as positive numerical value.");
+						flag=1;
+					}
+					else if(product == ''){
+						//createAlert("Invalid Input","Please enter a name for Product");
+						flag=1;
+					}
+					else if (! $.isNumeric(quantity)||quantity<0) {
+					//	createAlert("Invalid Input","Please enter a name for Quantity");
+						flag=1;
+					}
+					else if(prodType == ""){
+					//	createAlert("Invalid Input","Please select one of the Product Type(s)");
+						flag=1;
+					}
+					else {
+					var data = {};
+					data.name = product;
+					data.unitRate = price;
+					data.productType="productTypes/"+prodType;		
+					data.quantity = quantity;
+					angular.element($('#add-new-product-multi')).scope().saveProduct(data);
+					}
+				}
+				console.log("uploaded");
+			}
+			
+			$('#add-multiple-product-modal').modal('toggle');
+			hot.clear();
+		    if (flag == 1)
+			{
+				console.log("Flag: "+flag);
+				createAlert("Invalid Input","Errors were present. Not all products were uploaded!");
+			}
+		    angular.element($('#add-new-product-multi')).scope().reload();	
+
+		});
+		$scope.displayStatus = function(product) {
+			if (this.product.status == 1){
+				return "Disable";
+			}
+			else {
+				return "Enable";
+			}
+		}
+		$scope.modifyClass = function(product) {
+			if(this.product.status == 1){
+				return "btn btn-danger btn-xs";
+			}
+			else if (this.product.status==0) {
+				return "btn btn-success";
+			}
+		}
 		
 		//function to edit product
 		$scope.editCurrentProduct = function(product){
 			
 			$scope.id = this.product.productId;
-			
+			var stat=parseInt(this.product.status);
 			$(".modal-header #HeadingEdit").html("Edit Product");
 			$(".modal-body #update-product-input").html("Price");
 			$(".modal-body #update-product-list-input-name").html("Name");
+			if (stat == 1) {
+				$(".modal-footer #toggle-product").html("Disable");
+			}
+			else if (stat == 0) {
+				$(".modal-footer #toggle-product").html("Enable");
+			}
 			$("#update-product-name-input").val(this.product.name);
 			$("#update-price-input").val(this.product.unitRate);
 			
@@ -144,9 +241,41 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 				}
 			
 			}
+			$scope.toggleCurrentProduct = function() {
+				
+				
+				console.log("toggle");
+				console.log("status: "+stat);
+				var currentStat = (stat+1)%2;
+				console.log("new status: "+currentStat);
+				$scope.editproduct = ProductEdit.get({id:$scope.id},function(){
+					$scope.editproduct.status=currentStat;
+					$scope.editproduct.$update({id:$scope.id},function(){
+						product.status = $scope.editproduct.status;
+					});
+				});
+				$("#edit-product-modal").modal('toggle');
+				console.log("toggle success");
+				
+			}	
 			
 			
 		}
+		$scope.enableDisableCurrentProduct= function(product){
+			var stat=parseInt(this.product.status);
+			var currentStat = (stat+1)%2;
+			$scope.id = this.product.productId;
+			console.log("Status: "+stat);
+			console.log("new Status: "+currentStat);
+			$scope.editproduct = ProductEdit.get({id:$scope.id},function(){
+				$scope.editproduct.status=currentStat;
+				$scope.editproduct.$update({id:$scope.id},function(){
+					product.status = $scope.editproduct.status;
+				});
+			});
+			console.log("toggle success");
+		}
+
 		//function to delete product
 		$scope.deleteCurrentProduct = function(product){
 			

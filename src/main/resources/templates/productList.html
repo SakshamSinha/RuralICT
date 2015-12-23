@@ -8,6 +8,8 @@
   	<form class="form-inline">
 	    <button class= "btn btn-success" id = "add-product" data-toggle="modal" data-title="Add new product" data-target="#add-product-modal">
 	    <i class="icon-white icon-plus-sign"></i> Add new product</button>
+	    <button class= "btn btn-success" id = "add-multi-product" data-toggle="modal" data-title="Add multiple products" data-target="#add-multiple-product-modal">
+	    <i class="icon-white icon-plus-sign"></i> Add Multiple Products</button>
     <div style="float: right;">
 		<label style="float:left;margin-top:4px;" class="control-label" for="productnamesearch">Search by Product Name:&nbsp;&nbsp;</label>
 		<input style="float:left;" id="productnamesearch" type="text" ng-model="productsearch.name">
@@ -140,6 +142,12 @@
 			</div>
 		  </div>
 		  <div class="control-group">
+		    <label class="control-label" for="new-quantity-input">Quantity</label>
+			<div class="controls">
+			  <input type="text" class="input-large" id="new-quantity-input" placeholder="2"/>
+			</div>
+		  </div>
+		  <div class="control-group">
 		  	<div id="pictureBox">
 		  		<img id="productImage" style='float:right;' src="#" alt="your image" />
 		  	</div>
@@ -157,8 +165,7 @@
     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button> 
   </div>
 </div>
-<!-- /.modal-content --> 
-<!-- /.modal-dialog -->
+
 <div class="modal fade" id="add-multiple-product-modal" tabindex="-2" role="dialog" aria-labelledby="HeadingAdd" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-header">
@@ -174,6 +181,7 @@
     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="icon-white icon-remove"></i> Cancel</button>
     </div>
 </div>
+    
 <!-- /.modal-content --> 
 <!-- /.modal-dialog -->
 
@@ -226,7 +234,8 @@ var orgid = $('#organizationId').val();
 console.log("Org ID:"+orgid);
 var abbr = $('#organizationAbbr').val();
 console.log("Org Abbr:" +abbr);
-$.get("http://localhost:8080/web/"+abbr+"/prodtypes", {}, function(results){
+
+$.get("/web/"+abbr+"/prodtypes", {}, function(results){
 	console.log("Works");
 	prodData = JSON.parse(results);
 	console.log("parsed");
