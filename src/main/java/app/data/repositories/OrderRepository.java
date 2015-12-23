@@ -8,7 +8,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 //import org.springframework.data.rest.core.annotation.RestResource;
-
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +15,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import app.entities.Group;
 import app.entities.Order;
 import app.entities.Organization;
-import app.entities.User;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 	/*

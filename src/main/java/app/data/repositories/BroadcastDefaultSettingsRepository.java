@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.BroadcastDefaultSettings;
-import app.entities.Group;
 import app.entities.Organization;
 
 public interface BroadcastDefaultSettingsRepository extends JpaRepository<BroadcastDefaultSettings, Integer> {

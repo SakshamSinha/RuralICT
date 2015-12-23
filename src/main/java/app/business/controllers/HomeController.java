@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
 import app.business.services.GroupMembershipService;
 import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;

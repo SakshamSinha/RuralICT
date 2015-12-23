@@ -6,12 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import app.entities.Group;
 import app.entities.Order;
 import app.entities.User;
 import app.entities.broadcast.Broadcast;
+
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
 @DiscriminatorValue("text")

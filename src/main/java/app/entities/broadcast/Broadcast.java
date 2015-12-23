@@ -20,14 +20,14 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
 import app.entities.Group;
 import app.entities.Organization;
 import app.entities.User;
 import app.entities.message.Message;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
 /**

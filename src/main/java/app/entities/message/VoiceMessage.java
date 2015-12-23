@@ -7,14 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import app.entities.Group;
 import app.entities.InboundCall;
 import app.entities.Order;
 import app.entities.User;
 import app.entities.Voice;
 import app.entities.broadcast.Broadcast;
+
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
 @DiscriminatorValue("voice")

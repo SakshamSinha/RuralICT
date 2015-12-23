@@ -9,7 +9,6 @@ import app.data.repositories.ProductRepository;
 import app.entities.Organization;
 import app.entities.Product;
 import app.entities.ProductType;
-import app.entities.projections.ProductProjection;
 
 @Service
 public class ProductService {

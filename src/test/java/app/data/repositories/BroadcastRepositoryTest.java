@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import app.RuralIvrsApplicationTests;
 import app.entities.Group;
 import app.entities.GroupMembership;
-import app.entities.Organization;
 import app.entities.broadcast.Broadcast;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,

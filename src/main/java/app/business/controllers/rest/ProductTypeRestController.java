@@ -22,7 +22,6 @@ import app.data.repositories.OrganizationRepository;
 import app.entities.Organization;
 import app.entities.Product;
 import app.entities.ProductType;
-import app.entities.User;
 
 @RestController
 @RequestMapping("/api/products/search/byType")

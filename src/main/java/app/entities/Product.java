@@ -1,10 +1,17 @@
 package app.entities;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -27,6 +34,10 @@ public class Product implements Serializable {
 	private String imageUrl;
 
 	private String name;
+
+	@Column(name="status")
+	private int status;
+
 
 	private int quantity;
 
@@ -55,6 +66,15 @@ public class Product implements Serializable {
 		this.description = description;
 		this.imageUrl = imageUrl;
 	}
+	
+	public int getStatus(){
+		return this.status;
+	}
+	
+	public void setStatus(int status){
+		this.status = status;
+	}
+
 
 	public int getProductId() {
 		return this.productId;

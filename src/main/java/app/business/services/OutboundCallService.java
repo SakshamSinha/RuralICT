@@ -10,7 +10,6 @@ import app.data.repositories.OutboundCallRepository;
 import app.entities.BroadcastRecipient;
 import app.entities.BroadcastSchedule;
 import app.entities.Group;
-import app.entities.Organization;
 import app.entities.OutboundCall;
 import app.entities.broadcast.Broadcast;
 
