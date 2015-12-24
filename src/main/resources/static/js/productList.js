@@ -3,7 +3,8 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 		var id;
 		var image_url;
 		var abbr = $('#organizationAbbr').val();
-		
+		var counter = 0, hot;
+		var prodData;
 		// Initialize the table
 		$http.get( API_ADDR + 'api/products/search/productlist?abbr=' + abbr + '&projection=productproj').
 			success(function(data, status, headers, config) {
@@ -113,6 +114,7 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			e.preventDefault();
 			var gridData = hot.getData();
 			var flag=0;
+			console.log("results "+prodData.products[0].name);
 			for (var i =0; i < gridData.length-1;++i)
 			{
 				var product = $.trim(gridData[i][0]);
@@ -258,7 +260,57 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			});
 
 		}
-
+		
+		$scope.displaySpreadsheet = function() {
+			if (counter == 0) {
+			console.log("called");
+			var stuff = [[]];
+			var container = document.getElementById('spreadsheet');
+			var names = [];
+			var orgid = $('#organizationId').val();
+			var abbr = $('#organizationAbbr').val();
+			console.log("about to create");
+			$http.get(API_ADDR+'web/'+abbr+'/prodtypes')
+			.success(function(results){
+				console.log("recieved");
+				console.log("results "+results.products[0].name);
+				prodData = results;
+				//prodData = JSON.parse(results);
+				for (var i=0;i<results.products.length;++i)
+					{
+					names[i]=results.products[i].name;
+					}
+				console.log("parsed");
+				hot = new Handsontable(container, {
+					  data: stuff,
+					  minRows: 10,
+					  minCols: 4,
+					  minSpareRows: 1,
+					  rowHeaders: false,
+					  colHeaders: ['Product Name','Price (Per Unit)', 'Product Type','Quantity'],
+					  columns: [
+					            {},
+					            {type: 'numeric'},
+					            {
+					              type: 'dropdown',
+					              source: names
+					            },
+					            {type: 'numeric'}
+					            
+					          ],
+					  contextMenu: true,
+					  colWidths :120
+					  
+				}); 
+				console.log("Created");
+			})
+			.error(function() {
+			    console.log( "error" );
+			});
+			++counter;
+			}	
+		}
+		
 		//function to delete product
 		$scope.deleteCurrentProduct = function(product){
 			
