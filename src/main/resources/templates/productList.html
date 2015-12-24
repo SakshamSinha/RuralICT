@@ -233,7 +233,7 @@ var names = [];
 var orgid = $('#organizationId').val();
 var abbr = $('#organizationAbbr').val();
 
-$.get("/web/"+abbr+"/prodtypes", {}, function(results){
+$http.get("/web/"+abbr+"/prodtypes", {}, function(results){
 	prodData = JSON.parse(results);
 	for (var i=0;i<prodData.products.length;++i)
 		{
@@ -264,5 +264,4 @@ $.get("/web/"+abbr+"/prodtypes", {}, function(results){
 })
 .fail(function() {
     console.log( "error" );
-  });
-</script>
+ </script>
