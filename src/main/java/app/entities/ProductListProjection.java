@@ -10,4 +10,6 @@ public interface ProductListProjection {
 	int getQuantity();
 	float getUnitRate();
 	public String getImageUrl();
+	int getStatus();
+
 }

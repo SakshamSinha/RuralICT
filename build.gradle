@@ -70,7 +70,6 @@ dependencies {
 	compile 'com.sun.faces:jsf-impl:2.1.19'
    	compile 'org.eclipse.persistence:javax.persistence:2.1.0'
    	compile 'org.json:json:20090211'
-
 }
 
 eclipse {

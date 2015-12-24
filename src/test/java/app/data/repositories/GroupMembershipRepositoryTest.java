@@ -23,10 +23,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import app.RuralIvrsApplicationTests;
-import app.data.repositories.GroupMembershipRepository;
-import app.data.repositories.GroupRepository;
-import app.data.repositories.OrganizationRepository;
-import app.data.repositories.UserRepository;
 import app.entities.GroupMembership;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,

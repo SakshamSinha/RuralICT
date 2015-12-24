@@ -3,7 +3,6 @@ package app.business.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import app.data.repositories.ProductTypeRepository;
@@ -48,5 +47,15 @@ public class ProductTypeService {
 		 */
 		return productTypeRepository.findAllByOrderByNameAsc();
 	}
+	public List<ProductType> getAllByOrganisation(Organization organization)
+	{
+
+		return productTypeRepository.findByOrganization(organization);
+	}
+	public ProductType getByOrganizationAndName(Organization organization, String name)
+	{
+		return productTypeRepository.findByOrganizationAndName(organization, name);
+	}
+
 
 }

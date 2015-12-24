@@ -1,6 +1,5 @@
 package app.entities.projections;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
 import app.entities.Product;

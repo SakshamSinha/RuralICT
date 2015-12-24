@@ -2,8 +2,6 @@ package app.data.repositories;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
@@ -52,4 +50,7 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Intege
 	
 	public ProductType findByNameAndOrganization(String name, Organization organization);
 
+	public List<ProductType> findByOrganization(Organization organization);
+	
+	public ProductType findByOrganizationAndName(Organization organization, String name);
 }

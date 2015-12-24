@@ -57,7 +57,6 @@ public class ProductsController {
 	public @ResponseBody String handleFileUpload(HttpServletRequest request) {
 		MultipartHttpServletRequest mRequest;
 		mRequest = (MultipartHttpServletRequest) request;
-		System.out.println("in upload picture controller.");
 		Iterator<String> itr = mRequest.getFileNames();
 		
 		//only one iteration i.e itr.next() as it has only one file

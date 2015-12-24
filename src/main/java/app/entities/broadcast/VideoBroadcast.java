@@ -3,11 +3,11 @@ package app.entities.broadcast;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import app.entities.Group;
 import app.entities.Organization;
 import app.entities.User;
+
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
 @DiscriminatorValue("video")

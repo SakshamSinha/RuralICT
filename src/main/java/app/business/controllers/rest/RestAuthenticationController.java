@@ -1,29 +1,15 @@
 package app.business.controllers.rest;
 
-import in.ac.iitb.ivrs.telephony.base.util.IVRUtils;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 import java.util.Random;
-
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.business.services.GroupMembershipService;
-import app.business.services.GroupService;
 import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;
 import app.data.repositories.GroupMembershipRepository;
@@ -41,15 +26,12 @@ import app.data.repositories.OrganizationMembershipRepository;
 import app.data.repositories.OrganizationRepository;
 import app.data.repositories.UserPhoneNumberRepository;
 import app.data.repositories.UserRepository;
-import app.entities.Group;
 import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
-import app.security.AuthenticatedUser;
 import app.util.SendMail;
-import app.util.Utils;
 
 
 @RestController

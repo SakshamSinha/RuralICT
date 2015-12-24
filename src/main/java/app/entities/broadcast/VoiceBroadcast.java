@@ -8,12 +8,12 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Type;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import app.entities.Group;
 import app.entities.Organization;
 import app.entities.User;
 import app.entities.Voice;
+
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @Entity
