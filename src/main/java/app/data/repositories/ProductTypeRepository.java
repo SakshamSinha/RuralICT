@@ -51,5 +51,6 @@ public interface ProductTypeRepository extends JpaRepository<ProductType, Intege
 	public ProductType findByNameAndOrganization(String name, Organization organization);
 
 	public List<ProductType> findByOrganization(Organization organization);
+	
 	public ProductType findByOrganizationAndName(Organization organization, String name);
 }

@@ -97,7 +97,6 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 				data.unitRate = price;
 				data.productType = productType;
 				data.quantity = quantity;
-				//data.organization= org;
 				angular.element($('#add-new-product')).scope().uploadFile(data);
 				setTimeout(function(){
 					angular.element($('#add-new-product')).scope().saveProduct(data);
@@ -112,11 +111,8 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 		});
 		$("#page-content").on("click", "#add-new-product-multi", function (e) {
 			e.preventDefault();
-			console.log("called");
 			var gridData = hot.getData();
 			var flag=0;
-			console.log(gridData);
-			console.log("length: "+gridData.length);
 			for (var i =0; i < gridData.length-1;++i)
 			{
 				var product = $.trim(gridData[i][0]);
@@ -133,26 +129,19 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 					
 					
 					}
-				console.log("name: "+product);
-				console.log("price: "+price);
-				console.log("type: "+prodType);
-				console.log("quantity: "+quantity);
+
 				if (product && price && prodType && quantity)
 				{
 					if(! $.isNumeric(price)||price<0){
-					//	createAlert("Invalid Input","Please enter valid price input as positive numerical value.");
 						flag=1;
 					}
 					else if(product == ''){
-						//createAlert("Invalid Input","Please enter a name for Product");
 						flag=1;
 					}
 					else if (! $.isNumeric(quantity)||quantity<0) {
-					//	createAlert("Invalid Input","Please enter a name for Quantity");
 						flag=1;
 					}
 					else if(prodType == ""){
-					//	createAlert("Invalid Input","Please select one of the Product Type(s)");
 						flag=1;
 					}
 					else {
@@ -164,7 +153,6 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 					angular.element($('#add-new-product-multi')).scope().saveProduct(data);
 					}
 				}
-				console.log("uploaded");
 			}
 			
 			$('#add-multiple-product-modal').modal('toggle');
@@ -244,10 +232,7 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			$scope.toggleCurrentProduct = function() {
 				
 				
-				console.log("toggle");
-				console.log("status: "+stat);
 				var currentStat = (stat+1)%2;
-				console.log("new status: "+currentStat);
 				$scope.editproduct = ProductEdit.get({id:$scope.id},function(){
 					$scope.editproduct.status=currentStat;
 					$scope.editproduct.$update({id:$scope.id},function(){
@@ -255,7 +240,7 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 					});
 				});
 				$("#edit-product-modal").modal('toggle');
-				console.log("toggle success");
+
 				
 			}	
 			
@@ -265,15 +250,13 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			var stat=parseInt(this.product.status);
 			var currentStat = (stat+1)%2;
 			$scope.id = this.product.productId;
-			console.log("Status: "+stat);
-			console.log("new Status: "+currentStat);
 			$scope.editproduct = ProductEdit.get({id:$scope.id},function(){
 				$scope.editproduct.status=currentStat;
 				$scope.editproduct.$update({id:$scope.id},function(){
 					product.status = $scope.editproduct.status;
 				});
 			});
-			console.log("toggle success");
+
 		}
 
 		//function to delete product

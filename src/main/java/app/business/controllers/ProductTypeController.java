@@ -80,9 +80,7 @@ public class ProductTypeController
 
 	public @ResponseBody String productId(@PathVariable String org, @RequestParam("name") String name) {
 		Organization organization = organizationService.getOrganizationByAbbreviation(org);
-		System.out.println("rec name: "+name);
 		ProductType product = productTypeService.getByOrganizationAndName(organization, name);
-		System.out.println("Id: "+product.getProductTypeId());
 		return "productTypes/"+product.getProductTypeId();
 	}
 	

@@ -231,16 +231,10 @@ var container = document.getElementById('spreadsheet');
 var hot,prodData;
 var names = [];
 var orgid = $('#organizationId').val();
-console.log("Org ID:"+orgid);
 var abbr = $('#organizationAbbr').val();
-console.log("Org Abbr:" +abbr);
 
 $.get("/web/"+abbr+"/prodtypes", {}, function(results){
-	console.log("Works");
 	prodData = JSON.parse(results);
-	console.log("parsed");
-	console.log(prodData.products[0].name);
-	console.log(prodData.products.length);
 	for (var i=0;i<prodData.products.length;++i)
 		{
 		names[i]=prodData.products[i].name;
