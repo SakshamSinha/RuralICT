@@ -35,6 +35,7 @@ import app.business.services.GroupMembershipService;
 import app.business.services.GroupService;
 import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;
+import app.business.services.UserPhoneNumberService;
 import app.data.repositories.GroupMembershipRepository;
 import app.data.repositories.GroupRepository;
 import app.data.repositories.OrganizationMembershipRepository;
@@ -86,6 +87,9 @@ public class RestAuthenticationController {
 	@Autowired
 	OrganizationMembershipService organizationMembershipService;
 	
+	@Autowired
+	UserPhoneNumberService userPhoneNumberService;
+	
 	@RequestMapping(value = "/otp",method = RequestMethod.POST )
 	public String otp(@RequestBody String requestBody) throws Exception
 	{
@@ -102,6 +106,12 @@ public class RestAuthenticationController {
 			e.printStackTrace();
 		}
 		UserPhoneNumber userPhoneNumber=userPhoneNumberRepository.findByPhoneNumber(phonenumber);
+		if(userRepository.findByEmail(email)!=null)
+		{
+			responseJsonObject.put("text", "Email entered already exists.");
+			responseJsonObject.put("otp", "null");
+			return responseJsonObject.toString();
+		}
 		List<Organization> orglist = organizationRepository.findAll();
 		JSONArray orgArray=new JSONArray();
 		for(Organization organization: orglist)
@@ -144,6 +154,7 @@ public class RestAuthenticationController {
 			response.put("otp",null);
 			try {
 				responseJsonObject.put("otp", "null");
+				responseJsonObject.put("text", "null");
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -441,6 +452,45 @@ public class RestAuthenticationController {
 			return responseJsonObject.toString();
 		}
 		
+	}
+	
+	@RequestMapping(value = "/changenumber",method = RequestMethod.POST )
+	public String changenumber(@RequestBody String requestBody)
+	{	
+		JSONObject responseJsonObject = new JSONObject();
+		JSONObject jsonObject=null;
+		String phonenumber_old = null;
+		String phonenumber_new = null;
+		try {
+			jsonObject = new JSONObject(requestBody);
+			phonenumber_old="91"+jsonObject.getString("phonenumber");
+			phonenumber_new="91"+jsonObject.getString("phonenumber_new");
+			System.out.println("phonenumber_old is :"+phonenumber_old);
+			System.out.println("phonenumber_new is :"+phonenumber_new);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		try {
+		UserPhoneNumber userPhoneNumber = userPhoneNumberRepository.findByPhoneNumber(phonenumber_old);
+		User user = userPhoneNumber.getUser();
+		try{
+			userPhoneNumber.setPhoneNumber(phonenumber_new);
+			userPhoneNumberService.addUserPhoneNumber(userPhoneNumber);
+			userPhoneNumberService.setPrimaryPhoneNumberByUser(user, userPhoneNumber);
+			responseJsonObject.put("status", "success");
+		}
+		catch (JSONException e) {
+			e.printStackTrace();
+			} 
+		} catch (NullPointerException e)
+		{
+			try {
+				responseJsonObject.put("status","user phone number not present");
+			} catch (JSONException e1) {
+				e.printStackTrace();
+			}
+		}
+		return responseJsonObject.toString();
 	}
 	
 	@RequestMapping(value = "/login",method = RequestMethod.POST )

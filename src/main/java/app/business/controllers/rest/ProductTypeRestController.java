@@ -76,7 +76,6 @@ public class ProductTypeRestController {
 		JSONArray proArray= new JSONArray();
 		int org_id = 0;
 		int flag=0;
-		//List<String> product_name= new ArrayList<String>();
 		try {
 			jsonObject = new JSONObject(requestBody);
 			org_id = jsonObject.getInt("org_id");
@@ -88,7 +87,7 @@ public class ProductTypeRestController {
 				 try {
 					JSONObject productObj = productListJsonArray.getJSONObject(i);
 					String product_name = productObj.getString("product_name");
-					float price = (float) productObj.getDouble("price");
+					float price = Float.parseFloat((productObj.getString("price")));
 					if(organization==null)
 					{
 						responseJsonObject.put("Status", "Failure");
