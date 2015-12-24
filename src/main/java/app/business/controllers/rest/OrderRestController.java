@@ -151,13 +151,8 @@ public class OrderRestController {
 		}
 		Order order = orderRepository.findOne(orderId);
 		Organization organization= order.getOrganization();
-		/*if(status!=null)
-		{
-			order.setStatus(status);
-			if(status.equals("cancelled"))
-				SendMail.sendMail(order.getMessage().getUser().getEmail(),"Cottage Industry App: Order Cancellation Acknowledgement","Dear User\nYour Order with order id : "+order.getOrderId()+" has been successfully cancelled.\n Thankyou for using our service.");
-		}
-		if(comments!=null)
+		//Will be used later when comments are added while ordering.
+		/*if(comments!=null)
 		{
 			BinaryMessage message=(BinaryMessage)order.getMessage();
 			message.setComments(comments);
