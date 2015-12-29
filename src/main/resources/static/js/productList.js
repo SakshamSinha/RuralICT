@@ -77,7 +77,6 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			var productType = $.trim($('#new-product-type-input').val());
 			var product = $.trim($('#new-product-input').val());
 			var quantity = $.trim($('#new-quantity-input').val());
-			console.log("qty: "+quantity);
 			//org=$('#ProductLists').attr('org');
 			if(! $.isNumeric(price)||price<0){
 				createAlert("Invalid Input","Please enter valid price input as positive numerical value.");
@@ -114,7 +113,6 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			e.preventDefault();
 			var gridData = hot.getData();
 			var flag=0;
-			console.log("results "+prodData.products[0].name);
 			for (var i =0; i < gridData.length-1;++i)
 			{
 				var product = $.trim(gridData[i][0]);
@@ -128,8 +126,6 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 						{
 						prodType = prodData.products[x].id;
 						}
-					
-					
 					}
 
 				if (product && price && prodType && quantity)
@@ -217,11 +213,11 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 				{
 					
 					$scope.editproduct = ProductEdit.get({id:$scope.id},function(){
-						$scope.editproduct.unitRate = newprice;
-						$scope.editproduct.name = newname;
-						$scope.editproduct.$update({id:$scope.id},function(){
-							product.unitRate = $scope.editproduct.unitRate;
-							product.name = $scope.editproduct.name;
+					$scope.editproduct.unitRate = newprice;
+					$scope.editproduct.name = newname;
+					$scope.editproduct.$update({id:$scope.id},function(){
+						product.unitRate = $scope.editproduct.unitRate;
+						product.name = $scope.editproduct.name;
 						});
 					});
 					
@@ -263,24 +259,19 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 		
 		$scope.displaySpreadsheet = function() {
 			if (counter == 0) {
-			console.log("called");
 			var stuff = [[]];
 			var container = document.getElementById('spreadsheet');
 			var names = [];
 			var orgid = $('#organizationId').val();
 			var abbr = $('#organizationAbbr').val();
-			console.log("about to create");
 			$http.get(API_ADDR+'web/'+abbr+'/prodtypes')
 			.success(function(results){
-				console.log("recieved");
-				console.log("results "+results.products[0].name);
 				prodData = results;
 				//prodData = JSON.parse(results);
 				for (var i=0;i<results.products.length;++i)
 					{
 					names[i]=results.products[i].name;
 					}
-				console.log("parsed");
 				hot = new Handsontable(container, {
 					  data: stuff,
 					  minRows: 10,
@@ -302,7 +293,6 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 					  colWidths :120
 					  
 				}); 
-				console.log("Created");
 			})
 			.error(function() {
 			    console.log( "error" );
