@@ -1,5 +1,5 @@
 /* Controller for handling voice Messages */
-website.controller("AppMessageCtrl", function($window, $resource, $scope, $route, GetOrderItemsByOrder, RemoveOrderItem, AddOrderItem, UpdateOrder, UpdateMessage, UpdateTextMessageComment) {
+website.controller("AppMessageCtrl", function($window, $resource, $scope, $route, $http, GetOrderItemsByOrder, RemoveOrderItem, AddOrderItem, UpdateOrder, UpdateMessage, UpdateTextMessageComment) {
 	
 	/* This array is a temporary queue to store new orderItems */
 	$scope.orderItemList = [];
@@ -95,7 +95,9 @@ website.controller("AppMessageCtrl", function($window, $resource, $scope, $route
 	
 	/* Adding order item to queue */
 	$scope.addOrderItemToQueue = function(data) {
+		console.log("order pushed");
 		$scope.orderItemList.push(data);
+		console.log("order pushed");
 	};
 	
 	/* Removing order item from queue */
@@ -149,11 +151,18 @@ website.controller("AppMessageCtrl", function($window, $resource, $scope, $route
 	$scope.saveOrder = function(orderId) {
 		$scope.order = UpdateOrder.get({id:orderId},function(){
 			$scope.order.status = "saved";
-			
 			$scope.order.$update({id:orderId},function(){
 				
 			});
+			
 		});
+		setTimeout(function(){$http.get( API_ADDR + 'api/orders/updatestatus/' + orderId ).
+			success(function( data, status, headers, config) {
+				createAlert("Success","Email was successfully send.");
+			}).
+			error(function( data, status, headers, config) {
+				createAlert("Failed", "Email not sent");
+			})},2000);
 	};
 	
 	/* process an order */
@@ -164,8 +173,14 @@ website.controller("AppMessageCtrl", function($window, $resource, $scope, $route
 			$scope.order.$update({id:orderId},function(){		
 			});
 		});
+		setTimeout(function(){$http.get( API_ADDR + 'api/orders/updatestatus/' + orderId ).
+		success(function( data, status, headers, config) {
+			createAlert("Success","Email was successfully send.");
+		}).
+		error(function( data, status, headers, config) {
+			createAlert("Failed", "Email not sent");
+		})},2000);
 	};
-	
 	/* reject an order */
 	$scope.rejectOrder = function(orderId) {
 		$scope.order = UpdateOrder.get({id:orderId},function(){
@@ -197,7 +212,7 @@ website.controller("AppMessageCtrl", function($window, $resource, $scope, $route
 	$scope.reload = function(){
 		
 		setTimeout(window.location.reload.bind(window.location),2000);
-	}
+	};
 });
 
 /************************************************************************/

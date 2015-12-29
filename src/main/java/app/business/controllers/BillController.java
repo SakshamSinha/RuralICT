@@ -45,7 +45,6 @@ public class BillController {
 			totalCost += orderItem.getUnitRate() * orderItem.getQuantity();
 		}
 		BillLayoutSettings billLayoutSetting = billLayoutSettingsService.getBillLayoutSettingsByOrganization(organization);
-		
 		model.addAttribute("billLayout",billLayoutSetting);
 		model.addAttribute("organization", organization);
 		model.addAttribute("message", message);

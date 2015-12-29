@@ -16,18 +16,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.business.services.OrderService;
 import app.business.services.ProductService;
 import app.business.services.UserService;
+import app.data.repositories.BillLayoutSettingsRepository;
 import app.data.repositories.BinaryMessageRepository;
 import app.data.repositories.GroupRepository;
 import app.data.repositories.OrderItemRepository;
 import app.data.repositories.OrderRepository;
 import app.data.repositories.OrganizationRepository;
+import app.entities.BillLayoutSettings;
 import app.entities.Order;
 import app.entities.OrderItem;
 import app.entities.Organization;
 import app.entities.Product;
 import app.entities.message.BinaryMessage;
+import app.util.SendBill;
 import app.util.SendMail;
 
 @RestController
@@ -54,6 +58,12 @@ public class OrderRestController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	OrderService orderService;
+	
+	@Autowired
+	BillLayoutSettingsRepository billLayoutSettingsRepository;
 	
 	@RequestMapping(value = "/orders/add",method = RequestMethod.POST )
 	public HashMap<String,String> addOrders(@RequestBody String requestBody){
@@ -108,56 +118,64 @@ public class OrderRestController {
 		response.put("orderId",new Integer(order.getOrderId()).toString());
 		response.put("Status", "Success");
 		String email=order.getMessage().getUser().getEmail();
-		SendMail.sendMail(email, "Cottage Industry App: Order Placed Successfully" , "Your Order id is: " + new Integer(order.getOrderId()).toString());
+		SendMail.sendMail(email, "Cottage Industry App: Order Placed Successfully" , "Your order has been placed successfully with order id is: " + new Integer(order.getOrderId()).toString());
 		return response;
 	}
 
-	@RequestMapping(value = "/orders/update/{orderId}",method = RequestMethod.POST )
-	public HashMap<String,String> updateOrders(@PathVariable int orderId,@RequestBody String requestBody)
+	@RequestMapping(value = "/orders/update/{orderId}",method = RequestMethod.POST ,produces="application/json" )
+	public String updateOrders(@PathVariable int orderId,@RequestBody String requestBody)
 	{
-		HashMap<String,String> response= new HashMap<String, String>();
+		JSONObject response= new JSONObject();
 		JSONObject jsonObject = null;
 		String status=null;
 		String comments=null;
+		String orgabr=null;
 		JSONArray orderItemsJSON = null;
 		try {
 			jsonObject = new JSONObject(requestBody);
 			status=jsonObject.getString("status");
-			comments=jsonObject.getString("comments");
+			//comments=jsonObject.getString("comments");
 			orderItemsJSON = jsonObject.getJSONArray("orderItems");
+			//orgabr= jsonObject.getString("orgabbr");
 		} catch (JSONException e) {
 			//Uncaught but not untamed :-)			
 			//return "Error";
 		}
 		if(orderRepository.findOne(orderId)==null)
 		{
-			System.out.println("No order of the given OrderId");
-			response.put("Status", "Error");
-			response.put("Error", "No Order of the following Id found");
-			return response;
+			try {
+				response.put("Status", "Error");
+				response.put("Error", "No Order of the following Id found");
+				return response.toString();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 		Order order = orderRepository.findOne(orderId);
-		if(status!=null)
-		{
-			order.setStatus(status);
-		}
-		if(comments!=null)
+		Organization organization= order.getOrganization();
+		//Will be used later when comments are added while ordering.
+		/*if(comments!=null)
 		{
 			BinaryMessage message=(BinaryMessage)order.getMessage();
 			message.setComments(comments);
 			binaryMessageRepository.save(message);
-		}
+		}*/
 		if(orderItemsJSON!=null)
 		{
+			for( OrderItem orderitem : order.getOrderItems())
+			{
+				orderItemRepository.delete(orderitem);
+			}
 			List<OrderItem> orderItems= new ArrayList<OrderItem>();
 			try {
 				orderItemsJSON = jsonObject.getJSONArray("orderItems");
 				for (int i = 0; i < orderItemsJSON.length(); i++) {
 				    OrderItem orderItem= new OrderItem();
 					JSONObject row = orderItemsJSON.getJSONObject(i);
-				    String productId=row.getString("id");
+					System.out.println("Inside orderItems");
+				    String productName=row.getString("name");
 				    float productQuantity =(float)row.getDouble("quantity");
-				    Product product=productService.getProductById(Integer.parseInt(productId));
+				    Product product=productService.getProductByNameAndOrg(productName, organization);
 				    orderItem.setProduct(product);
 				    orderItem.setQuantity(productQuantity);	
 				    orderItem.setUnitRate(product.getUnitRate());
@@ -171,10 +189,41 @@ public class OrderRestController {
 			}
 			order.setOrderItems(orderItems);
 		}
-		orderRepository.save(order);
-		response.put("Status", "Success");
-		return response;
+		try {
+			response.put("Status", "Success");
+			order.setStatus(status);
+			if(status.equals("cancelled"))
+			{
+				SendMail.sendMail(order.getMessage().getUser().getEmail(), "Cottage Industry App: Order Cancellation Acknowledgement", "Dear User,\nYour order with order id "+order.getOrderId()+" has been successfully cancelled.\nWe hope to serve you again.");
+			}
+			else {
+				SendMail.sendMail(order.getMessage().getUser().getEmail(), "Cottage Industry App: Order Modification Acknowledgement", "Dear User,\nYour order with order id "+order.getOrderId()+" has been successfully modified.\n");
+			}
+			orderRepository.save(order);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return response.toString();
 	}
 	
-	
+	@RequestMapping(value = "/orders/updatestatus/{orderId}",method = RequestMethod.GET, produces="text/plain" )
+	public String updateOrderStatus(@PathVariable int orderId)
+	{
+		System.out.println("In update status with order id = "+orderId);
+		Order order = orderRepository.findOne(orderId);
+		Organization organization= order.getOrganization();
+		if(order.getStatus().equals("processed"))
+		{
+			System.out.println("In processed");
+			BillLayoutSettings billLayoutSetting = billLayoutSettingsRepository.findByOrganization(organization);
+			SendBill.sendMail(order, organization, billLayoutSetting);
+		}
+		else if (order.getStatus().equals("saved"))
+		{
+			System.out.println("In saved");
+			SendMail.sendMail(order.getMessage().getUser().getEmail(), "Cottage Industry App: Order recieved", "Organization "+organization.getName()+" has recieved your order. Order processing might take couple of days. Once your order is processed, you will receive an email confirming the same.\n\n Thankyou for shopping with us.");
+		}
+		System.out.println("Mail sent");
+		return "Success";
+	}
 }
