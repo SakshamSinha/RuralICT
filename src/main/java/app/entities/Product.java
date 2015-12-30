@@ -52,10 +52,11 @@ public class Product implements Serializable {
 	private ProductType productType;
 
 	public Product() {
+		this.status =1;
 	}
 
 	public Product(String name, ProductType productType, float unitRate, int quantity, String description,
-			String imageUrl) {
+			String imageUrl, int status) {
 
 		this.name = name;
 		this.productType = productType;
@@ -63,6 +64,13 @@ public class Product implements Serializable {
 		this.quantity = quantity;
 		this.description = description;
 		this.imageUrl = imageUrl;
+		this.status=status;
+	}
+	
+	public Product(String name, ProductType productType, float unitRate, int quantity, String description,
+			String imageUrl) {
+
+		this(name, productType, unitRate, quantity, description,imageUrl,1);
 	}
 
 	public int getStatus(){
