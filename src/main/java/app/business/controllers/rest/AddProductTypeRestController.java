@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.business.services.OrganizationService;
 import app.business.services.PresetQuantityService;
 import app.business.services.ProductTypeService;
-import app.data.repositories.OrganizationRepository;
 import app.entities.Organization;
 import app.entities.PresetQuantity;
 import app.entities.ProductType;
@@ -27,7 +27,7 @@ import app.entities.ProductType;
 public class AddProductTypeRestController {
 	
 	@Autowired
-	OrganizationRepository organizationRepository;
+	OrganizationService organizationService;
 	
 	@Autowired
 	ProductTypeService productTypeService;
@@ -57,7 +57,7 @@ public class AddProductTypeRestController {
 		
 		
 		ProductType productType = new ProductType();
-		Organization organization = organizationRepository.findByAbbreviation(organizationabbr);
+		Organization organization = organizationService.getOrganizationByAbbreviation(organizationabbr);
 		productType.setOrganization(organization);
 		productType.setName(productTypeName);
 		System.out.println(presetArray.length());
