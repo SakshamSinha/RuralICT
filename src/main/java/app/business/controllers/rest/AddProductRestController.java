@@ -31,8 +31,8 @@ public class AddProductRestController {
 	ProductTypeService productTypeService;
 	
 	@RequestMapping(value ="/product/add", method = RequestMethod.POST )
-	public String addProduct(@RequestBody String requestBody)
-	{
+	public String addProduct(@RequestBody String requestBody){
+		
 		JSONObject jsonObject = null;
 		JSONObject responseJsonObject = new JSONObject();
 		String organizationabbr = null;
@@ -70,5 +70,52 @@ public class AddProductRestController {
 		}
 		return responseJsonObject.toString();
 	}
-
+	
+	@RequestMapping(value ="/product/edit", method = RequestMethod.POST)
+	
+	public String editProduct(@RequestBody String requestBody) {
+		
+		JSONObject jsonObject = null;
+		JSONObject responseJsonObject = new JSONObject();
+		String organizationabbr = null;
+		String productName = null, newName = null;
+		Product product = null;
+		Organization organization =null;
+		int newQuantity = 0;
+		float newRate = 0;
+		try {
+			jsonObject = new JSONObject(requestBody);
+			organizationabbr = jsonObject.getString("orgabbr");
+			organization = organizationService.getOrganizationByAbbreviation(organizationabbr);
+			productName = jsonObject.getString("name");
+			newName = jsonObject.getString("newname");
+			newQuantity = Integer.parseInt(jsonObject.getString("qty"));
+			newRate = Float.parseFloat(jsonObject.getString("rate"));
+		}
+		catch (JSONException e) {
+			e.printStackTrace();
+		}
+			product = productService.getProductByNameAndOrg(productName, organization);
+			product.setName(newName);
+			product.setQuantity(newQuantity);
+			product.setUnitRate(newRate);
+		try{
+			productService.addProduct(product);
+		}
+		catch(Exception e) {
+			try {
+				responseJsonObject.put("edit", "failure");
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+			return responseJsonObject.toString();
+		}
+		try {
+			responseJsonObject.put("edit","success");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return responseJsonObject.toString();
+	}
 }

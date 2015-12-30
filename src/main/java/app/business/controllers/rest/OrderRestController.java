@@ -150,7 +150,7 @@ public class OrderRestController {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-		}
+		}	
 		Order order = orderRepository.findOne(orderId);
 		Organization organization= order.getOrganization();
 		//Will be used later when comments are added while ordering.
