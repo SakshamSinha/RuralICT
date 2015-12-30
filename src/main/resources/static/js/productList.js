@@ -267,7 +267,6 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			$http.get(API_ADDR+'web/'+abbr+'/prodtypes')
 			.success(function(results){
 				prodData = results;
-				//prodData = JSON.parse(results);
 				for (var i=0;i<results.products.length;++i)
 					{
 					names[i]=results.products[i].name;
