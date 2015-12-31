@@ -238,12 +238,9 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 					});
 				});
 				$("#edit-product-modal").modal('toggle');
-
-				
 			}	
-			
-			
 		}
+		
 		$scope.enableDisableCurrentProduct= function(product){
 			var stat=parseInt(this.product.status);
 			var currentStat = (stat+1)%2;
@@ -254,9 +251,34 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 					product.status = $scope.editproduct.status;
 				});
 			});
-
 		}
 		
+		$scope.globalEnable = function() {
+			var abbr = $('#organizationAbbr').val();
+			var toggleStatus=1;
+			console.log(API_ADDR+'web/'+abbr+'/statusToggle?status='+toggleStatus)
+			$http.get(API_ADDR+'web/'+abbr+'/statusToggle?status='+toggleStatus)
+			.success(function (res) {
+				$route.reload();
+			})
+			.error(function() {
+				console.log("error");
+			});	
+		}
+		
+		$scope.globalDisable = function() {
+			var abbr = $('#organizationAbbr').val();
+			var toggleStatus=0;
+			console.log(API_ADDR+'web/'+abbr+'/statusToggle?status='+toggleStatus)
+			$http.get(API_ADDR+'web/'+abbr+'/statusToggle?status='+toggleStatus)
+			.success(function (res) {
+				$route.reload();
+			})
+			.error(function() {
+				console.log("error");
+			});	
+		}
+
 		$scope.displaySpreadsheet = function() {
 			if (counter == 0) {
 			var stuff = [[]];
