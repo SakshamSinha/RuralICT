@@ -33,6 +33,10 @@ public class OrderService {
 		return orderRepository.findByOrganizationAndStatus(organization, "cancelled");
 	}
 
+	public List<Order> getOrderByOrganizationRejected(Organization organization) {
+		return orderRepository.findByOrganizationAndStatus(organization, "rejected");
+	}
+
 	public List<Order> getOrderByGroupProcessed(Group group)
 	{
 		return orderRepository.findByMessage_groupAndStatus(group,"processed");
