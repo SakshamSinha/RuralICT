@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import app.data.repositories.MessageRepository;
 import app.entities.Group;
+import app.entities.Order;
 import app.entities.broadcast.VoiceBroadcast;
 import app.entities.message.Message;
 
@@ -192,5 +193,10 @@ public class MessageService {
 
 	public List<Message> getRejectedTextMessageList(Group group) {
 		return getMessageListByOrderStatus(group, "text", "rejected");
+	}
+	
+	public Message getMessageFromOrder(Order order) {
+		return messageRepository.findByOrder(order);
+	
 	}
 }
