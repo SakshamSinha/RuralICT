@@ -28,6 +28,10 @@ public class OrderService {
 	public List<Order> getOrderByOrganizationSaved(Organization organization) {
 		return orderRepository.findByOrganizationAndStatus(organization, "saved");
 	}
+	
+	public List<Order> getOrderByOrganizationCancelled(Organization organization) {
+		return orderRepository.findByOrganizationAndStatus(organization, "cancelled");
+	}
 
 	public List<Order> getOrderByGroupProcessed(Group group)
 	{
