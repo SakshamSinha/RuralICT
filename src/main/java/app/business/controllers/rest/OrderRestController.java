@@ -345,6 +345,40 @@ public class OrderRestController {
 		return jsonResponseObject.toString();
 	}
 	
+	@RequestMapping(value = "/orders/rejected",method = RequestMethod.GET )
+	public String displayRejectedOrders(@RequestParam(value="orgabbr") String orgabbr)
+	{
+		
+		Organization organization =organizationService.getOrganizationByAbbreviation(orgabbr);
+		List<Order> orderList = orderService.getOrderByOrganizationRejected(organization);
+		JSONObject jsonResponseObject = new JSONObject();
+		JSONArray orderArray = new JSONArray();
+		Iterator<Order> iterator = orderList.iterator();
+		while(iterator.hasNext())
+		{
+			JSONObject orderObject = new JSONObject();
+			Order order = iterator.next();
+			Message message = messageService.getMessageFromOrder(order);
+			if(message != null){
+			try {
+				orderObject.put("orderid",order.getOrderId());
+				orderObject.put("timestamp", message.getTime().toString());
+				orderObject.put("username", userService.getUser(message.getUser().getUserId()).getName());
+				orderObject.put("comment", message.getComments());
+				orderArray.put(orderObject);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			}
+		}
+		try {
+			jsonResponseObject.put("orders",orderArray);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonResponseObject.toString();
+	}
+	
 	@RequestMapping(value = "/orders/changestate/processed/{orderId}",method = RequestMethod.GET )
 	public String changeToProcessedState(@PathVariable int orderId) {
 		JSONObject responseJsonObject = new JSONObject();
@@ -401,7 +435,7 @@ public class OrderRestController {
 		Order order = orderService.getOrder(orderId);
 		order.setStatus("rejected");
 		try {
-		orderService.cancelOrder(order);
+		orderService.rejectOrder(order);
 		}
 		catch (Exception e)
 		{
