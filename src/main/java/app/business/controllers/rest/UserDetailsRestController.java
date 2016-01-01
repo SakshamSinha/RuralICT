@@ -23,7 +23,7 @@ public class UserDetailsRestController {
 	@Autowired
 	UserPhoneNumberService userPhoneNumberService;
 	
-	@RequestMapping(value = "/details",method = RequestMethod.GET)
+	@RequestMapping(value = "/details/email",method = RequestMethod.GET)
 	public String getUserDetails(@RequestParam String email) {
 		JSONObject responseJsonObject = new JSONObject();
 		User user = userService.getUserFromEmail(email);
@@ -38,4 +38,23 @@ public class UserDetailsRestController {
 		}
 		return responseJsonObject.toString();
 	}
+	@RequestMapping(value = "/details/number",method = RequestMethod.GET)
+	public String getUserDetailsNumber(@RequestParam String phoneNumber) {
+		JSONObject responseJsonObject = new JSONObject();
+		UserPhoneNumber userPhoneNumber = userPhoneNumberService.getUserPhoneNumber(phoneNumber);
+		System.out.println(userPhoneNumber.getPhoneNumber());
+		User user = userPhoneNumber.getUser();
+		try {
+			responseJsonObject.put("name", user.getName());
+			responseJsonObject.put("addess",user.getAddress());
+			responseJsonObject.put("phone number", userPhoneNumber.getPhoneNumber());
+		}
+		catch(JSONException e){
+			e.printStackTrace();
+		}
+		return responseJsonObject.toString();
+	}
+	
+	
+	
 }
