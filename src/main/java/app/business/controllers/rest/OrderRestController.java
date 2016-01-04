@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -14,11 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.business.services.OrderService;
+import app.business.services.OrganizationService;
+import app.business.services.PresetQuantityService;
 import app.business.services.ProductService;
 import app.business.services.UserService;
+import app.business.services.message.MessageService;
 import app.data.repositories.BillLayoutSettingsRepository;
 import app.data.repositories.BinaryMessageRepository;
 import app.data.repositories.GroupRepository;
@@ -29,14 +34,25 @@ import app.entities.BillLayoutSettings;
 import app.entities.Order;
 import app.entities.OrderItem;
 import app.entities.Organization;
+import app.entities.PresetQuantity;
 import app.entities.Product;
 import app.entities.message.BinaryMessage;
+import app.entities.message.Message;
 import app.util.SendBill;
 import app.util.SendMail;
 
 @RestController
 @RequestMapping("/api")
 public class OrderRestController {
+	
+	@Autowired
+	OrganizationService organizationService;
+	
+	@Autowired
+	MessageService messageService;
+	
+	@Autowired
+	PresetQuantityService presetQuantityService;
 	
 	@Autowired
 	ProductService productService;
@@ -150,7 +166,7 @@ public class OrderRestController {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-		}
+		}	
 		Order order = orderRepository.findOne(orderId);
 		Organization organization= order.getOrganization();
 		//Will be used later when comments are added while ordering.
@@ -221,9 +237,277 @@ public class OrderRestController {
 		else if (order.getStatus().equals("saved"))
 		{
 			System.out.println("In saved");
-			SendMail.sendMail(order.getMessage().getUser().getEmail(), "Cottage Industry App: Order recieved", "Organization "+organization.getName()+" has recieved your order. Order processing might take couple of days. Once your order is processed, you will receive an email confirming the same.\n\n Thankyou for shopping with us.");
+			SendMail.sendMail(order.getMessage().getUser().getEmail(), "Cottage Industry App: Order recieved", "Organization "+organization.getName()+" has recieved your order. Order processing might take couple of days. Once your order is processed, you will receive an email confirming the same.\n\n Thank you for shopping with us.");
 		}
 		System.out.println("Mail sent");
 		return "Success";
+	}
+	
+	@RequestMapping(value = "/orders/saved",method = RequestMethod.GET )
+	public String displaySavedOrders(@RequestParam(value="orgabbr") String orgabbr)
+	{
+		
+		Organization organization =organizationService.getOrganizationByAbbreviation(orgabbr);
+		List<Order> orderList = orderService.getOrderByOrganizationSaved(organization);
+		JSONObject jsonResponseObject = new JSONObject();
+		JSONArray orderArray = new JSONArray();
+		Iterator<Order> iterator = orderList.iterator();
+		while(iterator.hasNext())
+		{
+			JSONObject orderObject = new JSONObject();
+			Order order = iterator.next();
+			Message message = messageService.getMessageFromOrder(order);
+			if(message != null){
+			try {
+				orderObject.put("orderid",order.getOrderId());
+				orderObject.put("timestamp", message.getTime().toString());
+				orderObject.put("username", userService.getUser(message.getUser().getUserId()).getName());
+				orderObject.put("comment", message.getComments());
+				orderArray.put(orderObject);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			}
+		}
+		try {
+			jsonResponseObject.put("orders",orderArray);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonResponseObject.toString();
+	}
+	
+	@RequestMapping(value = "/orders/processed",method = RequestMethod.GET )
+	public String displayProcessedOrders(@RequestParam(value="orgabbr") String orgabbr)
+	{
+		
+		Organization organization =organizationService.getOrganizationByAbbreviation(orgabbr);
+		List<Order> orderList = orderService.getOrderByOrganizationProcessed(organization);
+		JSONObject jsonResponseObject = new JSONObject();
+		JSONArray orderArray = new JSONArray();
+		Iterator<Order> iterator = orderList.iterator();
+		while(iterator.hasNext())
+		{
+			JSONObject orderObject = new JSONObject();
+			Order order = iterator.next();
+			Message message = messageService.getMessageFromOrder(order);
+			if(message != null){
+			try {
+				orderObject.put("orderid",order.getOrderId());
+				orderObject.put("timestamp", message.getTime().toString());
+				orderObject.put("username", userService.getUser(message.getUser().getUserId()).getName());
+				orderObject.put("comment", message.getComments());
+				orderArray.put(orderObject);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			}
+		}
+		try {
+			jsonResponseObject.put("orders",orderArray);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonResponseObject.toString();
+	}
+	
+	@RequestMapping(value = "/orders/cancelled",method = RequestMethod.GET )
+	public String displayCancelledOrders(@RequestParam(value="orgabbr") String orgabbr)
+	{
+		
+		Organization organization =organizationService.getOrganizationByAbbreviation(orgabbr);
+		List<Order> orderList = orderService.getOrderByOrganizationCancelled(organization);
+		JSONObject jsonResponseObject = new JSONObject();
+		JSONArray orderArray = new JSONArray();
+		Iterator<Order> iterator = orderList.iterator();
+		while(iterator.hasNext())
+		{
+			JSONObject orderObject = new JSONObject();
+			Order order = iterator.next();
+			Message message = messageService.getMessageFromOrder(order);
+			if(message != null){
+			try {
+				orderObject.put("orderid",order.getOrderId());
+				orderObject.put("timestamp", message.getTime().toString());
+				orderObject.put("username", userService.getUser(message.getUser().getUserId()).getName());
+				orderObject.put("comment", message.getComments());
+				orderArray.put(orderObject);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			}
+		}
+		try {
+			jsonResponseObject.put("orders",orderArray);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonResponseObject.toString();
+	}
+	
+	@RequestMapping(value = "/orders/rejected",method = RequestMethod.GET )
+	public String displayRejectedOrders(@RequestParam(value="orgabbr") String orgabbr)
+	{
+		
+		Organization organization =organizationService.getOrganizationByAbbreviation(orgabbr);
+		List<Order> orderList = orderService.getOrderByOrganizationRejected(organization);
+		JSONObject jsonResponseObject = new JSONObject();
+		JSONArray orderArray = new JSONArray();
+		Iterator<Order> iterator = orderList.iterator();
+		while(iterator.hasNext())
+		{
+			JSONObject orderObject = new JSONObject();
+			Order order = iterator.next();
+			Message message = messageService.getMessageFromOrder(order);
+			if(message != null){
+			try {
+				orderObject.put("orderid",order.getOrderId());
+				orderObject.put("timestamp", message.getTime().toString());
+				orderObject.put("username", userService.getUser(message.getUser().getUserId()).getName());
+				orderObject.put("comment", message.getComments());
+				orderArray.put(orderObject);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			}
+		}
+		try {
+			jsonResponseObject.put("orders",orderArray);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonResponseObject.toString();
+	}
+	
+	@RequestMapping(value = "/orders/changestate/processed/{orderId}",method = RequestMethod.GET )
+	public String changeToProcessedState(@PathVariable int orderId) {
+		JSONObject responseJsonObject = new JSONObject();
+		Order order = orderService.getOrder(orderId);
+		order.setStatus("processed");
+		try {
+		orderService.processOrder(order);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			try {
+				return responseJsonObject.put("result", "failure").toString();
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+		}
+	try {
+		responseJsonObject.put("result", "success");
+	} catch (JSONException e) {
+		e.printStackTrace();
+	}	
+	return responseJsonObject.toString();
+	}
+	
+	@RequestMapping(value = "/orders/changestate/cancelled/{orderId}",method = RequestMethod.GET )
+	public String changeToCancelledState(@PathVariable int orderId) {
+		JSONObject responseJsonObject = new JSONObject();
+		Order order = orderService.getOrder(orderId);
+		order.setStatus("cancelled");
+		try {
+		orderService.cancelOrder(order);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			try {
+				return responseJsonObject.put("result", "failure").toString();
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+		}
+	try {
+		responseJsonObject.put("result", "success");
+	} catch (JSONException e) {
+		e.printStackTrace();
+	}	
+	return responseJsonObject.toString();
+	}
+	
+	@RequestMapping(value = "/orders/changestate/rejected/{orderId}",method = RequestMethod.GET )
+	public String changeToRejectedState(@PathVariable int orderId) {
+		JSONObject responseJsonObject = new JSONObject();
+		Order order = orderService.getOrder(orderId);
+		order.setStatus("rejected");
+		try {
+		orderService.rejectOrder(order);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			try {
+				return responseJsonObject.put("result", "failure").toString();
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+		}
+	try {
+		responseJsonObject.put("result", "success");
+	} catch (JSONException e) {
+		e.printStackTrace();
+	}	
+	return responseJsonObject.toString();
+	}
+	
+	
+	
+	
+	@RequestMapping(value = "/orders/details/{orderId}",method = RequestMethod.GET )
+	public String getOrderDetails(@PathVariable int orderId) {
+		JSONObject responseJsonObject = new JSONObject();
+		JSONArray items = new JSONArray();
+		Order order = orderService.getOrder(orderId);
+		List<OrderItem> orderItems = order.getOrderItems();
+		Iterator<OrderItem> iterator = orderItems.iterator();
+		while(iterator.hasNext()) {
+			OrderItem orderItem = iterator.next(); 
+			JSONObject item = new JSONObject();
+			try {
+				item.put("productname", orderItem.getProduct().getName());
+				item.put("quantity", orderItem.getQuantity());
+				item.put("rate", orderItem.getUnitRate());
+				items.put(item);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			responseJsonObject.put("items", items);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return responseJsonObject.toString();
+	}
+	
+	@RequestMapping(value = "/presetquantities",method = RequestMethod.GET )
+	public String getPresetQuantity(@RequestParam (value="orgabbr") String orgabbr) {
+		Organization organization = organizationService.getOrganizationByAbbreviation(orgabbr);
+		JSONObject jsonResponseObject = new JSONObject();
+		JSONArray array = new JSONArray();
+		List <PresetQuantity> presetQty = presetQuantityService.getPresetQuantityList(organization);
+		Iterator <PresetQuantity> iterator = presetQty.iterator();
+		while(iterator.hasNext()) {
+			JSONObject qty = new JSONObject();
+			PresetQuantity presetQuantity = iterator.next();
+			try {
+				qty.put("producttype",presetQuantity.getProductType().getName());
+				qty.put("qty", presetQuantity.getQuantity());
+				array.put(qty);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			jsonResponseObject.put("presetquantity", array);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonResponseObject.toString();
+		
 	}
 }

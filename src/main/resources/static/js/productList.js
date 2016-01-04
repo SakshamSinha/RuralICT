@@ -3,7 +3,8 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 		var id;
 		var image_url;
 		var abbr = $('#organizationAbbr').val();
-		
+		var counter = 0, hot;
+		var prodData;
 		// Initialize the table
 		$http.get( API_ADDR + 'api/products/search/productlist?abbr=' + abbr + '&projection=productproj').
 			success(function(data, status, headers, config) {
@@ -76,7 +77,6 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			var productType = $.trim($('#new-product-type-input').val());
 			var product = $.trim($('#new-product-input').val());
 			var quantity = $.trim($('#new-quantity-input').val());
-			console.log("qty: "+quantity);
 			//org=$('#ProductLists').attr('org');
 			if(! $.isNumeric(price)||price<0){
 				createAlert("Invalid Input","Please enter valid price input as positive numerical value.");
@@ -126,8 +126,6 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 						{
 						prodType = prodData.products[x].id;
 						}
-					
-					
 					}
 
 				if (product && price && prodType && quantity)
@@ -215,11 +213,11 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 				{
 					
 					$scope.editproduct = ProductEdit.get({id:$scope.id},function(){
-						$scope.editproduct.unitRate = newprice;
-						$scope.editproduct.name = newname;
-						$scope.editproduct.$update({id:$scope.id},function(){
-							product.unitRate = $scope.editproduct.unitRate;
-							product.name = $scope.editproduct.name;
+					$scope.editproduct.unitRate = newprice;
+					$scope.editproduct.name = newname;
+					$scope.editproduct.$update({id:$scope.id},function(){
+						product.unitRate = $scope.editproduct.unitRate;
+						product.name = $scope.editproduct.name;
 						});
 					});
 					
@@ -240,12 +238,9 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 					});
 				});
 				$("#edit-product-modal").modal('toggle');
-
-				
 			}	
-			
-			
 		}
+		
 		$scope.enableDisableCurrentProduct= function(product){
 			var stat=parseInt(this.product.status);
 			var currentStat = (stat+1)%2;
@@ -256,9 +251,77 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 					product.status = $scope.editproduct.status;
 				});
 			});
-
+		}
+		
+		$scope.globalEnable = function() {
+			var abbr = $('#organizationAbbr').val();
+			var toggleStatus=1;
+			console.log(API_ADDR+'web/'+abbr+'/statusToggle?status='+toggleStatus)
+			$http.get(API_ADDR+'web/'+abbr+'/statusToggle?status='+toggleStatus)
+			.success(function (res) {
+				$route.reload();
+			})
+			.error(function() {
+				console.log("error");
+			});	
+		}
+		
+		$scope.globalDisable = function() {
+			var abbr = $('#organizationAbbr').val();
+			var toggleStatus=0;
+			console.log(API_ADDR+'web/'+abbr+'/statusToggle?status='+toggleStatus)
+			$http.get(API_ADDR+'web/'+abbr+'/statusToggle?status='+toggleStatus)
+			.success(function (res) {
+				$route.reload();
+			})
+			.error(function() {
+				console.log("error");
+			});	
 		}
 
+		$scope.displaySpreadsheet = function() {
+			if (counter == 0) {
+			var stuff = [[]];
+			var container = document.getElementById('spreadsheet');
+			var names = [];
+			var orgid = $('#organizationId').val();
+			var abbr = $('#organizationAbbr').val();
+			$http.get(API_ADDR+'web/'+abbr+'/prodtypes')
+			.success(function(results){
+				prodData = results;
+				for (var i=0;i<results.products.length;++i)
+					{
+					names[i]=results.products[i].name;
+					}
+				hot = new Handsontable(container, {
+					  data: stuff,
+					  minRows: 10,
+					  minCols: 4,
+					  minSpareRows: 1,
+					  rowHeaders: false,
+					  colHeaders: ['Product Name','Price (Per Unit)', 'Product Type','Quantity'],
+					  columns: [
+					            {},
+					            {type: 'numeric'},
+					            {
+					              type: 'dropdown',
+					              source: names
+					            },
+					            {type: 'numeric'}
+					            
+					          ],
+					  contextMenu: true,
+					  colWidths :120
+					  
+				}); 
+			})
+			.error(function() {
+			    console.log( "error" );
+			});
+			++counter;
+			}	
+		}
+		
 		//function to delete product
 		$scope.deleteCurrentProduct = function(product){
 			

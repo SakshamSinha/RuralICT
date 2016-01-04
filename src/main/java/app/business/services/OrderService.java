@@ -24,6 +24,18 @@ public class OrderService {
 	public List<Order> getOrderByOrganizationProcessed(Organization organization) {
 		return orderRepository.findByOrganizationAndStatus(organization, "processed");
 	}
+	
+	public List<Order> getOrderByOrganizationSaved(Organization organization) {
+		return orderRepository.findByOrganizationAndStatus(organization, "saved");
+	}
+	
+	public List<Order> getOrderByOrganizationCancelled(Organization organization) {
+		return orderRepository.findByOrganizationAndStatus(organization, "cancelled");
+	}
+
+	public List<Order> getOrderByOrganizationRejected(Organization organization) {
+		return orderRepository.findByOrganizationAndStatus(organization, "rejected");
+	}
 
 	public List<Order> getOrderByGroupProcessed(Group group)
 	{

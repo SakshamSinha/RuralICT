@@ -8,8 +8,11 @@
   	<form class="form-inline">
 	    <button class= "btn btn-success" id = "add-product" data-toggle="modal" data-title="Add new product" data-target="#add-product-modal">
 	    <i class="icon-white icon-plus-sign"></i> Add new product</button>
-	    <button class= "btn btn-success" id = "add-multi-product" data-toggle="modal" data-title="Add multiple products" data-target="#add-multiple-product-modal">
+	    <button class= "btn btn-success" id = "add-multi-product"  ng-click="displaySpreadsheet()" data-toggle="modal" data-title="Add multiple products" data-target="#add-multiple-product-modal">
 	    <i class="icon-white icon-plus-sign"></i> Add Multiple Products</button>
+	    <button class = "btn btn-success"  id = "global-status-enable"  ng-click="globalEnable()" data-toggle="modal" data-title="Enable All Products"> Enable All Products</button>
+	    <button class = "btn btn-danger btn-xs"  id = "global-status-disable"  ng-click="globalDisable()" data-toggle="modal" data-title="Disable All Products"> Disable All Products</button>
+ 		
     <div style="float: right;">
 		<label style="float:left;margin-top:4px;" class="control-label" for="productnamesearch">Search by Product Name:&nbsp;&nbsp;</label>
 		<input style="float:left;" id="productnamesearch" type="text" ng-model="productsearch.name">
@@ -225,44 +228,3 @@
 </div>
 
 </div>
-<script>
-var stuff = [[]];
-var container = document.getElementById('spreadsheet');
-var hot,prodData;
-var names = [];
-var orgid = $('#organizationId').val();
-var abbr = $('#organizationAbbr').val();
-
-$.get("/web/"+abbr+"/prodtypes", {}, function(results){
-	prodData = JSON.parse(results);
-	for (var i=0;i<prodData.products.length;++i)
-		{
-		names[i]=prodData.products[i].name;
-		}
-	hot = new Handsontable(container, {
-		  data: stuff,
-		  minRows: 10,
-		  minCols: 4,
-		  minSpareRows: 1,
-		  rowHeaders: false,
-		  colHeaders: ['Product Name','Price (Per Unit)', 'Product Type','Quantity'],
-		  columns: [
-		            {},
-		            {type: 'numeric'},
-		            {
-		              type: 'dropdown',
-		              source: names
-		            },
-		            {type: 'numeric'}
-		            
-		          ],
-		  contextMenu: true,
-		  colWidths :120
-		  
-		}); 
-	
-})
-.fail(function() {
-    console.log( "error" );
-  });
-</script>
