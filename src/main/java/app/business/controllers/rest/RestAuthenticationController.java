@@ -616,115 +616,115 @@ public class RestAuthenticationController {
 	}
 	
 	//authentication for admin app.
-	@RequestMapping(value = "/loginAdmin",method = RequestMethod.POST )
-	public String loginAdmin(@RequestBody String requestBody)
-	{
-		//Check if exists
-		JSONObject responseJsonObject = new JSONObject();
-		JSONObject jsonObject=null;
-		String phonenumber = null;
-		String password=null;
-		try {
-			jsonObject = new JSONObject(requestBody);
-			phonenumber=jsonObject.getString("phonenumber");
-			password=jsonObject.getString("password");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		
-		User user = userRepository.findByuserPhoneNumbers_phoneNumber(phonenumber);
-		
-		
-		if(user!=null)
+		@RequestMapping(value = "/loginAdmin",method = RequestMethod.POST )
+		public String loginAdmin(@RequestBody String requestBody)
 		{
-			/*
-			 * Check if the user is approved
-			 * 
-			 */
-			if(password==null)
-			{
-				try {
-					responseJsonObject.put("Status", "Error");
-					responseJsonObject.put("Error", "Password is null.");
-					responseJsonObject.put("Authentication", "failure");
-					responseJsonObject.put("registered", "true");
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-				return responseJsonObject.toString();
+			//Check if exists
+			JSONObject responseJsonObject = new JSONObject();
+			JSONObject jsonObject=null;
+			String phonenumber = null;
+			String password=null;
+			try {
+				jsonObject = new JSONObject(requestBody);
+				phonenumber=jsonObject.getString("phonenumber");
+				password=jsonObject.getString("password");
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-			if(user.getSha256Password()==null)
+			
+			User user = userRepository.findByuserPhoneNumbers_phoneNumber(phonenumber);
+			
+			
+			if(user!=null)
 			{
-				try {
-					responseJsonObject.put("Status", "Error");
-					responseJsonObject.put("Error", "User Password is null. Set the password");
-					responseJsonObject.put("Authentication", "failure");
-					responseJsonObject.put("registered", "true");
-				} catch (JSONException e) {
-					
-					e.printStackTrace();
-				}
-				return responseJsonObject.toString();
-			}
-			if(passwordEncoder.matches(password, user.getSha256Password()))
-			{
-				List<OrganizationMembership> organizationMemberships = user.getOrganizationMemberships();
-				for (OrganizationMembership orgm: organizationMemberships)
+				/*
+				 * Check if the user is approved
+				 * 
+				 */
+				if(password==null)
 				{
-					if(orgm.getIsAdmin())
-					{
-						try{
-							responseJsonObject.put("Authentication", "success");	
-							responseJsonObject.put("email", user.getEmail());
-							JSONObject org= new JSONObject();
-							org.put("name", orgm.getOrganization().getName());
-							org.put("org_id", orgm.getOrganization().getOrganizationId());
-							org.put("abbr", orgm.getOrganization().getAbbreviation());	
-							org.put("ph_no", orgm.getOrganization().getIvrNumber());
-							responseJsonObject.put("organization", org);
-							}
-							catch (Exception e)
-							{
-								e.printStackTrace();
-							}
-							return responseJsonObject.toString();
+					try {
+						responseJsonObject.put("Status", "Error");
+						responseJsonObject.put("Error", "Password is null.");
+						responseJsonObject.put("Authentication", "failure");
+						responseJsonObject.put("registered", "true");
+					} catch (JSONException e) {
+						e.printStackTrace();
 					}
+					return responseJsonObject.toString();
+				}
+				if(user.getSha256Password()==null)
+				{
+					try {
+						responseJsonObject.put("Status", "Error");
+						responseJsonObject.put("Error", "User Password is null. Set the password");
+						responseJsonObject.put("Authentication", "failure");
+						responseJsonObject.put("registered", "true");
+					} catch (JSONException e) {
 						
+						e.printStackTrace();
+					}
+					return responseJsonObject.toString();
 				}
-				try {
-					responseJsonObject.put("Authentication", "failure");
-					responseJsonObject.put("registered", "true");
-					responseJsonObject.put("Error", "Registered user is not an admin.");
-				} catch (JSONException e) {
-					e.printStackTrace();
+				if(passwordEncoder.matches(password, user.getSha256Password()))
+				{
+					List<OrganizationMembership> organizationMemberships = user.getOrganizationMemberships();
+					for (OrganizationMembership orgm: organizationMemberships)
+					{
+						if(orgm.getIsAdmin())
+						{
+							try{
+								responseJsonObject.put("Authentication", "success");	
+								responseJsonObject.put("email", user.getEmail());
+								JSONObject org= new JSONObject();
+								org.put("name", orgm.getOrganization().getName());
+								org.put("org_id", orgm.getOrganization().getOrganizationId());
+								org.put("abbr", orgm.getOrganization().getAbbreviation());	
+								org.put("ph_no", orgm.getOrganization().getIvrNumber());
+								responseJsonObject.put("organization", org);
+								}
+								catch (Exception e)
+								{
+									e.printStackTrace();
+								}
+								return responseJsonObject.toString();
+						}
+							
+					}
+					try {
+						responseJsonObject.put("Authentication", "failure");
+						responseJsonObject.put("registered", "true");
+						responseJsonObject.put("Error", "Registered user is not an admin.");
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					return responseJsonObject.toString();
 				}
-				return responseJsonObject.toString();
+				else
+				{
+					try {
+						responseJsonObject.put("Authentication", "failure");
+						responseJsonObject.put("registered", "true");
+						responseJsonObject.put("Error", "null");
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					return responseJsonObject.toString();
+				}
 			}
 			else
 			{
 				try {
 					responseJsonObject.put("Authentication", "failure");
-					responseJsonObject.put("registered", "true");
+					responseJsonObject.put("registered", "false");
 					responseJsonObject.put("Error", "null");
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				return responseJsonObject.toString();
 			}
+		
 		}
-		else
-		{
-			try {
-				responseJsonObject.put("Authentication", "failure");
-				responseJsonObject.put("registered", "false");
-				responseJsonObject.put("Error", "null");
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			return responseJsonObject.toString();
-		}
-	
-	}
 	
 	@RequestMapping(value = "/changepassword",method = RequestMethod.POST )
 	public HashMap<String,String> changePassword(@RequestBody String requestBody)
