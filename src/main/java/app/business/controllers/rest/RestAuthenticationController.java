@@ -88,12 +88,10 @@ public class RestAuthenticationController {
 			e.printStackTrace();
 		}
 		UserPhoneNumber userPhoneNumber=userPhoneNumberRepository.findByPhoneNumber(phonenumber);
-		System.out.println("after getting phone number");
 		if( userRepository.findByEmail(email).size()!=0)
 		{
 			responseJsonObject.put("text", "Email entered already exists.");
 			responseJsonObject.put("otp", "null");
-			System.out.println("email is: "+userRepository.findByEmail(email).size());
 			return responseJsonObject.toString();
 		}
 		List<Organization> orglist = organizationRepository.findAll();
