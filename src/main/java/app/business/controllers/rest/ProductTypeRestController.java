@@ -20,6 +20,7 @@ import app.business.services.ProductTypeService;
 import app.business.services.UserService;
 import app.data.repositories.OrganizationRepository;
 import app.entities.Organization;
+import app.entities.PresetQuantity;
 import app.entities.Product;
 import app.entities.ProductType;
 
@@ -117,6 +118,5 @@ public class ProductTypeRestController {
 			e.printStackTrace();
 		}
 		return responseJsonObject.toString();
-	}
-
+	}		
 }
