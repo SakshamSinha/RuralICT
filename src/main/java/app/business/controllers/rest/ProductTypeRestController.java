@@ -53,7 +53,7 @@ public class ProductTypeRestController {
 			for(Product product: productList)
 			{
 				HashMap<String, String> map=new HashMap<String, String>();
-				if(ptype.getName().equals(product.getProductType().getName()))
+				if(ptype.getName().equals(product.getProductType().getName()) && (product.getStatus() == 1))
 				{
 					map.put("id", Integer.toString(product.getProductId()));
 					map.put("name", product.getName());

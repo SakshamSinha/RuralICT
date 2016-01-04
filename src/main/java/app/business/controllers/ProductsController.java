@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -31,7 +32,7 @@ import app.entities.ProductType;
 import app.util.Utils;
 
 @Controller
-@RequestMapping("/web/{org}/")
+@RequestMapping("/web/{org}")
 public class ProductsController {
 
 	@Autowired
@@ -91,6 +92,20 @@ public class ProductsController {
 		System.out.println(url);
 		return url;
 	    
+	}
+	
+	@RequestMapping(value="/statusToggle",method = RequestMethod.GET)
+	public @ResponseBody String globalStatusChange(@PathVariable String org, @RequestParam(value="status") int status)
+	{
+		Organization organization = organizationService.getOrganizationByAbbreviation(org);
+		List<Product> products = productService.getProductList(organization);
+		Iterator <Product> iterator = products.iterator();
+		while (iterator.hasNext()) {
+			Product product = iterator.next();
+			product.setStatus(status);
+			productService.addProduct(product);
+		}
+		return null;
 	}
 
 }

@@ -136,4 +136,9 @@ public class UserService {
 		
 		return userRepository.findAll();
 	}
+	
+	public User getUserFromEmail(String email) {
+		List <User> users = userRepository.findByEmail(email);
+		return users.get(0);
+	}
 }

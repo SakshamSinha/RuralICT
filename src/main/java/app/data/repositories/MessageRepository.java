@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import app.entities.Group;
+import app.entities.Order;
 import app.entities.message.Message;
 
 public interface MessageRepository extends JpaRepository<Message, Integer> {
@@ -43,7 +44,7 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	/*
 	 * Search functions
 	 */
-	
+	public Message findByOrder(Order order);
 	public List<Message> findByGroupAndTypeAndFormat(Group group,String type,String format, Sort sort);
 	public List<Message> findByGroupAndFormat(Group group,String format);
 	public List<Message> findByGroupAndModeAndFormat(Group group,String mode,String format);
