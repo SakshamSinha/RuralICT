@@ -64,4 +64,8 @@ public class OrganizationMembershipService {
 		OrganizationMembership organizationMembership= origanizationMembershipRepository.findByUserAndOrganization(user, organization);
 		return organizationMembership.getStatus();
 	}
+	
+	public OrganizationMembership getOrganizationMembershipByUserAndIsAdmin(User user, boolean isAdmin) {
+		return origanizationMembershipRepository.findByUserAndIsAdmin(user, isAdmin);
+	}
 }
