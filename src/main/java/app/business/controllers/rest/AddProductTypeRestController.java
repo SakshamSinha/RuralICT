@@ -47,35 +47,38 @@ public class AddProductTypeRestController {
 			jsonObject = new JSONObject(requestBody);
 			organizationabbr=jsonObject.getString("orgabbr");
 			productTypeName = jsonObject.getString("name");
-			presetArray = jsonObject.getJSONArray("preset");
+			/* Enable in future
+			 * presetArray = jsonObject.getJSONArray("preset");
+			 */
 		}
 		catch(JSONException e)
 		{
 			e.printStackTrace();
 		}
-		//Float [] preset = new Float[presetArray.length()];
-		
-		
+		/*Dummy value as preset quantity currently serves no purpose*/
+		float preset = (float) 5; 
 		ProductType productType = new ProductType();
 		Organization organization = organizationService.getOrganizationByAbbreviation(organizationabbr);
 		productType.setOrganization(organization);
 		productType.setName(productTypeName);
-		System.out.println(presetArray.length());
-		for(int i=0; i < presetArray.length();i++)
+		//System.out.println(presetArray.length());
+	/*	Enable in future
+	 * for(int i=0; i < presetArray.length();i++)
 		{
 			PresetQuantity presetQuantity;
 			try {
 				presetQuantity = new PresetQuantity(organization, productType, Float.parseFloat(presetArray.getString(i)));
 				presetQuantities.add(presetQuantity);
-				//presetQuantityService.addPresetQuantity(presetQuantity);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 		System.out.println("Adding...");
-		
+		PresetQuantity presetQuantity;
+		presetQuantity = new PresetQuantity(organization, productType,preset);
+		presetQuantities.add(presetQuantity);
 		productType.setPresetQuantities(presetQuantities);
 		try {
 			productTypeService.addProductType(productType);
