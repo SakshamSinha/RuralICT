@@ -213,11 +213,11 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 				{
 					
 					$scope.editproduct = ProductEdit.get({id:$scope.id},function(){
-					$scope.editproduct.unitRate = newprice;
-					$scope.editproduct.name = newname;
-					$scope.editproduct.$update({id:$scope.id},function(){
-						product.unitRate = $scope.editproduct.unitRate;
-						product.name = $scope.editproduct.name;
+						$scope.editproduct.unitRate = newprice;
+						$scope.editproduct.name = newname;
+						$scope.editproduct.$update({id:$scope.id},function(){
+							product.unitRate = $scope.editproduct.unitRate;
+							product.name = $scope.editproduct.name;
 						});
 					});
 					
@@ -279,6 +279,7 @@ website.controller("ProductsCtrl",function($window, $scope, $http, $route, $loca
 			});	
 		}
 
+		
 		$scope.displaySpreadsheet = function() {
 			if (counter == 0) {
 			var stuff = [[]];

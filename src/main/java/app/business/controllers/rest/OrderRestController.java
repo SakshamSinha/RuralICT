@@ -213,7 +213,9 @@ public class OrderRestController {
 				SendMail.sendMail(order.getMessage().getUser().getEmail(), "Cottage Industry App: Order Cancellation Acknowledgement", "Dear User,\nYour order with order id "+order.getOrderId()+" has been successfully cancelled.\nWe hope to serve you again.");
 			}
 			else {
-				SendMail.sendMail(order.getMessage().getUser().getEmail(), "Cottage Industry App: Order Modification Acknowledgement", "Dear User,\nYour order with order id "+order.getOrderId()+" has been successfully modified.\n");
+				SendMail.sendMail(order.getMessage().getUser().getEmail(), "Cottage Industry App: Order Modification Acknowledgement", "Dear User,\nYour order with order id "+order.getOrderId()+" has been successfully modified on "+order.getMessage().getTime());
+				order.getMessage().setTime(new Timestamp((new Date()).getTime()));
+				binaryMessageRepository.save((BinaryMessage)order.getMessage());
 			}
 			orderRepository.save(order);
 		} catch (JSONException e) {
