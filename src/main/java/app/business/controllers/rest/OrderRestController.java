@@ -170,7 +170,7 @@ public class OrderRestController {
 		Order order = orderRepository.findOne(orderId);
 		Organization organization= order.getOrganization();
 		//Will be used later when comments are added while ordering.
-		if(comments!=null)
+		if(comments.equals("null"))
 		{
 			BinaryMessage message=(BinaryMessage)order.getMessage();
 			message.setComments(comments);
