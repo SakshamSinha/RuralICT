@@ -56,7 +56,7 @@ public class AddProductTypeRestController {
 			e.printStackTrace();
 		}
 		/*Dummy value as preset quantity currently serves no purpose*/
-		float preset = (float) 5; 
+		//float preset = (float) 5; 
 		ProductType productType = new ProductType();
 		Organization organization = organizationService.getOrganizationByAbbreviation(organizationabbr);
 		productType.setOrganization(organization);
@@ -74,12 +74,12 @@ public class AddProductTypeRestController {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-		}*/
+		}
 		System.out.println("Adding...");
 		PresetQuantity presetQuantity;
 		presetQuantity = new PresetQuantity(organization, productType,preset);
 		presetQuantities.add(presetQuantity);
-		productType.setPresetQuantities(presetQuantities);
+		productType.setPresetQuantities(presetQuantities);  */
 		try {
 			productTypeService.addProductType(productType);
 		}

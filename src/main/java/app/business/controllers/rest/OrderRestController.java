@@ -188,7 +188,7 @@ public class OrderRestController {
 				for (int i = 0; i < orderItemsJSON.length(); i++) {
 				    OrderItem orderItem= new OrderItem();
 					JSONObject row = orderItemsJSON.getJSONObject(i);
-					System.out.println("Inside orderItems");
+					//System.out.println("Inside orderItems");
 				    String productName=row.getString("name");
 				    float productQuantity =(float)row.getDouble("quantity");
 				    Product product=productService.getProductByNameAndOrg(productName, organization);
