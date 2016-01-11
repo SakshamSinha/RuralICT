@@ -202,8 +202,14 @@ public class ManageUsersRestController {
 		String phone = newUserDetails.get("phone");
 		String role  = newUserDetails.get("role");
 		String address = newUserDetails.get("address");
+		String fname=name;
+		if(name.contains(" "))
+		{
+			int i=name.indexOf(" ");
+			fname=name.substring(0, i);
+		}
 		Random randomint = new Random();
-		String password= name+randomint.nextInt(1000);
+		String password= fname+randomint.nextInt(1000);
 
 		// Variables to store the boolean values of the roles
 		boolean isAdmin = false;
@@ -242,7 +248,7 @@ public class ManageUsersRestController {
 
 		UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address, currentTimestamp);
 		System.out.println("password is: "+password);
-		SendMail.sendMail(email, "Cottage Industry App: User credentials", "Dear User,\nThe admin of "+organization.getName()+" has added you as a trusted member in the organization.\n Now you can place your order by logging in to our lokacart app using the credentials given below-\nUsername : "+email+"\nPassword : "+password+"\n\nIf you wish to change your password, you can simply click on forget your password button on the app login screen and follow the instructions.\n\nThankyou,\nBest Regards,\nLokacart Team");
+		SendMail.sendMail(email, "Cottage Industry App: User credentials", "Dear User,\nThe admin of "+organization.getName()+" has added you as a trusted member in the organization.\nNow you can place your order by logging in to our lokacart app using the credentials given below-\nUsername : "+email+"\nPassword : "+password+"\n\nIf you wish to change your password, you can simply click on forget your password button on the app login screen and follow the instructions.\n\nThankyou,\nBest Regards,\nLokacart Team");
 		
 		// Finally return it as a JSON response body
 		return userrow;
