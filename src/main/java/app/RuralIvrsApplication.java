@@ -28,7 +28,7 @@ public class RuralIvrsApplication {
         SpringApplication.run(RuralIvrsApplication.class, args);
         (new Thread(new DownloadDaemon())).start();
     }
-	
+
 	@Bean
 	public CacheManager cacheManager() {
 		return new ConcurrentMapCacheManager();
