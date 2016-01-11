@@ -8,10 +8,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +33,7 @@ import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
+import app.util.SendMail;
 import app.util.UserManage;
 
 @RestController
@@ -42,6 +45,9 @@ public class ManageUsersRestController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@Autowired
 	OrganizationService organizationService;
@@ -196,6 +202,8 @@ public class ManageUsersRestController {
 		String phone = newUserDetails.get("phone");
 		String role  = newUserDetails.get("role");
 		String address = newUserDetails.get("address");
+		Random randomint = new Random();
+		String password= name+randomint.nextInt(1000);
 
 		// Variables to store the boolean values of the roles
 		boolean isAdmin = false;
@@ -215,6 +223,7 @@ public class ManageUsersRestController {
 		user.setTime(currentTimestamp);
 		user.setTextbroadcastlimit(0);
 		user.setVoicebroadcastlimit(0);
+		user.setSha256Password(passwordEncoder.encode(password));
 		userService.addUser(user);
 		System.out.println("user timestamp is: "+user.getTime());
 
@@ -232,7 +241,9 @@ public class ManageUsersRestController {
 		int manageUserID = user.getUserId();
 
 		UserManage userrow = new UserManage(manageUserID, name, email, phone, role, address, currentTimestamp);
-
+		System.out.println("password is: "+password);
+		SendMail.sendMail(email, "Cottage Industry App: User credentials", "Dear User,\nThe admin of "+organization.getName()+" has added you as a trusted member in the organization.\n Now you can place your order by logging in to our lokacart app using the credentials given below-\nUsername : "+email+"\nPassword : "+password+"\n\nIf you wish to change your password, you can simply click on forget your password button on the app login screen and follow the instructions.\n\nThankyou,\nBest Regards,\nLokacart Team");
+		
 		// Finally return it as a JSON response body
 		return userrow;
 	}
