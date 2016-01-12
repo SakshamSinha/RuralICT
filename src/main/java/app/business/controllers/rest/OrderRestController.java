@@ -152,7 +152,7 @@ public class OrderRestController {
 		try {
 			jsonObject = new JSONObject(requestBody);
 			status=jsonObject.getString("status");
-			//comments=jsonObject.getString("comments");
+			comments=jsonObject.getString("comments");
 			orderItemsJSON = jsonObject.getJSONArray("orderItems");
 			//orgabr= jsonObject.getString("orgabbr");
 		} catch (JSONException e) {
@@ -172,12 +172,12 @@ public class OrderRestController {
 		Order order = orderRepository.findOne(orderId);
 		Organization organization= order.getOrganization();
 		//Will be used later when comments are added while ordering.
-		/*if(comments!=null)
+		if(!comments.equals("null"))
 		{
 			BinaryMessage message=(BinaryMessage)order.getMessage();
 			message.setComments(comments);
 			binaryMessageRepository.save(message);
-		}*/
+		}
 		if(orderItemsJSON!=null)
 		{
 			for( OrderItem orderitem : order.getOrderItems())
