@@ -1,5 +1,11 @@
 package app.business.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +50,41 @@ public class BillController {
 		for(OrderItem orderItem : order.getOrderItems()) {
 			totalCost += orderItem.getUnitRate() * orderItem.getQuantity();
 		}
-		BillLayoutSettings billLayoutSetting = billLayoutSettingsService.getBillLayoutSettingsByOrganization(organization);
+		HashMap<String,OrderItem> map= new HashMap<String,OrderItem>();
+	    for(OrderItem orderitem: order.getOrderItems())
+	    {
+   		 if(!map.containsKey(orderitem.getProduct().getName()))
+   			 map.put(orderitem.getProduct().getName(), orderitem);
+   		 else
+   		 {
+   			 OrderItem orderItem=new OrderItem();
+			 float qty=map.get(orderitem.getProduct().getName()).getQuantity()+orderitem.getQuantity();
+			 orderItem.setOrder(order);
+			 orderItem.setProduct(orderitem.getProduct());
+			 orderItem.setQuantity(qty);
+			 orderItem.setUnitRate(orderitem.getUnitRate());
+			 map.put(orderitem.getProduct().getName(),orderItem);
+   		 }
+   	    }
+	    Order temp_order= new Order();
+	    Set<String> product= map.keySet();
+	    Iterator<String> i= product.iterator();
+	    List<OrderItem> orderItems= new ArrayList<OrderItem>();
+	    while(i.hasNext())
+	    {
+	    	OrderItem orderitem= map.get(i.next());
+	    	orderItems.add(orderitem);
+	    }
+	    temp_order.setOrderId(orderId);
+	    temp_order.setOrderItems(orderItems);
+	    temp_order.setOrganization(organization);
+ 		BillLayoutSettings billLayoutSetting = billLayoutSettingsService.getBillLayoutSettingsByOrganization(organization);
 		model.addAttribute("billLayout",billLayoutSetting);
 		model.addAttribute("organization", organization);
 		model.addAttribute("message", message);
-		model.addAttribute("order", order);
+		model.addAttribute("order", temp_order);
 		model.addAttribute("total", totalCost);
+		map.clear();
 		return "generateBill";
 	}
 

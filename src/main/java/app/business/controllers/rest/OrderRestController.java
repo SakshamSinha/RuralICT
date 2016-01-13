@@ -135,6 +135,8 @@ public class OrderRestController {
 		response.put("Status", "Success");
 		String email=order.getMessage().getUser().getEmail();
 		SendMail.sendMail(email, "Cottage Industry App: Order Placed Successfully" , "Your order has been placed successfully with order id is: " + new Integer(order.getOrderId()).toString());
+		if(organization.getAbbreviation().equals("NatG"))
+			SendMail.sendMail("vishalghodke@gmail.com", "Cottage Industry App: Order Placed", "Dear Admin,\nCustomer "+order.getMessage().getUser().getName()+" has placed an order of order id "+order.getOrderId()+".\n\nThankyou\nLokacart Team\n");
 		return response;
 	}
 
@@ -170,7 +172,7 @@ public class OrderRestController {
 		Order order = orderRepository.findOne(orderId);
 		Organization organization= order.getOrganization();
 		//Will be used later when comments are added while ordering.
-		if(comments.equals("null"))
+		if(!comments.equals("null"))
 		{
 			BinaryMessage message=(BinaryMessage)order.getMessage();
 			message.setComments(comments);
@@ -188,7 +190,6 @@ public class OrderRestController {
 				for (int i = 0; i < orderItemsJSON.length(); i++) {
 				    OrderItem orderItem= new OrderItem();
 					JSONObject row = orderItemsJSON.getJSONObject(i);
-					//System.out.println("Inside orderItems");
 				    String productName=row.getString("name");
 				    float productQuantity =(float)row.getDouble("quantity");
 				    Product product=productService.getProductByNameAndOrg(productName, organization);
@@ -211,11 +212,15 @@ public class OrderRestController {
 			if(status.equals("cancelled"))
 			{
 				SendMail.sendMail(order.getMessage().getUser().getEmail(), "Cottage Industry App: Order Cancellation Acknowledgement", "Dear User,\nYour order with order id "+order.getOrderId()+" has been successfully cancelled.\nWe hope to serve you again.");
+				if(organization.getAbbreviation().equals("NatG"))
+					SendMail.sendMail("vishalghodke@gmail.com", "Cottage Industry App: Order Cancellation", "Dear Admin,\nCustomer "+order.getMessage().getUser().getName()+" has cancelled the order of order id "+order.getOrderId()+".\n\nThankyou\nLokacart Team\n");
 			}
 			else {
 				SendMail.sendMail(order.getMessage().getUser().getEmail(), "Cottage Industry App: Order Modification Acknowledgement", "Dear User,\nYour order with order id "+order.getOrderId()+" has been successfully modified on "+order.getMessage().getTime());
 				order.getMessage().setTime(new Timestamp((new Date()).getTime()));
 				binaryMessageRepository.save((BinaryMessage)order.getMessage());
+				if(organization.getAbbreviation().equals("NatG"))
+					SendMail.sendMail("vishalghodke@gmail.com", "Cottage Industry App: Order Modification", "Dear Admin,\nCustomer "+order.getMessage().getUser().getName()+" has modified the order of order id "+order.getOrderId()+".\n\nThankyou\nLokacart Team\n");
 			}
 			orderRepository.save(order);
 		} catch (JSONException e) {
