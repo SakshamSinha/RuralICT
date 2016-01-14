@@ -290,6 +290,7 @@ public class RestAuthenticationController {
 		String phonenumber = null;
 		String email=null;
 		JSONArray orgListJsonArray = null;
+		GCMTestController obj = new GCMTestController();
 		List<Organization> orgList= new ArrayList<Organization>();
 		try {
 			jsonObject = new JSONObject(requestBody);
@@ -327,6 +328,7 @@ public class RestAuthenticationController {
 				int org_id=org.getInt("org_id");
 				//Adding organization
 				Organization organization= organizationRepository.findOne(org_id);
+				obj.broadcast(user.getName()+" would like to be a member.", "123", "New Member Request");
 				if(organization==null)
 				{
 					response.put("Status", "Failure");
