@@ -9,6 +9,7 @@
 						<th>Order ID</th>
 						<th>Time</th>
 						<th>User Name</th>
+						<th>Comments</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -16,7 +17,8 @@
 	
 						<td th:text="${appMessage.order.orderId}">Order Id</td>
 						<td th:attr="id='cancelledAppMessageTime'+${appMessage.messageId}" th:text="${appMessage.Time}">Time</td>
-						<td th:attr="id='cancelledAppMessageName'+${appMessage.messageId}" th:text="${appMessage.user.name}" class="notranslate">Name</td>						
+						<td th:attr="id='cancelledAppMessageName'+${appMessage.messageId}" th:text="${appMessage.user.name}" class="notranslate">Name</td>				
+						<td th:attr="id='cancelledAppMessageName'+${appMessage.messageId}" th:text="${appMessage.comments}" class="notranslate">Comments</td>					
 					</tr>
 				</tbody>
 			</table>

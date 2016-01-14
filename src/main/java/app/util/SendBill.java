@@ -2,8 +2,11 @@ package app.util;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -26,6 +29,7 @@ import app.entities.BillLayoutSettings;
 import app.entities.Order;
 import app.entities.OrderItem;
 import app.entities.Organization;
+import app.entities.Product;
 
 public class SendBill {
 	
@@ -75,14 +79,33 @@ public class SendBill {
 		     msg.setSubject("Cottage Industry App Order Bill");
 		     String rows= "";
 		     double total= 0;
-		     for(OrderItem orderitems: order.getOrderItems())
+		     HashMap<String,OrderItem> map= new HashMap<String,OrderItem>();
+		     for(OrderItem orderitem: order.getOrderItems())
+	    	 {
+	    		 if(!map.containsKey(orderitem.getProduct().getName()))
+	    			 map.put(orderitem.getProduct().getName(), orderitem);
+	    		 else
+	    		 {
+	    			 OrderItem orderItem=new OrderItem();
+	    			 float qty=map.get(orderitem.getProduct().getName()).getQuantity()+orderitem.getQuantity();
+	    			 orderItem.setOrder(order);
+	    			 orderItem.setProduct(orderitem.getProduct());
+	    			 orderItem.setQuantity(qty);
+	    			 orderItem.setUnitRate(orderitem.getUnitRate());
+	    			 map.put(orderitem.getProduct().getName(),orderItem);
+	    		 }
+	    	 }
+		     Set<String> product= map.keySet();
+		     Iterator<String> i= product.iterator();
+		     while(i.hasNext())
 		     {
+		    	 OrderItem orderitem= map.get(i.next());
 		    	 rows = rows+"<tr>";
-		    	 rows = rows + "<td style=\"text-align:right\">"+orderitems.getProduct().getName()+"</td>";
-		    	 rows = rows + "<td style=\"text-align:right\">"+orderitems.getQuantity()+"</td>";
-		    	 rows = rows + "<td style=\"text-align:right\">"+orderitems.getUnitRate()+"</td>";
-		    	 rows = rows + "<td style=\"text-align:right\">"+(orderitems.getQuantity()*orderitems.getUnitRate())+"</td></tr>";
-		    	 total = total + orderitems.getQuantity()*orderitems.getUnitRate();
+		    	 rows = rows + "<td style=\"text-align:right\">"+orderitem.getProduct().getName()+"</td>";
+		    	 rows = rows + "<td style=\"text-align:right\">"+orderitem.getQuantity()+"</td>";
+		    	 rows = rows + "<td style=\"text-align:right\">"+orderitem.getUnitRate()+"</td>";
+		    	 rows = rows + "<td style=\"text-align:right\">"+(orderitem.getQuantity()*orderitem.getUnitRate())+"</td></tr>";
+		    	 total = total + orderitem.getQuantity()*orderitem.getUnitRate();
 		     }
 		    msg.setContent("<html>"+
 			"<head>"+
@@ -101,6 +124,7 @@ public class SendBill {
 					"</style>"+
 				"</head>"+
 				"<body style=\"font-family:Times New Roman; font-size:8\">"+
+					"<p>Dear User,<br>Your Order has been processed.<br>Please find the attached bill below.</p><br>"+
 					"<div class=\"container-fluid\">"+
 						"<div class=\"row-fluid\" style=\"text-align:center\">"+
 							"<div class=\"span4\">"+
@@ -183,6 +207,7 @@ public class SendBill {
 
 		     Transport.send(msg);
 		     System.out.println("Message sent.");
+		     map.clear();
 		     return 1;
 		  }catch (MessagingException e){ System.out.println("Error, cause: " + e); return 0;}
 		
