@@ -70,6 +70,8 @@ dependencies {
 	compile 'com.sun.faces:jsf-impl:2.1.19'
    	compile 'org.eclipse.persistence:javax.persistence:2.1.0'
    	compile 'org.json:json:20090211'
+   	compile 'com.ganyo:gcm-server:1.0.2'
+   	compile 'javax.mail:javax.mail-api:1.5.2'   	
 }
 
 eclipse {
