@@ -94,6 +94,12 @@ public class RestAuthenticationController {
 			responseJsonObject.put("otp", "null");
 			return responseJsonObject.toString();
 		}
+		if( userRepository.findByuserPhoneNumbers_phoneNumber(phonenumber)!=null)
+		{
+			responseJsonObject.put("text", "Phone number entered already exists.");
+			responseJsonObject.put("otp", "null");
+			return responseJsonObject.toString();
+		}
 		List<Organization> orglist = organizationRepository.findAll();
 		JSONArray orgArray=new JSONArray();
 		for(Organization organization: orglist)
