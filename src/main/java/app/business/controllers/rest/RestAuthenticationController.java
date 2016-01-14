@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.business.services.GroupMembershipService;
@@ -27,11 +28,13 @@ import app.data.repositories.OrganizationMembershipRepository;
 import app.data.repositories.OrganizationRepository;
 import app.data.repositories.UserPhoneNumberRepository;
 import app.data.repositories.UserRepository;
+import app.data.repositories.VersionCheckRepository;
 import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
+import app.entities.VersionCheck;
 import app.util.SendMail;
 
 
@@ -71,6 +74,41 @@ public class RestAuthenticationController {
 	
 	@Autowired
 	UserPhoneNumberService userPhoneNumberService;
+	
+	@Autowired
+	VersionCheckRepository versionCheckRepository;
+	
+	@RequestMapping(value = "/versioncheck",method = RequestMethod.GET)
+	public String checkVersion (@RequestParam(value="version")String version) {
+		int id=1;
+		float appVersion = Float.parseFloat(version);
+		JSONObject responseJsonObject = new JSONObject();
+		VersionCheck currentVersion = versionCheckRepository.findOne(id);
+		float curVersion = currentVersion.getVersion();
+		int curMandatory = currentVersion.getMandatory();
+		if (curVersion <= appVersion) {
+			try {
+				responseJsonObject.put("response", "0");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		else if ((curVersion > appVersion) && (curMandatory == 0) ) {
+			try {
+				responseJsonObject.put("response", "1");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		else if ((curVersion > appVersion) && (curMandatory == 1) ) {
+			try {
+				responseJsonObject.put("response", "2");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return responseJsonObject.toString();
+	}
 	
 	@RequestMapping(value = "/otp",method = RequestMethod.POST )
 	public String otp(@RequestBody String requestBody) throws Exception

@@ -171,6 +171,14 @@ public class OrderRestController {
 		}	
 		Order order = orderRepository.findOne(orderId);
 		Organization organization= order.getOrganization();
+		if( order.getStatus().equals("processed")) {
+			try {
+				response.put("Status", "Order cannot be cancelled. Please sync app immediately");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return response.toString();
+		}
 		//Will be used later when comments are added while ordering.
 		if(!comments.equals("null"))
 		{
