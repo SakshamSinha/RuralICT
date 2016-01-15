@@ -33,6 +33,15 @@ public class GcmRestController {
 		catch(JSONException e){
 			e.printStackTrace();
 		}
+		
+		try {
+			GcmTokens tokenCheck = gcmTokensService.getByToken(token);
+			gcmTokensService.removeToken(tokenCheck);
+		}
+		catch(Exception e) {
+			//no need to handle exception
+			System.out.println("new token");
+		}
 		GcmTokens gcmToken = new GcmTokens(token, number);
 		try{
 			gcmTokensService.addToken(gcmToken);
