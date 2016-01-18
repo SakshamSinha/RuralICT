@@ -62,14 +62,20 @@ public class GcmRestController {
 		return jsonResponseObject.toString();
 	}
 	
-	@RequestMapping(value="/deregistertoken", method=RequestMethod.GET) 
-	public String deregisterToken(@RequestParam(value="number") String number) {
+	@RequestMapping(value="/deregistertoken", method=RequestMethod.POST) 
+	public String deregisterToken(@RequestBody String requestBody) {
 		JSONObject jsonResponseObject = new JSONObject();
+		JSONObject tokenDetails = null;
+		String token;
+		System.out.println("deregister called");
 		try{
-		GcmTokens gcmToken = gcmTokensService.getByPhoneNumber(number);
+		tokenDetails = new JSONObject(requestBody);
+		token = tokenDetails.getString("token");
+		GcmTokens gcmToken = gcmTokensService.getByToken(token);
 		gcmTokensService.removeToken(gcmToken);
 		}
 		catch(Exception e) {
+			System.out.println("Token remove failed");
 			try {
 				jsonResponseObject.put("response", "fail");
 			} catch (JSONException e1) {
