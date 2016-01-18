@@ -12,11 +12,12 @@ public class GcmRequest {
 	public void broadcast(String userMessage, String title, List<String> androidTargets) {
 		final long serialVersionUID = 1L;
 		//List<String> androidTargets = new ArrayList<String>();
-		final String SENDER_ID = "AIzaSyBsUr9b5VT5_oH_0FSygF8us4AXKA1yvGw";
+		//final String SENDER_ID = "AIzaSyBsUr9b5VT5_oH_0FSygF8us4AXKA1yvGw";
+		final String SENDER_ID = "AIzaSyArxqWuwifUbkvXAgfAAzxuls3TBrMeMBg";
 		Sender sender = new Sender(SENDER_ID);
 	     Message message = new Message.Builder()
-	        .timeToLive(30)
-	        .delayWhileIdle(true)
+	        //.timeToLive(30)
+	        .delayWhileIdle(false)
 	        .addData("message", userMessage)
 	        .addData("title", title)
 	        .build();
