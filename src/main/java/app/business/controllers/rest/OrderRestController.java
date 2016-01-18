@@ -302,13 +302,65 @@ public class OrderRestController {
 		return "Success";
 	}
 	
+	@RequestMapping(value="/orders/get", method = RequestMethod.GET)
+	public String displayAllOrders(@RequestParam(value="orgabbr") String orgabbr)
+	{
+		JSONObject jsonResponseObject = new JSONObject();
+		JSONArray savedArray = new JSONArray();
+		JSONArray processedArray = new JSONArray();
+		JSONArray cancelledArray = new JSONArray();
+		Organization organization =organizationService.getOrganizationByAbbreviation(orgabbr);
+		List<Order> orderList = orderService.getOrderByOrganization(organization);
+		Iterator <Order> iterator = orderList.iterator();
+		while(iterator.hasNext()) {
+			Order order = iterator.next();
+			Message message = messageService.getMessageFromOrder(order);
+			JSONObject orderObject = new JSONObject();
+			if(message != null){
+				try {
+					orderObject.put("orderid",order.getOrderId());
+					orderObject.put("timestamp", message.getTime().toString());
+					orderObject.put("username", userService.getUser(message.getUser().getUserId()).getName());
+					orderObject.put("comment", message.getComments());
+					if(order.getStatus().equals("saved")){
+						savedArray.put(orderObject);
+					}
+					else if (order.getStatus().equals("processed")){
+						processedArray.put(orderObject);
+					}
+					else if (order.getStatus().equals("cancelled")) {
+						cancelledArray.put(orderObject);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				}
+			
+		}
+		try{
+		jsonResponseObject.put("saved", savedArray);
+		jsonResponseObject.put("processed", processedArray);
+		jsonResponseObject.put("cancelled", cancelledArray);
+		jsonResponseObject.put("response", "success");
+		}
+		catch(JSONException e){
+			e.printStackTrace();
+			try {
+				jsonResponseObject.put("response", "error");
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+			return jsonResponseObject.toString();
+		}
+		return jsonResponseObject.toString();
+	}
+
 	@RequestMapping(value = "/orders/saved",method = RequestMethod.GET )
 	public String displaySavedOrders(@RequestParam(value="orgabbr") String orgabbr)
 	{
-		
+		JSONObject jsonResponseObject = new JSONObject();
 		Organization organization =organizationService.getOrganizationByAbbreviation(orgabbr);
 		List<Order> orderList = orderService.getOrderByOrganizationSaved(organization);
-		JSONObject jsonResponseObject = new JSONObject();
 		JSONArray orderArray = new JSONArray();
 		Iterator<Order> iterator = orderList.iterator();
 		while(iterator.hasNext())
@@ -569,4 +621,6 @@ public class OrderRestController {
 		return jsonResponseObject.toString();
 		
 	}
+	 
+	
 }
