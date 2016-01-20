@@ -57,7 +57,7 @@ public class ProductTypeRestController {
 				{
 					map.put("id", Integer.toString(product.getProductId()));
 					map.put("name", product.getName());
-					map.put("quantity", Integer.toString(product.getQuantity()));
+					map.put("quantity", Float.toString(product.getQuantity()));
 					map.put("unitRate", Float.toString(product.getUnitRate()));
 					map.put("imageUrl", product.getImageUrl());
 					Listmap.add(map);
