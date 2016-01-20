@@ -3,6 +3,7 @@ package app.business.controllers.rest;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.business.services.GcmTokensService;
 import app.business.services.GroupMembershipService;
 import app.business.services.OrganizationMembershipService;
 import app.business.services.OrganizationService;
 import app.business.services.UserPhoneNumberService;
+import app.business.services.UserService;
 import app.data.repositories.GroupMembershipRepository;
 import app.data.repositories.GroupRepository;
 import app.data.repositories.OrganizationMembershipRepository;
@@ -29,12 +32,14 @@ import app.data.repositories.OrganizationRepository;
 import app.data.repositories.UserPhoneNumberRepository;
 import app.data.repositories.UserRepository;
 import app.data.repositories.VersionCheckRepository;
+import app.entities.GcmTokens;
 import app.entities.GroupMembership;
 import app.entities.Organization;
 import app.entities.OrganizationMembership;
 import app.entities.User;
 import app.entities.UserPhoneNumber;
 import app.entities.VersionCheck;
+import app.util.GcmRequest;
 import app.util.SendMail;
 
 
@@ -77,6 +82,12 @@ public class RestAuthenticationController {
 	
 	@Autowired
 	VersionCheckRepository versionCheckRepository;
+	
+	@Autowired
+	GcmTokensService gcmTokensService;
+	
+	@Autowired
+	UserService userService;
 	
 	@RequestMapping(value = "/versioncheck",method = RequestMethod.GET)
 	public String checkVersion (@RequestParam(value="version")String version) {
@@ -322,7 +333,7 @@ public class RestAuthenticationController {
 		String phonenumber = null;
 		String email=null;
 		JSONArray orgListJsonArray = null;
-		GCMTestController obj = new GCMTestController();
+	
 		List<Organization> orgList= new ArrayList<Organization>();
 		try {
 			jsonObject = new JSONObject(requestBody);
@@ -360,7 +371,36 @@ public class RestAuthenticationController {
 				int org_id=org.getInt("org_id");
 				//Adding organization
 				Organization organization= organizationRepository.findOne(org_id);
-				obj.broadcast(user.getName()+" would like to be a member.", "123", "New Member Request");
+				List<OrganizationMembership> organizationMembership = organizationMembershipService.getOrganizationMembershipListByIsAdmin(organization, true);
+				List<String> phoneNumbers = new ArrayList<String>();
+				Iterator <OrganizationMembership> membershipIterator = organizationMembership.iterator();
+				while (membershipIterator.hasNext()) {
+					OrganizationMembership membership = membershipIterator.next();
+					User adminUser = membership.getUser();
+					phoneNumbers.add(userPhoneNumberService.getUserPrimaryPhoneNumber(adminUser).getPhoneNumber());
+				}
+				Iterator <String> iterator = phoneNumbers.iterator();
+				List <String>androidTargets = new ArrayList<String>();
+				while(iterator.hasNext()) {
+					String number = iterator.next();
+					try{
+					List<GcmTokens> gcmTokens = gcmTokensService.getListByPhoneNumber(number);
+					Iterator <GcmTokens> iter = gcmTokens.iterator();
+					while(iter.hasNext()) {
+					androidTargets.add(iter.next().getToken());
+					}
+					}
+					catch(Exception e){
+						System.out.println("no token for number: "+number);
+					}
+				}
+				if(androidTargets.size()>0) {
+					GcmRequest gcmRequest = new GcmRequest();
+					gcmRequest.broadcast(user.getName()+" would like to be a member", "New Member Request", androidTargets,1,user.getUserId());
+					}
+				
+				
+
 				if(organization==null)
 				{
 					response.put("Status", "Failure");
