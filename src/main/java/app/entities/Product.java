@@ -34,7 +34,7 @@ public class Product implements Serializable {
 	private String imageUrl;
 
 	private String name;
-	private int quantity;
+	private float quantity;
 	
 	@Column(name="status")
 	private int status;
@@ -55,7 +55,7 @@ public class Product implements Serializable {
 		this.status =1;
 	}
 
-	public Product(String name, ProductType productType, float unitRate, int quantity, String description,
+	public Product(String name, ProductType productType, float unitRate, float quantity, String description,
 			String imageUrl, int status) {
 
 		this.name = name;
@@ -67,7 +67,7 @@ public class Product implements Serializable {
 		this.status=status;
 	}
 	
-	public Product(String name, ProductType productType, float unitRate, int quantity, String description,
+	public Product(String name, ProductType productType, float unitRate, float quantity, String description,
 			String imageUrl) {
 
 		this(name, productType, unitRate, quantity, description,imageUrl,1);
@@ -114,11 +114,11 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	public int getQuantity() {
+	public float getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(float quantity) {
 		this.quantity = quantity;
 	}
 
