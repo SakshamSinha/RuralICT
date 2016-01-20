@@ -176,7 +176,7 @@ public class OrderRestController {
 		}
 		if(androidTargets.size()>0) {
 		GcmRequest gcmRequest = new GcmRequest();
-		gcmRequest.broadcast(userService.getCurrentUser().getName()+" has placed an order", "New order", androidTargets);
+		gcmRequest.broadcast(userService.getCurrentUser().getName()+" has placed an order", "New order", androidTargets,0);
 		}
 		SendMail.sendMail(email, "Cottage Industry App: Order Placed Successfully" , "Your order has been placed successfully with order id is: " + new Integer(order.getOrderId()).toString());
 		if(organization.getAbbreviation().equals("NatG"))
@@ -354,7 +354,29 @@ public class OrderRestController {
 		}
 		return jsonResponseObject.toString();
 	}
-
+	/*JSONObject responseJsonObject = new JSONObject();
+		JSONArray items = new JSONArray();
+		Order order = orderService.getOrder(orderId);
+		List<OrderItem> orderItems = order.getOrderItems();
+		Iterator<OrderItem> iterator = orderItems.iterator();
+		while(iterator.hasNext()) {
+			OrderItem orderItem = iterator.next(); 
+			JSONObject item = new JSONObject();
+			try {
+				item.put("productname", orderItem.getProduct().getName());
+				item.put("quantity", orderItem.getQuantity());
+				item.put("rate", orderItem.getUnitRate());
+				items.put(item);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			responseJsonObject.put("items", items);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return responseJsonObject.toString(); */
 	@RequestMapping(value = "/orders/saved",method = RequestMethod.GET )
 	public String displaySavedOrders(@RequestParam(value="orgabbr") String orgabbr)
 	{
@@ -374,6 +396,23 @@ public class OrderRestController {
 				orderObject.put("timestamp", message.getTime().toString());
 				orderObject.put("username", userService.getUser(message.getUser().getUserId()).getName());
 				orderObject.put("comment", message.getComments());
+				JSONArray items = new JSONArray();
+				List<OrderItem> orderItems = order.getOrderItems();
+				Iterator<OrderItem> iter = orderItems.iterator();
+				while(iter.hasNext()){
+					OrderItem orderItem = iter.next();
+					JSONObject item = new JSONObject();
+					try {
+						item.put("productname", orderItem.getProduct().getName());
+						item.put("quantity", orderItem.getQuantity());
+						item.put("rate", orderItem.getUnitRate());
+						items.put(item);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					items.put(item);
+				}
+				orderObject.put("items", items);
 				orderArray.put(orderObject);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -408,6 +447,23 @@ public class OrderRestController {
 				orderObject.put("timestamp", message.getTime().toString());
 				orderObject.put("username", userService.getUser(message.getUser().getUserId()).getName());
 				orderObject.put("comment", message.getComments());
+				JSONArray items = new JSONArray();
+				List<OrderItem> orderItems = order.getOrderItems();
+				Iterator<OrderItem> iter = orderItems.iterator();
+				while(iter.hasNext()){
+					OrderItem orderItem = iter.next();
+					JSONObject item = new JSONObject();
+					try {
+						item.put("productname", orderItem.getProduct().getName());
+						item.put("quantity", orderItem.getQuantity());
+						item.put("rate", orderItem.getUnitRate());
+						items.put(item);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					items.put(item);
+				}
+				orderObject.put("items", items);
 				orderArray.put(orderObject);
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -442,6 +498,23 @@ public class OrderRestController {
 				orderObject.put("timestamp", message.getTime().toString());
 				orderObject.put("username", userService.getUser(message.getUser().getUserId()).getName());
 				orderObject.put("comment", message.getComments());
+				JSONArray items = new JSONArray();
+				List<OrderItem> orderItems = order.getOrderItems();
+				Iterator<OrderItem> iter = orderItems.iterator();
+				while(iter.hasNext()){
+					OrderItem orderItem = iter.next();
+					JSONObject item = new JSONObject();
+					try {
+						item.put("productname", orderItem.getProduct().getName());
+						item.put("quantity", orderItem.getQuantity());
+						item.put("rate", orderItem.getUnitRate());
+						items.put(item);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					items.put(item);
+				}
+				orderObject.put("items", items);
 				orderArray.put(orderObject);
 			} catch (JSONException e) {
 				e.printStackTrace();
