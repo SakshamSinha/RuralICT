@@ -230,6 +230,16 @@ public class OrderRestController {
 			message.setComments(comments);
 			binaryMessageRepository.save(message);
 		}
+		System.out.println(order.getStatus());
+		if( order.getStatus().equals("processed")) {
+			try {
+				System.out.println("inside");
+				response.put("Status", "Order cannot be cancelled. Please sync app immediately");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return response.toString();
+		}
 		if(orderItemsJSON!=null)
 		{
 			for( OrderItem orderitem : order.getOrderItems())

@@ -83,12 +83,13 @@ public class RestAuthenticationController {
 	@Autowired
 	VersionCheckRepository versionCheckRepository;
 	
+
 	@Autowired
 	GcmTokensService gcmTokensService;
 	
 	@Autowired
 	UserService userService;
-	
+
 	@RequestMapping(value = "/versioncheck",method = RequestMethod.GET)
 	public String checkVersion (@RequestParam(value="version")String version) {
 		int id=1;
@@ -140,6 +141,12 @@ public class RestAuthenticationController {
 		if( userRepository.findByEmail(email).size()!=0)
 		{
 			responseJsonObject.put("text", "Email entered already exists.");
+			responseJsonObject.put("otp", "null");
+			return responseJsonObject.toString();
+		}
+		if( userRepository.findByuserPhoneNumbers_phoneNumber(phonenumber)!=null)
+		{
+			responseJsonObject.put("text", "Phone number entered already exists.");
 			responseJsonObject.put("otp", "null");
 			return responseJsonObject.toString();
 		}

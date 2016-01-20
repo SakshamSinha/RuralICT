@@ -36,7 +36,6 @@ public class ProductTypeRestController {
 	UserService userService;
 	@Autowired
 	OrganizationRepository organizationRepository;
-	
 	@Autowired
 	ProductService productService;
 	
