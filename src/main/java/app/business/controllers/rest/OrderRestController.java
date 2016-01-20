@@ -381,9 +381,10 @@ public class OrderRestController {
 					OrderItem orderItem = iter.next();
 					JSONObject item = new JSONObject();
 					try {
+				
 						item.put("productname", orderItem.getProduct().getName());
-						item.put("quantity", orderItem.getQuantity());
-						item.put("rate", orderItem.getUnitRate());
+						item.put("quantity", Float.toString(orderItem.getQuantity()));
+						item.put("rate", Float.toString(orderItem.getUnitRate()));
 						items.put(item);
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -433,8 +434,8 @@ public class OrderRestController {
 					JSONObject item = new JSONObject();
 					try {
 						item.put("productname", orderItem.getProduct().getName());
-						item.put("quantity", orderItem.getQuantity());
-						item.put("rate", orderItem.getUnitRate());
+						item.put("quantity", Float.toString(orderItem.getQuantity()));
+						item.put("rate", Float.toString(orderItem.getUnitRate()));
 						items.put(item);
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -484,8 +485,8 @@ public class OrderRestController {
 					JSONObject item = new JSONObject();
 					try {
 						item.put("productname", orderItem.getProduct().getName());
-						item.put("quantity", orderItem.getQuantity());
-						item.put("rate", orderItem.getUnitRate());
+						item.put("quantity", Float.toString(orderItem.getQuantity()));
+						item.put("rate", Float.toString(orderItem.getUnitRate()));
 						items.put(item);
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -631,8 +632,8 @@ public class OrderRestController {
 			JSONObject item = new JSONObject();
 			try {
 				item.put("productname", orderItem.getProduct().getName());
-				item.put("quantity", orderItem.getQuantity());
-				item.put("rate", orderItem.getUnitRate());
+				item.put("quantity", Float.toString(orderItem.getQuantity()));
+				item.put("rate", Float.toString(orderItem.getUnitRate()));
 				items.put(item);
 			} catch (JSONException e) {
 				e.printStackTrace();
