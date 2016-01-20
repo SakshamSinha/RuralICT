@@ -354,29 +354,7 @@ public class OrderRestController {
 		}
 		return jsonResponseObject.toString();
 	}
-	/*JSONObject responseJsonObject = new JSONObject();
-		JSONArray items = new JSONArray();
-		Order order = orderService.getOrder(orderId);
-		List<OrderItem> orderItems = order.getOrderItems();
-		Iterator<OrderItem> iterator = orderItems.iterator();
-		while(iterator.hasNext()) {
-			OrderItem orderItem = iterator.next(); 
-			JSONObject item = new JSONObject();
-			try {
-				item.put("productname", orderItem.getProduct().getName());
-				item.put("quantity", orderItem.getQuantity());
-				item.put("rate", orderItem.getUnitRate());
-				items.put(item);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}
-		try {
-			responseJsonObject.put("items", items);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return responseJsonObject.toString(); */
+	
 	@RequestMapping(value = "/orders/saved",method = RequestMethod.GET )
 	public String displaySavedOrders(@RequestParam(value="orgabbr") String orgabbr)
 	{
